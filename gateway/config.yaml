@@ -1,0 +1,56 @@
+# LiteLLM Configuration for agent4science
+# 
+# This file configures multi-provider LLM routing through LiteLLM.
+# Replace [PLACEHOLDER] values with your actual API keys.
+#
+# Supported providers: DeepSeek, OpenAI, Anthropic, Ollama (local)
+
+model_list:
+  # Primary model for complex reasoning tasks
+  - model_name: main
+    litellm_params:
+      model: deepseek/deepseek-v4-pro
+      api_key: [PLACEHOLDER_DEEPSEEK_API_KEY]
+      max_tokens: 8192
+      temperature: 0.7
+
+  # Fast model for lightweight tasks
+  - model_name: fast
+    litellm_params:
+      model: deepseek/deepseek-v4-flash
+      api_key: [PLACEHOLDER_DEEPSEEK_API_KEY]
+      max_tokens: 4096
+      temperature: 0.5
+
+  # Local Ollama deployment (for offline/sensitive data scenarios)
+  - model_name: local
+    litellm_params:
+      model: ollama/qwen3.5:9b
+      api_base: http://127.0.0.1:11434
+      max_tokens: 4096
+      temperature: 0.7
+
+  # OpenAI GPT-4 (optional, for comparison)
+  - model_name: gpt4
+    litellm_params:
+      model: gpt-4-turbo
+      api_key: [PLACEHOLDER_OPENAI_API_KEY]
+      max_tokens: 8192
+      temperature: 0.7
+
+  # Anthropic Claude (optional, for complex reasoning)
+  - model_name: claude
+    litellm_params:
+      model: anthropic/claude-3-5-sonnet
+      api_key: [PLACEHOLDER_ANTHROPIC_API_KEY]
+      max_tokens: 8192
+      temperature: 0.7
+
+# Router settings
+router_settings:
+  default_model: main
+  fallback_models:
+    - fast
+    - local
+  retry_attempts: 3
+  timeout: 60

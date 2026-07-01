@@ -1,0 +1,2489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xuanshu-agents Hub — AI Agent 控制面板</title>
+  <meta name="description" content="xuanshu-agents 多 Agent 协作系统控制面板，支持云端预览和本地连接模式">
+  <meta property="og:title" content="xuanshu-agents Hub — AI Agent 控制面板">
+  <meta property="og:description" content="多 Agent 协作系统，支持云端预览和本地连接模式">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%237B61FF' d='M16 2L4 9v14l12 7 12-7V9L16 2zm0 4l8 4.5v9L16 24l-8-4.5v-9L16 6z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #1C1C1E;
+      --bg-surface: #242424;
+      --bg-elevated: #2C2C2E;
+      --bg-overlay: #3A3A3C;
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-tertiary: rgba(255, 255, 255, 0.3);
+      --accent: #7B61FF;
+      --accent-secondary: #FF6363;
+      --accent-green: #34D399;
+      --accent-amber: #FBBF24;
+      --accent-red: #EF4444;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+      --shadow: 0 8px 24px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.45);
+      --shadow-xl: 0 24px 64px rgba(0,0,0,0.75), 0 8px 16px rgba(0,0,0,0.5);
+      --sidebar-collapsed: 60px;
+      --sidebar-expanded: 200px;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+    }
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+      top: -200px;
+      right: -100px;
+    }
+    .orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+      bottom: -150px;
+      left: -100px;
+    }
+    .orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--accent-green) 0%, transparent 70%);
+      top: 50%;
+      left: 30%;
+      opacity: 0.2;
+    }
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .app-container { display: flex; min-height: 100vh; position: relative; z-index: 1; }
+    .sidebar {
+      width: var(--sidebar-collapsed);
+      background: rgba(36, 36, 36, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: width 0.2s ease;
+      position: relative;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .sidebar:hover { width: var(--sidebar-expanded); }
+    .sidebar-logo {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-weight: 600;
+      font-size: 16px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .sidebar:hover .logo-text { opacity: 1; }
+    .nav-items {
+      flex: 1;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .nav-item:hover { background: var(--bg-elevated); }
+    .nav-item.active { background: rgba(123, 97, 255, 0.15); }
+    .nav-item.active::before { opacity: 1; }
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-secondary);
+      fill: none;
+      stroke-width: 1.5;
+    }
+    .nav-item.active .nav-icon svg { stroke: var(--accent); }
+    .nav-label {
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .sidebar:hover .nav-label { opacity: 1; }
+    .sidebar-footer {
+      padding: 16px 12px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .version-badge {
+      font-size: 10px;
+      background: var(--bg-overlay);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: auto;
+    }
+    .main-content {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .page { display: none; animation: fadeIn 0.2s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .page-header { margin-bottom: 32px; }
+    .page-title {
+      font-size: 28px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .page-subtitle { font-size: 14px; color: var(--text-secondary); }
+    .glass {
+      background: rgba(36, 36, 36, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      position: relative;
+    }
+    .glass::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 20%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 80%, transparent 100%);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .bento-grid { display: grid; gap: 16px; }
+    .bento-2x2 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, auto); }
+    .bento-3col { grid-template-columns: 1fr 2fr 1fr; }
+    .service-card { padding: 20px; transition: all 0.15s ease; }
+    .service-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .service-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .service-info { display: flex; align-items: center; gap: 12px; }
+    .service-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-overlay);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .service-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+    .service-name { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+    .service-port { font-size: 12px; color: var(--text-tertiary); font-family: 'SF Mono', Monaco, monospace; }
+    .status-indicator { display: flex; align-items: center; gap: 8px; }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+    }
+    .status-dot.online { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+    .status-dot.degraded { background: var(--accent-amber); box-shadow: 0 0 8px var(--accent-amber); }
+    .status-dot.offline { background: var(--accent-red); }
+    .status-text { font-size: 12px; color: var(--text-secondary); }
+    .service-latency {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 12px;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    .service-detail {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+    .btn-check {
+      width: 100%;
+      margin-top: 16px;
+      padding: 10px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-check:hover { background: var(--accent); border-color: var(--accent); color: white; }
+    .btn-check.checking { pointer-events: none; opacity: 0.7; }
+    .quick-action-card { padding: 20px; cursor: pointer; transition: all 0.15s ease; }
+    .quick-action-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: rgba(255,255,255,0.12); }
+    .action-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .action-title svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+    .action-items { display: flex; flex-direction: column; gap: 8px; }
+    .action-btn {
+      padding: 10px 14px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .action-btn:hover { background: rgba(123, 97, 255, 0.15); border-color: var(--accent); color: var(--text-primary); }
+    .action-btn.loading { pointer-events: none; opacity: 0.6; }
+    .action-btn .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .summary-card { padding: 20px; }
+    .summary-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .summary-title svg { width: 16px; height: 16px; stroke: var(--accent-green); fill: none; stroke-width: 1.5; }
+    .summary-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-item { background: var(--bg-overlay); padding: 12px; border-radius: var(--radius-sm); }
+    .stat-value { font-size: 20px; font-weight: 600; color: var(--accent); }
+    .stat-label { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+    .task-card {
+      padding: 16px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .task-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .task-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .task-id { font-size: 11px; color: var(--text-tertiary); font-family: 'SF Mono', Monaco, monospace; }
+    .task-status {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+    .task-status.pending { background: rgba(251, 191, 36, 0.2); color: var(--accent-amber); }
+    .task-status.running { background: rgba(59, 130, 246, 0.2); color: #3B82F6; }
+    .task-status.completed { background: rgba(52, 211, 153, 0.2); color: var(--accent-green); }
+    .task-status.failed { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+    .task-goal { font-size: 14px; color: var(--text-primary); margin-bottom: 8px; }
+    .task-result { font-size: 12px; color: var(--text-secondary); padding: 8px; background: var(--bg-base); border-radius: 6px; max-height: 100px; overflow-y: auto; }
+    .task-input-group { display: flex; gap: 8px; margin-bottom: 16px; }
+    .task-input {
+      flex: 1;
+      padding: 10px 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+    .task-input:focus { outline: none; border-color: var(--accent); }
+    .btn-primary {
+      padding: 10px 16px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-primary:hover { transform: scale(1.02); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .memory-block {
+      padding: 16px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+    }
+    .memory-block-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .memory-block-name { font-size: 13px; font-weight: 600; color: var(--accent); }
+    .memory-block-content { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .memory-edit-btn {
+      padding: 4px 8px;
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .memory-edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .recall-results { margin-top: 16px; }
+    .recall-item {
+      padding: 12px;
+      background: var(--bg-overlay);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+    }
+    .recall-score { font-size: 11px; color: var(--accent-green); margin-bottom: 4px; }
+    .recall-content { font-size: 13px; color: var(--text-secondary); }
+    .gaps-list { margin-top: 16px; }
+    .gap-item {
+      padding: 12px;
+      background: var(--bg-overlay);
+      border-left: 3px solid var(--accent-amber);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 8px;
+    }
+    .gap-domain { font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+    .gap-description { font-size: 13px; color: var(--text-secondary); }
+    .chat-container { display: flex; height: calc(100vh - 140px); gap: 16px; }
+    .chat-sidebar { width: 260px; flex-shrink: 0; }
+    .chat-sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-sidebar-title { font-size: 14px; font-weight: 600; }
+    .btn-new-chat {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--accent);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .btn-new-chat:hover { transform: scale(1.05); }
+    .chat-history { padding: 12px; max-height: calc(100% - 60px); overflow-y: auto; }
+    .chat-history-item {
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chat-history-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .chat-history-item.active { background: rgba(123, 97, 255, 0.15); color: var(--text-primary); }
+    .chat-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+    .message { max-width: 80%; animation: messageIn 0.2s ease; }
+    @keyframes messageIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .message.user { align-self: flex-end; }
+    .message.agent { align-self: flex-start; }
+    .message-bubble { padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
+    .message.user .message-bubble { background: var(--text-primary); color: var(--bg-base); border-bottom-right-radius: 4px; }
+    .message.agent .message-bubble { background: rgba(36, 36, 36, 0.9); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+    .message-time { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; padding: 0 4px; }
+    .message.user .message-time { text-align: right; }
+    .chat-input-area { padding: 16px; border-top: 1px solid var(--border); }
+    .chat-mode-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+    .mode-tab {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .mode-tab.active { background: rgba(123, 97, 255, 0.2); border-color: var(--accent); color: var(--accent); }
+    .chat-input-wrapper { display: flex; gap: 12px; }
+    .chat-input {
+      flex: 1;
+      padding: 14px 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: inherit;
+      resize: none;
+      transition: all 0.15s ease;
+    }
+    .chat-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(123, 97, 255, 0.15); }
+    .chat-input::placeholder { color: var(--text-tertiary); }
+    .btn-send {
+      padding: 14px 24px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-send:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(123, 97, 255, 0.4); }
+    .btn-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .knowledge-container { display: flex; gap: 16px; height: calc(100vh - 140px); }
+    .wiki-nav { width: 240px; flex-shrink: 0; }
+    .wiki-nav-header { padding: 16px; font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--border-subtle); }
+    .wiki-nav-tree { padding: 12px; }
+    .wiki-nav-item {
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+    .wiki-nav-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .wiki-nav-item.active { background: rgba(123, 97, 255, 0.15); color: var(--text-primary); }
+    .wiki-nav-item svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+    .wiki-preview { flex: 1; padding: 24px; overflow-y: auto; }
+    .wiki-preview-title { font-size: 24px; font-weight: 600; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+    .wiki-content { font-size: 14px; line-height: 1.8; color: var(--text-secondary); }
+    .wiki-content h2 { font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 24px 0 12px; }
+    .wiki-content h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 20px 0 10px; }
+    .wiki-content p { margin-bottom: 12px; }
+    .wiki-content code { background: var(--bg-overlay); padding: 2px 6px; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; }
+    .wiki-content pre { background: var(--bg-overlay); padding: 16px; border-radius: var(--radius-sm); overflow-x: auto; margin: 16px 0; }
+    .wiki-content pre code { background: none; padding: 0; }
+    .wiki-content ul, .wiki-content ol { margin: 12px 0; padding-left: 24px; }
+    .wiki-content li { margin-bottom: 6px; }
+    .monitor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .monitor-card { padding: 20px; }
+    .monitor-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .monitor-title svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+    .resource-item { margin-bottom: 20px; }
+    .resource-item:last-child { margin-bottom: 0; }
+    .resource-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .resource-label { font-size: 13px; color: var(--text-secondary); }
+    .resource-value { font-size: 13px; font-weight: 500; font-family: 'SF Mono', Monaco, monospace; }
+    .resource-bar { height: 8px; background: var(--bg-overlay); border-radius: 4px; overflow: hidden; }
+    .resource-fill { height: 100%; border-radius: 4px; transition: width 0.3s ease; }
+    .resource-fill.vram { background: linear-gradient(90deg, var(--accent), #a78bfa); }
+    .resource-fill.ram { background: linear-gradient(90deg, var(--accent-green), #34D399); }
+    .resource-fill.disk { background: linear-gradient(90deg, var(--accent-amber), #fbbf24); }
+    .activity-feed { max-height: 300px; overflow-y: auto; }
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-time { font-size: 11px; color: var(--text-tertiary); font-family: 'SF Mono', Monaco, monospace; flex-shrink: 0; }
+    .activity-content { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .activity-text { font-size: 13px; color: var(--text-secondary); }
+    .activity-tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-overlay);
+      color: var(--text-tertiary);
+    }
+    .activity-tag.agent { background: rgba(123, 97, 255, 0.2); color: var(--accent); }
+    .activity-tag.warning { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+    .activity-tag.success { background: rgba(52, 211, 153, 0.2); color: var(--accent-green); }
+    .chart-container { height: 200px; display: flex; align-items: flex-end; gap: 8px; padding: 16px 0; }
+    .chart-bar {
+      flex: 1;
+      background: var(--accent);
+      border-radius: 4px 4px 0 0;
+      min-height: 4px;
+      transition: height 0.3s ease;
+    }
+    .chart-label { font-size: 10px; color: var(--text-tertiary); text-align: center; margin-top: 8px; }
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-tertiary);
+    }
+    .empty-state svg { width: 48px; height: 48px; stroke: var(--text-tertiary); fill: none; stroke-width: 1.5; margin-bottom: 16px; }
+    .empty-state-title { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: var(--text-secondary); }
+    .empty-state-text { font-size: 13px; }
+    .settings-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .settings-section { padding: 20px; }
+    .settings-section-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .form-input:focus { outline: none; border-color: var(--accent); }
+    .form-hint { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
+    .preset-buttons { display: flex; gap: 8px; margin-top: 8px; }
+    .preset-btn {
+      flex: 1;
+      padding: 10px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .preset-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .preset-btn.active { background: rgba(123, 97, 255, 0.2); border-color: var(--accent); color: var(--accent); }
+    .btn-save {
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-save:hover { transform: scale(1.02); }
+    .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .tool-card {
+      padding: 16px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .tool-icon { font-size: 24px; margin-bottom: 8px; }
+    .tool-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .tool-desc { font-size: 12px; color: var(--text-tertiary); }
+    .tool-category { font-size: 10px; padding: 2px 6px; background: var(--bg-base); border-radius: 4px; color: var(--text-secondary); margin-top: 8px; display: inline-block; }
+    .execute-area { margin-top: 20px; padding: 20px; background: var(--bg-overlay); border-radius: var(--radius-sm); }
+    .execute-result { margin-top: 16px; padding: 16px; background: var(--bg-base); border-radius: var(--radius-sm); font-family: 'SF Mono', Monaco, monospace; font-size: 12px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; color: var(--text-secondary); }
+    .offline-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: rgba(251, 191, 36, 0.15);
+      border-bottom: 1px solid var(--accent-amber);
+      color: var(--accent-amber);
+      font-size: 13px;
+      text-align: center;
+      z-index: 1000;
+      display: none;
+    }
+    .offline-banner.show { display: block; }
+    /* 双模式横幅 */
+    .mode-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 16px;
+      background: rgba(59, 130, 246, 0.15);
+      border-bottom: 1px solid #3B82F6;
+      color: #60A5FA;
+      font-size: 13px;
+      text-align: center;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .mode-banner.show { display: flex; }
+    .mode-banner.local-mode {
+      background: rgba(52, 211, 153, 0.12);
+      border-color: #34D399;
+      color: #6EE7B7;
+    }
+    .mode-banner-text { flex: 1; text-align: center; }
+    .mode-banner-link {
+      color: #93C5FD;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .mode-banner.local-mode .mode-banner-link {
+      color: #86EFAC;
+    }
+    .mode-banner-link:hover { opacity: 0.8; }
+    /* 一键本地化按钮 */
+    .localize-btn {
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .localize-btn.cloud-mode {
+      background: linear-gradient(135deg, #7B61FF 0%, #9D7BFF 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(123, 97, 255, 0.3);
+    }
+    .localize-btn.cloud-mode:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(123, 97, 255, 0.4);
+    }
+    .localize-btn.local-mode {
+      background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+      color: white;
+    }
+    .localize-btn.local-mode:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(52, 211, 153, 0.3);
+    }
+    .localize-btn.connecting {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .localize-btn .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    /* Settings 模式指示器 */
+    .mode-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .mode-indicator.cloud {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60A5FA;
+    }
+    .mode-indicator.local {
+      background: rgba(52, 211, 153, 0.15);
+      color: #34D399;
+    }
+    .mode-indicator-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .api-endpoint-disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .api-endpoint-hint {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+      font-style: italic;
+    }
+    .connection-test { display: flex; gap: 8px; margin-top: 12px; }
+    .test-btn {
+      flex: 1;
+      padding: 8px;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .test-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .test-btn.success { border-color: var(--accent-green); color: var(--accent-green); }
+    .test-btn.error { border-color: var(--accent-red); color: var(--accent-red); }
+    .test-btn .spinner { width: 12px; height: 12px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .model-list { margin-top: 16px; }
+    .model-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-overlay); border-radius: 6px; margin-bottom: 6px; }
+    .model-name { font-size: 12px; font-family: 'SF Mono', Monaco, monospace; color: var(--text-primary); }
+    .model-size { font-size: 11px; color: var(--text-tertiary); }
+    .dream-result { margin-top: 16px; padding: 16px; background: var(--bg-base); border-radius: var(--radius-sm); border-left: 3px solid var(--accent); }
+    .dream-title { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+    .dream-content { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .transfer-section { margin-top: 16px; padding: 16px; background: var(--bg-overlay); border-radius: var(--radius-sm); }
+    .transfer-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .confidence-result { margin-top: 16px; padding: 16px; background: var(--bg-base); border-radius: var(--radius-sm); }
+    .confidence-score { font-size: 32px; font-weight: 600; color: var(--accent); }
+    .confidence-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+    .context-bar-container { margin-top: 12px; }
+    .context-bar { height: 4px; background: var(--bg-overlay); border-radius: 2px; overflow: hidden; }
+    .context-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-secondary)); border-radius: 2px; transition: width 0.3s ease; }
+    .context-label { font-size: 11px; color: var(--text-tertiary); margin-top: 6px; display: flex; justify-content: space-between; }
+  </style>
+</head>
+<body>
+  <!-- 双模式横幅 -->
+  <div id="modeBanner" class="mode-banner">
+    <span class="mode-banner-text" id="modeBannerText">🌐 云端预览模式 — 使用演示数据</span>
+    <span class="mode-banner-link" id="modeBannerLink" onclick="toggleConnectionMode()">点击切换</span>
+  </div>
+
+  <!-- 背景装饰 -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="bg-grid"></div>
+
+  <div class="app-container">
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">✦</div>
+        <span class="logo-text">xuanshu-agents</span>
+      </div>
+      <nav class="nav-items">
+        <div class="nav-item active" data-page="hub">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </div>
+          <span class="nav-label">Hub</span>
+        </div>
+        <div class="nav-item" data-page="chat">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <span class="nav-label">Chat</span>
+        </div>
+        <div class="nav-item" data-page="tasks">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <span class="nav-label">Tasks</span>
+        </div>
+        <div class="nav-item" data-page="knowledge">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          </div>
+          <span class="nav-label">Knowledge</span>
+        </div>
+        <div class="nav-item" data-page="monitor">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </div>
+          <span class="nav-label">Monitor</span>
+        </div>
+        <div class="nav-item" data-page="tools">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+          </div>
+          <span class="nav-label">Tools</span>
+        </div>
+        <div class="nav-item" data-page="settings">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </div>
+          <span class="nav-label">Settings</span>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="version-badge">v4.0</span>
+        </div>
+        <button id="localizeBtn" class="localize-btn cloud-mode" onclick="toggleConnectionMode()">
+          <span id="localizeBtnText">🔗 一键本地化</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+      <!-- Hub 页面 -->
+      <div id="page-hub" class="page active">
+        <div class="page-header">
+          <h1 class="page-title">控制中心</h1>
+          <p class="page-subtitle">xuanshu-agents 多 Agent 协作系统</p>
+        </div>
+
+        <div class="bento-grid bento-2x2">
+          <!-- AgentOS 状态卡片 -->
+          <div class="glass service-card" data-service="agentos">
+            <div class="service-header">
+              <div class="service-info">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </div>
+                <div>
+                  <div class="service-name">AgentOS</div>
+                  <div class="service-port">127.0.0.1:8000</div>
+                </div>
+              </div>
+              <div class="status-indicator">
+                <div id="status-agentos" class="status-dot"></div>
+                <span id="text-agentos" class="status-text">检测中</span>
+              </div>
+            </div>
+            <div class="service-detail" id="agentos-version"></div>
+            <div class="service-detail" id="agentos-uptime"></div>
+            <div class="service-latency" id="latency-agentos"></div>
+            <button class="btn-check" onclick="checkService('agentos')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              健康检查
+            </button>
+          </div>
+
+          <!-- Ollama 状态卡片 -->
+          <div class="glass service-card" data-service="ollama">
+            <div class="service-header">
+              <div class="service-info">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                </div>
+                <div>
+                  <div class="service-name">Ollama</div>
+                  <div class="service-port">127.0.0.1:11434</div>
+                </div>
+              </div>
+              <div class="status-indicator">
+                <div id="status-ollama" class="status-dot"></div>
+                <span id="text-ollama" class="status-text">检测中</span>
+              </div>
+            </div>
+            <div class="service-detail" id="ollama-models"></div>
+            <div class="service-detail" id="ollama-vram"></div>
+            <div class="service-latency" id="latency-ollama"></div>
+            <button class="btn-check" onclick="checkService('ollama')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              健康检查
+            </button>
+          </div>
+
+          <!-- 快捷操作 -->
+          <div class="glass quick-action-card">
+            <div class="action-title">
+              <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              快捷操作
+            </div>
+            <div class="action-items">
+              <button class="action-btn" onclick="triggerDream()">
+                <span class="spinner" style="display:none"></span>
+                🌙 触发做梦
+              </button>
+              <button class="action-btn" onclick="viewKnowledgeGaps()">
+                <span class="spinner" style="display:none"></span>
+                📚 查看知识缺口
+              </button>
+              <button class="action-btn" onclick="viewCoreMemory()">
+                💭 查看核心记忆
+              </button>
+            </div>
+          </div>
+
+          <!-- 系统概要 -->
+          <div class="glass summary-card">
+            <div class="summary-title">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              系统概要
+            </div>
+            <div class="summary-stats">
+              <div class="stat-item">
+                <div class="stat-value" id="stat-requests">-</div>
+                <div class="stat-label">总请求数</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="stat-tasks">-</div>
+                <div class="stat-label">活跃任务</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="stat-memory">-</div>
+                <div class="stat-label">记忆块</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="stat-uptime">-</div>
+                <div class="stat-label">运行时长</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 活动 Feed -->
+        <div class="glass" style="margin-top: 16px; padding: 20px;">
+          <div class="monitor-title">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            实时活动
+          </div>
+          <div class="activity-feed" id="activityFeed">
+            <div class="activity-item">
+              <span class="activity-time">--:--:--</span>
+              <div class="activity-content">
+                <span class="activity-text">等待活动...</span>
+                <span class="activity-tag">System</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat 页面 -->
+      <div id="page-chat" class="page">
+        <div class="page-header">
+          <h1 class="page-title">对话</h1>
+          <p class="page-subtitle">与 AgentOS 进行自然语言交互</p>
+        </div>
+
+        <div class="chat-container">
+          <div class="chat-sidebar glass">
+            <div class="chat-sidebar-header">
+              <span class="chat-sidebar-title">对话历史</span>
+              <button class="btn-new-chat" onclick="newChat()">+</button>
+            </div>
+            <div class="chat-history" id="chatHistory"></div>
+          </div>
+
+          <div class="chat-main glass">
+            <div class="chat-messages" id="chatMessages">
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <div class="empty-state-title">开始新对话</div>
+                <div class="empty-state-text">输入消息与 AgentOS 交流</div>
+              </div>
+            </div>
+            <div class="chat-input-area">
+              <div class="chat-mode-tabs">
+                <div class="mode-tab active" data-mode="research" onclick="setChatMode('research')">🔬 研究</div>
+                <div class="mode-tab" data-mode="engineering" onclick="setChatMode('engineering')">⚙️ 工程</div>
+                <div class="mode-tab" data-mode="casual" onclick="setChatMode('casual')">☕ 休闲</div>
+              </div>
+              <div class="chat-input-wrapper">
+                <textarea class="chat-input" id="chatInput" placeholder="输入消息... (Shift+Enter 换行)" rows="1"></textarea>
+                <button class="btn-send" id="btnSend" onclick="sendMessage()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                  发送
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks 页面 -->
+      <div id="page-tasks" class="page">
+        <div class="page-header">
+          <h1 class="page-title">任务管理</h1>
+          <p class="page-subtitle">异步任务队列与状态监控</p>
+        </div>
+
+        <div class="glass" style="padding: 20px; margin-bottom: 16px;">
+          <div class="task-input-group">
+            <input type="text" class="task-input" id="taskGoal" placeholder="输入任务目标...">
+            <button class="btn-primary" onclick="createTask()">创建任务</button>
+          </div>
+        </div>
+
+        <div id="tasksList">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="empty-state-title">暂无任务</div>
+            <div class="empty-state-text">创建一个新任务开始</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Knowledge 页面 -->
+      <div id="page-knowledge" class="page">
+        <div class="page-header">
+          <h1 class="page-title">知识库</h1>
+          <p class="page-subtitle">核心记忆管理与知识检索</p>
+        </div>
+
+        <div class="knowledge-container">
+          <div class="wiki-nav glass">
+            <div class="wiki-nav-header">导航</div>
+            <div class="wiki-nav-tree">
+              <div class="wiki-nav-item active" onclick="loadKnowledgeTab('core')">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                核心记忆
+              </div>
+              <div class="wiki-nav-item" onclick="loadKnowledgeTab('recall')">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                回忆搜索
+              </div>
+              <div class="wiki-nav-item" onclick="loadKnowledgeTab('remember')">
+                <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                写入记忆
+              </div>
+              <div class="wiki-nav-item" onclick="loadKnowledgeTab('wiki')">
+                <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                WIKI 浏览
+              </div>
+              <div class="wiki-nav-item" onclick="loadKnowledgeTab('gaps')">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                知识缺口
+              </div>
+            </div>
+          </div>
+
+          <div class="wiki-preview glass" id="knowledgeContent">
+            <div class="wiki-preview-title">核心记忆</div>
+            <div id="coreMemoryList">
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <div class="empty-state-title">加载中...</div>
+              </div>
+            </div>
+            <div id="recallSection" style="display:none; margin-top: 20px;">
+              <div class="task-input-group">
+                <input type="text" class="task-input" id="recallQuery" placeholder="输入搜索查询...">
+                <button class="btn-primary" onclick="performRecall()">搜索</button>
+              </div>
+              <div id="recallResults" class="recall-results"></div>
+            </div>
+            <div id="rememberSection" style="display:none; margin-top: 20px;">
+              <textarea class="task-input" id="rememberContent" placeholder="输入要记住的内容..." rows="4" style="resize:vertical"></textarea>
+              <button class="btn-primary" style="margin-top:12px" onclick="performRemember()">保存记忆</button>
+            </div>
+            <div id="wikiSection" style="display:none;">
+              <div id="wikiDreamContent"></div>
+            </div>
+            <div id="gapsSection" style="display:none;">
+              <div id="gapsList" class="gaps-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monitor 页面 -->
+      <div id="page-monitor" class="page">
+        <div class="page-header">
+          <h1 class="page-title">系统监控</h1>
+          <p class="page-subtitle">实时性能指标与资源使用</p>
+        </div>
+
+        <div class="monitor-grid">
+          <div class="glass monitor-card">
+            <div class="monitor-title">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              资源使用
+            </div>
+            <div class="resource-item">
+              <div class="resource-header">
+                <span class="resource-label">GPU 显存</span>
+                <span class="resource-value" id="vram-value">-</span>
+              </div>
+              <div class="resource-bar">
+                <div class="resource-fill vram" id="vram-bar" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-header">
+                <span class="resource-label">内存</span>
+                <span class="resource-value" id="ram-value">-</span>
+              </div>
+              <div class="resource-bar">
+                <div class="resource-fill ram" id="ram-bar" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-header">
+                <span class="resource-label">磁盘</span>
+                <span class="resource-value" id="disk-value">-</span>
+              </div>
+              <div class="resource-bar">
+                <div class="resource-fill disk" id="disk-bar" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass monitor-card">
+            <div class="monitor-title">
+              <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              请求统计
+            </div>
+            <div class="chart-container" id="requestsChart">
+              <div class="chart-bar" style="height: 20%"><div class="chart-label">Chat</div></div>
+              <div class="chart-bar" style="height: 15%"><div class="chart-label">Task</div></div>
+              <div class="chart-bar" style="height: 10%"><div class="chart-label">Tool</div></div>
+              <div class="chart-bar" style="height: 5%"><div class="chart-label">Other</div></div>
+            </div>
+          </div>
+
+          <div class="glass monitor-card">
+            <div class="monitor-title">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              任务状态
+            </div>
+            <div class="chart-container" id="tasksChart">
+              <div class="chart-bar" style="height: 10%"><div class="chart-label">Pending</div></div>
+              <div class="chart-bar" style="height: 10%"><div class="chart-label">Running</div></div>
+              <div class="chart-bar" style="height: 60%"><div class="chart-label">Completed</div></div>
+              <div class="chart-bar" style="height: 5%"><div class="chart-label">Failed</div></div>
+            </div>
+          </div>
+
+          <div class="glass monitor-card">
+            <div class="monitor-title">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+              已加载模型
+            </div>
+            <div class="model-list" id="modelList">
+              <div class="model-item">
+                <span class="model-name">加载中...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass" style="margin-top: 16px; padding: 20px;">
+          <div class="monitor-title">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            实时活动
+          </div>
+          <div class="activity-feed" id="monitorActivityFeed"></div>
+        </div>
+      </div>
+
+      <!-- Tools 页面 -->
+      <div id="page-tools" class="page">
+        <div class="page-header">
+          <h1 class="page-title">工具箱</h1>
+          <p class="page-subtitle">AgentOS 可用工具列表与执行</p>
+        </div>
+
+        <div class="tools-grid" id="toolsGrid">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            <div class="empty-state-title">加载中...</div>
+          </div>
+        </div>
+
+        <div class="glass execute-area" id="executeArea" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">选中的工具</label>
+            <div id="selectedTool" style="font-size: 16px; font-weight: 600; color: var(--accent);"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">参数 (JSON)</label>
+            <textarea class="form-input" id="toolParams" rows="4" placeholder='{"key": "value"}'></textarea>
+          </div>
+          <button class="btn-primary" onclick="executeTool()">执行工具</button>
+          <div class="execute-result" id="executeResult" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- Settings 页面 -->
+      <div id="page-settings" class="page">
+        <div class="page-header">
+          <h1 class="page-title">设置</h1>
+          <p class="page-subtitle">配置 API 端点和系统参数</p>
+        </div>
+
+        <div class="settings-grid">
+          <div class="glass settings-section">
+            <div class="settings-section-title">API 配置</div>
+            <div class="mode-indicator cloud" id="modeIndicator">
+              <span class="mode-indicator-dot"></span>
+              <span id="modeIndicatorText">云端预览模式</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">AgentOS 端点</label>
+              <input type="text" class="form-input api-endpoint-disabled" id="apiEndpoint" value="http://127.0.0.1:8000" disabled>
+              <div class="api-endpoint-hint" id="apiEndpointHint">云端模式使用演示数据</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ollama 端点</label>
+              <input type="text" class="form-input api-endpoint-disabled" id="ollamaEndpoint" value="http://127.0.0.1:11434" disabled>
+              <div class="api-endpoint-hint" id="ollamaEndpointHint">云端模式使用演示数据</div>
+            </div>
+            <div class="connection-test">
+              <button class="test-btn" id="testAgentOS" onclick="testConnection('agentos')">
+                测试 AgentOS
+              </button>
+              <button class="test-btn" id="testOllama" onclick="testConnection('ollama')">
+                测试 Ollama
+              </button>
+            </div>
+            <button class="btn-primary" style="margin-top: 12px; width: 100%;" onclick="testCloudDemo()">
+              🌐 测试云端演示状态
+            </button>
+          </div>
+
+          <div class="glass settings-section">
+            <div class="settings-section-title">模型配置</div>
+            <div class="form-group">
+              <label class="form-label">Pro 模型</label>
+              <input type="text" class="form-input" id="proModel" value="deepseek-v4-pro">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Flash 模型</label>
+              <input type="text" class="form-input" id="flashModel" value="deepseek-v4-flash">
+            </div>
+            <div class="form-group">
+              <label class="form-label">默认模式</label>
+              <div class="preset-buttons">
+                <button class="preset-btn" onclick="setPreset('research')">研究</button>
+                <button class="preset-btn active" onclick="setPreset('engineering')">工程</button>
+                <button class="preset-btn" onclick="setPreset('casual')">休闲</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass settings-section">
+            <div class="settings-section-title">科研预设</div>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">选择预设模式以快速配置系统参数</p>
+            <div class="preset-buttons" style="flex-direction: column; gap: 12px;">
+              <button class="preset-btn" onclick="applyPreset('research')">
+                <div style="font-weight: 600; margin-bottom: 4px;">🔬 研究模式</div>
+                <div style="font-size: 11px; color: var(--text-tertiary);">深度分析，Pro 模型优先</div>
+              </button>
+              <button class="preset-btn" onclick="applyPreset('engineering')">
+                <div style="font-weight: 600; margin-bottom: 4px;">⚙️ 工程模式</div>
+                <div style="font-size: 11px; color: var(--text-tertiary);">平衡模式，混合使用 Pro/Flash</div>
+              </button>
+              <button class="preset-btn" onclick="applyPreset('casual')">
+                <div style="font-weight: 600; margin-bottom: 4px;">☕ 休闲模式</div>
+                <div style="font-size: 11px; color: var(--text-tertiary);">快速响应，Flash 模型优先</div>
+              </button>
+            </div>
+            <button class="btn-save" onclick="saveSettings()">保存设置</button>
+          </div>
+
+          <div class="glass settings-section">
+            <div class="settings-section-title">高级功能</div>
+            <div class="form-group">
+              <label class="form-label">置信度评估</label>
+              <input type="text" class="form-input" id="confidenceQuery" placeholder="输入要评估的查询...">
+              <button class="btn-primary" style="margin-top: 8px; width: 100%;" onclick="evaluateConfidence()">评估置信度</button>
+              <div class="confidence-result" id="confidenceResult" style="display:none;">
+                <div class="confidence-score" id="confidenceScore">-</div>
+                <div class="confidence-label">置信度评分</div>
+              </div>
+            </div>
+            <div class="transfer-section">
+              <div class="form-label">跨领域迁移</div>
+              <div class="transfer-inputs">
+                <input type="text" class="form-input" id="sourceDomain" placeholder="源领域">
+                <input type="text" class="form-input" id="targetDomain" placeholder="目标领域">
+              </div>
+              <button class="btn-primary" style="width: 100%;" onclick="performTransfer()">执行迁移</button>
+              <div class="execute-result" id="transferResult" style="display:none; margin-top: 12px;"></div>
+            </div>
+          </div>
+
+          <div class="glass settings-section" style="grid-column: span 2;">
+            <div class="settings-section-title">配置热更新</div>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">重新加载配置无需重启服务</p>
+            <button class="btn-primary" onclick="reloadConfig()">重新加载配置</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ============================================
+    // API 配置
+    // ============================================
+    const API = {
+      agentos: 'http://127.0.0.1:8000',
+      ollama: 'http://127.0.0.1:11434',
+      webui: 'http://127.0.0.1:8080'
+    };
+
+    const TIMEOUT = 5000;
+
+    // 全局状态
+    const state = {
+      currentPage: 'hub',
+      currentMode: 'engineering',
+      currentChatMode: 'research',
+      messages: [],
+      startTime: Date.now(),
+      isOffline: false,
+      selectedTool: null,
+      tools: [],
+      connectionMode: 'cloud', // 'cloud' | 'local'
+      startTimestamp: Date.now()
+    };
+
+    // ============================================
+    // 连接模式管理
+    // ============================================
+    function getConnectionMode() {
+      return state.connectionMode;
+    }
+
+    function setConnectionMode(mode) {
+      state.connectionMode = mode;
+      localStorage.setItem('xuanshu-connection-mode', mode);
+      updateUIForMode(mode);
+    }
+
+    function updateUIForMode(mode) {
+      const modeBanner = document.getElementById('modeBanner');
+      const localizeBtn = document.getElementById('localizeBtn');
+      const localizeBtnText = document.getElementById('localizeBtnText');
+      const modeIndicator = document.getElementById('modeIndicator');
+      const modeIndicatorText = document.getElementById('modeIndicatorText');
+      const apiEndpoint = document.getElementById('apiEndpoint');
+      const ollamaEndpoint = document.getElementById('ollamaEndpoint');
+      const apiEndpointHint = document.getElementById('apiEndpointHint');
+      const ollamaEndpointHint = document.getElementById('ollamaEndpointHint');
+
+      if (mode === 'local') {
+        // 更新模式横幅
+        modeBanner.classList.add('show', 'local-mode');
+        document.getElementById('modeBannerText').textContent = '✅ 已连接本地 AgentOS';
+        document.getElementById('modeBannerLink').textContent = '切换云端';
+
+        // 更新本地化按钮
+        localizeBtn.classList.remove('cloud-mode');
+        localizeBtn.classList.add('local-mode');
+        localizeBtnText.textContent = '✅ 已连接本地';
+
+        // 更新Settings模式指示器
+        modeIndicator.classList.remove('cloud');
+        modeIndicator.classList.add('local');
+        modeIndicatorText.textContent = '本地连接模式';
+
+        // 启用API端点输入
+        apiEndpoint.disabled = false;
+        apiEndpoint.classList.remove('api-endpoint-disabled');
+        apiEndpointHint.textContent = '本地 AgentOS API 服务地址';
+        ollamaEndpoint.disabled = false;
+        ollamaEndpoint.classList.remove('api-endpoint-disabled');
+        ollamaEndpointHint.textContent = '本地 Ollama API 服务地址';
+      } else {
+        // 云端模式
+        modeBanner.classList.add('show');
+        modeBanner.classList.remove('local-mode');
+        document.getElementById('modeBannerText').textContent = '🌐 云端预览模式 — 使用演示数据';
+        document.getElementById('modeBannerLink').textContent = '点击切换';
+
+        // 更新本地化按钮
+        localizeBtn.classList.remove('local-mode');
+        localizeBtn.classList.add('cloud-mode');
+        localizeBtnText.textContent = '🔗 一键本地化';
+
+        // 更新Settings模式指示器
+        modeIndicator.classList.remove('local');
+        modeIndicator.classList.add('cloud');
+        modeIndicatorText.textContent = '云端预览模式';
+
+        // 禁用API端点输入
+        apiEndpoint.disabled = true;
+        apiEndpoint.classList.add('api-endpoint-disabled');
+        apiEndpointHint.textContent = '云端模式使用演示数据';
+        ollamaEndpoint.disabled = true;
+        ollamaEndpoint.classList.add('api-endpoint-disabled');
+        ollamaEndpointHint.textContent = '云端模式使用演示数据';
+      }
+    }
+
+    async function toggleConnectionMode() {
+      const btn = document.getElementById('localizeBtn');
+      if (btn.classList.contains('connecting')) return;
+
+      const currentMode = getConnectionMode();
+
+      if (currentMode === 'cloud') {
+        // 尝试切换到本地模式
+        btn.classList.add('connecting');
+        const btnText = document.getElementById('localizeBtnText');
+        btnText.innerHTML = '<span class="spinner"></span> 连接中...';
+
+        const isOnline = await checkLocalAgentOS();
+        if (isOnline) {
+          setConnectionMode('local');
+          refreshAllPanels();
+          addActivity('已连接到本地 AgentOS', 'success');
+        } else {
+          btn.classList.remove('connecting');
+          btnText.textContent = '🔗 一键本地化';
+          addActivity('无法连接到本地 AgentOS，请确保服务正在运行', 'warning');
+        }
+      } else {
+        // 切换到云端模式
+        setConnectionMode('cloud');
+        refreshAllPanels();
+        addActivity('已切换到云端预览模式', 'system');
+      }
+    }
+
+    async function checkLocalAgentOS() {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+      try {
+        const response = await fetch(`${API.agentos}/health`, {
+          method: 'GET',
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        return response.ok;
+      } catch (e) {
+        clearTimeout(timeoutId);
+        return false;
+      }
+    }
+
+    function refreshAllPanels() {
+      checkAllServices();
+      loadStats();
+      if (typeof loadTools === 'function') loadTools();
+      if (typeof loadTasks === 'function') loadTasks();
+      if (typeof loadKnowledge === 'function') loadKnowledge();
+    }
+
+    // ============================================
+    // API 请求封装（带降级策略）
+    // ============================================
+    async function apiRequest(service, endpoint, options = {}) {
+      // 云端模式直接返回mock数据
+      if (getConnectionMode() === 'cloud') {
+        const type = endpoint.replace('/', '');
+        return getMockData(type);
+      }
+
+      const url = `${API[service]}${endpoint}`;
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
+
+      try {
+        const response = await fetch(url, {
+          ...options,
+          signal: controller.signal,
+          headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+          }
+        });
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        return await response.json();
+      } catch (e) {
+        clearTimeout(timeoutId);
+        console.warn(`API调用失败 (${service}${endpoint}): ${e.message}`);
+        // 本地模式失败时降级到mock数据
+        const type = endpoint.replace('/', '');
+        return getMockData(type);
+      }
+    }
+
+    function showModeBanner() {
+      const modeBanner = document.getElementById('modeBanner');
+      if (modeBanner) {
+        modeBanner.classList.add('show');
+      }
+    }
+
+    function hideModeBanner() {
+      const modeBanner = document.getElementById('modeBanner');
+      if (modeBanner) {
+        modeBanner.classList.remove('show');
+      }
+    }
+
+    // ============================================
+    // Mock 数据（增强版）
+    // ============================================
+    function getMockData(type) {
+      const now = Date.now();
+      const uptimeSeconds = Math.floor((now - state.startTimestamp) / 1000);
+      const uptimeStr = uptimeSeconds < 3600 
+        ? `${Math.floor(uptimeSeconds / 60)}分` 
+        : `${Math.floor(uptimeSeconds / 3600)}小时${Math.floor((uptimeSeconds % 3600) / 60)}分`;
+
+      const mocks = {
+        health: { 
+          status: 'online', 
+          version: 'v4.0.0', 
+          uptime: uptimeStr, 
+          agent: 'xuanshu-agent',
+          memory: 'active',
+          mode: getConnectionMode(),
+          timestamp: new Date().toISOString()
+        },
+        stats: { 
+          agent_os: { 
+            total_requests: 156 + Math.floor(uptimeSeconds / 60), 
+            chat_requests: 89 + Math.floor(uptimeSeconds / 120),
+            task_requests: 34 + Math.floor(uptimeSeconds / 180),
+            tool_requests: 33 + Math.floor(uptimeSeconds / 200)
+          }, 
+          tasks: { 
+            pending: 2, 
+            running: 1, 
+            completed: 45 + Math.floor(uptimeSeconds / 300),
+            failed: 3 
+          },
+          trends: {
+            requests_trend: '+12%',
+            tasks_completed_trend: '+8%',
+            avg_response_time: '230ms'
+          }
+        },
+        models: { 
+          models: [
+            { name: 'qwen3.5:9b', size: 5368709120, modified: '2周前' },
+            { name: 'qwen3-coder:30b', size: 21474836480, modified: '3天前' },
+            { name: 'deepseek-v4-pro', size: 8589934592, modified: '1周前' },
+            { name: 'deepseek-v4-flash', size: 2147483648, modified: '1周前' },
+            { name: 'llama3.1:8b', size: 4294967296, modified: '1月前' }
+          ] 
+        },
+        tasks: [
+          { task_id: 'task-001', goal: '分析Agent协作模式', status: 'completed', result: '分析完成，识别出3种协作模式：串行、并行、层次化', created: '2小时前' },
+          { task_id: 'task-002', goal: '优化内存管理', status: 'running', result: null, created: '1小时前', progress: 65 },
+          { task_id: 'task-003', goal: '生成技术文档', status: 'pending', result: null, created: '30分钟前' },
+          { task_id: 'task-004', goal: '性能基准测试', status: 'completed', result: '基准测试完成：平均响应时间 230ms', created: '3小时前' },
+          { task_id: 'task-005', goal: '安全漏洞扫描', status: 'failed', result: '扫描失败：目标服务不可达', created: '45分钟前', error: 'Connection timeout' },
+          { task_id: 'task-006', goal: '代码审查', status: 'completed', result: '发现2处建议优化点', created: '4小时前' }
+        ],
+        core: { 
+          prompt: `## 核心身份
+你是 xuanshu-agents 系统中的 Pro Agent，专注于复杂任务处理和深度分析。
+
+## 专业知识
+- 多 Agent 协作系统架构
+- 任务规划与执行优化
+- 知识图谱构建
+
+## 工作原则
+1. 深度分析优先
+2. 保持上下文连贯
+3. 主动识别知识盲区`, 
+          stats: { 
+            core_blocks: 5, 
+            recall_count: 23 + Math.floor(uptimeSeconds / 120),
+            last_update: '5分钟前'
+          } 
+        },
+        tools: { 
+          tools: [
+            { name: 'web_search', description: '互联网搜索工具，支持实时信息查询', category: 'search', enabled: true },
+            { name: 'file_ops', description: '文件系统操作：读取、写入、搜索文件', category: 'io', enabled: true },
+            { name: 'calculator', description: '高精度数学计算工具', category: 'utility', enabled: true },
+            { name: 'git_ops', description: 'Git 版本控制操作', category: 'vcs', enabled: true },
+            { name: 'browser', description: '浏览器自动化控制', category: 'automation', enabled: true },
+            { name: 'code_executor', description: 'Python/JS 代码执行环境', category: 'execution', enabled: true },
+            { name: 'image_gen', description: 'AI 图片生成工具', category: 'ai', enabled: true },
+            { name: 'ocr', description: '光学字符识别', category: 'vision', enabled: false }
+          ], 
+          total: 8,
+          enabled: 7
+        },
+        gaps: { 
+          gaps: [
+            { domain: '量子计算', priority: 'high', description: '需要补充量子计算基础知识以支持相关任务' },
+            { domain: '生物信息学', priority: 'medium', description: '蛋白质结构分析相关概念不熟悉' },
+            { domain: '金融衍生品定价', priority: 'medium', description: '期权定价模型需要补充' },
+            { domain: '航天器轨道力学', priority: 'low', description: '深空探测任务规划可能用到' }
+          ], 
+          total: 4,
+          high_priority: 1
+        }
+      };
+      return mocks[type] || {};
+    }
+
+    // ============================================
+    // 页面导航
+    // ============================================
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => switchPage(item.dataset.page));
+    });
+
+    function switchPage(page) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelector(`[data-page="${page}"]`).classList.add('active');
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(`page-${page}`).classList.add('active');
+      state.currentPage = page;
+
+      if (page === 'hub') checkAllServices();
+      if (page === 'tasks') loadTasks();
+      if (page === 'knowledge') loadKnowledgeTab('core');
+      if (page === 'monitor') { loadMonitorData(); startMonitorPolling(); }
+      if (page === 'tools') loadTools();
+    }
+
+    // ============================================
+    // 服务健康检查
+    // ============================================
+    async function checkService(service) {
+      const btn = event.target.closest('.btn-check') || document.querySelector(`[data-service="${service}"] .btn-check`);
+      if (btn) {
+        btn.classList.add('checking');
+        btn.innerHTML = '<span class="spinner"></span> 检查中...';
+      }
+
+      const endpoint = service === 'agentos' ? '/health' : '/api/tags';
+      const data = await apiRequest(service, endpoint);
+
+      const statusDot = document.getElementById(`status-${service}`);
+      const statusText = document.getElementById(`text-${service}`);
+      const latencyEl = document.getElementById(`latency-${service}`);
+
+      if (data) {
+        state.isOffline = false;
+        hideOfflineBanner();
+        statusDot.className = 'status-dot online';
+        statusText.textContent = '在线';
+
+        if (service === 'agentos') {
+          document.getElementById('agentos-version').textContent = `版本: ${data.version || 'unknown'}`;
+          document.getElementById('agentos-uptime').textContent = `运行时长: ${data.uptime || 'unknown'}`;
+          latencyEl.textContent = `Agent: ${data.agent || 'N/A'}`;
+        } else if (service === 'ollama') {
+          const modelCount = data.models?.length || 0;
+          document.getElementById('ollama-models').textContent = `已加载模型: ${modelCount} 个`;
+          document.getElementById('ollama-vram').textContent = `估算显存: ~${(modelCount * 4).toFixed(1)} GB`;
+        }
+        addActivity(`${service} 服务在线`, 'success');
+      } else {
+        statusDot.className = 'status-dot offline';
+        statusText.textContent = '离线';
+        addActivity(`${service} 服务离线`, 'warning');
+      }
+
+      if (btn) {
+        btn.classList.remove('checking');
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> 健康检查';
+      }
+    }
+
+    async function checkAllServices() {
+      await checkService('agentos');
+      await checkService('ollama');
+      await loadStats();
+    }
+
+    // ============================================
+    // 统计与概要
+    // ============================================
+    async function loadStats() {
+      const data = await apiRequest('agentos', '/stats');
+      const stats = data || getMockData('stats');
+
+      document.getElementById('stat-requests').textContent = stats.agent_os?.total_requests || '-';
+      document.getElementById('stat-memory').textContent = stats.memory?.core_blocks || stats.core?.stats?.core_blocks || '-';
+
+      const activeTasks = (stats.tasks?.pending || 0) + (stats.tasks?.running || 0);
+      document.getElementById('stat-tasks').textContent = activeTasks;
+
+      const uptime = Date.now() - state.startTime;
+      const hours = Math.floor(uptime / 3600000);
+      const mins = Math.floor((uptime % 3600000) / 60000);
+      document.getElementById('stat-uptime').textContent = `${hours}h ${mins}m`;
+    }
+
+    // ============================================
+    // 快捷操作
+    // ============================================
+    async function triggerDream() {
+      const btn = event.target.closest('.action-btn');
+      btn.classList.add('loading');
+      btn.querySelector('.spinner').style.display = 'inline-block';
+
+      const data = await apiRequest('agentos', '/sleeptime/dream', { method: 'POST' });
+      
+      btn.classList.remove('loading');
+      btn.querySelector('.spinner').style.display = 'none';
+
+      if (data) {
+        addActivity('做梦触发成功 - 记忆正在沉淀', 'success');
+        if (data.dream || data.consolidation) {
+          document.getElementById('wikiDreamContent').innerHTML = `
+            <div class="dream-result">
+              <div class="dream-title">🌙 梦境沉淀结果</div>
+              <div class="dream-content">${data.dream || data.consolidation || '处理完成'}</div>
+            </div>
+          `;
+        }
+      } else {
+        addActivity('做梦触发失败 - 服务不可用', 'warning');
+      }
+    }
+
+    async function viewKnowledgeGaps() {
+      const data = await apiRequest('agentos', '/meta/gaps');
+      const gaps = data?.gaps || getMockData('gaps').gaps;
+      
+      const gapsList = document.getElementById('gapsList');
+      if (gaps.length > 0) {
+        gapsList.innerHTML = gaps.map(gap => `
+          <div class="gap-item">
+            <div class="gap-domain">${gap.domain || '通用'}</div>
+            <div class="gap-description">${gap.description || gap}</div>
+          </div>
+        `).join('');
+      } else {
+        gapsList.innerHTML = '<div class="empty-state"><div class="empty-state-title">暂无知识缺口</div></div>';
+      }
+      
+      switchPage('knowledge');
+      loadKnowledgeTab('gaps');
+      addActivity('已加载知识缺口列表', 'system');
+    }
+
+    async function viewCoreMemory() {
+      switchPage('knowledge');
+      loadKnowledgeTab('core');
+      addActivity('查看核心记忆', 'system');
+    }
+
+    // ============================================
+    // 活动日志
+    // ============================================
+    function addActivity(text, type = 'system') {
+      const feeds = [document.getElementById('activityFeed'), document.getElementById('monitorActivityFeed')];
+      const time = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      feeds.forEach(feed => {
+        if (!feed) return;
+        const item = document.createElement('div');
+        item.className = 'activity-item';
+        item.innerHTML = `
+          <span class="activity-time">${time}</span>
+          <div class="activity-content">
+            <span class="activity-text">${escapeHtml(text)}</span>
+            <span class="activity-tag ${type}">${type === 'agent' ? 'Agent' : type === 'warning' ? 'Warning' : type === 'success' ? 'Success' : 'System'}</span>
+          </div>
+        `;
+        feed.insertBefore(item, feed.firstChild);
+        while (feed.children.length > 20) feed.removeChild(feed.lastChild);
+      });
+    }
+
+    // ============================================
+    // 聊天功能
+    // ============================================
+    function handleChatKeydown(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function setChatMode(mode) {
+      state.currentChatMode = mode;
+      document.querySelectorAll('.mode-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.mode === mode);
+      });
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const btnSend = document.getElementById('btnSend');
+      btnSend.disabled = true;
+
+      addMessage('user', message);
+      input.value = '';
+
+      const agentMsg = addMessage('agent', '思考中...');
+
+      const data = await apiRequest('agentos', '/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message, context: state.currentChatMode })
+      });
+
+      if (data) {
+        agentMsg.querySelector('.message-bubble').textContent = data.response || data.message || '收到消息';
+        addActivity(`对话完成 - 策略: ${data.strategy || 'N/A'}`, 'agent');
+      } else {
+        agentMsg.querySelector('.message-bubble').textContent = '抱歉，AgentOS 服务暂时不可用';
+        addActivity('对话失败 - 服务离线', 'warning');
+      }
+
+      btnSend.disabled = false;
+      scrollChatToBottom();
+      saveChatHistory();
+    }
+
+    function addMessage(role, content) {
+      const container = document.getElementById('chatMessages');
+      const emptyState = container.querySelector('.empty-state');
+      if (emptyState) emptyState.remove();
+
+      const time = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+      const messageEl = document.createElement('div');
+      messageEl.className = `message ${role}`;
+      messageEl.innerHTML = `
+        <div class="message-bubble">${escapeHtml(content)}</div>
+        <div class="message-time">${time}</div>
+      `;
+      container.appendChild(messageEl);
+      state.messages.push({ role, content, time });
+      scrollChatToBottom();
+      return messageEl;
+    }
+
+    function scrollChatToBottom() {
+      const container = document.getElementById('chatMessages');
+      setTimeout(() => container.scrollTop = container.scrollHeight, 50);
+    }
+
+    function newChat() {
+      document.getElementById('chatMessages').innerHTML = `
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <div class="empty-state-title">开始新对话</div>
+          <div class="empty-state-text">输入消息与 AgentOS 交流</div>
+        </div>
+      `;
+      state.messages = [];
+    }
+
+    function saveChatHistory() {
+      localStorage.setItem('chat-history', JSON.stringify(state.messages));
+    }
+
+    function loadChatHistory() {
+      const history = localStorage.getItem('chat-history');
+      if (history) {
+        try {
+          const messages = JSON.parse(history);
+          messages.forEach(m => addMessage(m.role, m.content));
+        } catch (e) {}
+      }
+    }
+
+    // ============================================
+    // 任务管理
+    // ============================================
+    async function loadTasks() {
+      const data = await apiRequest('agentos', '/tasks');
+      const tasks = data || getMockData('tasks').tasks || [];
+
+      const container = document.getElementById('tasksList');
+      if (tasks.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="empty-state-title">暂无任务</div>
+            <div class="empty-state-text">创建一个新任务开始</div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = tasks.map(task => `
+        <div class="task-card" onclick="loadTaskDetail('${task.task_id}')">
+          <div class="task-header">
+            <span class="task-id">${task.task_id}</span>
+            <span class="task-status ${task.status}">${task.status}</span>
+          </div>
+          <div class="task-goal">${escapeHtml(task.goal)}</div>
+          ${task.result ? `<div class="task-result">${escapeHtml(task.result)}</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    async function createTask() {
+      const input = document.getElementById('taskGoal');
+      const goal = input.value.trim();
+      if (!goal) return;
+
+      const data = await apiRequest('agentos', '/task', {
+        method: 'POST',
+        body: JSON.stringify({ goal })
+      });
+
+      if (data) {
+        addActivity(`创建任务: ${goal.substring(0, 30)}...`, 'system');
+        input.value = '';
+        loadTasks();
+        pollTaskStatus(data.task_id);
+      } else {
+        addActivity('创建任务失败', 'warning');
+      }
+    }
+
+    async function loadTaskDetail(taskId) {
+      const data = await apiRequest('agentos', `/task/${taskId}`);
+      if (data) {
+        alert(`任务详情:\n\nID: ${data.task_id}\n状态: ${data.status}\n目标: ${data.goal}\n\n结果: ${data.result || '处理中...'}`);
+      }
+    }
+
+    function pollTaskStatus(taskId) {
+      const interval = setInterval(async () => {
+        const data = await apiRequest('agentos', `/task/${taskId}`);
+        if (data && (data.status === 'completed' || data.status === 'failed')) {
+          clearInterval(interval);
+          loadTasks();
+          addActivity(`任务 ${taskId} 已${data.status === 'completed' ? '完成' : '失败'}`, data.status === 'completed' ? 'success' : 'warning');
+        }
+      }, 3000);
+    }
+
+    // ============================================
+    // 知识库
+    // ============================================
+    async function loadKnowledgeTab(tab) {
+      document.querySelectorAll('.wiki-nav-item').forEach(item => item.classList.remove('active'));
+      document.querySelector(`[onclick="loadKnowledgeTab('${tab}')"]`).classList.add('active');
+
+      document.getElementById('coreMemoryList').style.display = tab === 'core' ? 'block' : 'none';
+      document.getElementById('recallSection').style.display = tab === 'recall' ? 'block' : 'none';
+      document.getElementById('rememberSection').style.display = tab === 'remember' ? 'block' : 'none';
+      document.getElementById('wikiSection').style.display = tab === 'wiki' ? 'block' : 'none';
+      document.getElementById('gapsSection').style.display = tab === 'gaps' ? 'block' : 'none';
+
+      if (tab === 'core') {
+        const data = await apiRequest('agentos', '/memory/core');
+        const core = data || getMockData('core');
+        
+        if (core.prompt) {
+          document.getElementById('coreMemoryList').innerHTML = `
+            <div class="memory-block">
+              <div class="memory-block-header">
+                <span class="memory-block-name">核心记忆</span>
+                <button class="memory-edit-btn" onclick="editCoreMemory()">编辑</button>
+              </div>
+              <div class="memory-block-content">${escapeHtml(core.prompt)}</div>
+              <div class="context-bar-container">
+                <div class="context-bar"><div class="context-fill" style="width: ${core.stats?.recall_count || 50}%"></div></div>
+                <div class="context-label"><span>召回次数</span><span>${core.stats?.recall_count || 0}</span></div>
+              </div>
+            </div>
+          `;
+        } else {
+          document.getElementById('coreMemoryList').innerHTML = '<div class="empty-state"><div class="empty-state-title">暂无核心记忆</div></div>';
+        }
+      }
+
+      if (tab === 'gaps') {
+        const data = await apiRequest('agentos', '/meta/gaps');
+        const gaps = data?.gaps || [];
+        const gapsList = document.getElementById('gapsList');
+        
+        if (gaps.length > 0) {
+          gapsList.innerHTML = gaps.map(gap => `
+            <div class="gap-item">
+              <div class="gap-domain">${gap.domain || '通用'}</div>
+              <div class="gap-description">${gap.description || JSON.stringify(gap)}</div>
+            </div>
+          `).join('');
+        } else {
+          gapsList.innerHTML = '<div class="empty-state"><div class="empty-state-title">暂无知识缺口</div></div>';
+        }
+      }
+
+      if (tab === 'wiki') {
+        document.getElementById('wikiDreamContent').innerHTML = `
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            <div class="empty-state-title">触发做梦以生成 WIKI</div>
+            <div class="empty-state-text">在 Hub 页面点击"触发做梦"</div>
+          </div>
+        `;
+      }
+    }
+
+    async function performRecall() {
+      const query = document.getElementById('recallQuery').value.trim();
+      if (!query) return;
+
+      const data = await apiRequest('agentos', '/memory/recall', {
+        method: 'POST',
+        body: JSON.stringify({ query, top_k: 5 })
+      });
+
+      const results = data?.results || [];
+      document.getElementById('recallResults').innerHTML = results.length > 0
+        ? results.map(r => `
+            <div class="recall-item">
+              <div class="recall-score">相关度: ${((r.score || 0.5) * 100).toFixed(1)}%</div>
+              <div class="recall-content">${escapeHtml(r.content || JSON.stringify(r))}</div>
+            </div>
+          `).join('')
+        : '<div class="empty-state"><div class="empty-state-title">未找到相关记忆</div></div>';
+
+      addActivity(`回忆搜索: ${query.substring(0, 20)}...`, 'system');
+    }
+
+    async function performRemember() {
+      const content = document.getElementById('rememberContent').value.trim();
+      if (!content) return;
+
+      const data = await apiRequest('agentos', '/memory/remember', {
+        method: 'POST',
+        body: JSON.stringify({ content })
+      });
+
+      if (data) {
+        addActivity('记忆已保存', 'success');
+        document.getElementById('rememberContent').value = '';
+        loadKnowledgeTab('core');
+      }
+    }
+
+    async function editCoreMemory() {
+      const current = document.querySelector('.memory-block-content')?.textContent || '';
+      const newContent = prompt('编辑核心记忆:', current);
+      if (newContent !== null && newContent !== current) {
+        await apiRequest('agentos', '/memory/core/update', {
+          method: 'POST',
+          body: JSON.stringify({ block: 'core', content: newContent })
+        });
+        loadKnowledgeTab('core');
+        addActivity('核心记忆已更新', 'success');
+      }
+    }
+
+    // ============================================
+    // 监控面板
+    // ============================================
+    let monitorInterval = null;
+
+    function startMonitorPolling() {
+      if (monitorInterval) clearInterval(monitorInterval);
+      monitorInterval = setInterval(loadMonitorData, 5000);
+    }
+
+    async function loadMonitorData() {
+      const stats = await apiRequest('agentos', '/stats') || getMockData('stats');
+      const models = await apiRequest('ollama', '/api/tags') || getMockData('models');
+
+      // 更新资源使用（模拟）
+      const vram = 30 + Math.random() * 30;
+      const ram = 40 + Math.random() * 20;
+      const disk = 50 + Math.random() * 10;
+
+      document.getElementById('vram-bar').style.width = `${vram}%`;
+      document.getElementById('ram-bar').style.width = `${ram}%`;
+      document.getElementById('disk-bar').style.width = `${disk}%`;
+      document.getElementById('vram-value').textContent = `${(vram * 0.16).toFixed(1)} GB / 16 GB`;
+      document.getElementById('ram-value').textContent = `${(ram * 0.16).toFixed(1)} GB / 16 GB`;
+      document.getElementById('disk-value').textContent = `${Math.floor(disk * 5.12)} GB / 512 GB`;
+
+      // 更新请求统计图表
+      const chatReq = stats.agent_os?.chat_requests || 10;
+      const taskReq = stats.agent_os?.task_requests || 5;
+      const toolReq = stats.agent_os?.tool_requests || 3;
+      const otherReq = (stats.agent_os?.total_requests || 20) - chatReq - taskReq - toolReq;
+      const maxReq = Math.max(chatReq, taskReq, toolReq, otherReq, 1);
+
+      document.getElementById('requestsChart').innerHTML = `
+        <div class="chart-bar" style="height: ${(chatReq / maxReq) * 100}%"><div class="chart-label">Chat (${chatReq})</div></div>
+        <div class="chart-bar" style="height: ${(taskReq / maxReq) * 100}%"><div class="chart-label">Task (${taskReq})</div></div>
+        <div class="chart-bar" style="height: ${(toolReq / maxReq) * 100}%"><div class="chart-label">Tool (${toolReq})</div></div>
+        <div class="chart-bar" style="height: ${(otherReq / maxReq) * 100}%"><div class="chart-label">Other (${otherReq})</div></div>
+      `;
+
+      // 更新任务统计图表
+      const pending = stats.tasks?.pending || 0;
+      const running = stats.tasks?.running || 0;
+      const completed = stats.tasks?.completed || 10;
+      const failed = stats.tasks?.failed || 1;
+      const maxTasks = Math.max(pending, running, completed, failed, 1);
+
+      document.getElementById('tasksChart').innerHTML = `
+        <div class="chart-bar" style="height: ${(pending / maxTasks) * 100}%; background: var(--accent-amber)"><div class="chart-label">Pending (${pending})</div></div>
+        <div class="chart-bar" style="height: ${(running / maxTasks) * 100}%; background: #3B82F6"><div class="chart-label">Running (${running})</div></div>
+        <div class="chart-bar" style="height: ${(completed / maxTasks) * 100}%; background: var(--accent-green)"><div class="chart-label">Completed (${completed})</div></div>
+        <div class="chart-bar" style="height: ${(failed / maxTasks) * 100}%; background: var(--accent-red)"><div class="chart-label">Failed (${failed})</div></div>
+      `;
+
+      // 更新模型列表
+      const modelList = document.getElementById('modelList');
+      if (models.models && models.models.length > 0) {
+        modelList.innerHTML = models.models.map(m => `
+          <div class="model-item">
+            <span class="model-name">${m.name}</span>
+            <span class="model-size">${(m.size / 1024 / 1024 / 1024).toFixed(1)} GB</span>
+          </div>
+        `).join('');
+      } else {
+        modelList.innerHTML = '<div class="model-item"><span class="model-name">未加载模型</span></div>';
+      }
+    }
+
+    // ============================================
+    // 工具箱
+    // ============================================
+    async function loadTools() {
+      const data = await apiRequest('agentos', '/tools');
+      const toolsData = data || getMockData('tools');
+
+      if (toolsData.tools) {
+        state.tools = toolsData.tools;
+        const icons = { search: '🔍', calculator: '🧮', web: '🌐', file: '📁', code: '💻', utility: '🔧' };
+        
+        document.getElementById('toolsGrid').innerHTML = toolsData.tools.map(tool => `
+          <div class="tool-card" onclick="selectTool('${tool.name}')">
+            <div class="tool-icon">${icons[tool.category] || '🔧'}</div>
+            <div class="tool-name">${tool.name}</div>
+            <div class="tool-desc">${tool.description}</div>
+            <div class="tool-category">${tool.category}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function selectTool(toolName) {
+      state.selectedTool = toolName;
+      document.getElementById('selectedTool').textContent = toolName;
+      document.getElementById('executeArea').style.display = 'block';
+      document.getElementById('toolParams').value = '{}';
+      document.getElementById('executeResult').style.display = 'none';
+      addActivity(`选择工具: ${toolName}`, 'system');
+    }
+
+    async function executeTool() {
+      if (!state.selectedTool) return;
+
+      let params = {};
+      try {
+        params = JSON.parse(document.getElementById('toolParams').value || '{}');
+      } catch (e) {
+        params = {};
+      }
+
+      const data = await apiRequest('agentos', `/tools/${state.selectedTool}/execute`, {
+        method: 'POST',
+        body: JSON.stringify({ parameters: params })
+      });
+
+      const resultEl = document.getElementById('executeResult');
+      resultEl.style.display = 'block';
+      resultEl.textContent = data ? JSON.stringify(data, null, 2) : '执行失败 - 服务不可用';
+
+      if (data) {
+        addActivity(`工具 ${state.selectedTool} 执行成功`, 'success');
+      } else {
+        addActivity(`工具 ${state.selectedTool} 执行失败`, 'warning');
+      }
+    }
+
+    // ============================================
+    // 设置
+    // ============================================
+    function setPreset(mode) {
+      state.currentMode = mode;
+      document.querySelectorAll('.settings-section .preset-btn').forEach(btn => {
+        const label = btn.textContent.trim();
+        btn.classList.toggle('active', 
+          (mode === 'research' && label === '研究') ||
+          (mode === 'engineering' && label === '工程') ||
+          (mode === 'casual' && label === '休闲')
+        );
+      });
+    }
+
+    function applyPreset(preset) {
+      const presets = {
+        research: { proModel: 'deepseek-v4-pro', flashModel: 'deepseek-v4-flash', mode: 'research' },
+        engineering: { proModel: 'deepseek-v4-pro', flashModel: 'deepseek-v4-flash', mode: 'engineering' },
+        casual: { proModel: 'deepseek-v4-flash', flashModel: 'deepseek-v4-flash', mode: 'casual' }
+      };
+
+      const p = presets[preset];
+      if (p) {
+        document.getElementById('proModel').value = p.proModel;
+        document.getElementById('flashModel').value = p.flashModel;
+        setPreset(p.mode);
+        addActivity(`应用${preset === 'research' ? '研究' : preset === 'engineering' ? '工程' : '休闲'}预设配置`, 'system');
+      }
+    }
+
+    async function testConnection(service) {
+      const btn = document.getElementById(`test${service.charAt(0).toUpperCase() + service.slice(1)}`);
+      btn.className = 'test-btn';
+      btn.innerHTML = '<span class="spinner"></span> 测试中...';
+
+      const endpoint = service === 'agentos' ? '/health' : '/api/tags';
+      const data = await apiRequest(service, endpoint);
+
+      if (data) {
+        btn.className = 'test-btn success';
+        btn.innerHTML = '✓ 连接成功';
+        addActivity(`${service} 连接测试成功`, 'success');
+      } else {
+        btn.className = 'test-btn error';
+        btn.innerHTML = '✗ 连接失败';
+        addActivity(`${service} 连接测试失败`, 'warning');
+      }
+
+      setTimeout(() => {
+        btn.className = 'test-btn';
+        btn.innerHTML = `测试 ${service === 'agentos' ? 'AgentOS' : 'Ollama'}`;
+      }, 3000);
+    }
+
+    async function reloadConfig() {
+      const data = await apiRequest('agentos', '/config/reload', { method: 'POST' });
+      if (data) {
+        addActivity('配置已重新加载', 'success');
+      } else {
+        addActivity('配置热更新失败', 'warning');
+      }
+    }
+
+    async function evaluateConfidence() {
+      const query = document.getElementById('confidenceQuery').value.trim();
+      if (!query) return;
+
+      const data = await apiRequest('agentos', '/meta/confidence', {
+        method: 'POST',
+        body: JSON.stringify({ query })
+      });
+
+      const resultEl = document.getElementById('confidenceResult');
+      resultEl.style.display = 'block';
+      
+      if (data) {
+        const score = typeof data === 'object' ? (data.score || data.confidence || 0.5) : data;
+        document.getElementById('confidenceScore').textContent = `${(score * 100).toFixed(0)}%`;
+        addActivity(`置信度评估: ${query.substring(0, 20)}... = ${(score * 100).toFixed(0)}%`, 'system');
+      } else {
+        document.getElementById('confidenceScore').textContent = 'N/A';
+      }
+    }
+
+    async function performTransfer() {
+      const source = document.getElementById('sourceDomain').value.trim();
+      const target = document.getElementById('targetDomain').value.trim();
+      if (!source || !target) return;
+
+      const data = await apiRequest('agentos', '/transfer/analogy', {
+        method: 'POST',
+        body: JSON.stringify({ source_domain: source, target_domain: target })
+      });
+
+      const resultEl = document.getElementById('transferResult');
+      resultEl.style.display = 'block';
+      resultEl.textContent = data ? JSON.stringify(data, null, 2) : '迁移失败 - 服务不可用';
+
+      if (data) {
+        addActivity(`跨领域迁移: ${source} → ${target}`, 'system');
+      }
+    }
+
+    function saveSettings() {
+      const settings = {
+        apiEndpoint: document.getElementById('apiEndpoint').value,
+        ollamaEndpoint: document.getElementById('ollamaEndpoint').value,
+        proModel: document.getElementById('proModel').value,
+        flashModel: document.getElementById('flashModel').value,
+        connectionMode: state.connectionMode
+      };
+
+      localStorage.setItem('xuanshu-settings', JSON.stringify(settings));
+      addActivity('设置已保存', 'system');
+
+      const btn = document.querySelector('.btn-save');
+      const originalText = btn.textContent;
+      btn.textContent = '已保存 ✓';
+      btn.style.background = 'var(--accent-green)';
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+      }, 2000);
+    }
+
+    function loadSettings() {
+      const saved = localStorage.getItem('xuanshu-settings');
+      if (saved) {
+        try {
+          const settings = JSON.parse(saved);
+          if (settings.apiEndpoint) document.getElementById('apiEndpoint').value = settings.apiEndpoint;
+          if (settings.ollamaEndpoint) document.getElementById('ollamaEndpoint').value = settings.ollamaEndpoint;
+          if (settings.proModel) document.getElementById('proModel').value = settings.proModel;
+          if (settings.flashModel) document.getElementById('flashModel').value = settings.flashModel;
+          if (settings.apiEndpoint) API.agentos = settings.apiEndpoint;
+          if (settings.ollamaEndpoint) API.ollama = settings.ollamaEndpoint;
+          // 恢复连接模式
+          if (settings.connectionMode) {
+            state.connectionMode = settings.connectionMode;
+          }
+        } catch (e) {}
+      }
+    }
+
+    // 云端演示测试函数
+    function testCloudDemo() {
+      const mode = getConnectionMode();
+      const mockData = getMockData('health');
+      addActivity(`云端演示状态: ${mockData.status} | 版本 ${mockData.version} | 模式: ${mode}`, 'system');
+    }
+
+    // ============================================
+    // 工具函数
+    // ============================================
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ============================================
+    // 初始化
+    // ============================================
+    document.addEventListener('DOMContentLoaded', async () => {
+      loadSettings();
+      
+      // 初始化模式检测
+      await initializeConnectionMode();
+
+      // 初始化时检查所有服务
+      setTimeout(() => {
+        checkAllServices();
+      }, 500);
+
+      // 定期更新统计
+      setInterval(loadStats, 10000);
+
+      // 添加初始化活动
+      setTimeout(() => {
+        addActivity('控制面板已启动', 'system');
+      }, 1000);
+    });
+
+    // 初始化连接模式
+    async function initializeConnectionMode() {
+      // 先设置UI为默认状态（云端）
+      updateUIForMode(state.connectionMode);
+
+      // 检查是否应该尝试本地连接
+      if (state.connectionMode === 'local' || !localStorage.getItem('xuanshu-connection-mode')) {
+        // 尝试检测本地AgentOS
+        const isOnline = await checkLocalAgentOS();
+        if (isOnline) {
+          setConnectionMode('local');
+          addActivity('检测到本地 AgentOS，已自动连接', 'success');
+        } else {
+          setConnectionMode('cloud');
+          addActivity('本地 AgentOS 未检测到，使用云端预览模式', 'system');
+        }
+      } else {
+        // 已保存的模式设置
+        updateUIForMode(state.connectionMode);
+      }
+    }
+  </script>
+</body>
+</html>

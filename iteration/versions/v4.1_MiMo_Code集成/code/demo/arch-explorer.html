@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xuanshu-agents 架构浏览器 | Circuit Board Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==================== 基础重置 ==================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-base: #1C1C1E;
+      --surface-1: #242424;
+      --surface-2: #2C2C2E;
+      --surface-3: #3A3A3C;
+      --accent: #7B61FF;
+      --accent-dim: rgba(123, 97, 255, 0.15);
+      --red-orange: #FF6363;
+      --green: #34D399;
+      --amber: #FBBF24;
+      --blue: #60A5FA;
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --text-muted: rgba(255, 255, 255, 0.4);
+      --glass-bg: rgba(36, 36, 36, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ==================== 背景效果层 ==================== */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 网格线背景 */
+    .grid-bg {
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* 渐变光晕 */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+    }
+    .orb-purple { width: 500px; height: 500px; background: var(--accent); top: -150px; left: 10%; }
+    .orb-blue { width: 400px; height: 400px; background: var(--blue); top: 30%; right: -100px; }
+    .orb-red { width: 350px; height: 350px; background: var(--red-orange); bottom: -100px; left: 30%; }
+
+    /* 扫描线效果 */
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(123, 97, 255, 0.3), transparent);
+      animation: scanMove 8s linear infinite;
+    }
+    @keyframes scanMove {
+      0% { top: -2px; }
+      100% { top: 100%; }
+    }
+
+    /* ==================== 主容器布局 ==================== */
+    .main-container {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ==================== 顶部控制栏 ==================== */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+
+    /* 模式切换按钮 */
+    .mode-switcher {
+      display: flex;
+      gap: 4px;
+      background: var(--surface-1);
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .mode-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      color: var(--text-primary);
+      background: var(--surface-2);
+    }
+
+    .mode-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* ==================== 架构画布区域 ==================== */
+    .canvas-wrapper {
+      flex: 1;
+      position: relative;
+      padding: 40px;
+      overflow: hidden;
+    }
+
+    /* SVG走线层 */
+    .svg-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .circuit-path {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 1;
+      stroke-dasharray: 8 4;
+      transition: stroke 0.3s ease, opacity 0.3s ease;
+    }
+
+    .circuit-path.highlighted {
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      filter: drop-shadow(0 0 6px var(--accent));
+    }
+
+    .circuit-path.dimmed {
+      opacity: 0.15;
+    }
+
+    /* 路径流动动画 */
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -24; }
+    }
+
+    .circuit-path.animated {
+      animation: dashFlow 2s linear infinite;
+    }
+
+    /* 节点层 */
+    .nodes-layer {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ==================== 架构节点卡片 ==================== */
+    .arch-node {
+      position: absolute;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 100px;
+    }
+
+    .arch-node::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      border-radius: 12px 12px 0 0;
+    }
+
+    .arch-node:hover {
+      border-color: var(--accent);
+      transform: scale(1.02);
+      box-shadow: 0 0 20px var(--accent-dim), var(--shadow-dark);
+    }
+
+    .arch-node.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px var(--accent-dim), var(--shadow-dark);
+    }
+
+    .node-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .node-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .node-icon.input { background: rgba(96, 165, 250, 0.2); color: var(--blue); }
+    .node-icon.core { background: rgba(123, 97, 255, 0.2); color: var(--accent); }
+    .node-icon.memory { background: rgba(52, 211, 153, 0.2); color: var(--green); }
+    .node-icon.tools { background: rgba(251, 191, 36, 0.2); color: var(--amber); }
+    .node-icon.output { background: rgba(255, 99, 99, 0.2); color: var(--red-orange); }
+
+    .node-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .node-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .node-status {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    .status-dot.offline { background: var(--red-orange); box-shadow: 0 0 6px var(--red-orange); }
+    .status-dot.idle { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
+    .status-text {
+      font-size: 10px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* 大节点样式（BaseAgent） */
+    .arch-node.large {
+      padding: 16px 20px;
+      min-width: 140px;
+    }
+
+    .arch-node.large .node-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+    }
+
+    .arch-node.large .node-title {
+      font-size: 15px;
+    }
+
+    /* 虚线节点（WIKI等） */
+    .arch-node.dashed {
+      border-style: dashed;
+      opacity: 0.7;
+    }
+
+    /* 图层标签 */
+    .layer-label {
+      position: absolute;
+      left: 24px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      background: var(--surface-1);
+      border-radius: 4px;
+    }
+
+    /* ==================== 粒子画布 ==================== */
+    .particle-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* ==================== 右侧详情面板 ==================== */
+    .detail-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 360px;
+      height: 100vh;
+      background: var(--glass-bg);
+      backdrop-filter: blur(30px) saturate(180%);
+      border-left: 1px solid var(--glass-border);
+      z-index: 200;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+    }
+
+    .detail-panel.open {
+      transform: translateX(0);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      background: inherit;
+      z-index: 1;
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .panel-close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--surface-2);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .panel-close:hover {
+      background: var(--surface-3);
+      color: var(--text-primary);
+    }
+
+    .panel-content {
+      padding: 20px;
+    }
+
+    .detail-section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .detail-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .param-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .param-item {
+      background: var(--surface-1);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .param-key {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .param-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .log-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .log-item {
+      background: var(--surface-1);
+      border-radius: 8px;
+      padding: 10px 12px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .log-time {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .log-action {
+      font-size: 12px;
+      color: var(--text-primary);
+      font-family: 'SF Mono', 'Consolas', monospace;
+    }
+
+    .log-result {
+      font-size: 11px;
+      color: var(--green);
+      margin-top: 4px;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-1);
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+
+    .status-indicator .status-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .status-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* ==================== 底部控制栏 ==================== */
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-top: 1px solid var(--glass-border);
+      position: sticky;
+      bottom: 0;
+      z-index: 100;
+    }
+
+    .playback-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: var(--surface-2);
+      border-radius: 10px;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: var(--surface-3);
+    }
+
+    .control-btn.primary {
+      background: var(--accent);
+      color: white;
+      width: 40px;
+      height: 40px;
+    }
+
+    .control-btn.primary:hover {
+      filter: brightness(1.1);
+    }
+
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .speed-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .speed-slider {
+      width: 80px;
+      height: 4px;
+      -webkit-appearance: none;
+      background: var(--surface-3);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .speed-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .speed-value {
+      font-size: 12px;
+      color: var(--text-secondary);
+      min-width: 30px;
+    }
+
+    /* 图层切换 */
+    .layer-toggles {
+      display: flex;
+      gap: 8px;
+    }
+
+    .layer-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--surface-1);
+      border: 1px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .layer-toggle:hover {
+      border-color: var(--glass-border);
+    }
+
+    .layer-toggle.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+    }
+
+    .layer-toggle .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .layer-toggle .dot.blue { background: var(--blue); }
+    .layer-toggle .dot.purple { background: var(--accent); }
+    .layer-toggle .dot.green { background: var(--green); }
+    .layer-toggle .dot.amber { background: var(--amber); }
+
+    .layer-toggle .name {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* 全屏按钮 */
+    .fullscreen-btn {
+      padding: 8px 16px;
+      border: none;
+      background: var(--surface-2);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .fullscreen-btn:hover {
+      background: var(--surface-3);
+      color: var(--text-primary);
+    }
+
+    /* ==================== 粒子提示 ==================== */
+    .particle-tooltip {
+      position: absolute;
+      background: var(--surface-3);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--text-primary);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 1000;
+      white-space: nowrap;
+    }
+
+    .particle-tooltip.visible {
+      opacity: 1;
+    }
+
+    /* ==================== 响应式 ==================== */
+    @media (max-width: 1200px) {
+      .arch-node {
+        min-width: 80px;
+        padding: 10px 12px;
+      }
+
+      .node-title {
+        font-size: 12px;
+      }
+
+      .layer-toggles {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .detail-panel {
+        width: 100%;
+      }
+
+      .bottom-bar {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+    }
+
+    /* ==================== 动画关键帧 ==================== */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .status-dot.online {
+      animation: pulse 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景效果层 -->
+  <div class="bg-layer grid-bg">
+    <div class="orb orb-purple"></div>
+    <div class="orb orb-blue"></div>
+    <div class="orb orb-red"></div>
+    <div class="scanline"></div>
+  </div>
+
+  <!-- 主容器 -->
+  <div class="main-container">
+    <!-- 顶部控制栏 -->
+    <header class="top-bar">
+      <div class="logo-section">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-text">xuanshu-agents</span>
+        <span class="logo-subtitle">架构浏览器</span>
+      </div>
+
+      <div class="mode-switcher">
+        <button class="mode-btn" data-mode="static">静态模式</button>
+        <button class="mode-btn active" data-mode="flow">流动模式</button>
+        <button class="mode-btn" data-mode="focus">聚焦模式</button>
+      </div>
+    </header>
+
+    <!-- 架构画布 -->
+    <div class="canvas-wrapper">
+      <!-- SVG走线层 -->
+      <svg class="svg-layer" id="circuitSvg">
+        <defs>
+          <!-- 发光滤镜 -->
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <!-- 动态生成的路径 -->
+      </svg>
+
+      <!-- 节点层 -->
+      <div class="nodes-layer" id="nodesLayer">
+        <!-- Layer 1: 输入层 -->
+        <div class="layer-label" style="top: 60px;">Input 输入</div>
+        
+        <div class="arch-node" id="node-user" data-layer="input" style="left: calc(50% - 160px); top: 100px;">
+          <div class="node-header">
+            <div class="node-icon input">👤</div>
+            <div>
+              <div class="node-title">User</div>
+              <div class="node-subtitle">用户输入</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-chat" data-layer="input" style="left: calc(50% - 300px); top: 100px;">
+          <div class="node-header">
+            <div class="node-icon input">💬</div>
+            <div>
+              <div class="node-title">Chat</div>
+              <div class="node-subtitle">对话接口</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-codeact" data-layer="input" style="left: calc(50% + 160px); top: 100px;">
+          <div class="node-header">
+            <div class="node-icon input">⌨️</div>
+            <div>
+              <div class="node-title">CodeAct</div>
+              <div class="node-subtitle">代码行动</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <!-- Layer 2: 核心层 -->
+        <div class="layer-label" style="top: 260px;">Core 核心</div>
+
+        <div class="arch-node large" id="node-baseagent" data-layer="core" style="left: calc(50% - 70px); top: 300px;">
+          <div class="node-header">
+            <div class="node-icon core">🧠</div>
+            <div>
+              <div class="node-title">BaseAgent</div>
+              <div class="node-subtitle">基础Agent核心</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">运行中</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-modelrouter" data-layer="core" style="left: calc(50% - 260px); top: 300px;">
+          <div class="node-header">
+            <div class="node-icon core">🔀</div>
+            <div>
+              <div class="node-title">ModelRouter</div>
+              <div class="node-subtitle">模型路由</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-guardrails" data-layer="core" style="left: calc(50% + 160px); top: 300px;">
+          <div class="node-header">
+            <div class="node-icon core">🛡️</div>
+            <div>
+              <div class="node-title">Guardrails</div>
+              <div class="node-subtitle">安全护栏</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-qualitydials" data-layer="core" style="left: calc(50% - 40px); top: 200px;">
+          <div class="node-header">
+            <div class="node-icon core">⚙️</div>
+            <div>
+              <div class="node-title">QualityDials</div>
+              <div class="node-subtitle">质量旋钮</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <!-- Layer 3: 记忆层 -->
+        <div class="layer-label" style="top: 460px;">Memory 记忆</div>
+
+        <div class="arch-node" id="node-corememory" data-layer="memory" style="left: calc(25% - 100px); top: 500px;">
+          <div class="node-header">
+            <div class="node-icon memory">💾</div>
+            <div>
+              <div class="node-title">CoreMemory</div>
+              <div class="node-subtitle">核心记忆</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-recallmemory" data-layer="memory" style="left: calc(50% - 100px); top: 500px;">
+          <div class="node-header">
+            <div class="node-icon memory">🔍</div>
+            <div>
+              <div class="node-title">RecallMemory</div>
+              <div class="node-subtitle">回忆检索</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-archivalmemory" data-layer="memory" style="left: calc(75% - 100px); top: 500px;">
+          <div class="node-header">
+            <div class="node-icon memory">📦</div>
+            <div>
+              <div class="node-title">ArchivalMemory</div>
+              <div class="node-subtitle">归档存储</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot idle"></div>
+            <span class="status-text">空闲</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-sleeptime" data-layer="memory" style="left: calc(50% - 100px); top: 620px;">
+          <div class="node-header">
+            <div class="node-icon memory">🌙</div>
+            <div>
+              <div class="node-title">Sleeptime</div>
+              <div class="node-subtitle">做梦引擎</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot idle"></div>
+            <span class="status-text">空闲</span>
+          </div>
+        </div>
+
+        <!-- Layer 4: 工具层 -->
+        <div class="layer-label" style="top: 760px;">Tools 工具</div>
+
+        <div class="arch-node" id="node-codeexec" data-layer="tools" style="left: calc(20% - 100px); top: 800px;">
+          <div class="node-header">
+            <div class="node-icon tools">⚡</div>
+            <div>
+              <div class="node-title">CodeExec</div>
+              <div class="node-subtitle">代码执行</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">就绪</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-websearch" data-layer="tools" style="left: calc(40% - 100px); top: 800px;">
+          <div class="node-header">
+            <div class="node-icon tools">🌐</div>
+            <div>
+              <div class="node-title">WebSearch</div>
+              <div class="node-subtitle">网络搜索</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">就绪</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-scheduler" data-layer="tools" style="left: calc(60% - 100px); top: 800px;">
+          <div class="node-header">
+            <div class="node-icon tools">📋</div>
+            <div>
+              <div class="node-title">Scheduler</div>
+              <div class="node-subtitle">任务调度</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">就绪</span>
+          </div>
+        </div>
+
+        <div class="arch-node" id="node-knowledge" data-layer="tools" style="left: calc(80% - 100px); top: 800px;">
+          <div class="node-header">
+            <div class="node-icon tools">📚</div>
+            <div>
+              <div class="node-title">Knowledge</div>
+              <div class="node-subtitle">知识库</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">在线</span>
+          </div>
+        </div>
+
+        <!-- 额外节点 -->
+        <div class="arch-node dashed" id="node-wiki" data-layer="extra" style="left: calc(50% + 60px); top: 680px;">
+          <div class="node-header">
+            <div class="node-icon output">📄</div>
+            <div>
+              <div class="node-title">WIKI</div>
+              <div class="node-subtitle">文档渲染</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot idle"></div>
+            <span class="status-text">待机</span>
+          </div>
+        </div>
+
+        <div class="arch-node large" id="node-agentos" data-layer="extra" style="left: calc(50% - 70px); top: 920px;">
+          <div class="node-header">
+            <div class="node-icon output">🏠</div>
+            <div>
+              <div class="node-title">AgentOS</div>
+              <div class="node-subtitle">服务接口层</div>
+            </div>
+          </div>
+          <div class="node-status">
+            <div class="status-dot online"></div>
+            <span class="status-text">运行中</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 粒子画布 -->
+      <canvas class="particle-canvas" id="particleCanvas"></canvas>
+    </div>
+
+    <!-- 底部控制栏 -->
+    <footer class="bottom-bar">
+      <div class="playback-controls">
+        <button class="control-btn primary" id="playPauseBtn">▶</button>
+        <div class="speed-control">
+          <span class="speed-label">速度</span>
+          <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="4" step="0.5" value="1">
+          <span class="speed-value" id="speedValue">1x</span>
+        </div>
+      </div>
+
+      <div class="layer-toggles">
+        <div class="layer-toggle active" data-layer="input">
+          <div class="dot blue"></div>
+          <span class="name">输入</span>
+        </div>
+        <div class="layer-toggle active" data-layer="core">
+          <div class="dot purple"></div>
+          <span class="name">核心</span>
+        </div>
+        <div class="layer-toggle active" data-layer="memory">
+          <div class="dot green"></div>
+          <span class="name">记忆</span>
+        </div>
+        <div class="layer-toggle active" data-layer="tools">
+          <div class="dot amber"></div>
+          <span class="name">工具</span>
+        </div>
+      </div>
+
+      <button class="fullscreen-btn" id="fullscreenBtn">
+        <span>⛶</span>
+        <span>全屏</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- 右侧详情面板 -->
+  <aside class="detail-panel" id="detailPanel">
+    <div class="panel-header">
+      <h3 class="panel-title" id="panelTitle">节点详情</h3>
+      <button class="panel-close" id="panelClose">✕</button>
+    </div>
+    <div class="panel-content" id="panelContent">
+      <!-- 动态内容 -->
+    </div>
+  </aside>
+
+  <!-- 粒子提示 -->
+  <div class="particle-tooltip" id="particleTooltip"></div>
+
+  <script>
+    // ==================== 节点详细数据 ====================
+    const nodeDetails = {
+      'node-user': {
+        name: 'User',
+        description: '用户输入源，是整个系统的触发点和最终服务对象。支持多模态输入（文本、语音、图像）。',
+        params: {
+          '连接方式': 'WebSocket',
+          '输入协议': 'JSON-RPC 2.0',
+          '超时时间': '30s'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:35:02', action: 'send_message()', result: '✓ 消息已发送' },
+          { time: '19:34:55', action: 'authenticate()', result: '✓ 认证成功' },
+          { time: '19:34:50', action: 'connect()', result: '✓ WebSocket已连接' }
+        ]
+      },
+      'node-chat': {
+        name: 'Chat',
+        description: '对话接口模块，负责用户消息的接收、解析和响应渲染。支持流式输出和富媒体消息。',
+        params: {
+          '协议': 'WebSocket',
+          '流式': 'true',
+          '最大长度': '4096'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:35:01', action: 'parse_message()', result: '✓ JSON解析成功' },
+          { time: '19:35:00', action: 'stream_response()', result: '→ BaseAgent' },
+          { time: '19:34:58', action: 'render_markdown()', result: '✓ 渲染完成' }
+        ]
+      },
+      'node-codeact': {
+        name: 'CodeAct',
+        description: '代码行动模块，允许Agent生成和执行代码来完成任务。支持Python、JavaScript等语言。',
+        params: {
+          '沙箱': 'Docker',
+          '超时': '60s',
+          '内存限制': '512MB'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:34:45', action: 'execute(code)', result: '✓ 执行完成' },
+          { time: '19:34:40', action: 'sandbox.create()', result: '✓ 容器已创建' },
+          { time: '19:34:38', action: 'validate_syntax()', result: '✓ 语法正确' }
+        ]
+      },
+      'node-baseagent': {
+        name: 'BaseAgent',
+        description: 'Agent核心模块，协调所有子模块完成用户任务。支持多种运行模式（chat/react/review）和灵活的配置旋钮。',
+        params: {
+          'mode': 'research',
+          'model': 'deepseek-v4-pro',
+          'temperature': '1.0',
+          'top_p': '1.0'
+        },
+        status: 'online',
+        statusText: '运行中',
+        logs: [
+          { time: '19:35:02', action: 'set_mode(research)', result: '✓ 7参数联动' },
+          { time: '19:34:58', action: 'chat("分析SSC机理")', result: '→ ModelRouter' },
+          { time: '19:34:55', action: 'guardrails.check()', result: '✓ passed' },
+          { time: '19:34:50', action: 'think()', result: '✓ 推理完成' }
+        ]
+      },
+      'node-modelrouter': {
+        name: 'ModelRouter',
+        description: '智能模型路由，根据任务类型自动选择最合适的模型。pro用于深度推理，flash用于快速响应。',
+        params: {
+          'pro模型': 'deepseek-v4-pro',
+          'flash模型': 'deepseek-v4-flash',
+          '路由策略': 'LLM分类'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:34:58', action: 'classify(task)', result: '→ research' },
+          { time: '19:34:57', action: 'route(pro)', result: '✓ 路由完成' },
+          { time: '19:34:56', action: 'call_api()', result: '✓ 响应200' }
+        ]
+      },
+      'node-guardrails': {
+        name: 'Guardrails',
+        description: '安全护栏系统，在输入和输出层进行安全检查，防止有害内容和数据泄露。',
+        params: {
+          '检查层级': '3层',
+          '敏感词库': '50000+',
+          '阻断策略': 'strict'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:34:55', action: 'check_input()', result: '✓ 安全' },
+          { time: '19:34:53', action: 'check_output()', result: '✓ 合规' },
+          { time: '19:34:50', action: 'pii_detect()', result: '✓ 无敏感信息' }
+        ]
+      },
+      'node-qualitydials': {
+        name: 'QualityDials',
+        description: '质量旋钮配置系统，控制Agent行为的各个维度：模式、温度、dials等。',
+        params: {
+          '模式': 'research',
+          '温度': '1.0',
+          'top_p': '1.0',
+          'max_tokens': '8192'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:35:02', action: 'apply_dials()', result: '✓ 已应用' },
+          { time: '19:34:55', action: 'validate_config()', result: '✓ 验证通过' },
+          { time: '19:34:50', action: 'preset(research)', result: '✓ 预设加载' }
+        ]
+      },
+      'node-corememory': {
+        name: 'CoreMemory',
+        description: '核心记忆模块，存储Agent的持久化信息，包括用户偏好、长期目标和重要上下文。',
+        params: {
+          '存储类型': '向量数据库',
+          '容量': '无限制',
+          '持久化': 'true'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:34:40', action: 'write(user_pref)', result: '✓ 已写入' },
+          { time: '19:34:30', action: 'read(context)', result: '✓ 上下文加载' },
+          { time: '19:34:20', action: 'embed()', result: '✓ 向量化完成' }
+        ]
+      },
+      'node-recallmemory': {
+        name: 'RecallMemory',
+        description: '回忆检索模块，通过语义搜索召回历史对话和相关信息，支持混合检索和RFF融合。',
+        params: {
+          '检索方式': 'NGramTFIDF',
+          '融合算法': 'RRF',
+          'top_k': '5'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:34:45', action: 'hybrid_retrieve()', result: '✓ 3条结果' },
+          { time: '19:34:44', action: 'semantic_search()', result: '✓ 语义匹配' },
+          { time: '19:34:43', action: 'rerank()', result: '✓ 重排序完成' }
+        ]
+      },
+      'node-archivalmemory': {
+        name: 'ArchivalMemory',
+        description: '归档存储模块，用于长期保存和检索历史任务、决策记录和重要事件。',
+        params: {
+          '存储类型': '向量归档',
+          '保留策略': '90天',
+          '压缩': 'true'
+        },
+        status: 'idle',
+        statusText: '空闲',
+        logs: [
+          { time: '19:30:00', action: 'archive_old()', result: '✓ 归档完成' },
+          { time: '19:00:00', action: 'vacuum()', result: '✓ 清理完成' },
+          { time: '18:00:00', action: 'optimize()', result: '✓ 索引优化' }
+        ]
+      },
+      'node-sleeptime': {
+        name: 'Sleeptime',
+        description: '做梦引擎模块，在Agent空闲时进行深度思考和知识整合，将重要信息沉淀到WIKI。',
+        params: {
+          '触发条件': '空闲>5min',
+          '思考深度': '3层',
+          '沉淀目标': 'WIKI'
+        },
+        status: 'idle',
+        statusText: '空闲',
+        logs: [
+          { time: '18:55:00', action: 'deep_think()', result: '✓ 思考完成' },
+          { time: '18:50:00', action: 'extract_insights()', result: '✓ 提炼洞察' },
+          { time: '18:45:00', action: 'idle_detected()', result: '→ 启动做梦' }
+        ]
+      },
+      'node-codeexec': {
+        name: 'CodeExec',
+        description: '代码执行引擎，在隔离的沙箱环境中安全执行代码，支持多语言和文件系统访问。',
+        params: {
+          '沙箱': 'Docker容器',
+          '超时': '60s',
+          '网络': '隔离'
+        },
+        status: 'online',
+        statusText: '就绪',
+        logs: [
+          { time: '19:34:48', action: 'exec(python)', result: '✓ 执行成功' },
+          { time: '19:34:47', action: 'sandbox.alloc()', result: '✓ 资源分配' },
+          { time: '19:34:46', action: 'validate()', result: '✓ 代码安全' }
+        ]
+      },
+      'node-websearch': {
+        name: 'WebSearch',
+        description: '网络搜索工具，调用外部搜索引擎获取实时信息，支持多源验证和结果聚合。',
+        params: {
+          '引擎': 'Bing API',
+          '语言': 'zh-CN',
+          '结果数': '10'
+        },
+        status: 'online',
+        statusText: '就绪',
+        logs: [
+          { time: '19:34:50', action: 'search()', result: '✓ 找到12条' },
+          { time: '19:34:49', action: 'fetch_results()', result: '✓ 内容获取' },
+          { time: '19:34:48', action: 'dedupe()', result: '✓ 去重完成' }
+        ]
+      },
+      'node-scheduler': {
+        name: 'Scheduler',
+        description: '任务调度器，管理定时任务、循环任务和依赖关系，支持Cron表达式和动态调度。',
+        params: {
+          '调度器': 'APScheduler',
+          '并发数': '5',
+          '超时策略': 'retry'
+        },
+        status: 'online',
+        statusText: '就绪',
+        logs: [
+          { time: '19:35:00', action: 'trigger(daily)', result: '✓ 任务触发' },
+          { time: '19:30:00', action: 'schedule()', result: '✓ 调度成功' },
+          { time: '19:00:00', action: 'health_check()', result: '✓ 健康正常' }
+        ]
+      },
+      'node-knowledge': {
+        name: 'Knowledge',
+        description: '知识库检索系统，基于向量数据库提供RAG能力，支持文档理解、语义检索和多跳推理。',
+        params: {
+          '索引类型': '向量+关键词',
+          'top_k': '5',
+          '召回率': '95%'
+        },
+        status: 'online',
+        statusText: '在线',
+        logs: [
+          { time: '19:34:52', action: 'retrieve()', result: '✓ 3个chunk' },
+          { time: '19:34:51', action: 'rerank()', result: '✓ 重排序' },
+          { time: '19:34:50', action: 'chunk_doc()', result: '✓ 分块完成' }
+        ]
+      },
+      'node-wiki': {
+        name: 'WIKI',
+        description: '文档渲染和持久化系统，将Agent的学习成果整理成可读的文档，支持Markdown格式。',
+        params: {
+          '格式': 'Markdown',
+          '存储': '本地文件',
+          '版本控制': 'git'
+        },
+        status: 'idle',
+        statusText: '待机',
+        logs: [
+          { time: '18:58:00', action: 'render()', result: '✓ 渲染完成' },
+          { time: '18:57:00', action: 'format()', result: '✓ 格式化' },
+          { time: '18:56:00', action: 'compile()', result: '✓ 编译完成' }
+        ]
+      },
+      'node-agentos': {
+        name: 'AgentOS',
+        description: 'Agent操作系统服务层，提供A2A通信、消息路由、服务发现和生命周期管理能力。',
+        params: {
+          '协议': 'A2A',
+          '端口': '8080',
+          '服务发现': 'DNS-SD'
+        },
+        status: 'online',
+        statusText: '运行中',
+        logs: [
+          { time: '19:35:02', action: 'broadcast()', result: '✓ 已广播' },
+          { time: '19:34:58', action: 'route_message()', result: '✓ 路由成功' },
+          { time: '19:34:50', action: 'health_report()', result: '✓ 状态正常' },
+          { time: '19:34:00', action: 'service_discovery()', result: '✓ 发现5个Agent' }
+        ]
+      }
+    };
+
+    // ==================== 走线连接定义 ====================
+    const connections = [
+      // 输入流
+      { from: 'node-chat', to: 'node-baseagent', id: 'conn-1', label: '用户输入流' },
+      { from: 'node-user', to: 'node-chat', id: 'conn-2', label: '直接消息' },
+      // 模型路由
+      { from: 'node-baseagent', to: 'node-modelrouter', id: 'conn-3', label: '模型请求' },
+      { from: 'node-modelrouter', to: 'node-baseagent', id: 'conn-4', label: '模型响应' },
+      // 质量检查
+      { from: 'node-baseagent', to: 'node-guardrails', id: 'conn-5', label: '质量检查' },
+      { from: 'node-guardrails', to: 'node-qualitydials', id: 'conn-6', label: '配置调整' },
+      { from: 'node-qualitydials', to: 'node-baseagent', id: 'conn-7', label: '应用配置' },
+      // 代码执行
+      { from: 'node-baseagent', to: 'node-codeact', id: 'conn-8', label: '代码生成' },
+      { from: 'node-codeact', to: 'node-codeexec', id: 'conn-9', label: '执行请求' },
+      { from: 'node-codeexec', to: 'node-baseagent', id: 'conn-10', label: '执行结果' },
+      // 记忆层
+      { from: 'node-baseagent', to: 'node-corememory', id: 'conn-11', label: '记忆写入' },
+      { from: 'node-baseagent', to: 'node-recallmemory', id: 'conn-12', label: '检索请求' },
+      { from: 'node-recallmemory', to: 'node-archivalmemory', id: 'conn-13', label: '归档同步' },
+      { from: 'node-archivalmemory', to: 'node-recallmemory', id: 'conn-14', label: '归档读取' },
+      // 做梦流程
+      { from: 'node-recallmemory', to: 'node-sleeptime', id: 'conn-15', label: '触发做梦' },
+      { from: 'node-sleeptime', to: 'node-wiki', id: 'conn-16', label: '知识沉淀' },
+      // 工具调用
+      { from: 'node-baseagent', to: 'node-websearch', id: 'conn-17', label: '搜索请求' },
+      { from: 'node-baseagent', to: 'node-scheduler', id: 'conn-18', label: '调度请求' },
+      { from: 'node-websearch', to: 'node-knowledge', id: 'conn-19', label: '知识查询' },
+      { from: 'node-knowledge', to: 'node-baseagent', id: 'conn-20', label: '知识返回' },
+      // 服务输出
+      { from: 'node-baseagent', to: 'node-agentos', id: 'conn-21', label: '服务调用' }
+    ];
+
+    // ==================== 全局状态 ====================
+    let isPlaying = true;
+    let animationSpeed = 1;
+    let currentMode = 'flow'; // static, flow, focus
+    let selectedNode = null;
+    let particles = [];
+    let animationFrameId = null;
+
+    // DOM元素引用
+    const circuitSvg = document.getElementById('circuitSvg');
+    const nodesLayer = document.getElementById('nodesLayer');
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    const detailPanel = document.getElementById('detailPanel');
+    const panelTitle = document.getElementById('panelTitle');
+    const panelContent = document.getElementById('panelContent');
+    const particleTooltip = document.getElementById('particleTooltip');
+
+    // ==================== 初始化 ====================
+    function init() {
+      resizeCanvas();
+      generateCircuitPaths();
+      initParticles();
+      setupEventListeners();
+      startAnimation();
+    }
+
+    // 调整画布大小
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    // ==================== 生成电路走线 ====================
+    function generateCircuitPaths() {
+      // 清空现有路径（保留defs）
+      const defs = circuitSvg.querySelector('defs');
+      circuitSvg.innerHTML = '';
+      circuitSvg.appendChild(defs);
+
+      connections.forEach(conn => {
+        const fromEl = document.getElementById(conn.from);
+        const toEl = document.getElementById(conn.to);
+        
+        if (!fromEl || !toEl) return;
+
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+        const svgRect = circuitSvg.getBoundingClientRect();
+
+        // 计算连接点（使用节点中心）
+        const x1 = fromRect.left + fromRect.width / 2 - svgRect.left;
+        const y1 = fromRect.top + fromRect.height / 2 - svgRect.top;
+        const x2 = toRect.left + toRect.width / 2 - svgRect.left;
+        const y2 = toRect.top + toRect.height / 2 - svgRect.top;
+
+        // 生成直角折线路径
+        const midY = (y1 + y2) / 2;
+        const pathD = `M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}`;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathD);
+        path.setAttribute('class', 'circuit-path');
+        path.setAttribute('id', conn.id);
+        path.setAttribute('data-from', conn.from);
+        path.setAttribute('data-to', conn.to);
+
+        // 存储路径数据用于粒子动画
+        path.dataset.path = pathD;
+        
+        circuitSvg.appendChild(path);
+
+        // 添加交叉点标记
+        addJunctionDot(x1, y1);
+        addJunctionDot(x2, y2);
+      });
+    }
+
+    // 添加交叉点标记
+    function addJunctionDot(x, y) {
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', x);
+      circle.setAttribute('cy', y);
+      circle.setAttribute('r', 3);
+      circle.setAttribute('fill', 'rgba(123, 97, 255, 0.3)');
+      circuitSvg.appendChild(circle);
+    }
+
+    // ==================== 粒子系统 ====================
+    function initParticles() {
+      particles = [];
+      
+      connections.forEach(conn => {
+        // 每条路径上放置2-3个粒子
+        const numParticles = Math.floor(Math.random() * 2) + 2;
+        for (let i = 0; i < numParticles; i++) {
+          particles.push({
+            connId: conn.id,
+            progress: Math.random(), // 0-1 沿路径的位置
+            speed: 0.003 + Math.random() * 0.002,
+            size: 3 + Math.random() * 2,
+            color: getRandomColor(),
+            paused: false,
+            visible: true
+          });
+        }
+      });
+    }
+
+    // 获取随机颜色
+    function getRandomColor() {
+      const colors = ['#7B61FF', '#60A5FA', '#34D399', '#FBBF24'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // 获取SVG路径上的点
+    function getPointOnPath(pathElement, progress) {
+      const pathLength = pathElement.getTotalLength();
+      const point = pathElement.getPointAtLength(progress * pathLength);
+      return { x: point.x, y: point.y };
+    }
+
+    // 更新和绘制粒子
+    function updateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(particle => {
+        if (!particle.visible || currentMode === 'static') return;
+        
+        const pathEl = document.getElementById(particle.connId);
+        if (!pathEl) return;
+
+        // 更新进度
+        if (!particle.paused && isPlaying) {
+          particle.progress += particle.speed * animationSpeed;
+          if (particle.progress > 1) {
+            particle.progress = 0;
+          }
+        }
+
+        // 获取位置
+        const pos = getPointOnPath(pathEl, particle.progress);
+        const rect = canvas.getBoundingClientRect();
+
+        // 绘制发光粒子
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = particle.color;
+        ctx.shadowColor = particle.color;
+        ctx.shadowBlur = 15;
+        ctx.fill();
+
+        // 绘制尾迹
+        ctx.beginPath();
+        ctx.arc(pos.x - particle.size * 2, pos.y, particle.size * 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = particle.color + '60';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+      });
+    }
+
+    // ==================== 动画循环 ====================
+    function startAnimation() {
+      function animate() {
+        updateParticles();
+        animationFrameId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // ==================== 事件监听 ====================
+    function setupEventListeners() {
+      // 窗口大小变化
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        generateCircuitPaths();
+      });
+
+      // 节点点击
+      document.querySelectorAll('.arch-node').forEach(node => {
+        node.addEventListener('click', () => {
+          const nodeId = node.id;
+          const details = nodeDetails[nodeId];
+          if (details) {
+            openDetailPanel(nodeId, details);
+            node.classList.add('selected');
+          }
+        });
+      });
+
+      // 面板关闭
+      document.getElementById('panelClose').addEventListener('click', closeDetailPanel);
+
+      // 模式切换
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentMode = btn.dataset.mode;
+          handleModeChange();
+        });
+      });
+
+      // 播放/暂停
+      document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
+
+      // 速度滑块
+      document.getElementById('speedSlider').addEventListener('input', (e) => {
+        animationSpeed = parseFloat(e.target.value);
+        document.getElementById('speedValue').textContent = animationSpeed + 'x';
+      });
+
+      // 图层切换
+      document.querySelectorAll('.layer-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          toggle.classList.toggle('active');
+          const layer = toggle.dataset.layer;
+          toggleLayerVisibility(layer, toggle.classList.contains('active'));
+        });
+      });
+
+      // 全屏
+      document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+
+      // 路径悬停高亮
+      document.querySelectorAll('.circuit-path').forEach(path => {
+        path.addEventListener('mouseenter', () => {
+          if (currentMode !== 'focus') {
+            path.classList.add('highlighted');
+          }
+        });
+        path.addEventListener('mouseleave', () => {
+          path.classList.remove('highlighted');
+        });
+      });
+
+      // 粒子悬停提示
+      canvas.addEventListener('mousemove', handleCanvasMouseMove);
+      canvas.addEventListener('mouseleave', () => {
+        particleTooltip.classList.remove('visible');
+      });
+    }
+
+    // 处理画布鼠标移动
+    function handleCanvasMouseMove(e) {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      let hoveredParticle = null;
+
+      particles.forEach(particle => {
+        if (!particle.visible) return;
+        const pathEl = document.getElementById(particle.connId);
+        if (!pathEl) return;
+
+        const pos = getPointOnPath(pathEl, particle.progress);
+        const dist = Math.sqrt(Math.pow(mouseX - pos.x, 2) + Math.pow(mouseY - pos.y, 2));
+
+        if (dist < 15) {
+          hoveredParticle = particle;
+          particle.paused = true;
+        } else {
+          particle.paused = false;
+        }
+      });
+
+      if (hoveredParticle) {
+        const conn = connections.find(c => c.id === hoveredParticle.connId);
+        if (conn) {
+          particleTooltip.textContent = `${conn.label} → ${hoveredParticle.color}`;
+          particleTooltip.style.left = (e.clientX + 10) + 'px';
+          particleTooltip.style.top = (e.clientY - 30) + 'px';
+          particleTooltip.classList.add('visible');
+        }
+      } else {
+        particleTooltip.classList.remove('visible');
+      }
+    }
+
+    // 打开详情面板
+    function openDetailPanel(nodeId, details) {
+      // 关闭之前的选中状态
+      document.querySelectorAll('.arch-node.selected').forEach(n => n.classList.remove('selected'));
+      document.getElementById(nodeId).classList.add('selected');
+
+      panelTitle.textContent = details.name;
+
+      // 生成面板内容
+      let html = `
+        <div class="detail-section">
+          <div class="status-indicator">
+            <div class="status-dot ${details.status}"></div>
+            <span class="status-label">${details.statusText}</span>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <div class="section-title">描述</div>
+          <p class="detail-desc">${details.description}</p>
+        </div>
+        
+        <div class="detail-section">
+          <div class="section-title">关键参数</div>
+          <div class="param-grid">
+      `;
+
+      for (const [key, value] of Object.entries(details.params)) {
+        html += `
+          <div class="param-item">
+            <div class="param-key">${key}</div>
+            <div class="param-value">${value}</div>
+          </div>
+        `;
+      }
+
+      html += `
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <div class="section-title">最近日志</div>
+          <div class="log-list">
+      `;
+
+      details.logs.forEach(log => {
+        html += `
+          <div class="log-item">
+            <div class="log-time">${log.time}</div>
+            <div class="log-action">${log.action}</div>
+            <div class="log-result">${log.result}</div>
+          </div>
+        `;
+      });
+
+      html += `
+          </div>
+        </div>
+      `;
+
+      panelContent.innerHTML = html;
+      detailPanel.classList.add('open');
+
+      // 聚焦模式下高亮相关路径
+      if (currentMode === 'focus') {
+        highlightRelatedPaths(nodeId);
+      }
+    }
+
+    // 关闭详情面板
+    function closeDetailPanel() {
+      detailPanel.classList.remove('open');
+      document.querySelectorAll('.arch-node.selected').forEach(n => n.classList.remove('selected'));
+      selectedNode = null;
+      
+      // 清除路径高亮
+      document.querySelectorAll('.circuit-path').forEach(p => {
+        p.classList.remove('highlighted', 'dimmed');
+      });
+    }
+
+    // 处理模式变化
+    function handleModeChange() {
+      const paths = document.querySelectorAll('.circuit-path');
+      
+      switch (currentMode) {
+        case 'static':
+          // 静态模式：停止粒子，移除动画
+          isPlaying = false;
+          paths.forEach(p => p.classList.remove('animated'));
+          break;
+          
+        case 'flow':
+          // 流动模式：恢复粒子和动画
+          isPlaying = true;
+          paths.forEach(p => p.classList.add('animated'));
+          document.querySelectorAll('.circuit-path').forEach(p => {
+            p.classList.remove('highlighted', 'dimmed');
+          });
+          particles.forEach(p => p.visible = true);
+          break;
+          
+        case 'focus':
+          // 聚焦模式：需要先选中节点
+          if (selectedNode) {
+            highlightRelatedPaths(selectedNode);
+          }
+          break;
+      }
+    }
+
+    // 高亮相关路径
+    function highlightRelatedPaths(nodeId) {
+      document.querySelectorAll('.circuit-path').forEach(p => {
+        const from = p.dataset.from;
+        const to = p.dataset.to;
+        
+        if (from === nodeId || to === nodeId) {
+          p.classList.add('highlighted');
+          p.classList.remove('dimmed');
+        } else {
+          p.classList.add('dimmed');
+          p.classList.remove('highlighted');
+        }
+      });
+
+      // 隐藏不相关的粒子
+      particles.forEach(p => {
+        const pathEl = document.getElementById(p.connId);
+        if (pathEl) {
+          const from = pathEl.dataset.from;
+          const to = pathEl.dataset.to;
+          p.visible = (from === nodeId || to === nodeId);
+        }
+      });
+    }
+
+    // 切换播放/暂停
+    function togglePlayPause() {
+      isPlaying = !isPlaying;
+      document.getElementById('playPauseBtn').textContent = isPlaying ? '⏸' : '▶';
+    }
+
+    // 切换图层可见性
+    function toggleLayerVisibility(layer, visible) {
+      const layerMap = {
+        'input': ['node-user', 'node-chat', 'node-codeact'],
+        'core': ['node-baseagent', 'node-modelrouter', 'node-guardrails', 'node-qualitydials'],
+        'memory': ['node-corememory', 'node-recallmemory', 'node-archivalmemory', 'node-sleeptime'],
+        'tools': ['node-codeexec', 'node-websearch', 'node-scheduler', 'node-knowledge', 'node-wiki', 'node-agentos']
+      };
+
+      const nodes = layerMap[layer] || [];
+      nodes.forEach(nodeId => {
+        const el = document.getElementById(nodeId);
+        if (el) {
+          el.style.display = visible ? '' : 'none';
+        }
+      });
+
+      // 隐藏/显示相关路径
+      document.querySelectorAll('.circuit-path').forEach(p => {
+        const from = p.dataset.from;
+        const to = p.dataset.to;
+        const fromVisible = !document.getElementById(from) || document.getElementById(from).style.display !== 'none';
+        const toVisible = !document.getElementById(to) || document.getElementById(to).style.display !== 'none';
+        p.style.display = (fromVisible && toVisible) ? '' : 'none';
+      });
+    }
+
+    // 切换全屏
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // 启动
+    init();
+  </script>
+</body>
+</html>

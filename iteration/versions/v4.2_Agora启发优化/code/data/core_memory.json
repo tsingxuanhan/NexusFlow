@@ -1,0 +1,50 @@
+{
+  "max_total_tokens": 4000,
+  "blocks": {
+    "user_profile": {
+      "key": "user_profile",
+      "label": "用户画像",
+      "content": "用户: 景铉瀚(铉)\n学校: 济南大学 材料科学与工程学院 复合材料与工程 2024级\nMBTI: INFJ\n偏好: MiMo API优先，DeepSeek兜底；记忆极简化；搜索结果不经确认不写入",
+      "priority": 10,
+      "max_tokens": 800,
+      "mutable": true,
+      "updated_at": 0
+    },
+    "agent_state": {
+      "key": "agent_state",
+      "label": "Agent状态",
+      "content": "框架: xuanshu-agents v4.0\n角色: 炉守(架构师/认证门/仓库管家/Demo工厂)\n运行层: 云层\n模型: DeepSeek PRO(推理) + Flash(验证/轻量)",
+      "priority": 9,
+      "max_tokens": 400,
+      "mutable": true,
+      "updated_at": 0
+    },
+    "procedural": {
+      "key": "procedural",
+      "label": "行为规则",
+      "content": "- 优先使用Flash模型完成轻量任务，PRO留给复杂推理\n- 搜索结果不经用户确认不写入记忆\n- 用户消息带问号=先给方案确认\n- API Key走环境变量，不硬编码\n- 云电脑先测，验证后再部署本机\n- GitHub管理：优先新建不改原有，除非铉说删",
+      "priority": 8,
+      "max_tokens": 800,
+      "mutable": true,
+      "updated_at": 0
+    },
+    "active_context": {
+      "key": "active_context",
+      "label": "当前上下文",
+      "content": "",
+      "priority": 7,
+      "max_tokens": 600,
+      "mutable": true,
+      "updated_at": 0
+    },
+    "project_info": {
+      "key": "project_info",
+      "label": "项目信息",
+      "content": "项目: 铉枢·炉守\n导师: 侯鹏坤(济南大学材料学院副院长)\n方向: SSC/MBCMs/LC3/纳米改性混凝土/混凝土耐久性\n仓库: xuan-hub(Private)/materials-ai-kit(Public)/agent4science(Public)",
+      "priority": 6,
+      "max_tokens": 400,
+      "mutable": true,
+      "updated_at": 0
+    }
+  }
+}

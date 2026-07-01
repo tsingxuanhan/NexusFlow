@@ -1,0 +1,36 @@
+{
+  "mcpServers": {
+    "open-design": {
+      "command": "npx",
+      "args": ["-y", "open-design-mcp@0.16.1"],
+      "env": {
+        "OD_DAEMON_URL": "http://localhost:7456",
+        "BYOK_BASE_URL": "https://api.deepseek.com/v1",
+        "BYOK_API_KEY": "${DEEPSEEK_API_KEY}",
+        "BYOK_MODEL": "deepseek-chat",
+        "BYOK_PROVIDER": "openai"
+      }
+    }
+  },
+  "_docs": {
+    "OD_DAEMON_URL": "Open Design Daemon地址，默认7456端口",
+    "BYOK_BASE_URL": "LLM API端点，支持openai/anthropic/ollama协议",
+    "BYOK_API_KEY": "API密钥，ollama用'local'",
+    "BYOK_MODEL": "模型ID",
+    "BYOK_PROVIDER": "协议类型: openai/anthropic/azure/google/ollama",
+    "_alternatives": {
+      "ollama_local": {
+        "BYOK_BASE_URL": "http://localhost:11434/v1",
+        "BYOK_API_KEY": "local",
+        "BYOK_MODEL": "qwen3.5:9b",
+        "BYOK_PROVIDER": "ollama"
+      },
+      "mimo_api": {
+        "BYOK_BASE_URL": "https://token-plan-cn.xiaomimimo.com/v1",
+        "BYOK_API_KEY": "${MIMO_200M_KEY}",
+        "BYOK_MODEL": "mimo-200m",
+        "BYOK_PROVIDER": "openai"
+      }
+    }
+  }
+}

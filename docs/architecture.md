@@ -1,60 +1,127 @@
-# Architecture Overview
+# NexusFlow 技术架构文档
 
-## System Design
+## 1. 概述
 
-NexusFlow follows a layered architecture:
+NexusFlow 是一个面向超长程任务（50步以上）的群体智能引擎，核心解决"多Agent如何在信息受限条件下，通过结构化通信协议产生超越任何单Agent的推理深度"这一根本问题。
+
+## 2. 核心创新
+
+### 2.1 CDoL 认知分工引擎
+
+**核心理念**：主动制造信息不对称，迫使每个Agent发展出从他人输出中逆向推断对方所见上下文的能力。
+
+**六种视角分解策略**：
+
+| 策略 | 核心思想 |
+|------|---------|
+| evidence-split | 按证据类型拆分，Agent各看一部分 |
+| role-constraint | 注入对抗角色（质疑者 vs 辩护者） |
+| layer-separation | 分层（抽象原理 vs 具体实现） |
+| modality-split | 按模态拆分（结构化数据 vs 非结构化文本） |
+| time-slice | 时序切片（前期 vs 后期） |
+| abstraction-level | 抽象层级（具体实例 vs 抽象规则） |
+
+**三轮通信协议**：
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Application Layer                    │
-│     (Miner | Assayer | Caster | Artisan)                │
-├─────────────────────────────────────────────────────────┤
-│                    Orchestration Layer                  │
-│         (TaskOrchestrator, HandoffManager)              │
-├─────────────────────────────────────────────────────────┤
-│                     Core Layer                          │
-│      (BaseAgent, Memory, Checkpoint, Observability)      │
-├─────────────────────────────────────────────────────────┤
-│                   Protocol Layer                        │
-│          (DeepSeek API, MCP Client)                    │
-└─────────────────────────────────────────────────────────┘
+Round 0: 独立推理
+  └── 每个Agent在隔离上下文中独立推理
+
+Round 1: 差异归因  
+  └── Agent收到他人结论，不可看原始视角
+  └── 执行"差异归因"——矛盾在哪？对方可能看到了什么？
+
+Round 2: 修正收敛
+  └── 基于归因结果修正结论
 ```
 
-## Core Components
+**FusionJudge 四类矛盾分类**：
 
-### BaseAgent
+| 矛盾类型 | 处理策略 |
+|---------|---------|
+| 可归因矛盾 | 触发双向通信修正 |
+| 不可归因矛盾 | 回溯到视角分解器 |
+| 虚假一致 | 比较推理链，拒绝合并 |
+| 真实收敛 | 输出最终答案 |
 
-Base class for all agents with:
-- DeepSeek API integration
-- Conversation management
-- Error handling with automatic retry
-- Checkpoint integration
-- Handoff support
+### 2.2 自适应上下文管理
 
-### TaskOrchestrator
+解决"大窗口懒惰症"——上下文窗口越大，Agent越倾向浅层推理。
 
-DAG-based workflow executor:
-- Sequential and parallel execution modes
-- Dependency resolution
-- Checkpoint saving
+**LazinessDetector 四维懒惰检测**：
 
-### Checkpoint Manager
+1. **检索频率**：Agent主动查询记忆系统的频率
+2. **纠错率**：Agent自我修正的频率
+3. **置信度趋势**：Agent输出置信度的变化方向
+4. **信息源多样性**：Agent引用信息来源的分散度
 
-State persistence:
-- SQLite backend for durability
-- In-memory for speed
-- Automatic save/restore
+### 2.3 三层信息架构
 
-### MCP Client
+| 层级 | Agent | 信息可见性 |
+|------|-------|----------|
+| 全局视野层 | Coordinator, Archivist | 完整信息 |
+| CDoL参与层 | Strategist, Coder, Researcher, Analyst, Critic, Synthesizer | 角色化ContextMask |
+| 旁观记录层 | Observer, Monitor | 仅中间结论 |
 
-Model Context Protocol integration:
-- Stdio transport for local tools
-- HTTP transport for remote tools
-- Tool schema validation
+## 3. 系统架构
 
-## Design Patterns
+### 3.1 端边云三层调度
 
-1. **Strategy Pattern**: Model selection (pro/flash)
-2. **Observer Pattern**: Tracing and metrics
-3. **Chain of Responsibility**: Handoff system
-4. **Template Method**: Agent base class
+```
+┌─────────────────────────────────────────────────────┐
+│  层级   │  模型                │  Agent              │
+├─────────┼──────────────────────┼────────────────────┤
+│  云端   │  DeepSeek API        │  Coordinator       │
+│         │                      │  Strategist        │
+│         │                      │  Archivist         │
+│         │                      │  Critic            │
+│         │                      │  Synthesizer       │
+│         │                      │  Researcher        │
+├─────────┼──────────────────────┼────────────────────┤
+│  边端   │  Ollama deepseek-r1  │  Coder             │
+│         │                      │  Analyst           │
+├─────────┼──────────────────────┼────────────────────┤
+│  终端   │  Ollama qwen3.5:9b  │  Observer          │
+│         │                      │  Monitor           │
+└─────────┴──────────────────────┴────────────────────┘
+```
+
+### 3.2 动态拓扑路由
+
+支持五种拓扑模式：星形 / 树形 / 网状 / 链式 / 汇聚
+
+运行时根据任务特征动态选择最优拓扑。
+
+## 4. 实验验证
+
+四组对比实验（CDoL vs 单Agent）量化验证认知分工协作增益：
+
+| 实验 | CDoL得分 | 单Agent得分 | 差距 |
+|------|---------|------------|------|
+| AGI路线分析 | 4.2/5 | 3.6/5 | +17% |
+| 1000步调度方案 | 38/45 | 30/45 | +27% |
+| 框架对比调研 | 8.1/10 | 5.8/10 | +40% |
+
+**关键发现**：任务越复杂、越需要多维验证，CDoL优势越大。
+
+## 5. 技术栈
+
+- **后端**：Python 3.10+ / FastAPI / uvicorn
+- **前端**：单页HTML / WebSocket
+- **推理**：Ollama (本地) + DeepSeek API (云端)
+- **协议**：A2A / MCP v2
+
+## 6. 模块清单
+
+| 模块 | 行数 | 功能 |
+|------|------|------|
+| cognitive_division_engine.py | ~2000 | CDoL认知分工引擎 |
+| adaptive_context_manager.py | ~1600 | 自适应上下文管理 |
+| agent_information_policy.py | ~500 | 三层信息策略 |
+| nexus_orchestrator.py | ~480 | 统一任务编排 |
+| dynamic_router.py | ~870 | 动态拓扑路由 |
+| edge_cloud_scheduler.py | ~540 | 端边云调度 |
+
+---
+
+*文档版本：v2.4*

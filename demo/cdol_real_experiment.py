@@ -5,6 +5,7 @@ CDoL (认知分工) ON/OFF 对比实验 - 真实 DeepSeek API 实现
 使用真实的 DeepSeek API 进行推理实验，对比 CDoL ON/OFF 模式的效果
 """
 
+import os
 import requests
 import json
 import time
@@ -15,7 +16,7 @@ from statistics import mean, stdev
 import math
 
 # ============ 配置 ============
-API_KEY = "sk-d081a93adf1240428f3f1a90fd68590f"
+API_KEY = os.environ.get("DEEPSEEK_API_KEY", "sk-your-key-here")
 API_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
 MODEL = "deepseek-chat"
 

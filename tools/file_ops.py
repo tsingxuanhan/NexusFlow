@@ -24,7 +24,7 @@ class FileOpsSecurity:
     
     # 允许的根目录
     ALLOWED_ROOTS = [
-        "/app/data",
+        "./data",
         "./output",
         "./knowledge",
         "./data",

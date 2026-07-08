@@ -17,3 +17,6 @@ node_modules/
 *.swo
 od-design/
 .od/
+.local/
+*.egg-info/
+examples/output/

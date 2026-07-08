@@ -208,7 +208,7 @@ TOOLS_CONFIG = {
         "enabled": True,
         "max_read_lines": 1000,
         "max_write_size": 10485760,  # 10MB
-        "allowed_roots": ["/app/data", "./output", "./knowledge", "./data", "./reports"],
+        "allowed_roots": [ "./data", "./output", "./knowledge", "./data", "./reports"],
     },
     "data_query": {
         "enabled": True,

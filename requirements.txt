@@ -11,3 +11,15 @@ networkx>=3.0
 gradio>=4.0
 
 # Phase 7: 认知分工 & 自适应上下文（无额外依赖）
+# 文档处理
+PyPDF2>=3.0.0
+pdfplumber>=0.9.0
+
+# 向量数据库
+chromadb>=0.4.0
+
+# LLM集成
+litellm>=1.0.0
+
+# 配置文件
+PyYAML>=6.0

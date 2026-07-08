@@ -1,0 +1,3267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusFlow Dashboard v4.0 — CDoL Core Engine</title>
+<style>
+/* ═══════════════════════════════════════════
+   NexusFlow Dashboard v4.0 — CDoL Core Engine
+   Full Visualization of Refactored Backend
+   ═══════════════════════════════════════════ */
+
+:root {
+  --bg-0: #0f0f1a;
+  --bg-1: #1e1e2e;
+  --bg-2: #2a2a3e;
+  --bg-3: #3a3a4e;
+  --bg-4: #4a4a5e;
+  --text-1: #e4e4e7;
+  --text-2: #a1a1aa;
+  --text-3: #71717a;
+  --coral: #ff7043;
+  --coral-glow: rgba(255,112,67,.25);
+  --coral-dim: rgba(255,112,67,.12);
+  --purple: #7c4dff;
+  --purple-glow: rgba(124,77,255,.25);
+  --purple-dim: rgba(124,77,255,.12);
+  --yellow: #ffd54f;
+  --yellow-glow: rgba(255,213,79,.2);
+  --yellow-dim: rgba(255,213,79,.12);
+  --mint: #4db6ac;
+  --mint-glow: rgba(77,182,172,.2);
+  --mint-dim: rgba(77,182,172,.12);
+  --red: #ef5350;
+  --red-glow: rgba(239,83,80,.2);
+  --blue: #42a5f5;
+  --blue-glow: rgba(66,165,245,.2);
+  --tier-global: #ff7043;
+  --tier-cdol: #7c4dff;
+  --tier-observer: #ffd54f;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 14px;
+  --font: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono: 'JetBrains Mono','Fira Code',monospace;
+  --ease: 250ms cubic-bezier(.4,0,.2,1);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:14px; -webkit-font-smoothing:antialiased; }
+body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); height:100vh; overflow:hidden; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--bg-3); border-radius:10px; }
+
+/* ─── Layout: Topbar + Main Grid ─── */
+.shell {
+  display: grid;
+  grid-template-rows: 52px 1fr;
+  height: 100vh;
+}
+
+/* ─── Topbar ─── */
+.topbar {
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--bg-2);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 16px;
+  z-index: 100;
+}
+.topbar-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 1.1rem;
+}
+.logo-icon {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--coral), var(--purple));
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; color: #fff;
+}
+.topbar-tag {
+  font-size: .6rem; padding: 2px 8px; border-radius: 20px;
+  background: var(--coral-dim); color: var(--coral); font-weight: 600;
+}
+.topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+.nav-btn {
+  padding: 6px 14px; border-radius: var(--radius-sm);
+  font-size: .82rem; cursor: pointer; border: none; background: none;
+  color: var(--text-3); transition: all var(--ease);
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-btn:hover { background: var(--bg-2); color: var(--text-1); }
+.nav-btn.active { background: var(--bg-2); color: var(--coral); }
+.topbar-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .75rem; font-family: var(--mono);
+}
+.status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.status-dot.online { background: var(--mint); box-shadow: 0 0 8px var(--mint); }
+.status-dot.offline { background: var(--red); }
+.status-dot.warning { background: var(--yellow); animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+.btn-new {
+  padding: 7px 16px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--coral), #f4511e);
+  color: #fff; font-size: .82rem; font-weight: 600;
+  border: none; cursor: pointer; transition: all var(--ease);
+  box-shadow: 0 2px 12px var(--coral-glow);
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-new:hover { transform: scale(1.02); box-shadow: 0 4px 20px var(--coral-glow); }
+
+/* ─── Main Content ─── */
+.main {
+  display: grid;
+  overflow: hidden;
+  transition: grid-template-columns .35s ease;
+}
+.main.layout-default {
+  grid-template-columns: 1fr 380px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header"
+    "content sidebar";
+}
+.main.layout-fullwidth {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header"
+    "content";
+}
+.main.layout-agents {
+  grid-template-columns: 1fr 420px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header"
+    "agents detail";
+}
+
+/* ─── Header Area (Stats + Pipeline) ─── */
+.header-area {
+  grid-area: header;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--bg-2);
+  padding: 14px 20px;
+}
+
+/* ─── Stats Row ─── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.stat-card {
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: all var(--ease);
+}
+.stat-card:hover { border-color: var(--bg-3); transform: translateY(-1px); }
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.stat-card.s-active::before { background: var(--mint); }
+.stat-card.s-tasks::before { background: var(--coral); }
+.stat-card.s-agents::before { background: var(--purple); }
+.stat-card.s-tokens::before { background: var(--yellow); }
+.stat-card.s-cdol::before { background: var(--blue); }
+.stat-card.s-insight::before { background: var(--coral); }
+.stat-label { font-size: .68rem; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.stat-value { font-size: 1.4rem; font-weight: 700; font-family: var(--mono); }
+.stat-value.v-mint { color: var(--mint); }
+.stat-value.v-coral { color: var(--coral); }
+.stat-value.v-purple { color: var(--purple); }
+.stat-value.v-yellow { color: var(--yellow); }
+.stat-value.v-blue { color: var(--blue); }
+.stat-sub { font-size: .68rem; color: var(--text-3); margin-top: 2px; }
+
+/* ─── CDoL Pipeline ─── */
+.pipeline-container {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-2); border-radius: var(--radius);
+  padding: 12px 20px;
+}
+.pipeline-title { font-size: .75rem; color: var(--text-3); margin-bottom: 8px; }
+.pipeline-stages {
+  display: flex; align-items: center; gap: 0; flex: 1;
+}
+.pipe-stage {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  position: relative;
+}
+.pipe-box {
+  width: 90px; padding: 10px 8px; border-radius: var(--radius-sm);
+  background: var(--bg-0); border: 2px solid var(--bg-3);
+  text-align: center; transition: all .4s ease;
+}
+.pipe-box.round0 { border-color: var(--purple); box-shadow: 0 0 12px var(--purple-glow); }
+.pipe-box.round1 { border-color: var(--coral); box-shadow: 0 0 12px var(--coral-glow); }
+.pipe-box.round2 { border-color: var(--mint); box-shadow: 0 0 12px var(--mint-glow); }
+.pipe-box.judge { border-color: var(--yellow); box-shadow: 0 0 12px var(--yellow-glow); }
+.pipe-icon { font-size: 1.3rem; margin-bottom: 2px; }
+.pipe-label { font-size: .68rem; font-weight: 700; }
+.pipe-sub { font-size: .6rem; color: var(--text-3); }
+.pipe-status {
+  font-size: .6rem; padding: 2px 6px; border-radius: 8px;
+  background: var(--bg-3); color: var(--text-3); margin-top: 4px;
+}
+.pipe-status.active { background: var(--purple-dim); color: var(--purple); }
+.pipe-status.done { background: var(--mint-dim); color: var(--mint); }
+.pipe-arrow {
+  width: 32px; height: 2px; background: var(--bg-3);
+  position: relative; margin: 0 6px; overflow: visible;
+}
+.pipe-arrow.flow { background: linear-gradient(90deg, var(--purple), var(--coral)); }
+.pipe-arrow .dot {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--coral); top: -2px; box-shadow: 0 0 8px var(--coral);
+  animation: flowDot 1.8s ease-in-out infinite;
+}
+@keyframes flowDot { 0%{left:-6px;opacity:0} 15%{opacity:1} 85%{opacity:1} 100%{left:calc(100% + 6px);opacity:0} }
+
+.pipeline-meta {
+  display: flex; gap: 16px; align-items: center;
+}
+.meta-item {
+  text-align: center; padding: 8px 16px;
+  background: var(--bg-0); border-radius: var(--radius-sm);
+  min-width: 80px;
+}
+.meta-value { font-size: 1.1rem; font-weight: 700; font-family: var(--mono); color: var(--text-1); }
+.meta-label { font-size: .62rem; color: var(--text-3); margin-top: 2px; }
+
+/* ─── Content Area ─── */
+.content-area {
+  grid-area: content;
+  background: var(--bg-0);
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+.sidebar-area {
+  grid-area: sidebar;
+  background: var(--bg-1);
+  border-left: 1px solid var(--bg-2);
+  overflow-y: auto;
+}
+.agents-area {
+  grid-area: agents;
+  background: var(--bg-0);
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+.detail-area {
+  grid-area: detail;
+  background: var(--bg-1);
+  border-left: 1px solid var(--bg-2);
+  overflow-y: auto;
+  padding: 16px;
+}
+
+/* ─── Panel Cards ─── */
+.panel-card {
+  background: var(--bg-1);
+  border: 1px solid var(--bg-2);
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.panel-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bg-2);
+  background: var(--bg-1);
+}
+.panel-icon { width: 18px; height: 18px; color: var(--coral); }
+.panel-title { font-size: .88rem; font-weight: 600; flex: 1; }
+.panel-badge {
+  font-size: .65rem; padding: 2px 8px; border-radius: 10px;
+  background: var(--bg-3); color: var(--text-3);
+  font-family: var(--mono);
+}
+.panel-body { padding: 14px 16px; }
+
+/* ─── Agent Grid ─── */
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.agent-card {
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  padding: 12px;
+  border: 1px solid transparent;
+  transition: all var(--ease);
+  cursor: pointer;
+}
+.agent-card:hover { border-color: var(--bg-3); transform: translateY(-2px); }
+.agent-card.selected { border-color: var(--coral); box-shadow: 0 0 16px var(--coral-glow); }
+.agent-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.agent-avatar {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.agent-avatar.global { background: var(--coral-dim); color: var(--coral); }
+.agent-avatar.cdol { background: var(--purple-dim); color: var(--purple); }
+.agent-avatar.observer { background: var(--yellow-dim); color: var(--yellow); }
+.agent-info { flex: 1; }
+.agent-name { font-weight: 600; font-size: .85rem; }
+.agent-role { font-size: .68rem; color: var(--text-3); }
+.agent-state {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.agent-state.idle { background: var(--text-3); }
+.agent-state.thinking { background: var(--coral); animation: pulse 1.5s infinite; box-shadow: 0 0 8px var(--coral-glow); }
+.agent-state.waiting { background: var(--yellow); }
+.agent-state.complete { background: var(--mint); box-shadow: 0 0 6px var(--mint-glow); }
+.agent-state.error { background: var(--red); }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.3);opacity:.7} }
+.agent-stats { display: flex; gap: 12px; margin-top: 8px; }
+.agent-stat { font-size: .7rem; }
+.agent-stat-label { color: var(--text-3); }
+.agent-stat-value { font-family: var(--mono); font-weight: 600; margin-left: 4px; }
+.agent-tier-badge {
+  display: inline-flex; font-size: .6rem; padding: 2px 8px; border-radius: 8px;
+  font-weight: 600; margin-top: 6px;
+}
+.agent-tier-badge.global { background: var(--coral-dim); color: var(--coral); }
+.agent-tier-badge.cdol { background: var(--purple-dim); color: var(--purple); }
+.agent-tier-badge.observer { background: var(--yellow-dim); color: var(--yellow); }
+
+/* ─── FusionJudge Panel ─── */
+.fusion-panel {
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.fusion-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.fusion-title { font-size: .88rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.fusion-badge {
+  font-size: .72rem; padding: 4px 12px; border-radius: 20px; font-weight: 600;
+}
+.fusion-badge.real-convergence { background: var(--mint-dim); color: var(--mint); }
+.fusion-badge.false-consensus { background: var(--red-glow); color: var(--red); }
+.fusion-badge.contradiction { background: var(--coral-dim); color: var(--coral); }
+.fusion-badge.calculating { background: var(--purple-dim); color: var(--purple); }
+.fusion-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 14px; }
+.fusion-metric {
+  background: var(--bg-0); border-radius: var(--radius-sm); padding: 12px;
+  text-align: center;
+}
+.fusion-metric-value { font-size: 1.5rem; font-weight: 700; font-family: var(--mono); }
+.fusion-metric-label { font-size: .65rem; color: var(--text-3); margin-top: 4px; }
+.fusion-details { margin-top: 12px; }
+.fusion-detail-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 0; border-bottom: 1px solid var(--bg-3);
+}
+.fusion-detail-row:last-child { border-bottom: none; }
+.fusion-type-dot { width: 8px; height: 8px; border-radius: 50%; }
+.fusion-type-dot.attributable { background: var(--mint); }
+.fusion-type-dot.unattributable { background: var(--coral); }
+.fusion-type-dot.false-consensus { background: var(--red); }
+.fusion-type-dot.converged { background: var(--purple); }
+.fusion-detail-text { flex: 1; font-size: .78rem; }
+.fusion-detail-count { font-size: .72rem; font-family: var(--mono); color: var(--text-3); }
+
+/* ─── LazinessDetector Panel ─── */
+.laziness-panel {
+  background: var(--bg-2); border-radius: var(--radius);
+  padding: 14px;
+}
+.laziness-title { font-size: .85rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.laziness-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.laziness-metric {
+  background: var(--bg-0); border-radius: var(--radius-sm); padding: 10px;
+  text-align: center; position: relative;
+}
+.laziness-metric.alert { border: 1px solid var(--yellow); }
+.laziness-metric.critical { border: 1px solid var(--red); }
+.laziness-indicator {
+  width: 32px; height: 32px; border-radius: 50%; margin: 0 auto 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.laziness-indicator.ok { background: var(--mint-dim); }
+.laziness-indicator.warning { background: var(--yellow-dim); }
+.laziness-indicator.critical { background: var(--red-glow); }
+.laziness-metric-value { font-size: 1.1rem; font-weight: 700; font-family: var(--mono); }
+.laziness-metric-label { font-size: .6rem; color: var(--text-3); margin-top: 4px; }
+.laziness-bar {
+  height: 4px; background: var(--bg-3); border-radius: 2px; margin-top: 8px; overflow: hidden;
+}
+.laziness-bar-fill {
+  height: 100%; border-radius: 2px; transition: width .5s ease;
+}
+.laziness-bar-fill.ok { background: var(--mint); }
+.laziness-bar-fill.warning { background: var(--yellow); }
+.laziness-bar-fill.critical { background: var(--red); }
+
+/* ─── InsightStore Panel ─── */
+.insight-panel {
+  background: var(--bg-2); border-radius: var(--radius);
+  padding: 14px;
+}
+.insight-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.insight-title { font-size: .85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.insight-count { font-size: .72rem; color: var(--text-3); }
+.insight-categories { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.insight-category {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; background: var(--bg-0); border-radius: 20px;
+  font-size: .72rem; cursor: pointer; transition: all var(--ease);
+  border: 1px solid transparent;
+}
+.insight-category:hover { border-color: var(--purple); }
+.insight-category.active { background: var(--purple-dim); border-color: var(--purple); }
+.insight-category-icon { font-size: .85rem; }
+.insight-category-label { color: var(--text-2); }
+.insight-category-count { 
+  background: var(--purple); color: #fff; font-size: .6rem;
+  padding: 1px 5px; border-radius: 8px; font-weight: 600;
+}
+.insight-list { display: flex; flex-direction: column; gap: 8px; }
+.insight-item {
+  background: var(--bg-0); border-radius: var(--radius-sm); padding: 10px 12px;
+  border-left: 3px solid var(--purple); transition: all var(--ease);
+  cursor: pointer;
+}
+.insight-item:hover { transform: translateX(4px); }
+.insight-item-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.insight-tag {
+  font-size: .6rem; padding: 2px 6px; border-radius: 6px;
+  background: var(--purple-dim); color: var(--purple); font-weight: 600;
+}
+.insight-confidence {
+  font-size: .65rem; color: var(--text-3); margin-left: auto;
+  font-family: var(--mono);
+}
+.insight-text { font-size: .78rem; color: var(--text-2); line-height: 1.4; }
+.insight-meta { font-size: .65rem; color: var(--text-3); margin-top: 6px; display: flex; gap: 10px; }
+
+/* ─── Strategy Selector ─── */
+.strategy-panel {
+  background: var(--bg-2); border-radius: var(--radius);
+  padding: 14px;
+}
+.strategy-title { font-size: .85rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.strategy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.strategy-card {
+  background: var(--bg-0); border-radius: var(--radius-sm); padding: 10px;
+  text-align: center; cursor: pointer; transition: all var(--ease);
+  border: 1px solid transparent;
+}
+.strategy-card:hover { border-color: var(--bg-3); }
+.strategy-card.selected { border-color: var(--purple); background: var(--purple-dim); }
+.strategy-icon { font-size: 1.3rem; margin-bottom: 4px; }
+.strategy-name { font-size: .72rem; font-weight: 600; }
+.strategy-desc { font-size: .62rem; color: var(--text-3); margin-top: 4px; }
+
+/* ─── Information Architecture ─── */
+.info-arch-panel {
+  background: var(--bg-2); border-radius: var(--radius);
+  padding: 14px;
+}
+.info-arch-title { font-size: .85rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.tier-diagram { display: flex; flex-direction: column; gap: 8px; }
+.tier-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; background: var(--bg-0); border-radius: var(--radius-sm);
+  border-left: 4px solid;
+}
+.tier-row.global { border-color: var(--coral); }
+.tier-row.cdol { border-color: var(--purple); }
+.tier-row.observer { border-color: var(--yellow); }
+.tier-icon { font-size: 1.3rem; }
+.tier-info { flex: 1; }
+.tier-name { font-size: .82rem; font-weight: 600; }
+.tier-desc { font-size: .68rem; color: var(--text-3); margin-top: 2px; }
+.tier-agents { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.tier-agent-chip {
+  font-size: .65rem; padding: 2px 8px; border-radius: 10px;
+  background: var(--bg-2); color: var(--text-2);
+}
+
+/* ─── CDoL Round Details ─── */
+.round-details {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.round-card {
+  background: var(--bg-2); border-radius: var(--radius);
+  overflow: hidden;
+}
+.round-card-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; cursor: pointer;
+  transition: background var(--ease);
+}
+.round-card-header:hover { background: var(--bg-3); }
+.round-number {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .85rem;
+}
+.round-0 .round-number { background: var(--purple-dim); color: var(--purple); }
+.round-1 .round-number { background: var(--coral-dim); color: var(--coral); }
+.round-2 .round-number { background: var(--mint-dim); color: var(--mint); }
+.round-title { flex: 1; }
+.round-name { font-size: .85rem; font-weight: 600; }
+.round-desc { font-size: .68rem; color: var(--text-3); }
+.round-status {
+  font-size: .65rem; padding: 3px 10px; border-radius: 10px;
+  background: var(--bg-3); color: var(--text-3);
+}
+.round-status.active { background: var(--purple-dim); color: var(--purple); animation: pulse 1.5s infinite; }
+.round-status.done { background: var(--mint-dim); color: var(--mint); }
+.round-body {
+  padding: 0 14px 14px;
+  display: none;
+}
+.round-card.expanded .round-body { display: block; }
+.round-conclusions {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.conclusion-item {
+  background: var(--bg-0); border-radius: var(--radius-sm); padding: 10px 12px;
+  border-left: 3px solid var(--purple);
+}
+.conclusion-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.conclusion-agent { font-size: .78rem; font-weight: 600; }
+.conclusion-preview { font-size: .75rem; color: var(--text-2); line-height: 1.4; }
+
+/* ─── Task Panel ─── */
+.task-panel {
+  background: var(--bg-2); border-radius: var(--radius);
+  padding: 14px;
+}
+.task-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.task-title { font-size: .85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.task-list { display: flex; flex-direction: column; gap: 8px; }
+.task-item {
+  background: var(--bg-0); border-radius: var(--radius-sm); padding: 12px;
+  cursor: pointer; transition: all var(--ease);
+  border: 1px solid transparent;
+}
+.task-item:hover { border-color: var(--bg-3); }
+.task-item.selected { border-color: var(--purple); background: var(--purple-dim); }
+.task-item-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.task-status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.task-status-dot.running { background: var(--mint); animation: pulse 2s infinite; }
+.task-status-dot.pending { background: var(--yellow); }
+.task-status-dot.completed { background: var(--text-3); }
+.task-status-dot.failed { background: var(--red); }
+.task-item-title { font-size: .82rem; font-weight: 600; flex: 1; }
+.task-item-meta { font-size: .65rem; color: var(--text-3); }
+.task-progress {
+  height: 4px; background: var(--bg-3); border-radius: 2px; margin-top: 8px; overflow: hidden;
+}
+.task-progress-fill {
+  height: 100%; border-radius: 2px; transition: width .5s ease;
+  background: linear-gradient(90deg, var(--purple), var(--coral));
+}
+.task-badges { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.task-badge {
+  font-size: .62rem; padding: 2px 8px; border-radius: 8px;
+  background: var(--bg-2); color: var(--text-2);
+}
+.task-badge.route-cdol { background: var(--purple-dim); color: var(--purple); }
+.task-badge.route-simple { background: var(--mint-dim); color: var(--mint); }
+
+/* ─── Event Log ─── */
+.event-log { display: flex; flex-direction: column; gap: 0; }
+.event-item {
+  display: flex; gap: 10px; padding: 8px 0;
+  border-bottom: 1px solid var(--bg-2);
+  animation: fadeSlide .25s ease-out;
+}
+@keyframes fadeSlide { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+.event-item:last-child { border-bottom: none; }
+.event-time { font-size: .68rem; font-family: var(--mono); color: var(--text-3); min-width: 48px; }
+.event-content { flex: 1; font-size: .78rem; color: var(--text-2); line-height: 1.4; }
+.event-content strong { color: var(--text-1); }
+.event-tag {
+  font-size: .6rem; padding: 2px 6px; border-radius: 6px;
+  font-weight: 600; margin-left: 6px;
+}
+.event-tag.agent { background: var(--coral-dim); color: var(--coral); }
+.event-tag.round { background: var(--purple-dim); color: var(--purple); }
+.event-tag.fusion { background: var(--yellow-dim); color: var(--yellow); }
+.event-tag.task { background: var(--mint-dim); color: var(--mint); }
+.event-tag.error { background: var(--red-glow); color: var(--red); }
+
+/* ─── Detail Drawer ─── */
+.detail-drawer {
+  position: fixed; top: 52px; right: 0; bottom: 0; width: 420px;
+  background: var(--bg-1); border-left: 1px solid var(--bg-2);
+  box-shadow: -8px 0 30px rgba(0,0,0,.4);
+  z-index: 50; transform: translateX(100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+}
+.detail-drawer.open { transform: translateX(0); }
+.drawer-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px; border-bottom: 1px solid var(--bg-2);
+}
+.drawer-title { font-size: .92rem; font-weight: 600; flex: 1; }
+.drawer-close {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-3); border: none; background: none;
+  transition: all var(--ease);
+}
+.drawer-close:hover { background: var(--bg-3); color: var(--text-1); }
+.drawer-body { flex: 1; overflow-y: auto; padding: 16px; }
+.drawer-section { margin-bottom: 18px; }
+.drawer-section-title {
+  font-size: .72rem; color: var(--text-3); text-transform: uppercase;
+  letter-spacing: .06em; margin-bottom: 10px;
+}
+.drawer-field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--bg-2); }
+.drawer-field-label { font-size: .8rem; color: var(--text-2); }
+.drawer-field-value { font-size: .8rem; font-family: var(--mono); font-weight: 600; }
+.drawer-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.drawer-tag {
+  font-size: .68rem; padding: 3px 10px; border-radius: 10px; font-weight: 600;
+}
+.drawer-tag.global { background: var(--coral-dim); color: var(--coral); }
+.drawer-tag.cdol { background: var(--purple-dim); color: var(--purple); }
+.drawer-tag.observer { background: var(--yellow-dim); color: var(--yellow); }
+.drawer-output {
+  background: var(--bg-0); border-radius: var(--radius-sm); padding: 12px;
+  max-height: 200px; overflow-y: auto;
+}
+.drawer-output pre { white-space: pre-wrap; font-size: .78rem; line-height: 1.5; color: var(--text-2); }
+
+/* ─── Dynamic Injection Panel (v3.2) ─── */
+.injection-section {
+  margin-bottom: 4px;
+}
+.injection-label {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-coral {
+  background: var(--coral-dim);
+  color: var(--coral);
+  border: 1px solid var(--coral);
+}
+.btn-coral:hover {
+  background: var(--coral);
+  color: #fff;
+}
+.btn-mint {
+  background: var(--mint-dim);
+  color: var(--mint);
+  border: 1px solid var(--mint);
+}
+.btn-mint:hover {
+  background: var(--mint);
+  color: #fff;
+}
+.btn-sm {
+  padding: 6px 12px;
+  font-size: .72rem;
+}
+
+/* ─── Task Result Modal ─── */
+.result-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.7);
+  z-index: 250; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .3s ease;
+}
+.result-overlay.open { opacity: 1; pointer-events: auto; }
+.result-modal {
+  background: var(--bg-1); border: 1px solid var(--bg-3);
+  border-radius: var(--radius-lg); width: 720px; max-width: 90vw;
+  max-height: 85vh; display: flex; flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0,0,0,.5);
+}
+.result-header {
+  display: flex; align-items: center; padding: 16px 20px;
+  border-bottom: 1px solid var(--bg-2); gap: 12px;
+}
+.result-header-icon { font-size: 1.5rem; }
+.result-header-title { flex: 1; font-size: 1rem; font-weight: 600; color: var(--text-1); }
+.result-meta {
+  display: flex; gap: 12px; padding: 12px 20px;
+  border-bottom: 1px solid var(--bg-2); flex-wrap: wrap;
+}
+.result-meta-item {
+  display: flex; align-items: center; gap: 4px;
+  font-size: .75rem; color: var(--text-2);
+}
+.result-meta-value { font-weight: 600; color: var(--text-1); font-family: var(--mono); }
+.result-body {
+  flex: 1; overflow-y: auto; padding: 20px;
+  font-size: .85rem; line-height: 1.7; color: var(--text-2);
+}
+.result-body h1, .result-body h2, .result-body h3, .result-body h4 { color: var(--text-1); margin: 16px 0 8px; }
+.result-body h1 { font-size: 1.2rem; border-bottom: 1px solid var(--bg-2); padding-bottom: 8px; }
+.result-body h2 { font-size: 1.05rem; }
+.result-body h3 { font-size: .95rem; }
+.result-body table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .8rem; }
+.result-body th, .result-body td { border: 1px solid var(--bg-3); padding: 6px 10px; text-align: left; }
+.result-body th { background: var(--bg-0); color: var(--text-1); font-weight: 600; }
+.result-body code { background: var(--bg-0); padding: 1px 4px; border-radius: 3px; font-size: .8rem; }
+.result-body blockquote { border-left: 3px solid var(--coral); padding: 8px 12px; margin: 8px 0; background: var(--bg-0); border-radius: 0 6px 6px 0; }
+.result-body strong { color: var(--text-1); }
+.result-footer {
+  display: flex; justify-content: flex-end; gap: 10px; padding: 12px 20px;
+  border-top: 1px solid var(--bg-2);
+}
+
+/* ─── Task Dialog ─── */
+.dialog-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  z-index: 200; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+}
+.dialog-overlay.open { opacity: 1; pointer-events: auto; }
+.dialog {
+  background: var(--bg-1); border: 1px solid var(--bg-2);
+  border-radius: var(--radius-lg); width: 520px; max-width: 90vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.95); transition: transform .25s ease;
+}
+.dialog-overlay.open .dialog { transform: scale(1); }
+.dialog-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 20px; border-bottom: 1px solid var(--bg-2);
+}
+.dialog-title { font-size: 1rem; font-weight: 700; flex: 1; }
+.dialog-body { padding: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: .8rem; color: var(--text-2); margin-bottom: 6px; }
+.form-input {
+  width: 100%; background: var(--bg-0); border: 1px solid var(--bg-3);
+  border-radius: var(--radius-sm); padding: 10px 12px;
+  color: var(--text-1); font-size: .88rem; outline: none;
+  transition: border-color var(--ease);
+  font-family: var(--font);
+}
+.form-input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-glow); }
+.form-input::placeholder { color: var(--text-3); }
+.form-select {
+  width: 100%; background: var(--bg-0); border: 1px solid var(--bg-3);
+  border-radius: var(--radius-sm); padding: 10px 12px;
+  color: var(--text-1); font-size: .88rem; outline: none;
+  cursor: pointer; font-family: var(--font);
+}
+.form-select:focus { border-color: var(--purple); }
+.dialog-footer { padding: 14px 20px; border-top: 1px solid var(--bg-2); display: flex; gap: 10px; justify-content: flex-end; }
+.btn { padding: 8px 16px; border-radius: var(--radius-sm); font-size: .82rem; font-weight: 500; border: none; cursor: pointer; transition: all var(--ease); font-family: var(--font); }
+.btn-ghost { background: transparent; color: var(--text-2); border: 1px solid var(--bg-3); }
+.btn-ghost:hover { background: var(--bg-2); color: var(--text-1); }
+.btn-primary { background: linear-gradient(135deg, var(--coral), #f4511e); color: #fff; box-shadow: 0 2px 12px var(--coral-glow); }
+.btn-primary:hover { transform: scale(1.02); box-shadow: 0 4px 20px var(--coral-glow); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* ─── Toast ─── */
+.toast-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column-reverse; gap: 8px; z-index: 300; pointer-events: none; }
+.toast {
+  background: var(--bg-2); border: 1px solid var(--bg-3);
+  border-radius: var(--radius); padding: 10px 14px;
+  font-size: .8rem; color: var(--text-2);
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  animation: toastIn .3s ease-out; pointer-events: auto;
+  max-width: 300px; display: flex; align-items: center; gap: 8px;
+}
+@keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+.toast.t-out { animation: toastOut .3s ease-in forwards; }
+@keyframes toastOut { to{opacity:0;transform:translateX(20px)} }
+.toast-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.toast-dot.info { background: var(--blue); }
+.toast-dot.success { background: var(--mint); }
+.toast-dot.warning { background: var(--yellow); }
+.toast-dot.error { background: var(--red); }
+
+/* ─── Responsive ─── */
+@media (max-width: 1200px) {
+  .stats-row { grid-template-columns: repeat(3, 1fr); }
+  .agent-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .pipeline-container { flex-direction: column; gap: 16px; }
+  .pipeline-stages { flex-wrap: wrap; justify-content: center; }
+  .pipeline-meta { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ─── Agent Pool Panel ─── */
+.agent-pool-panel {
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.agent-pool-title {
+  font-size: .85rem; font-weight: 600; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.agent-pool-list {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 420px; overflow-y: auto;
+  padding-right: 4px;
+}
+.pool-agent-card {
+  background: var(--bg-0);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  transition: all var(--ease);
+  display: flex; align-items: flex-start; gap: 10px;
+  position: relative;
+}
+.pool-agent-card:hover {
+  border-color: var(--bg-3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+.pool-agent-avatar {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  background: var(--bg-2);
+}
+.pool-agent-info { flex: 1; min-width: 0; }
+.pool-agent-name {
+  font-weight: 600; font-size: .82rem; color: var(--text-1);
+  display: flex; align-items: center; gap: 6px;
+}
+.pool-agent-role-tag {
+  font-size: .58rem; padding: 1px 6px; border-radius: 6px;
+  font-weight: 600; vertical-align: middle;
+}
+.pool-agent-provider {
+  font-size: .65rem; color: var(--text-3); margin-top: 2px;
+  display: flex; align-items: center; gap: 4px;
+}
+.pool-agent-desc {
+  font-size: .68rem; color: var(--text-3); margin-top: 4px;
+  line-height: 1.4;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.pool-agent-status {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  margin-top: 2px;
+}
+.pool-agent-status.online { background: var(--mint); box-shadow: 0 0 6px var(--mint-glow); }
+.pool-agent-status.busy { background: var(--yellow); animation: blink 1.5s infinite; }
+.pool-agent-status.offline { background: var(--text-3); }
+.pool-agent-badges {
+  display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap;
+}
+.pool-badge {
+  font-size: .58rem; padding: 1px 6px; border-radius: 6px;
+  font-weight: 600;
+}
+.pool-badge.custom { background: var(--yellow-dim); color: var(--yellow); }
+.pool-badge.builtin { background: var(--purple-dim); color: var(--purple); }
+.pool-badge.provider-deepseek { background: rgba(0,150,255,.12); color: #42a5f5; }
+.pool-badge.provider-ollama { background: rgba(76,175,80,.12); color: #66bb6a; }
+.pool-badge.provider-openai { background: rgba(16,163,127,.12); color: #10a37f; }
+.pool-delete-btn {
+  position: absolute; top: 6px; right: 6px;
+  width: 20px; height: 20px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none; background: transparent;
+  color: var(--text-3); font-size: .7rem;
+  transition: all var(--ease); opacity: 0;
+}
+.pool-agent-card:hover .pool-delete-btn { opacity: 1; }
+.pool-delete-btn:hover { background: var(--red-glow); color: var(--red); }
+.btn-add-agent {
+  width: 100%; padding: 10px; margin-top: 10px;
+  background: linear-gradient(135deg, var(--purple-dim), var(--coral-dim));
+  border: 1px dashed var(--bg-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-2); font-size: .78rem; font-weight: 600;
+  cursor: pointer; transition: all var(--ease);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-add-agent:hover {
+  border-color: var(--purple);
+  background: linear-gradient(135deg, var(--purple-dim), var(--coral-dim));
+  color: var(--text-1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--purple-glow);
+}
+
+/* ─── Add Agent Dialog ─── */
+.add-agent-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  z-index: 220; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+}
+.add-agent-overlay.open { opacity: 1; pointer-events: auto; }
+.add-agent-dialog {
+  background: var(--bg-1); border: 1px solid var(--bg-2);
+  border-radius: var(--radius-lg); width: 520px; max-width: 90vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.95); transition: transform .25s ease;
+  max-height: 85vh; display: flex; flex-direction: column;
+}
+.add-agent-overlay.open .add-agent-dialog { transform: scale(1); }
+.add-agent-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 20px; border-bottom: 1px solid var(--bg-2);
+}
+.add-agent-title { font-size: 1rem; font-weight: 700; flex: 1; }
+.add-agent-body { padding: 20px; overflow-y: auto; flex: 1; }
+.add-agent-body .form-group { margin-bottom: 14px; }
+.add-agent-body .form-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.add-agent-footer {
+  padding: 14px 20px; border-top: 1px solid var(--bg-2);
+  display: flex; gap: 10px; justify-content: flex-end;
+}
+.btn-add-submit {
+  background: linear-gradient(135deg, var(--purple), var(--coral));
+  color: #fff; padding: 8px 20px; border-radius: var(--radius-sm);
+  font-size: .85rem; font-weight: 600; border: none; cursor: pointer;
+  transition: all var(--ease);
+  box-shadow: 0 2px 12px var(--purple-glow);
+}
+.btn-add-submit:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px var(--purple-glow);
+}
+.btn-add-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-icon">[U+26A1]</div>
+      <span>NexusFlow</span>
+      <span class="topbar-tag">CDoL v4</span>
+    </div>
+    
+    <nav class="topbar-nav">
+      <button class="nav-btn active" data-view="overview" onclick="switchView('overview')">
+        <span>[U+1F4CA]</span> 概览
+      </button>
+      <button class="nav-btn" data-view="cdol" onclick="switchView('cdol')">
+        <span>[U+1F504]</span> CDoL通信
+      </button>
+      <button class="nav-btn" data-view="agents" onclick="switchView('agents')">
+        <span>[U+1F916]</span> Agent状态
+      </button>
+      <button class="nav-btn" data-view="modules" onclick="switchView('modules')">
+        <span>[U+1F9E0]</span> 核心模块
+      </button>
+    </nav>
+    
+    <div class="topbar-right">
+      <div class="status-pill">
+        <div class="status-dot online" id="wsStatus"></div>
+        <span id="wsStatusText">已连接</span>
+      </div>
+      <div class="status-pill" style="font-size:.72rem;color:var(--text-3)">
+        <span id="currentTime">--:--:--</span>
+      </div>
+      <button class="btn-new" onclick="openTaskDialog()">
+        <span>+</span> 新任务
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main layout-default" id="mainContent">
+    <!-- Header Area (Stats + Pipeline) -->
+    <div class="header-area">
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card s-active">
+          <div class="stat-label">活跃任务</div>
+          <div class="stat-value v-mint" id="statActiveTasks">0</div>
+          <div class="stat-sub">运行中</div>
+        </div>
+        <div class="stat-card s-tasks">
+          <div class="stat-label">完成任务</div>
+          <div class="stat-value v-coral" id="statCompletedTasks">0</div>
+          <div class="stat-sub">历史总计</div>
+        </div>
+        <div class="stat-card s-agents">
+          <div class="stat-label">在线Agent</div>
+          <div class="stat-value v-purple" id="statOnlineAgents">10</div>
+          <div class="stat-sub">/ 10 总数</div>
+        </div>
+        <div class="stat-card s-tokens">
+          <div class="stat-label">Token消耗</div>
+          <div class="stat-value v-yellow" id="statTokens">0</div>
+          <div class="stat-sub">本次会话</div>
+        </div>
+        <div class="stat-card s-cdol">
+          <div class="stat-label">CDoL轮次</div>
+          <div class="stat-value v-blue" id="statCdolRounds">0</div>
+          <div class="stat-sub">已完成</div>
+        </div>
+        <div class="stat-card s-insight">
+          <div class="stat-label">经验积累</div>
+          <div class="stat-value v-coral" id="statInsights">0</div>
+          <div class="stat-sub">InsightStore</div>
+        </div>
+      </div>
+
+      <!-- CDoL Pipeline -->
+      <div class="pipeline-container">
+        <div>
+          <div class="pipeline-title">CDoL 三轮通信协议</div>
+          <div class="pipeline-stages">
+            <!-- Round 0 -->
+            <div class="pipe-stage">
+              <div class="pipe-box round0" id="pipeRound0">
+                <div class="pipe-icon">[U+1F3AF]</div>
+                <div class="pipe-label">Round 0</div>
+                <div class="pipe-sub">独立推理</div>
+              </div>
+              <div class="pipe-status" id="pipeRound0Status">等待</div>
+            </div>
+            
+            <div class="pipe-arrow" id="pipeArrow0"><div class="dot"></div></div>
+            
+            <!-- Round 1 -->
+            <div class="pipe-stage">
+              <div class="pipe-box round1" id="pipeRound1">
+                <div class="pipe-icon">[U+2696][U+FE0F]</div>
+                <div class="pipe-label">Round 1</div>
+                <div class="pipe-sub">差异归因</div>
+              </div>
+              <div class="pipe-status" id="pipeRound1Status">等待</div>
+            </div>
+            
+            <div class="pipe-arrow" id="pipeArrow1"><div class="dot"></div></div>
+            
+            <!-- Round 2 -->
+            <div class="pipe-stage">
+              <div class="pipe-box round2" id="pipeRound2">
+                <div class="pipe-icon">[U+1F527]</div>
+                <div class="pipe-label">Round 2</div>
+                <div class="pipe-sub">修正收敛</div>
+              </div>
+              <div class="pipe-status" id="pipeRound2Status">等待</div>
+            </div>
+            
+            <div class="pipe-arrow" id="pipeArrow2"><div class="dot"></div></div>
+            
+            <!-- FusionJudge -->
+            <div class="pipe-stage">
+              <div class="pipe-box judge" id="pipeJudge">
+                <div class="pipe-icon">[U+1F9EC]</div>
+                <div class="pipe-label">FusionJudge</div>
+                <div class="pipe-sub">矛盾检测</div>
+              </div>
+              <div class="pipe-status" id="pipeJudgeStatus">等待</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pipeline-meta">
+          <div class="meta-item">
+            <div class="meta-value" id="metaConflictType">--</div>
+            <div class="meta-label">冲突类型</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value" id="metaDivergence">--</div>
+            <div class="meta-label">分歧度</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value" id="metaAgentsActive">0</div>
+            <div class="meta-label">活跃Agent</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value" id="metaSynergyGain">0.0</div>
+            <div class="meta-label">协同增益</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area" id="contentArea">
+      <!-- Overview View -->
+      <div id="viewOverview" class="view-content">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <!-- Agent Status -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F916]</span>
+              <span class="panel-title">Agent 状态监控</span>
+              <span class="panel-badge" id="agentCount">10 个</span>
+            </div>
+            <div class="panel-body">
+              <div class="agent-grid" id="agentGrid"></div>
+            </div>
+          </div>
+
+          <!-- Recent Tasks -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F4CB]</span>
+              <span class="panel-title">任务列表</span>
+              <span class="panel-badge" id="taskCount">0 个</span>
+            </div>
+            <div class="panel-body">
+              <div class="task-list" id="taskList"></div>
+            </div>
+          </div>
+
+          <!-- FusionJudge -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F9EC]</span>
+              <span class="panel-title">FusionJudge 矛盾检测</span>
+              <span class="panel-badge" id="fusionBadge">待检测</span>
+            </div>
+            <div class="panel-body">
+              <div class="fusion-panel" id="fusionPanel">
+                <div class="fusion-header">
+                  <div class="fusion-title">
+                    <span>[U+2696][U+FE0F]</span>
+                    <span>虚假一致检测</span>
+                  </div>
+                  <div class="fusion-badge fusion-badge.calculating" id="fusionStatus">等待分析</div>
+                </div>
+                <div class="fusion-metrics">
+                  <div class="fusion-metric">
+                    <div class="fusion-metric-value" id="fusionDivergence" style="color:var(--text-2)">--</div>
+                    <div class="fusion-metric-label">分歧度</div>
+                  </div>
+                  <div class="fusion-metric">
+                    <div class="fusion-metric-value" id="fusionAttributions" style="color:var(--mint)">--</div>
+                    <div class="fusion-metric-label">可归因矛盾</div>
+                  </div>
+                  <div class="fusion-metric">
+                    <div class="fusion-metric-value" id="fusionUnattributed" style="color:var(--coral)">--</div>
+                    <div class="fusion-metric-label">不可归因</div>
+                  </div>
+                  <div class="fusion-metric">
+                    <div class="fusion-metric-value" id="fusionWarnings" style="color:var(--red)">--</div>
+                    <div class="fusion-metric-label">虚假一致警告</div>
+                  </div>
+                </div>
+                <div class="fusion-details" id="fusionDetails">
+                  <div class="fusion-detail-row">
+                    <div class="fusion-type-dot converged"></div>
+                    <div class="fusion-detail-text">等待 CDoL 执行...</div>
+                    <div class="fusion-detail-count">--</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LazinessDetector -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F50D]</span>
+              <span class="panel-title">LazinessDetector 懒惰检测</span>
+              <span class="panel-badge" id="lazinessAlert">正常</span>
+            </div>
+            <div class="panel-body">
+              <div class="laziness-panel" id="lazinessPanel">
+                <div class="laziness-title">
+                  <span>[U+26A1]</span>
+                  <span>四维懒惰检测</span>
+                </div>
+                <div class="laziness-metrics" id="lazinessMetrics">
+                  <div class="laziness-metric" id="lazMetricRetrieval">
+                    <div class="laziness-indicator ok">[U+1F50E]</div>
+                    <div class="laziness-metric-value" style="color:var(--mint)">0.85</div>
+                    <div class="laziness-metric-label">检索频率</div>
+                    <div class="laziness-bar"><div class="laziness-bar-fill ok" style="width:85%"></div></div>
+                  </div>
+                  <div class="laziness-metric" id="lazMetricCorrection">
+                    <div class="laziness-indicator ok">[U+270F][U+FE0F]</div>
+                    <div class="laziness-metric-value" style="color:var(--mint)">0.72</div>
+                    <div class="laziness-metric-label">纠错率</div>
+                    <div class="laziness-bar"><div class="laziness-bar-fill ok" style="width:72%"></div></div>
+                  </div>
+                  <div class="laziness-metric" id="lazMetricConfidence">
+                    <div class="laziness-indicator ok">[U+1F4C8]</div>
+                    <div class="laziness-metric-value" style="color:var(--mint)">0.68</div>
+                    <div class="laziness-metric-label">置信度趋势</div>
+                    <div class="laziness-bar"><div class="laziness-bar-fill ok" style="width:68%"></div></div>
+                  </div>
+                  <div class="laziness-metric" id="lazMetricDiversity">
+                    <div class="laziness-indicator warning">[U+1F310]</div>
+                    <div class="laziness-metric-value" style="color:var(--yellow)">0.45</div>
+                    <div class="laziness-metric-label">信息源多样性</div>
+                    <div class="laziness-bar"><div class="laziness-bar-fill warning" style="width:45%"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CDoL View -->
+      <div id="viewCdol" class="view-content" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <!-- Three Rounds Detail -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F504]</span>
+              <span class="panel-title">CDoL 三轮通信详情</span>
+            </div>
+            <div class="panel-body">
+              <div class="round-details" id="roundDetails">
+                <!-- Round 0 -->
+                <div class="round-card round-0 expanded" id="round0Card">
+                  <div class="round-card-header" onclick="toggleRound('round0')">
+                    <div class="round-number">0</div>
+                    <div class="round-title">
+                      <div class="round-name">Round 0 — 独立推理</div>
+                      <div class="round-desc">每个Agent在隔离上下文中独立推理，产出中间结论</div>
+                    </div>
+                    <div class="round-status" id="round0Status">等待</div>
+                  </div>
+                  <div class="round-body">
+                    <div class="round-conclusions" id="round0Conclusions">
+                      <div class="conclusion-item">
+                        <div class="conclusion-header">
+                          <span class="conclusion-agent">Agent 们</span>
+                        </div>
+                        <div class="conclusion-preview">等待 Round 0 开始...</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Round 1 -->
+                <div class="round-card round-1" id="round1Card">
+                  <div class="round-card-header" onclick="toggleRound('round1')">
+                    <div class="round-number">1</div>
+                    <div class="round-title">
+                      <div class="round-name">Round 1 — 差异归因</div>
+                      <div class="round-desc">Agent收到他人结论但不可见原始视角，执行差异归因</div>
+                    </div>
+                    <div class="round-status" id="round1Status">等待</div>
+                  </div>
+                  <div class="round-body">
+                    <div class="round-conclusions" id="round1Conclusions">
+                      <div class="conclusion-item">
+                        <div class="conclusion-header">
+                          <span class="conclusion-agent">Agent 们</span>
+                        </div>
+                        <div class="conclusion-preview">等待 Round 1 开始...</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Round 2 -->
+                <div class="round-card round-2" id="round2Card">
+                  <div class="round-card-header" onclick="toggleRound('round2')">
+                    <div class="round-number">2</div>
+                    <div class="round-title">
+                      <div class="round-name">Round 2 — 修正收敛</div>
+                      <div class="round-desc">Agent基于归因结果修正结论，标注修正原因</div>
+                    </div>
+                    <div class="round-status" id="round2Status">等待</div>
+                  </div>
+                  <div class="round-body">
+                    <div class="round-conclusions" id="round2Conclusions">
+                      <div class="conclusion-item">
+                        <div class="conclusion-header">
+                          <span class="conclusion-agent">Agent 们</span>
+                        </div>
+                        <div class="conclusion-preview">等待 Round 2 开始...</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strategy Selector -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F9E9]</span>
+              <span class="panel-title">分解策略选择</span>
+              <span class="panel-badge" id="strategyBadge">6 种</span>
+            </div>
+            <div class="panel-body">
+              <div class="strategy-panel">
+                <div class="strategy-title">
+                  <span>[U+1F4CB]</span>
+                  <span>六种视角分解策略</span>
+                </div>
+                <div class="strategy-grid" id="strategyGrid">
+                  <div class="strategy-card selected" data-strategy="evidence_split" onclick="selectStrategy('evidence_split')">
+                    <div class="strategy-icon">[U+1F4CA]</div>
+                    <div class="strategy-name">Evidence Split</div>
+                    <div class="strategy-desc">按证据类型拆分</div>
+                  </div>
+                  <div class="strategy-card" data-strategy="role_constraint" onclick="selectStrategy('role_constraint')">
+                    <div class="strategy-icon">[U+1F3AD]</div>
+                    <div class="strategy-name">Role Constraint</div>
+                    <div class="strategy-desc">注入对抗角色</div>
+                  </div>
+                  <div class="strategy-card" data-strategy="layer_separation" onclick="selectStrategy('layer_separation')">
+                    <div class="strategy-icon">[U+1F3D7][U+FE0F]</div>
+                    <div class="strategy-name">Layer Separation</div>
+                    <div class="strategy-desc">分层策略/实现</div>
+                  </div>
+                  <div class="strategy-card" data-strategy="modality_split" onclick="selectStrategy('modality_split')">
+                    <div class="strategy-icon">[U+1F4C1]</div>
+                    <div class="strategy-name">Modality Split</div>
+                    <div class="strategy-desc">按模态拆分</div>
+                  </div>
+                  <div class="strategy-card" data-strategy="time_slice" onclick="selectStrategy('time_slice')">
+                    <div class="strategy-icon">[U+23F0]</div>
+                    <div class="strategy-name">Time Slice</div>
+                    <div class="strategy-desc">时序切片</div>
+                  </div>
+                  <div class="strategy-card" data-strategy="abstraction_level" onclick="selectStrategy('abstraction_level')">
+                    <div class="strategy-icon">[U+1F3AF]</div>
+                    <div class="strategy-name">Abstraction Level</div>
+                    <div class="strategy-desc">抽象层级拆分</div>
+                  </div>
+                </div>
+                <div style="margin-top:14px;padding:12px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <div style="font-size:.78rem;color:var(--text-2);margin-bottom:8px">当前策略说明</div>
+                  <div style="font-size:.82rem;font-weight:600;color:var(--purple)" id="strategyDesc">按证据类型拆分为多个视角，如 Agent[U+2081]看实验数据，Agent[U+2082]看理论分析</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Information Architecture -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F310]</span>
+              <span class="panel-title">信息不对称架构</span>
+              <span class="panel-badge">三层</span>
+            </div>
+            <div class="panel-body">
+              <div class="info-arch-panel">
+                <div class="info-arch-title">
+                  <span>[U+1F512]</span>
+                  <span>AgentInformationPolicy 三层信息架构</span>
+                </div>
+                <div class="tier-diagram">
+                  <!-- Global Tier -->
+                  <div class="tier-row global">
+                    <div class="tier-icon">[U+1F310]</div>
+                    <div class="tier-info">
+                      <div class="tier-name">全局视野层 GLOBAL</div>
+                      <div class="tier-desc">可见全部上下文，可直接调用任何Agent</div>
+                      <div class="tier-agents">
+                        <span class="tier-agent-chip">[U+1F9ED] Coordinator</span>
+                        <span class="tier-agent-chip">[U+1F4DA] Archivist</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- CDoL Tier -->
+                  <div class="tier-row cdol">
+                    <div class="tier-icon">[U+1F517]</div>
+                    <div class="tier-info">
+                      <div class="tier-name">CDoL参与层 PARTICIPANT</div>
+                      <div class="tier-desc">按ContextMask看到信息切片，参与三轮通信</div>
+                      <div class="tier-agents">
+                        <span class="tier-agent-chip">[U+1F9E9] Strategist</span>
+                        <span class="tier-agent-chip">[U+1F4BB] Coder</span>
+                        <span class="tier-agent-chip">[U+1F50D] Researcher</span>
+                        <span class="tier-agent-chip">[U+1F4CA] Analyst</span>
+                        <span class="tier-agent-chip">[U+1F525] Critic</span>
+                        <span class="tier-agent-chip">[U+1F52C] Synthesizer</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Observer Tier -->
+                  <div class="tier-row observer">
+                    <div class="tier-icon">[U+1F441]</div>
+                    <div class="tier-info">
+                      <div class="tier-name">旁观记录层 BYSTANDER</div>
+                      <div class="tier-desc">仅可见中间结论，提供元观察报告</div>
+                      <div class="tier-agents">
+                        <span class="tier-agent-chip">[U+1F441] Observer</span>
+                        <span class="tier-agent-chip">[U+1F4E1] Monitor</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- InsightStore -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F4A1]</span>
+              <span class="panel-title">InsightStore 跨任务学习</span>
+              <span class="panel-badge" id="insightCount">0 条</span>
+            </div>
+            <div class="panel-body">
+              <div class="insight-panel">
+                <div class="insight-header">
+                  <div class="insight-title">
+                    <span>[U+1F9E0]</span>
+                    <span>五维结构化经验</span>
+                  </div>
+                </div>
+                <div class="insight-categories">
+                  <div class="insight-category active" data-cat="all" onclick="filterInsights('all')">
+                    <span class="insight-category-icon">[U+1F4E6]</span>
+                    <span class="insight-category-label">全部</span>
+                    <span class="insight-category-count" id="insightCountAll">0</span>
+                  </div>
+                  <div class="insight-category" data-cat="strategy" onclick="filterInsights('strategy')">
+                    <span class="insight-category-icon">[U+1F3AF]</span>
+                    <span class="insight-category-label">策略</span>
+                    <span class="insight-category-count" id="insightCountStrategy">0</span>
+                  </div>
+                  <div class="insight-category" data-cat="contradiction" onclick="filterInsights('contradiction')">
+                    <span class="insight-category-icon">[U+26A1]</span>
+                    <span class="insight-category-label">矛盾</span>
+                    <span class="insight-category-count" id="insightCountContradiction">0</span>
+                  </div>
+                  <div class="insight-category" data-cat="synergy" onclick="filterInsights('synergy')">
+                    <span class="insight-category-icon">[U+1F517]</span>
+                    <span class="insight-category-label">协同</span>
+                    <span class="insight-category-count" id="insightCountSynergy">0</span>
+                  </div>
+                </div>
+                <div class="insight-list" id="insightList">
+                  <div class="insight-item" style="opacity:.5">
+                    <div class="insight-text">暂无经验积累，等待任务执行...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agents View -->
+      <div id="viewAgents" class="view-content" style="display:none">
+        <div class="panel-card">
+          <div class="panel-header">
+            <span class="panel-icon">[U+1F916]</span>
+            <span class="panel-title">10个Agent 实时状态</span>
+            <span class="panel-badge">CDoL 协作</span>
+          </div>
+          <div class="panel-body">
+            <div class="agent-grid" id="agentGridFull" style="grid-template-columns:repeat(auto-fill, minmax(240px, 1fr))"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modules View -->
+      <div id="viewModules" class="view-content" style="display:none">
+        <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px">
+          <!-- FusionJudge Module -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F9EC]</span>
+              <span class="panel-title">FusionJudge</span>
+              <span class="panel-badge" style="background:var(--purple-dim);color:var(--purple)">核心模块</span>
+            </div>
+            <div class="panel-body">
+              <div style="font-size:.82rem;color:var(--text-2);line-height:1.6;margin-bottom:12px">
+                虚假一致检测与四类矛盾分类
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--mint)"></div>
+                  <span style="font-size:.78rem">可归因矛盾 → 触发双向通信修正</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--coral)"></div>
+                  <span style="font-size:.78rem">不可归因矛盾 → 回溯视角分解器</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--red)"></div>
+                  <span style="font-size:.78rem">虚假一致 → 拒绝合并，分离条件方案</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--purple)"></div>
+                  <span style="font-size:.78rem">真实收敛 → 输出最终答案</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LazinessDetector Module -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F50D]</span>
+              <span class="panel-title">LazinessDetector</span>
+              <span class="panel-badge" style="background:var(--purple-dim);color:var(--purple)">核心模块</span>
+            </div>
+            <div class="panel-body">
+              <div style="font-size:.82rem;color:var(--text-2);line-height:1.6;margin-bottom:12px">
+                四维懒惰检测，解决大窗口懒惰症
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+1F50E]</span>
+                  <span style="font-size:.78rem">检索频率 → 主动探索意愿</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+270F][U+FE0F]</span>
+                  <span style="font-size:.78rem">纠错率 → 自我审视程度</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+1F4C8]</span>
+                  <span style="font-size:.78rem">置信度趋势 → 过度自信检测</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+1F310]</span>
+                  <span style="font-size:.78rem">信息源多样性 → 信息茧房检测</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- InsightStore Module -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <span class="panel-icon">[U+1F4A1]</span>
+              <span class="panel-title">InsightStore</span>
+              <span class="panel-badge" style="background:var(--purple-dim);color:var(--purple)">核心模块</span>
+            </div>
+            <div class="panel-body">
+              <div style="font-size:.82rem;color:var(--text-2);line-height:1.6;margin-bottom:12px">
+                跨任务学习，五维结构化经验
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+1F3AF]</span>
+                  <span style="font-size:.78rem">strategy_effectiveness</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+26A1]</span>
+                  <span style="font-size:.78rem">contradiction_patterns</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+1F4D0]</span>
+                  <span style="font-size:.78rem">decomposition_quality</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+1F517]</span>
+                  <span style="font-size:.78rem">synergy_analysis</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-0);border-radius:var(--radius-sm)">
+                  <span>[U+1F4CB]</span>
+                  <span style="font-size:.78rem">task_type</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar-area" id="sidebarArea">
+      <div class="panel-card">
+        <div class="panel-header">
+          <span class="panel-icon">[U+1F4DD]</span>
+          <span class="panel-title">事件日志</span>
+          <span class="panel-badge" id="eventCount">0</span>
+        </div>
+        <div class="panel-body">
+          <div class="event-log" id="eventLog"></div>
+        </div>
+      </div>
+      
+      <!-- Dynamic Injection Panel (v3.2) -->
+      <div class="panel-card" id="injectionPanel" style="display:none">
+        <div class="panel-header">
+          <span class="panel-icon">[U+1F489]</span>
+          <span class="panel-title">动态注入控制</span>
+          <span class="panel-badge" id="injectionBadge" style="background:var(--red-dim);color:var(--red)">实验性功能</span>
+        </div>
+        <div class="panel-body" style="padding:12px">
+          <!-- Requirement Change -->
+          <div class="injection-section">
+            <div class="injection-label">[U+1F4DD] 需求变更注入</div>
+            <textarea class="form-input" id="injectionInput" rows="2" placeholder="输入新的需求或约束..." style="font-size:.75rem;margin-bottom:8px"></textarea>
+            <button class="btn btn-sm btn-coral" onclick="injectRequirement()" style="width:100%;font-size:.72rem">
+              注入需求变更
+            </button>
+          </div>
+          
+          <!-- Fault Injection -->
+          <div class="injection-section" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bg-2)">
+            <div class="injection-label">[U+1F4A5] 故障注入</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('node_failure','researcher')" style="font-size:.68rem" title="模拟Researcher节点失效">
+                [U+1F525] 研究员失效
+              </button>
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('node_failure','coder')" style="font-size:.68rem" title="模拟Coder节点失效">
+                [U+1F525] 编码师失效
+              </button>
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('latency_inject','all')" style="font-size:.68rem" title="注入全局延迟">
+                [U+23F1][U+FE0F] 延迟注入
+              </button>
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('topology_disrupt','topology')" style="font-size:.68rem" title="强制切换拓扑">
+                [U+1F500] 拓扑扰动
+              </button>
+            </div>
+          </div>
+          
+          <!-- Recovery -->
+          <div class="injection-section" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bg-2)">
+            <div class="injection-label">[U+1F527] 手动恢复</div>
+            <div id="disabledAgentsList" style="font-size:.7rem;color:var(--text-2);margin:8px 0">
+              无失效Agent
+            </div>
+            <button class="btn btn-sm btn-mint" onclick="recoverAllAgents()" style="width:100%;font-size:.72rem">
+              恢复所有Agent
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Pool Panel -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <span class="panel-icon">[U+1F916]</span>
+          <span class="panel-title">云端 Agent 池</span>
+          <span class="panel-badge" id="agentPoolCount">0 个</span>
+        </div>
+        <div class="panel-body">
+          <div class="agent-pool-panel">
+            <div class="agent-pool-title">
+              <span>[U+1F916]</span>
+              <span>可用 Agent 列表</span>
+            </div>
+            <div class="agent-pool-list" id="agentPoolList">
+              <div style="text-align:center;padding:20px;color:var(--text-3);font-size:.78rem">
+                加载中...
+              </div>
+            </div>
+            <button class="btn-add-agent" onclick="openAddAgentDialog()">
+              <span>[U+2795]</span>
+              <span>添加 Agent</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agents Detail Area -->
+    <div class="detail-area" id="detailArea" style="display:none">
+      <!-- Agent Detail will be populated here -->
+    </div>
+  </main>
+</div>
+
+<!-- Detail Drawer -->
+<div class="detail-drawer" id="detailDrawer">
+  <div class="drawer-header">
+    <span class="drawer-title" id="drawerTitle">Agent 详情</span>
+    <button class="drawer-close" onclick="closeDrawer()">[U+2715]</button>
+  </div>
+  <div class="drawer-body" id="drawerBody">
+    <!-- Dynamic content -->
+  </div>
+</div>
+
+<!-- Task Dialog -->
+<div class="dialog-overlay" id="taskDialogOverlay">
+  <div class="dialog">
+    <div class="dialog-header">
+      <span class="dialog-title">[U+1F4CB] 提交新任务</span>
+      <button class="drawer-close" onclick="closeTaskDialog()">[U+2715]</button>
+    </div>
+    <div class="dialog-body">
+      <div class="form-group">
+        <label class="form-label">任务描述</label>
+        <textarea class="form-input" id="taskInput" rows="4" placeholder="描述您的任务，例如：分析蛋白质折叠问题并设计实验方案"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">最大轮数</label>
+        <select class="form-select" id="taskRounds">
+          <option value="1">1轮 (简单任务)</option>
+          <option value="3">3轮 (标准任务)</option>
+          <option value="5">5轮 (中等任务)</option>
+          <option value="10" selected>10轮 (复杂任务)</option>
+          <option value="20">20轮 (深度任务)</option>
+          <option value="50">50轮 (探索性任务)</option>
+          <option value="100">100轮 (大规模研究)</option>
+          <option value="200">200轮 (深度研究)</option>
+          <option value="500">500轮 (超大规模任务)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">步数上限 <span style="font-size:.75rem;color:var(--text-2)">(0=不限)</span></label>
+        <input class="form-input" id="taskMaxSteps" type="number" value="0" min="0" max="10000" placeholder="0表示不限制步数">
+      </div>
+      <div class="form-group">
+        <label class="form-label">CDoL 分解策略</label>
+        <div style="font-size:.75rem;color:var(--text-2);padding:10px;background:var(--bg-0);border-radius:6px;line-height:1.5">
+          [U+1F916] <strong>智能自动选择</strong>：系统将根据任务特征自动选择最优策略<br>
+          <span style="font-size:.7rem;color:var(--text-3)">支持：证据拆分 / 角色对抗 / 分层分析 / 模态拆分 / 时序切片 / 抽象层级</span>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <button class="btn btn-ghost" onclick="closeTaskDialog()">取消</button>
+      <button class="btn btn-primary" id="btnSubmitTask" onclick="submitTask()">提交执行</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Agent Dialog -->
+<div class="add-agent-overlay" id="addAgentOverlay">
+  <div class="add-agent-dialog">
+    <div class="add-agent-header">
+      <span>[U+1F916]</span>
+      <span class="add-agent-title">添加云端 Agent</span>
+      <button class="drawer-close" onclick="closeAddAgentDialog()">[U+2715]</button>
+    </div>
+    <div class="add-agent-body">
+      <div class="form-group">
+        <label class="form-label">Agent 名称 <span style="color:var(--red)">*</span></label>
+        <input class="form-input" id="addAgentName" placeholder="例如：CodeReviewer" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">API Key <span style="color:var(--red)">*</span></label>
+        <input class="form-input" id="addAgentApiKey" type="password" placeholder="输入 API Key" />
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div>
+            <label class="form-label">Provider</label>
+            <select class="form-select" id="addAgentProvider">
+              <option value="deepseek">DeepSeek</option>
+              <option value="openai">OpenAI</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">模型</label>
+            <input class="form-input" id="addAgentModel" placeholder="deepseek-chat" value="deepseek-chat" />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">角色方向</label>
+        <select class="form-select" id="addAgentRole">
+          <option value="auto">自动推断</option>
+          <option value="coder">Coder 编码师</option>
+          <option value="analyst">Analyst 分析师</option>
+          <option value="researcher">Researcher 研究员</option>
+          <option value="critic">Critic 批评家</option>
+          <option value="synthesizer">Synthesizer 整合师</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">描述（可选）</label>
+        <textarea class="form-input" id="addAgentDesc" rows="3" placeholder="简要描述该 Agent 的专长或用途..."></textarea>
+      </div>
+    </div>
+    <div class="add-agent-footer">
+      <button class="btn btn-ghost" onclick="closeAddAgentDialog()">取消</button>
+      <button class="btn-add-submit" id="btnAddAgent" onclick="addAgent()">[U+2795] 添加 Agent</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// NexusFlow Dashboard v4.0 — CDoL Core Engine
+// ═══════════════════════════════════════════
+
+const API_BASE = '';
+let ws = null;
+let currentView = 'overview';
+let selectedAgent = null;
+let selectedTask = null;
+let eventCount = 0;
+
+// Agent definitions (10 Agents)
+const AGENTS = [
+  { id: 'coordinator', name: 'Coordinator', label: '编排者', icon: '[U+1F9ED]', tier: 'global', state: 'idle', tokens: 0, tasks: 0, description: '接收任务，评估复杂度，决定路由（单Agent vs CDoL）' },
+  { id: 'archivist', name: 'Archivist', label: '档案师', icon: '[U+1F4DA]', tier: 'global', state: 'idle', tokens: 0, tasks: 0, description: '任务完成后蒸馏经验，写入全局记忆，跨任务知识复用' },
+  { id: 'strategist', name: 'Strategist', label: '策略师', icon: '[U+1F9E9]', tier: 'cdol', state: 'idle', tokens: 0, tasks: 0, description: '分析任务本质，分解为多视角子问题，设计信息不对称方案' },
+  { id: 'coder', name: 'Coder', label: '编码师', icon: '[U+1F4BB]', tier: 'cdol', state: 'idle', tokens: 0, tasks: 0, description: '编写代码、调试工具、实现自动化方案' },
+  { id: 'researcher', name: 'Researcher', label: '研究员', icon: '[U+1F50D]', tier: 'cdol', state: 'idle', tokens: 0, tasks: 0, description: '信息检索、文献分析、提供事实依据' },
+  { id: 'analyst', name: 'Analyst', label: '分析师', icon: '[U+1F4CA]', tier: 'cdol', state: 'idle', tokens: 0, tasks: 0, description: '数据分析、模式识别、量化洞察' },
+  { id: 'critic', name: 'Critic', label: '批评家', icon: '[U+1F525]', tier: 'cdol', state: 'idle', tokens: 0, tasks: 0, description: '对抗质疑、发现盲点、确保结论鲁棒' },
+  { id: 'synthesizer', name: 'Synthesizer', label: '整合师', icon: '[U+1F52C]', tier: 'cdol', state: 'idle', tokens: 0, tasks: 0, description: '多视角融合、解决矛盾、生成统一方案' },
+  { id: 'observer', name: 'Observer', label: '旁观者', icon: '[U+1F441]', tier: 'observer', state: 'idle', tokens: 0, tasks: 0, description: '仅观察中间结论，发现跨视角隐藏模式' },
+  { id: 'monitor', name: 'Monitor', label: '监控者', icon: '[U+1F4E1]', tier: 'observer', state: 'idle', tokens: 0, tasks: 0, description: '监控Agent负载与系统健康，检测异常' },
+];
+
+// Strategy descriptions
+const STRATEGY_DESCS = {
+  'evidence_split': '按证据类型拆分为多个视角，如 Agent[U+2081]看实验数据，Agent[U+2082]看理论分析。协同增益：必须通信才能拼出完整证据链',
+  'role_constraint': '注入对抗角色，如质疑者 vs 辩护者。协同增益：对抗性视角消除 confirmation bias',
+  'layer_separation': '分层处理，如 Agent[U+2081]高层策略，Agent[U+2082]底层验证。协同增益：策略Agent不被琐碎约束束缚',
+  'modality_split': '按模态拆分，如 Agent[U+2081]结构化数据，Agent[U+2082]非结构化文本。协同增益：互补格式促进交叉验证',
+  'time_slice': '时序切片，如 Agent[U+2081]看时序前半段，Agent[U+2082]看后半段。协同增益：必须推断对方因果上下文',
+  'abstraction_level': '抽象层级拆分，如 Agent[U+2081]看具体实例，Agent[U+2082]看抽象规则。协同增益：实例[U+2194]规则双向验证',
+};
+
+// FusionJudge data
+let fusionData = {
+  divergence: null,
+  conflict_type: 'waiting',
+  attributable: 0,
+  unattributable: 0,
+  false_consensus: 0,
+  converged: 0,
+};
+
+// LazinessDetector data
+let lazinessData = {
+  retrieval_frequency: 0.85,
+  correction_rate: 0.72,
+  confidence_trend: 0.68,
+  info_diversity: 0.45,
+};
+
+// Insights data
+let insightsData = [];
+
+// Tasks data
+let tasksData = [];
+
+// Round conclusions
+let roundConclusions = {
+  round0: [],
+  round1: [],
+  round2: [],
+};
+
+// ─── Utility Functions ───
+function $(id) { return document.getElementById(id); }
+function $$(sel) { return document.querySelectorAll(sel); }
+function timeNow() {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+}
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+// ─── Show Toast ───
+function showToast(message, type = 'info') {
+  const container = $('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<div class="toast-dot ${type}"></div><span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('t-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// ─── View Switching ───
+function switchView(view) {
+  currentView = view;
+  $$('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
+  
+  $$('.view-content').forEach(v => v.style.display = 'none');
+  $(`view${view.charAt(0).toUpperCase() + view.slice(1)}`).style.display = '';
+  
+  const main = $('mainContent');
+  const sidebar = $('sidebarArea');
+  const detail = $('detailArea');
+  
+  if (view === 'agents') {
+    main.className = 'main layout-agents';
+    sidebar.style.display = 'none';
+    detail.style.display = '';
+    renderAgentsFull();
+  } else {
+    main.className = 'main layout-default';
+    sidebar.style.display = '';
+    detail.style.display = 'none';
+  }
+}
+
+// ─── Agent Rendering ───
+function renderAgentCard(agent) {
+  const tierColors = { global: 'var(--coral)', cdol: 'var(--purple)', observer: 'var(--yellow)' };
+  const stateLabels = { idle: '空闲', thinking: '推理中', waiting: '等待', complete: '完成', error: '异常' };
+  const stateColors = { idle: 'var(--text-3)', thinking: 'var(--coral)', waiting: 'var(--yellow)', complete: 'var(--mint)', error: 'var(--red)' };
+  
+  return `
+    <div class="agent-card ${selectedAgent === agent.id ? 'selected' : ''}" onclick="openAgentDetail('${agent.id}')" data-agent="${agent.id}">
+      <div class="agent-header">
+        <div class="agent-avatar ${agent.tier}" style="border:2px solid ${tierColors[agent.tier]}">${agent.icon}</div>
+        <div class="agent-info">
+          <div class="agent-name">${agent.label}</div>
+          <div class="agent-role">${agent.name}</div>
+        </div>
+        <div class="agent-state ${agent.state}" style="box-shadow:0 0 8px ${stateColors[agent.state]}"></div>
+      </div>
+      <span class="agent-tier-badge ${agent.tier}">${agent.tier === 'global' ? '[U+1F310]全局' : agent.tier === 'cdol' ? '[U+1F517]CDoL' : '[U+1F441]旁观'}</span>
+      ${agent.edge_cloud_label ? `<span class="agent-tier-badge" style="background:${agent.edge_cloud_layer === 'cloud' ? '#1a3a5c' : agent.edge_cloud_layer === 'edge' ? '#2a1a4c' : '#1a2c1a'};color:${agent.edge_cloud_layer === 'cloud' ? '#64b5f6' : agent.edge_cloud_layer === 'edge' ? '#ce93d8' : '#a5d6a7'};margin-left:4px">${agent.edge_cloud_label}</span>` : ''}
+      <div class="agent-stats">
+        <div class="agent-stat">
+          <span class="agent-stat-label">Token</span>
+          <span class="agent-stat-value">${agent.tokens || 0}</span>
+        </div>
+        <div class="agent-stat">
+          <span class="agent-stat-label">任务</span>
+          <span class="agent-stat-value">${agent.tasks || 0}</span>
+        </div>
+        <div class="agent-stat">
+          <span class="agent-stat-label">状态</span>
+          <span class="agent-stat-value" style="color:${stateColors[agent.state]}">${stateLabels[agent.state]}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAgentsGrid() {
+  $('agentGrid').innerHTML = AGENTS.map(a => renderAgentCard(a)).join('');
+  $('agentGridFull').innerHTML = AGENTS.map(a => renderAgentCard(a)).join('');
+  $('agentCount').textContent = `${AGENTS.length} 个`;
+}
+
+function renderAgentsFull() {
+  renderAgentsGrid();
+}
+
+// ─── Agent Detail Drawer ───
+function openAgentDetail(agentId) {
+  const agent = AGENTS.find(a => a.id === agentId);
+  if (!agent) return;
+  
+  selectedAgent = agentId;
+  renderAgentsGrid();
+  
+  const tierColors = { global: 'var(--coral)', cdol: 'var(--purple)', observer: 'var(--yellow)' };
+  const tierLabels = { global: '全局视野层', cdol: 'CDoL参与层', observer: '旁观记录层' };
+  
+  $('drawerTitle').textContent = `${agent.icon} ${agent.label}`;
+  $('drawerBody').innerHTML = `
+    <div class="drawer-section">
+      <div class="drawer-section-title">基本信息</div>
+      <div class="drawer-field"><span class="drawer-field-label">角色</span><span class="drawer-field-value">${agent.name}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">信息层</span>
+        <span class="drawer-tag ${agent.tier}" style="background:${tierColors[agent.tier]}20;color:${tierColors[agent.tier]}">${tierLabels[agent.tier]}</span>
+      </div>
+      <div class="drawer-field"><span class="drawer-field-label">状态</span><span class="drawer-field-value">${agent.state}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">Token 用量</span><span class="drawer-field-value">${agent.tokens || 0}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">完成任务</span><span class="drawer-field-value">${agent.tasks || 0}</span></div>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">角色描述</div>
+      <div style="font-size:.82rem;color:var(--text-2);line-height:1.5">${agent.description}</div>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">信息可见性</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        ${agent.tier === 'global' ? `
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>任务目标</span><span style="color:var(--mint);font-weight:600">100%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>全局上下文</span><span style="color:var(--mint);font-weight:600">100%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>Agent状态</span><span style="color:var(--mint);font-weight:600">100%</span>
+          </div>
+        ` : agent.tier === 'cdol' ? `
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>任务目标</span><span style="color:var(--purple);font-weight:600">80%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>本人视角</span><span style="color:var(--purple);font-weight:600">100%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>其他Agent结论</span><span style="color:var(--yellow);font-weight:600">60%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>历史记忆</span><span style="color:var(--text-3);font-weight:600">0%</span>
+          </div>
+        ` : `
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>中间结论</span><span style="color:var(--yellow);font-weight:600">100%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-0);border-radius:6px;font-size:.78rem">
+            <span>原始输入</span><span style="color:var(--text-3);font-weight:600">0%</span>
+          </div>
+        `}
+      </div>
+    </div>
+  `;
+  $('detailDrawer').classList.add('open');
+}
+
+function closeDrawer() {
+  $('detailDrawer').classList.remove('open');
+  selectedAgent = null;
+  renderAgentsGrid();
+}
+
+// ─── Strategy Selection ───
+function selectStrategy(strategy) {
+  $$('.strategy-card').forEach(c => c.classList.toggle('selected', c.dataset.strategy === strategy));
+  $('strategyDesc').textContent = STRATEGY_DESCS[strategy];
+}
+
+// ─── Round Toggle ───
+function toggleRound(round) {
+  const card = $(`${round}Card`);
+  card.classList.toggle('expanded');
+}
+
+// ─── Task List ───
+function renderTaskList() {
+  if (tasksData.length === 0) {
+    $('taskList').innerHTML = `
+      <div style="text-align:center;padding:24px;color:var(--text-3);font-size:.82rem">
+        暂无任务，提交新任务开始体验
+      </div>
+    `;
+    return;
+  }
+  
+  $('taskList').innerHTML = tasksData.slice(0, 5).map(t => {
+    const statusClass = t.status === 'running' ? 'running' : t.status === 'pending' ? 'pending' : t.status === 'completed' ? 'completed' : 'failed';
+    const progress = t.total_rounds > 0 ? Math.round((t.current_round / t.total_rounds) * 100) : 0;
+    return `
+      <div class="task-item ${selectedTask === t.id ? 'selected' : ''}" onclick="openTaskDetail('${t.id}')" data-task="${t.id}">
+        <div class="task-item-header">
+          <div class="task-status-dot ${statusClass}"></div>
+          <div class="task-item-title">${escapeHtml(t.description?.substring(0, 40) || '任务')}</div>
+        </div>
+        <div class="task-item-meta">${t.id} · ${t.route || 'CDoL'}</div>
+        <div class="task-progress"><div class="task-progress-fill" style="width:${progress}%"></div></div>
+        <div class="task-badges">
+          <span class="task-badge ${t.route === 'cdol' ? 'route-cdol' : ''}">${t.route || 'cdol'}</span>
+          <span class="task-badge">${t.topology || 'auto'}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  $('taskCount').textContent = `${tasksData.length} 个`;
+}
+
+function openTaskDetail(taskId) {
+  const task = tasksData.find(t => t.id === taskId);
+  if (!task) return;
+  
+  selectedTask = taskId;
+  renderTaskList();
+  
+  const statusLabels = { pending: '排队中', planning: '规划中', running: '运行中', completed: '已完成', failed: '失败', reviewing: '审核中' };
+  
+  $('drawerTitle').textContent = `[U+1F4CB] ${task.id}`;
+  $('drawerBody').innerHTML = `
+    <div class="drawer-section">
+      <div class="drawer-section-title">任务信息</div>
+      <div class="drawer-field"><span class="drawer-field-label">描述</span><span class="drawer-field-value" style="font-size:.78rem;max-width:280px">${escapeHtml(task.description || '')}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">状态</span><span class="drawer-field-value">${statusLabels[task.status] || task.status}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">路由</span><span class="drawer-field-value">${task.route || 'cdol'}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">拓扑</span><span class="drawer-field-value">${task.topology || 'auto'}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">轮次</span><span class="drawer-field-value">${task.current_round || 0} / ${task.total_rounds || task.max_rounds || 0}</span></div>
+      <div class="drawer-field"><span class="drawer-field-label">步数</span><span class="drawer-field-value">${task.step_counter || 0}${task.max_steps > 0 ? ' / ' + task.max_steps : ''}</span></div>
+    </div>
+    ${task.participants?.length ? `
+    <div class="drawer-section">
+      <div class="drawer-section-title">参与 Agent (${task.participants.length})</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${task.participants.map(pid => {
+          const a = AGENTS.find(ag => ag.id === pid);
+          return a ? `<span class="drawer-tag ${a.tier}">${a.icon} ${a.label}</span>` : '';
+        }).join('')}
+      </div>
+    </div>
+    ` : ''}
+    ${task.cdol_strategy ? `
+    <div class="drawer-section">
+      <div class="drawer-section-title">CDoL 策略</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div class="drawer-tag" style="background:var(--purple-dim);color:var(--purple)">${task.cdol_strategy}</div>
+        ${task.strategy_confidence ? `<span style="font-size:.7rem;color:var(--text-3)">置信度 ${(task.strategy_confidence * 100).toFixed(0)}%</span>` : ''}
+      </div>
+      ${task.strategy_reasoning ? `<div style="font-size:.75rem;color:var(--text-2);line-height:1.5;padding:8px;background:var(--bg-0);border-radius:6px;margin-top:6px">[U+1F3AF] ${escapeHtml(task.strategy_reasoning)}</div>` : ''}
+      ${task.strategy_factors?.length ? `<div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">${task.strategy_factors.map(f => `<span style="font-size:.65rem;background:var(--bg-2);color:var(--text-2);padding:2px 6px;border-radius:4px">${escapeHtml(f)}</span>`).join('')}</div>` : ''}
+    </div>
+    ` : ''}
+    ${task.step_results?.length ? `
+    <div class="drawer-section">
+      <div class="drawer-section-title">执行轮次 (${task.step_results.length})</div>
+      ${task.step_results.map(s => `
+        <div style="background:var(--bg-0);border-radius:8px;padding:10px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="font-weight:600;font-size:.82rem">Round ${s.round || s.step}</span>
+            <span style="font-size:.7rem;color:var(--text-3)">${s.agent_steps || 0} steps | CDoL ${s.cdol_rounds || 0}</span>
+          </div>
+          <div style="font-size:.75rem;color:var(--text-2);line-height:1.4">${escapeHtml(s.summary || '(无摘要)').substring(0, 100)}...</div>
+        </div>
+      `).join('')}
+    </div>
+    ` : ''}
+    ${task.final_result && task.status === 'completed' ? `
+    <div class="drawer-section">
+      <div class="drawer-section-title">[U+1F4C4] 最终输出</div>
+      <div class="drawer-output">
+        <div style="font-size:.8rem;line-height:1.6;color:var(--text-2);max-height:300px;overflow-y:auto">${renderMarkdown(task.final_result).substring(0, 2000)}${task.final_result.length > 2000 ? '<br><em style="color:var(--text-3)">... 内容已截断，请下载查看完整报告</em>' : ''}</div>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <button class="btn btn-primary" style="font-size:.75rem;padding:4px 12px" onclick="showTaskResult({task_id:'${task.id}',duration:${task.duration_seconds||0},rounds:${task.total_rounds||task.max_rounds||0},steps:${task.step_counter||0},cdol_rounds_total:${task.cdol_rounds_completed||0},tokens:${task.tokens_total||0},synergy_gain:${task.synergy_gain||0},final_result:tasksData.find(t=>t.id==='${task.id}')?.final_result||'',output_file:'${task.output_path||''}'})">[U+1F4C4] 查看完整报告</button>
+        ${task.output_path ? `<button class="btn btn-ghost" style="font-size:.75rem;padding:4px 12px" onclick="window.open('/api/tasks/${task.id}/download','_blank')">[U+2B07] 下载</button>` : ''}
+      </div>
+    </div>
+    ` : ''}
+  `;
+  $('detailDrawer').classList.add('open');
+}
+
+// ─── Task Dialog ───
+function openTaskDialog() {
+  $('taskDialogOverlay').classList.add('open');
+  $('taskInput').value = '';
+  $('btnSubmitTask').disabled = false;
+  $('btnSubmitTask').textContent = '提交执行';
+  setTimeout(() => $('taskInput').focus(), 100);
+}
+
+function closeTaskDialog() {
+  $('taskDialogOverlay').classList.remove('open');
+}
+
+async function submitTask() {
+  const desc = $('taskInput').value.trim();
+  if (!desc) {
+    showToast('请输入任务描述', 'warning');
+    return;
+  }
+  
+  const rounds = parseInt($('taskRounds').value) || 10;
+  const maxSteps = parseInt($('taskMaxSteps').value) || 0;
+  const btn = $('btnSubmitTask');
+  btn.disabled = true;
+  btn.textContent = '提交中...';
+  
+  try {
+    const resp = await fetch(API_BASE + '/api/tasks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ description: desc, max_rounds: rounds, max_steps: maxSteps }),
+    });
+    
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.detail || '提交失败');
+    }
+    
+    const result = await resp.json();
+    showToast(`任务 ${result.task_id} 已提交`, 'success');
+    closeTaskDialog();
+    switchView('overview');
+    
+    // Add task to list
+    tasksData.unshift({
+      id: result.task_id,
+      description: desc,
+      max_rounds: rounds,
+      max_steps: maxSteps,
+      status: 'pending',
+      route: 'cdol',
+      topology: 'auto',
+      current_round: 0,
+      total_rounds: rounds,
+      step_counter: 0,
+      participants: [],
+      step_results: [],
+    });
+    renderTaskList();
+    
+  } catch(e) {
+    showToast('提交失败: ' + e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '提交执行';
+  }
+}
+
+// ─── Event Log ───
+function addEvent(level, content) {
+  const log = $('eventLog');
+  const div = document.createElement('div');
+  div.className = 'event-item';
+  div.innerHTML = `<span class="event-time">${timeNow()}</span><span class="event-content">${content}</span>`;
+  log.insertBefore(div, log.firstChild);
+  while (log.children.length > 50) log.removeChild(log.lastChild);
+  eventCount++;
+  $('eventCount').textContent = eventCount;
+}
+
+// ─── Update Pipeline ───
+function updatePipeline(round, status) {
+  const pipe = $(`pipe${round.charAt(0).toUpperCase() + round.slice(1)}`);
+  const statusEl = $(`pipe${round.charAt(0).toUpperCase() + round.slice(1)}Status`);
+  
+  if (!pipe || !statusEl) return;
+  
+  statusEl.className = 'pipe-status';
+  if (status === 'active') {
+    statusEl.textContent = '进行中';
+    statusEl.classList.add('active');
+  } else if (status === 'done') {
+    statusEl.textContent = '完成';
+    statusEl.classList.add('done');
+  } else {
+    statusEl.textContent = '等待';
+  }
+}
+
+// ─── Update FusionJudge ───
+function updateFusionJudge(data) {
+  fusionData = { ...fusionData, ...data };
+  
+  $('fusionDivergence').textContent = fusionData.divergence !== null ? `${(fusionData.divergence * 100).toFixed(0)}%` : '--';
+  $('fusionAttributions').textContent = fusionData.attributable || '--';
+  $('fusionUnattributed').textContent = fusionData.unattributable || '--';
+  $('fusionWarnings').textContent = fusionData.false_consensus || '--';
+  
+  const statusBadge = $('fusionStatus');
+  const typeLabels = {
+    'real_convergence': '真实收敛',
+    'false_consensus': '虚假一致',
+    'attributable_contradiction': '可归因矛盾',
+    'unattributable_contradiction': '不可归因矛盾',
+    'calculating': '分析中',
+    'waiting': '等待分析',
+  };
+  statusBadge.textContent = typeLabels[fusionData.conflict_type] || '等待';
+  statusBadge.className = `fusion-badge fusion-badge.${fusionData.conflict_type}`;
+  
+  const badge = $('fusionBadge');
+  badge.textContent = typeLabels[fusionData.conflict_type] || '待检测';
+  
+  $('metaConflictType').textContent = typeLabels[fusionData.conflict_type]?.replace('分析中', '').replace('等待', '--') || '--';
+  $('metaDivergence').textContent = fusionData.divergence !== null ? `${(fusionData.divergence * 100).toFixed(0)}%` : '--';
+}
+
+// ─── Update LazinessDetector ───
+function updateLazinessDetector(data) {
+  lazinessData = { ...lazinessData, ...data };
+  
+  const metrics = [
+    { id: 'lazMetricRetrieval', value: lazinessData.retrieval_frequency, label: '检索频率' },
+    { id: 'lazMetricCorrection', value: lazinessData.correction_rate, label: '纠错率' },
+    { id: 'lazMetricConfidence', value: lazinessData.confidence_trend, label: '置信度趋势' },
+    { id: 'lazMetricDiversity', value: lazinessData.info_diversity, label: '信息源多样性' },
+  ];
+  
+  let hasWarning = false;
+  let hasCritical = false;
+  
+  metrics.forEach(m => {
+    const el = $(m.id);
+    if (!el) return;
+    
+    const level = m.value >= 0.6 ? 'ok' : m.value >= 0.3 ? 'warning' : 'critical';
+    if (level === 'warning') hasWarning = true;
+    if (level === 'critical') hasCritical = true;
+    
+    const indicator = el.querySelector('.laziness-indicator');
+    const value = el.querySelector('.laziness-metric-value');
+    const bar = el.querySelector('.laziness-bar-fill');
+    
+    indicator.className = `laziness-indicator ${level}`;
+    value.style.color = level === 'ok' ? 'var(--mint)' : level === 'warning' ? 'var(--yellow)' : 'var(--red)';
+    value.textContent = m.value.toFixed(2);
+    
+    el.className = `laziness-metric ${level === 'warning' ? 'alert' : level === 'critical' ? 'critical' : ''}`;
+    
+    bar.className = `laziness-bar-fill ${level}`;
+    bar.style.width = `${m.value * 100}%`;
+  });
+  
+  const alertBadge = $('lazinessAlert');
+  if (hasCritical) {
+    alertBadge.textContent = '危险';
+    alertBadge.style.color = 'var(--red)';
+  } else if (hasWarning) {
+    alertBadge.textContent = '警告';
+    alertBadge.style.color = 'var(--yellow)';
+  } else {
+    alertBadge.textContent = '正常';
+    alertBadge.style.color = 'var(--mint)';
+  }
+}
+
+// ─── Dynamic Injection Functions (v3.2) ───
+function showInjectionPanel() {
+  $('injectionPanel').style.display = '';
+}
+
+function hideInjectionPanel() {
+  $('injectionPanel').style.display = 'none';
+}
+
+async function injectRequirement() {
+  if (!selectedTask) {
+    showToast('请先选择一个运行中的任务', 'warning');
+    return;
+  }
+  
+  const content = $('injectionInput').value.trim();
+  if (!content) {
+    showToast('请输入需求变更内容', 'warning');
+    return;
+  }
+  
+  try {
+    const resp = await fetch(`${API_BASE}/api/tasks/${selectedTask}/modify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'requirement_change',
+        content: content,
+      }),
+    });
+    
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.detail || '注入失败');
+    }
+    
+    const result = await resp.json();
+    showToast(`[U+2705] 需求变更已注入: ${result.modification_id}`, 'success');
+    $('injectionInput').value = '';
+    addEvent('injection', `[U+1F4DD] 需求变更已注入: ${content.substring(0, 50)}...`);
+  } catch (e) {
+    showToast(`[U+274C] 注入失败: ${e.message}`, 'error');
+    addEvent('error', `需求注入失败: ${e.message}`);
+  }
+}
+
+async function injectFault(faultType, target) {
+  if (!selectedTask) {
+    showToast('请先选择一个运行中的任务', 'warning');
+    return;
+  }
+  
+  const faultLabels = {
+    'node_failure': '节点失效',
+    'latency_inject': '延迟注入',
+    'topology_disrupt': '拓扑扰动',
+  };
+  
+  try {
+    const resp = await fetch(`${API_BASE}/api/tasks/${selectedTask}/inject-fault`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fault_type: faultType,
+        target: target,
+        severity: 'high',
+        duration: 3,
+      }),
+    });
+    
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.detail || '故障注入失败');
+    }
+    
+    const result = await resp.json();
+    showToast(`[U+1F4A5] ${faultLabels[faultType]}已注入: ${target}`, 'warning');
+    addEvent('fault', `[U+1F4A5] ${faultLabels[faultType]} → ${target}`);
+  } catch (e) {
+    showToast(`[U+274C] 注入失败: ${e.message}`, 'error');
+    addEvent('error', `故障注入失败: ${e.message}`);
+  }
+}
+
+async function recoverAllAgents() {
+  if (!selectedTask) {
+    showToast('请先选择一个运行中的任务', 'warning');
+    return;
+  }
+  
+  try {
+    // 获取当前禁用的Agent列表
+    const resp = await fetch(`${API_BASE}/api/tasks/${selectedTask}/injections`);
+    const data = await resp.json();
+    
+    if (!data.disabled_agents || data.disabled_agents.length === 0) {
+      showToast('没有需要恢复的Agent', 'info');
+      return;
+    }
+    
+    // 逐个恢复
+    for (const agentId of data.disabled_agents) {
+      await fetch(`${API_BASE}/api/tasks/${selectedTask}/recover`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agent_id: agentId }),
+      });
+    }
+    
+    showToast(`[U+1F527] 已恢复 ${data.disabled_agents.length} 个Agent`, 'success');
+    addEvent('recovery', `[U+1F527] 已恢复所有失效Agent`);
+    updateDisabledAgentsList([]);
+  } catch (e) {
+    showToast(`[U+274C] 恢复失败: ${e.message}`, 'error');
+  }
+}
+
+function updateDisabledAgentsList(disabledAgents) {
+  const el = $('disabledAgentsList');
+  if (!disabledAgents || disabledAgents.length === 0) {
+    el.innerHTML = '无失效Agent';
+    el.style.color = 'var(--mint)';
+  } else {
+    el.innerHTML = disabledAgents.map(id => `<span style="color:var(--red)">[U+26A0][U+FE0F] ${id}</span>`).join('<br>');
+    el.style.color = 'var(--text-2)';
+  }
+}
+
+// ─── Update Insights ───
+function updateInsights(insights) {
+  insightsData = insights || [];
+  
+  const count = insightsData.length;
+  $('insightCount').textContent = `${count} 条`;
+  $('statInsights').textContent = count;
+  
+  const cats = { all: count, strategy: 0, contradiction: 0, synergy: 0 };
+  insightsData.forEach(i => {
+    if (i.category === 'strategy') cats.strategy++;
+    if (i.category === 'contradiction') cats.contradiction++;
+    if (i.category === 'synergy') cats.synergy++;
+  });
+  
+  $('insightCountAll').textContent = cats.all;
+  $('insightCountStrategy').textContent = cats.strategy;
+  $('insightCountContradiction').textContent = cats.contradiction;
+  $('insightCountSynergy').textContent = cats.synergy;
+  
+  renderInsightList('all');
+}
+
+function addEvent(level, content) {
+  const log = $('eventLog');
+  const div = document.createElement('div');
+  div.className = 'event-item';
+  div.innerHTML = `<span class="event-time">${timeNow()}</span><span class="event-content">${content}</span>`;
+  log.insertBefore(div, log.firstChild);
+  while (log.children.length > 50) log.removeChild(log.lastChild);
+  eventCount++;
+  $('eventCount').textContent = eventCount;
+}
+
+function filterInsights(cat) {
+  $$('.insight-category').forEach(c => c.classList.toggle('active', c.dataset.cat === cat));
+  renderInsightList(cat);
+}
+
+function renderInsightList(category) {
+  const filtered = category === 'all' ? insightsData : insightsData.filter(i => i.category === category);
+  
+  if (filtered.length === 0) {
+    $('insightList').innerHTML = `
+      <div class="insight-item" style="opacity:.5">
+        <div class="insight-text">暂无${category === 'all' ? '' : category}相关经验...</div>
+      </div>
+    `;
+    return;
+  }
+  
+  $('insightList').innerHTML = filtered.map(i => `
+    <div class="insight-item">
+      <div class="insight-item-header">
+        <span class="insight-tag">${i.category || 'general'}</span>
+        <span class="insight-confidence">置信度 ${((i.confidence || 0.5) * 100).toFixed(0)}%</span>
+      </div>
+      <div class="insight-text">${escapeHtml(i.lesson || i.text || '')}</div>
+      <div class="insight-meta">
+        ${i.tags?.length ? `<span>标签: ${i.tags.join(', ')}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── Update Round Conclusions ───
+function updateRoundConclusion(round, agentId, conclusion) {
+  if (!roundConclusions[round]) roundConclusions[round] = [];
+  
+  const existing = roundConclusions[round].findIndex(c => c.agent === agentId);
+  if (existing >= 0) {
+    roundConclusions[round][existing].conclusion = conclusion;
+  } else {
+    const agent = AGENTS.find(a => a.id === agentId);
+    roundConclusions[round].push({
+      agent: agentId,
+      name: agent?.label || agentId,
+      icon: agent?.icon || '[U+1F916]',
+      conclusion: conclusion,
+    });
+  }
+  
+  renderRoundConclusions(round);
+}
+
+function renderRoundConclusions(round) {
+  const container = $(`round${round.charAt(0).toUpperCase() + round.slice(1)}Conclusions`);
+  if (!container) return;
+  
+  if (roundConclusions[round].length === 0) {
+    container.innerHTML = `
+      <div class="conclusion-item">
+        <div class="conclusion-header">
+          <span class="conclusion-agent">等待 ${round === 'round0' ? 'Round 0' : round === 'round1' ? 'Round 1' : 'Round 2'} 开始...</span>
+        </div>
+        <div class="conclusion-preview">--</div>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = roundConclusions[round].map(c => `
+    <div class="conclusion-item">
+      <div class="conclusion-header">
+        <span class="conclusion-agent">${c.icon} ${c.name}</span>
+      </div>
+      <div class="conclusion-preview">${escapeHtml(c.conclusion || '').substring(0, 200)}...</div>
+    </div>
+  `).join('');
+}
+
+// ─── WebSocket Connection ───
+function connectWebSocket() {
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${protocol}//${window.location.host}/ws/events`;
+  
+  try {
+    ws = new WebSocket(wsUrl);
+    
+    ws.onopen = () => {
+      $('wsStatus').className = 'status-dot online';
+      $('wsStatusText').textContent = '已连接';
+      addEvent('task', '<strong>系统</strong> WebSocket 已连接');
+    };
+    
+    ws.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        handleWSMessage(msg);
+      } catch(e) {
+        console.error('WS parse error:', e);
+      }
+    };
+    
+    ws.onclose = () => {
+      $('wsStatus').className = 'status-dot offline';
+      $('wsStatusText').textContent = '断开';
+      addEvent('error', '<strong>系统</strong> WebSocket 断开，5秒后重连...');
+      setTimeout(connectWebSocket, 5000);
+    };
+    
+    ws.onerror = (err) => {
+      $('wsStatus').className = 'status-dot warning';
+      addEvent('error', '<strong>系统</strong> WebSocket 错误');
+    };
+    
+  } catch(e) {
+    $('wsStatus').className = 'status-dot offline';
+    $('wsStatusText').textContent = '未连接';
+  }
+}
+
+function handleWSMessage(msg) {
+  const { type, data } = msg;
+  
+  switch(type) {
+    case 'history':
+      (data.events || []).forEach(e => handleWSMessage(e));
+      break;
+      
+    case 'system_status':
+      $('statOnlineAgents').textContent = data.agents?.length || 10;
+      if (data.ollama_models) {
+        addEvent('task', `<strong>系统</strong> Ollama: ${data.ollama_models?.join(', ') || '无可用模型'}`);
+      }
+      break;
+      
+    case 'task_created':
+      addEvent('task', `<strong>任务</strong> ${data.task_id} 已创建`);
+      break;
+      
+    case 'task_plan':
+      const planTask = tasksData.find(t => t.id === data.task_id);
+      if (planTask) {
+        planTask.cdol_strategy = data.cdol_strategy;
+        planTask.strategy_desc = data.strategy_desc;
+        planTask.strategy_reasoning = data.strategy_reasoning;
+        planTask.strategy_confidence = data.strategy_confidence;
+        planTask.strategy_factors = data.strategy_factors;
+        planTask.route = data.route;
+        planTask.topology = data.topology;
+        planTask.participants = data.participants;
+        renderTaskList();
+      }
+      addEvent('task', `<strong>策略</strong> ${data.cdol_strategy} — ${data.strategy_reasoning || '自动选择'}`);
+      break;
+      
+    case 'task_update':
+      const task = tasksData.find(t => t.id === data.task_id);
+      if (task) {
+        Object.assign(task, data);
+      } else {
+        tasksData.unshift(data);
+      }
+      renderTaskList();
+      
+      if (data.status === 'running') {
+        $('statActiveTasks').textContent = parseInt($('statActiveTasks').textContent || 0) + 1;
+        addEvent('task', `<strong>任务</strong> ${data.task_id} 开始运行`);
+        // 显示动态注入面板
+        selectedTask = data.task_id;
+        showInjectionPanel();
+      }
+      // completed/failed handled by dedicated task_complete/task_failed events
+      break;
+      
+    case 'agent_update':
+      const agent = AGENTS.find(a => a.id === data.agent_id);
+      if (agent) {
+        Object.assign(agent, data);
+        renderAgentsGrid();
+        
+        if (data.state === 'thinking') {
+          addEvent('agent', `<strong>${agent.label}</strong> ${data.message || '开始推理'}`);
+        }
+      }
+      break;
+      
+    case 'agent_output':
+      const outAgent = AGENTS.find(a => a.id === data.agent_id);
+      if (outAgent) {
+        outAgent.last_output = data.output;
+        outAgent.tokens = (outAgent.tokens || 0) + (data.tokens || 0);
+        $('statTokens').textContent = parseInt($('statTokens').textContent || 0) + (data.tokens || 0);
+      }
+      
+      // Update CDoL sub-round conclusions (cdol_round: 0/1/2)
+      const cdolRound = data.cdol_round ?? data.round;
+      if (cdolRound === 0) {
+        updateRoundConclusion('round0', data.agent_id, data.output);
+        updatePipeline('round0', 'active');
+      } else if (cdolRound === 1) {
+        updateRoundConclusion('round1', data.agent_id, data.output);
+        updatePipeline('round0', 'done');
+        updatePipeline('round1', 'active');
+      } else if (cdolRound === 2) {
+        updateRoundConclusion('round2', data.agent_id, data.output);
+        updatePipeline('round1', 'done');
+        updatePipeline('round2', 'active');
+      }
+      
+      addEvent('round', `<strong>${outAgent?.label || data.agent_id}</strong> R${data.round || '?'}-CDoL${cdolRound} | Step ${data.step_counter || '?'} | ${data.tokens || 0} tokens`);
+      break;
+      
+    case 'round_complete':
+      // Main round completed (contains multiple agent steps)
+      const rTask = tasksData.find(t => t.id === data.task_id);
+      if (rTask) {
+        rTask.current_round = data.round;
+        rTask.step_counter = data.step_counter;
+      }
+      addEvent('round', `<strong>Round</strong> ${data.round}/${data.total_rounds} 完成 | +${data.agent_steps_this_round} steps (total: ${data.step_counter})`);
+      renderTaskList();
+      break;
+      
+    case 'cdol_round_complete':
+      $('statCdolRounds').textContent = parseInt($('statCdolRounds').textContent || 0) + 1;
+      if (data.cdol_round === 2) {
+        updatePipeline('round2', 'done');
+        updatePipeline('judge', 'active');
+        addEvent('fusion', `<strong>CDoL</strong> 三轮完成，准备矛盾检测`);
+      }
+      break;
+      
+    case 'fusion_judge_result':
+      updateFusionJudge(data);
+      updatePipeline('judge', 'done');
+      addEvent('fusion', `<strong>FusionJudge</strong> 检测完成: ${data.conflict_type || 'unknown'}`);
+      $('metaSynergyGain').textContent = (data.synergy_gain || 0).toFixed(1);
+      break;
+      
+    case 'laziness_alert':
+      updateLazinessDetector(data.metrics || {});
+      if (data.level === 'warning' || data.level === 'critical') {
+        addEvent('error', `<strong>LazinessDetector</strong> ${data.level}: ${data.agent_id}`);
+      }
+      break;
+      
+    case 'insight_stored':
+      insightsData.unshift(data.insight || {});
+      updateInsights(insightsData);
+      addEvent('task', `<strong>InsightStore</strong> 新经验已存储`);
+      break;
+      
+    case 'archivist_distill':
+      addEvent('task', `<strong>Archivist</strong> 蒸馏完成`);
+      break;
+      
+    case 'task_complete':
+      $('statCompletedTasks').textContent = parseInt($('statCompletedTasks').textContent || 0) + 1;
+      $('statActiveTasks').textContent = Math.max(0, parseInt($('statActiveTasks').textContent || 0) - 1);
+      // Update task data with final result
+      const completedTask = tasksData.find(t => t.id === data.task_id);
+      if (completedTask) {
+        completedTask.status = 'completed';
+        completedTask.final_result = data.final_result || '';
+        completedTask.output_path = data.output_file || '';
+        completedTask.duration_seconds = data.duration || 0;
+        completedTask.tokens_total = data.tokens || 0;
+        completedTask.synergy_gain = data.synergy_gain || 0;
+      }
+      renderTaskList();
+      addEvent('task', `<strong>任务</strong> ${data.task_id} 已完成 | ${data.rounds}轮 / ${data.steps}步 / ${data.cdol_rounds_total}轮CDoL / ${(data.duration/60).toFixed(1)}分钟 / ${data.tokens.toLocaleString()} tokens`);
+      showTaskResult(data);
+      break;
+
+    case 'task_failed':
+      $('statActiveTasks').textContent = Math.max(0, parseInt($('statActiveTasks').textContent || 0) - 1);
+      addEvent('error', `<strong>任务</strong> ${data.task_id} 失败: ${data.error || ''}`);
+      break;
+    
+    // Dynamic Injection Events (v3.2)
+    case 'task_modified':
+      addEvent('injection', `[U+1F4DD] <strong>需求变更</strong>: ${data.modification?.content?.substring(0, 60) || '已注入'}...`);
+      break;
+    
+    case 'fault_injected':
+      addEvent('fault', `[U+1F4A5] <strong>故障注入</strong>: ${data.fault?.type_label || '未知'} → ${data.fault?.target || '系统'}`);
+      break;
+    
+    case 'recovery_attempt':
+      addEvent('recovery', `[U+1F527] <strong>恢复尝试</strong>: ${data.agent_id} (${data.strategy})`);
+      break;
+    
+    case 'recovery_success':
+      addEvent('recovery', `[U+2705] <strong>恢复成功</strong>: ${data.agent_id} 已恢复`);
+      updateDisabledAgentsList([]);
+      break;
+    
+    case 'agent_recovered':
+      addEvent('recovery', `[U+1F527] <strong>Agent恢复</strong>: ${data.agent_id}`);
+      break;
+    
+    case 'data_corruption':
+      addEvent('fault', `[U+1F5D1][U+FE0F] <strong>数据损坏</strong>: ${data.target} 需要重新获取`);
+      break;
+
+    // Agent Pool Events
+    case 'agent_pool_updated':
+      addEvent('agent', `<strong>[U+1F916] Agent 池</strong> 列表已更新`);
+      loadAgentPool();
+      break;
+    
+    case 'agent_state':
+      // Update individual agent state in pool
+      if (agentPoolData.length > 0) {
+        const poolAgent = agentPoolData.find(a => a.id === data.agent_id || a.name === data.agent_id);
+        if (poolAgent) {
+          poolAgent.state = data.state || data.status || 'idle';
+          renderAgentList(agentPoolData);
+        }
+      }
+      break;
+
+    case 'log':
+      const level = data.level === 'error' ? 'error' : 'task';
+      addEvent(level, `<strong>系统</strong> ${data.message}`);
+      break;
+  }
+}
+
+// ─── Initial Data Fetch ───
+async function fetchInitialData() {
+  try {
+    // Fetch agents
+    const agentsResp = await fetch(API_BASE + '/api/agents');
+    if (agentsResp.ok) {
+      const agentsData = await agentsResp.json();
+      if (agentsData.agents?.length) {
+        agentsData.agents.forEach(a => {
+          const existing = AGENTS.find(ag => ag.id === a.id);
+          if (existing) Object.assign(existing, a);
+        });
+        renderAgentsGrid();
+      }
+    }
+    
+    // Fetch tasks
+    const tasksResp = await fetch(API_BASE + '/api/tasks');
+    if (tasksResp.ok) {
+      const tasksDataResp = await tasksResp.json();
+      if (tasksDataResp.tasks?.length) {
+        tasksData = tasksDataResp.tasks;
+        renderTaskList();
+      }
+    }
+    
+    // Fetch system status
+    const statusResp = await fetch(API_BASE + '/api/system/status');
+    if (statusResp.ok) {
+      const status = await statusResp.json();
+      if (status.core_engine) {
+        addEvent('task', '<strong>系统</strong> CDoL 核心引擎已就绪');
+      }
+    }
+    
+  } catch(e) {
+    console.error('Failed to fetch initial data:', e);
+  }
+}
+
+// ─── Clock ───
+function updateClock() {
+  const d = new Date();
+  $('currentTime').textContent = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+}
+
+// ─── Demo Mode (when backend unavailable) ───
+function startDemoMode() {
+  addEvent('task', '<strong>系统</strong> 演示模式已启动（后端未连接）');
+  
+  // Simulate agent activity
+  setInterval(() => {
+    const randomAgent = AGENTS[Math.floor(Math.random() * AGENTS.length)];
+    if (randomAgent.state === 'idle' && Math.random() > 0.7) {
+      randomAgent.state = 'thinking';
+      randomAgent.tokens += rand(100, 500);
+      renderAgentsGrid();
+      addEvent('agent', `<strong>${randomAgent.label}</strong> 开始工作`);
+      
+      setTimeout(() => {
+        randomAgent.state = 'idle';
+        randomAgent.tasks++;
+        renderAgentsGrid();
+        addEvent('agent', `<strong>${randomAgent.label}</strong> 完成`);
+      }, 3000 + Math.random() * 4000);
+    }
+  }, 2000);
+  
+  // Simulate pipeline
+  setInterval(() => {
+    const pipelineStates = ['round0', 'round1', 'round2', 'judge'];
+    const currentState = pipelineStates.find(s => $(`pipe${s.charAt(0).toUpperCase() + s.slice(1)}Status`)?.textContent === '进行中');
+    
+    if (!currentState && Math.random() > 0.8) {
+      updatePipeline('round0', 'active');
+      addEvent('round', '<strong>CDoL</strong> Round 0 开始');
+      
+      setTimeout(() => {
+        updatePipeline('round0', 'done');
+        updatePipeline('round1', 'active');
+        addEvent('round', '<strong>CDoL</strong> Round 1 开始');
+        
+        setTimeout(() => {
+          updatePipeline('round1', 'done');
+          updatePipeline('round2', 'active');
+          addEvent('round', '<strong>CDoL</strong> Round 2 开始');
+          
+          setTimeout(() => {
+            updatePipeline('round2', 'done');
+            updatePipeline('judge', 'active');
+            addEvent('fusion', '<strong>FusionJudge</strong> 开始矛盾检测');
+            
+            setTimeout(() => {
+              updatePipeline('judge', 'done');
+              updateFusionJudge({
+                divergence: Math.random() * 0.5,
+                conflict_type: ['real_convergence', 'attributable_contradiction', 'false_consensus'][Math.floor(Math.random() * 3)],
+                attributable: rand(0, 3),
+                unattributable: rand(0, 2),
+                false_consensus: rand(0, 1),
+              });
+              $('statCdolRounds').textContent = parseInt($('statCdolRounds').textContent || 0) + 3;
+            }, 2000);
+          }, 3000);
+        }, 3000);
+      }, 3000);
+    }
+  }, 10000);
+  
+  // Simulate laziness changes
+  setInterval(() => {
+    updateLazinessDetector({
+      retrieval_frequency: 0.6 + Math.random() * 0.4,
+      correction_rate: 0.5 + Math.random() * 0.5,
+      confidence_trend: 0.5 + Math.random() * 0.5,
+      info_diversity: 0.3 + Math.random() * 0.5,
+    });
+  }, 5000);
+  
+  // Simulate insights
+  const demoInsights = [
+    { category: 'strategy', lesson: 'evidence_split 策略在涉及外部数据的任务中表现最佳', confidence: 0.85, tags: ['evidence_split', '数据任务'] },
+    { category: 'contradiction', lesson: 'role_constraint 策略容易产生可归因矛盾，需要更多轮次收敛', confidence: 0.72, tags: ['role_constraint', '收敛'] },
+    { category: 'synergy', lesson: 'abstraction_level + modality_split 组合在复杂系统设计任务中增益最高', confidence: 0.88, tags: ['abstraction_level', '组合'] },
+    { category: 'strategy', lesson: 'time_slice 策略适合处理需要时序推理的任务', confidence: 0.76, tags: ['time_slice', '时序'] },
+    { category: 'synergy', lesson: '多Agent参与时，协同增益与视角间信息差正相关', confidence: 0.81, tags: ['协同', '信息差'] },
+  ];
+  
+  setTimeout(() => {
+    updateInsights(demoInsights);
+    addEvent('task', '<strong>InsightStore</strong> 演示数据已加载');
+  }, 2000);
+}
+
+// ─── Agent Pool Functions ───
+let agentPoolData = [];
+
+const PROVIDER_ICONS = { deepseek: '[U+1F40B]', ollama: '[U+1F999]', openai: '[U+1F7E2]' };
+const PROVIDER_LABELS = { deepseek: 'DeepSeek', ollama: 'Ollama', openai: 'OpenAI' };
+const ROLE_LABELS = { coder: '编码师', analyst: '分析师', researcher: '研究员', critic: '批评家', synthesizer: '整合师', auto: '自动推断' };
+const AGENT_ICONS_MAP = { coder: '[U+1F4BB]', analyst: '[U+1F4CA]', researcher: '[U+1F50D]', critic: '[U+1F525]', synthesizer: '[U+1F52C]', auto: '[U+1F916]' };
+
+async function loadAgentPool() {
+  try {
+    const resp = await fetch(API_BASE + '/api/agents');
+    if (resp.ok) {
+      const agents = await resp.json();
+      agentPoolData = agents.agents || agents || [];
+      renderAgentList(agentPoolData);
+    }
+  } catch (e) {
+    // Fallback: use built-in agents as pool data
+    agentPoolData = AGENTS.map(a => ({
+      id: a.id,
+      name: a.name,
+      label: a.label || a.name,
+      icon: a.icon,
+      provider: 'ollama',
+      role: 'auto',
+      description: a.description,
+      is_builtin: true,
+      state: a.state || 'idle',
+    }));
+    renderAgentList(agentPoolData);
+  }
+}
+
+function renderAgentList(agents) {
+  const container = $('agentPoolList');
+  if (!agents || agents.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-3);font-size:.78rem">暂无 Agent，点击下方添加</div>';
+    $('agentPoolCount').textContent = '0 个';
+    return;
+  }
+  
+  container.innerHTML = agents.map(agent => {
+    const isBuiltin = agent.is_builtin !== false;
+    const provider = agent.provider || 'ollama';
+    const role = agent.role || 'auto';
+    const stateClass = agent.state === 'thinking' || agent.state === 'busy' ? 'busy' : (agent.state === 'idle' || agent.state === 'online' || agent.state === 'complete') ? 'online' : 'offline';
+    const icon = agent.icon || AGENT_ICONS_MAP[role] || '[U+1F916]';
+    const name = agent.label || agent.name || agent.id;
+    const providerIcon = PROVIDER_ICONS[provider] || '[U+1F916]';
+    const providerLabel = PROVIDER_LABELS[provider] || provider;
+    
+    return `
+      <div class="pool-agent-card" data-agent-id="${escapeHtml(agent.id || agent.name)}">
+        <div class="pool-agent-avatar">${icon}</div>
+        <div class="pool-agent-info">
+          <div class="pool-agent-name">
+            ${escapeHtml(name)}
+            <span class="pool-agent-role-tag" style="background:var(--purple-dim);color:var(--purple)">${ROLE_LABELS[role] || role}</span>
+          </div>
+          <div class="pool-agent-provider">
+            <span>${providerIcon}</span>
+            <span>${escapeHtml(providerLabel)}</span>
+            ${agent.model ? `<span style="margin-left:4px;color:var(--text-3)">· ${escapeHtml(agent.model)}</span>` : ''}
+          </div>
+          ${agent.description ? `<div class="pool-agent-desc">${escapeHtml(agent.description)}</div>` : ''}
+          <div class="pool-agent-badges">
+            ${isBuiltin ? '<span class="pool-badge builtin">内置</span>' : '<span class="pool-badge custom">[U+1F511] 自定义</span>'}
+            <span class="pool-badge provider-${escapeHtml(provider)}">${providerIcon} ${escapeHtml(providerLabel)}</span>
+          </div>
+        </div>
+        <div class="pool-agent-status ${stateClass}" title="${stateClass === 'online' ? '在线' : stateClass === 'busy' ? '忙碌' : '离线'}"></div>
+        ${!isBuiltin ? `<button class="pool-delete-btn" onclick="removeAgent('${escapeHtml(agent.id || agent.name)}')" title="删除">[U+2715]</button>` : ''}
+      </div>
+    `;
+  }).join('');
+  
+  $('agentPoolCount').textContent = `${agents.length} 个`;
+}
+
+function openAddAgentDialog() {
+  $('addAgentOverlay').classList.add('open');
+  $('addAgentName').value = '';
+  $('addAgentApiKey').value = '';
+  $('addAgentProvider').value = 'deepseek';
+  $('addAgentModel').value = 'deepseek-chat';
+  $('addAgentRole').value = 'auto';
+  $('addAgentDesc').value = '';
+  $('btnAddAgent').disabled = false;
+  $('btnAddAgent').textContent = '[U+2795] 添加 Agent';
+  setTimeout(() => $('addAgentName').focus(), 100);
+}
+
+function closeAddAgentDialog() {
+  $('addAgentOverlay').classList.remove('open');
+}
+
+async function addAgent() {
+  const name = $('addAgentName').value.trim();
+  const apiKey = $('addAgentApiKey').value.trim();
+  const provider = $('addAgentProvider').value;
+  const model = $('addAgentModel').value.trim() || (provider === 'deepseek' ? 'deepseek-chat' : 'gpt-4');
+  const role = $('addAgentRole').value;
+  const description = $('addAgentDesc').value.trim();
+  
+  if (!name) {
+    showToast('请输入 Agent 名称', 'warning');
+    $('addAgentName').focus();
+    return;
+  }
+  if (!apiKey) {
+    showToast('请输入 API Key', 'warning');
+    $('addAgentApiKey').focus();
+    return;
+  }
+  
+  const btn = $('btnAddAgent');
+  btn.disabled = true;
+  btn.textContent = '添加中...';
+  
+  const formData = {
+    name: name,
+    api_key: apiKey,
+    provider: provider,
+    model: model,
+    role: role,
+    description: description,
+  };
+  
+  try {
+    const resp = await fetch(API_BASE + '/api/agents/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    
+    const result = await resp.json();
+    
+    if (resp.ok && result.success !== false) {
+      showToast('Agent 添加成功', 'success');
+      closeAddAgentDialog();
+      addEvent('agent', `<strong>[U+1F916] Agent 池</strong> 新增 "${escapeHtml(name)}" (${PROVIDER_LABELS[provider]})`);
+      loadAgentPool();
+    } else {
+      showToast('添加失败: ' + (result.error || '未知错误'), 'error');
+      btn.disabled = false;
+      btn.textContent = '[U+2795] 添加 Agent';
+    }
+  } catch (e) {
+    showToast('添加失败: ' + e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '[U+2795] 添加 Agent';
+  }
+}
+
+async function removeAgent(name) {
+  if (!confirm(`确定要删除 Agent "${name}" 吗？`)) return;
+  
+  try {
+    const resp = await fetch(`${API_BASE}/api/agents/${encodeURIComponent(name)}`, { method: 'DELETE' });
+    const result = await resp.json();
+    
+    if (resp.ok && result.success !== false) {
+      showToast('Agent 已删除', 'success');
+      addEvent('agent', `<strong>[U+1F916] Agent 池</strong> 已删除 "${escapeHtml(name)}"`);
+      loadAgentPool();
+    } else {
+      showToast('删除失败: ' + (result.error || '未知错误'), 'error');
+    }
+  } catch (e) {
+    showToast('删除失败: ' + e.message, 'error');
+  }
+}
+
+// ─── Initialize ───
+document.addEventListener('DOMContentLoaded', () => {
+  // Render initial state
+  renderAgentsGrid();
+  renderTaskList();
+  renderRoundConclusions('round0');
+  renderRoundConclusions('round1');
+  renderRoundConclusions('round2');
+  
+  // Connect to backend
+  fetchInitialData().then(() => {
+    connectWebSocket();
+  }).catch(() => {
+    // Backend unavailable, start demo mode
+    startDemoMode();
+  });
+  
+  // Load agent pool
+  loadAgentPool();
+  
+  // Update clock
+  updateClock();
+  setInterval(updateClock, 1000);
+  
+  // Initial event
+  addEvent('task', '<strong>NexusFlow Dashboard v4.0</strong> 已启动');
+  
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      openTaskDialog();
+    }
+    if (e.key === 'Escape') {
+      closeDrawer();
+      closeTaskDialog();
+      closeAddAgentDialog();
+    }
+    if (e.key === 'n' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      openTaskDialog();
+    }
+  });
+});
+// ─── Task Result Modal ───
+let currentResultData = null;
+let currentResultText = '';
+
+function showTaskResult(data) {
+  currentResultData = data;
+  currentResultText = data.final_result || '';
+  
+  $('resultTitle').textContent = `[U+1F4C4] 任务完成 — ${data.task_id}`;
+  
+  // Meta info
+  $('resultMeta').innerHTML = `
+    <div class="result-meta-item">[U+23F1] 耗时 <span class="result-meta-value">${(data.duration/60).toFixed(1)}分钟</span></div>
+    <div class="result-meta-item">[U+1F504] 轮数 <span class="result-meta-value">${data.rounds || '-'}</span></div>
+    <div class="result-meta-item">[U+1F4CA] 步数 <span class="result-meta-value">${data.steps || '-'}</span></div>
+    <div class="result-meta-item">[U+1F504] CDoL轮次 <span class="result-meta-value">${data.cdol_rounds_total || '-'}</span></div>
+    <div class="result-meta-item">[U+1F524] Tokens <span class="result-meta-value">${(data.tokens || 0).toLocaleString()}</span></div>
+    <div class="result-meta-item">[U+26A1] 协同增益 <span class="result-meta-value">${(data.synergy_gain || 0).toFixed(1)}</span></div>
+    ${data.output_file ? `<div class="result-meta-item">[U+1F4C1] <span class="result-meta-value">${data.output_file}</span></div>` : ''}
+  `;
+  
+  // Render markdown-like content as HTML
+  const body = $('resultBody');
+  body.innerHTML = renderMarkdown(currentResultText);
+  
+  // Show/hide download button
+  $('btnDownloadResult').style.display = data.output_file ? '' : 'none';
+  
+  $('resultOverlay').classList.add('open');
+}
+
+function closeResultModal() {
+  $('resultOverlay').classList.remove('open');
+}
+
+function copyResult() {
+  navigator.clipboard.writeText(currentResultText).then(() => {
+    addEvent('task', '[U+1F4CB] 报告内容已复制到剪贴板');
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = currentResultText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    addEvent('task', '[U+1F4CB] 报告内容已复制到剪贴板');
+  });
+}
+
+function downloadResult() {
+  if (!currentResultData || !currentResultData.output_file) return;
+  window.open(`/api/tasks/${currentResultData.task_id}/download`, '_blank');
+}
+
+function renderMarkdown(text) {
+  if (!text) return '<p style="color:var(--text-3)">无输出内容</p>';
+  let html = escapeHtml(text);
+  // Headers
+  html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  // Bold
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Horizontal rules
+  html = html.replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--bg-3);margin:16px 0">');
+  // Blockquotes
+  html = html.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
+  // Simple table rendering
+  html = html.replace(/(?:^|\n)((?:\|.*\|(?:\n|$))+)/g, function(match, tableBlock) {
+    const rows = tableBlock.trim().split('\n').filter(r => !r.match(/^\|[\s-:|]+\|$/));
+    if (rows.length === 0) return match;
+    let table = '<table>';
+    rows.forEach((row, idx) => {
+      const cells = row.split('|').filter(c => c.trim() !== '');
+      const tag = idx === 0 ? 'th' : 'td';
+      table += '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+    });
+    table += '</table>';
+    return table;
+  });
+  // Line breaks
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+</script>
+
+<!-- Task Result Modal -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-modal">
+    <div class="result-header">
+      <span class="result-header-icon">[U+1F4C4]</span>
+      <span class="result-header-title" id="resultTitle">任务输出报告</span>
+      <button class="drawer-close" onclick="closeResultModal()">[U+2715]</button>
+    </div>
+    <div class="result-meta" id="resultMeta"></div>
+    <div class="result-body" id="resultBody"></div>
+    <div class="result-footer">
+      <button class="btn btn-ghost" onclick="copyResult()">[U+1F4CB] 复制内容</button>
+      <button class="btn btn-primary" id="btnDownloadResult" onclick="downloadResult()">[U+2B07] 下载报告</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

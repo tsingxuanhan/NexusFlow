@@ -179,7 +179,7 @@ class AgentOS:
         app = FastAPI(
             title="NexusFlow AgentOS",
             description="铉枢·炉守 Agent运行时API",
-            version="4.0.0",
+            version="2.7.0",
         )
 
         # CORS: 允许Hub控制面板等前端访问

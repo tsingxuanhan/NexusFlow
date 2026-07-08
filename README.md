@@ -248,11 +248,18 @@ cd NexusFlow
 pip install -r requirements.txt
 
 # 配置环境变量
-cp config/.env.example .env
+cp .env.example .env
 # 编辑 .env 填入你的 API Key
 ```
 
 ### 启动
+
+```bash
+# 推荐方式：一键启动
+python run.py
+
+# 或手动启动
+```
 
 ```bash
 # Windows

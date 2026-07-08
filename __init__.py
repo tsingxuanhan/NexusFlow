@@ -22,7 +22,7 @@ from adaptive_context_manager import (
 )
 from nexus_orchestrator import NexusOrchestrator, TaskResult, create_orchestrator
 
-__version__ = "4.0.0"
+__version__ = "2.7.0"
 
 __all__ = [
     # 基础

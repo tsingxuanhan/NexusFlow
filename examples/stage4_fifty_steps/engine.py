@@ -15,10 +15,10 @@ from datetime import datetime
 # ============================================================
 # Configuration
 # ============================================================
-BASE_DIR = "/app/data/所有对话/主对话/nexusflow-ppt/stage4_fifty_steps"
+BASE_DIR = "."
 ARTIFACTS_DIR = os.path.join(BASE_DIR, "stage4_artifacts")
-NOAA_CLI = "/app/data/所有对话/主对话/.skills/skill_noaa-data-skill/bin/_cli_wrapper.py"
-WHO_CLI = "/app/data/所有对话/主对话/.skills/skill_who-data-skill/scripts/_cli_wrapper.py"
+NOAA_CLI = "../skills/noaa/bin/_cli_wrapper.py"
+WHO_CLI = "../skills/who/scripts/_cli_wrapper.py"
 
 DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
 DEEPSEEK_KEY = "YOUR_DEEPSEEK_API_KEY"  # Set your API key here

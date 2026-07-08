@@ -2,7 +2,23 @@
 
 > 面向超长程复杂任务的群体智能引擎
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Agents](https://img.shields.io/badge/Agents-10-orange.svg)]()
+[![Architecture](https://img.shields.io/badge/Architecture-CDoL%20%7C%20Edge--Cloud--Endpoint-purple.svg)]()
+
 **NexusFlow** 是一个基于认知分工（Cognitive Division of Labor, CDoL）的多智能体协作框架。不同于传统的任务分割式多Agent系统，NexusFlow 通过**主动制造信息不对称**，迫使每个Agent发展出从他人输出中逆向推断对方所见上下文的能力，从而产生超越任何单Agent的推理深度。
+
+---
+
+## ✨ What's New
+
+| 日期 | 更新 | 说明 |
+|------|------|------|
+| 2026-07-08 | **NOAA 气候变化多维诊断** | CDoL 6角色协作分析 5 城市 9 年气象数据，CRI 排名 + 趋势校正 + 2023 回测全通过 |
+| 2026-07-03 | **v3.4 动态 Agent 管理 + 日志归档** | 运行时动态增删云端 Agent；完整任务日志自动归档到 `reports/` |
+| 2026-07-03 | **v2 核心修复** | 7 项 P0/P1 问题修复，20 步全量测试全绿，协同增益指标 2.16 真实计算生效 |
+| 2026-07-02 | **命名重构完成** | 全量去除 browser 导向命名，统一为科研任务导向 |
 
 ---
 
@@ -13,6 +29,8 @@
 - **三层信息架构**：全局视野层 / CDoL参与层 / 旁观记录层
 - **动态拓扑路由**：运行时重建Agent协作图，支持五种拓扑模式
 - **端边云三层调度**：隐私优先调度，支持本地Ollama + 云端DeepSeek
+- **动态 Agent 管理**：运行时按需增删云端 Agent，弹性伸缩
+- **任务日志归档**：完整协作过程自动记录，支持事后审计与复盘
 - **10个专用Agent角色**：Coordinator、Strategist、Coder、Researcher、Analyst、Critic、Synthesizer、Archivist、Observer、Monitor
 
 ---
@@ -158,6 +176,20 @@ ollama pull qwen3.5:9b
 | 📊 Analyst | 分析师 | 🖥️ CDoL | 数据分析、模式识别 |
 | 👁 Observer | 观察者 | 📱 旁观 | 元观察、偏见检测 |
 | 📡 Monitor | 监控者 | 📱 旁观 | 健康检查、异常检测 |
+
+---
+
+## 生态导航
+
+```
+🏛️ XuanHub 开源生态
+├── 🔬 NexusFlow                 ← 核心框架（本仓库）
+├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇论文 / 30分类)
+├── 🧪 materials-ai-kit          ← 材料AI工具包
+├── 🧰 agent4science             ← 学术工具集 & 知识库入口
+├── 🎨 xuanshu-ui-gallery        ← UI风格库 (6种CSS主题)
+└── 📖 qiu                       ← 项目指南文档
+```
 
 ---
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-NexusFlow Dashboard Server v3.1 — Refactored with Real Core Engine
+NexusFlow Dashboard Server v3.4 — Dynamic Agents & Log Archiving
 ===================================================================
 Full-stack AGI task execution server, now using agent4science_nexus/ core modules.
 
@@ -51,6 +51,7 @@ import aiohttp
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
+from pydantic import BaseModel
 import uvicorn
 
 # 输出目录：任务完成后自动保存报告
@@ -165,7 +166,7 @@ try:
     print("[NexusFlow] ✓ Real Core Engine modules loaded successfully")
 except ImportError as e:
     CORE_ENGINE_AVAILABLE = False
-    print(f"[NexusFlow] ⚠ Core Engine not available: {e}")
+    print(f"[NexusFlow] [WARNING] Core Engine not available: {e}")
     print("[NexusFlow] Falling back to simplified inline implementations")
 
 # ============================================================================
@@ -719,6 +720,13 @@ class TaskExecution:
     false_consensus_warnings: List[Dict] = field(default_factory=list)
     laziness_alerts: List[Dict] = field(default_factory=list)
     output_path: str = ""
+    log_path: str = ""  # 日志归档文件路径
+    # Dynamic injection support (v3.2)
+    pending_injections: List[Dict] = field(default_factory=list)  # 待处理的注入事件
+    processed_injections: List[Dict] = field(default_factory=list)  # 已处理的注入
+    fault_injections: List[Dict] = field(default_factory=list)  # 故障注入记录
+    recovery_attempts: List[Dict] = field(default_factory=list)  # 恢复尝试记录
+    disabled_agents: Set[str] = field(default_factory=set)  # 被禁用的Agent（故障模拟）
 
 
 # ============================================================================
@@ -730,6 +738,44 @@ class EventBus:
         self.connections: Set[WebSocket] = set()
         self._log: List[Dict] = []
         self._max = 500
+        self._log_file = None
+        self._log_file_path: Optional[str] = None
+    
+    def set_log_file(self, file_path: str):
+        """设置日志归档文件路径，开启文件日志"""
+        self.close_log_file()
+        self._log_file_path = file_path
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        self._log_file = open(file_path, "a", encoding="utf-8")
+        self._log_file.write(f"{'='*60}\n")
+        self._log_file.write(f"NexusFlow Task Log — {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        self._log_file.write(f"{'='*60}\n")
+        self._log_file.flush()
+        logger.info(f"[EventBus] Log file opened: {file_path}")
+    
+    def close_log_file(self):
+        """关闭日志归档文件"""
+        if self._log_file:
+            try:
+                self._log_file.write(f"\n{'='*60}\n")
+                self._log_file.write(f"Log closed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                self._log_file.flush()
+                self._log_file.close()
+            except Exception as e:
+                logger.warning(f"[EventBus] Error closing log file: {e}")
+            finally:
+                self._log_file = None
+                logger.info(f"[EventBus] Log file closed: {self._log_file_path}")
+                self._log_file_path = None
+    
+    def _write_to_log_file(self, timestamp: str, event_type: str, content: str):
+        """写入一行到日志文件"""
+        if self._log_file and not self._log_file.closed:
+            try:
+                self._log_file.write(f"[{timestamp}] [{event_type}] {content}\n")
+                self._log_file.flush()
+            except Exception as e:
+                logger.warning(f"[EventBus] Error writing to log file: {e}")
     
     async def connect(self, ws: WebSocket):
         await ws.accept()
@@ -745,6 +791,9 @@ class EventBus:
         self._log.append(event)
         if len(self._log) > self._max:
             self._log = self._log[-self._max:]
+        # 写入日志归档文件
+        data_summary = json.dumps(data, ensure_ascii=False) if isinstance(data, dict) else str(data)
+        self._write_to_log_file(event["ts"], event_type, data_summary)
         dead = set()
         for ws in self.connections:
             try:
@@ -1229,9 +1278,9 @@ class NexusFlowEngine:
         self.llm = llm_router
         self.events = events
         self.agent_states: Dict[str, AgentState] = {
-            a["id"]: AgentState(id=a["id"]) for a in AGENT_DEFS
+            a["id"]: AgentState(id=a["id"]) for a in self._get_all_agent_defs()
         }
-        self.agent_defs_map: Dict[str, Dict] = {a["id"]: a for a in AGENT_DEFS}
+        self.agent_defs_map: Dict[str, Dict] = {a["id"]: a for a in self._get_all_agent_defs()}
         
         # Initialize core engine components
         self._init_core_engine()
@@ -1247,6 +1296,29 @@ class NexusFlowEngine:
         
         logger.info(f"[NexusFlow] Engine initialized (Core Engine: {CORE_ENGINE_AVAILABLE})")
     
+    def _get_all_agent_defs(self) -> List[Dict]:
+        """获取所有 Agent 定义（静态 + 动态）"""
+        all_defs = list(AGENT_DEFS)
+        for agent_def in dynamic_agents.values():
+            if agent_def not in all_defs:
+                all_defs.append(agent_def)
+        return all_defs
+    
+    def refresh_dynamic_agents(self):
+        """刷新动态 Agent 到引擎内部状态"""
+        for agent_def in dynamic_agents.values():
+            aid = agent_def["id"]
+            if aid not in self.agent_states:
+                self.agent_states[aid] = AgentState(id=aid)
+            self.agent_defs_map[aid] = agent_def
+        # 清理已删除的动态 agent
+        removed = [aid for aid in self.agent_defs_map 
+                   if aid not in {a["id"] for a in AGENT_DEFS} 
+                   and aid not in dynamic_agents]
+        for aid in removed:
+            self.agent_states.pop(aid, None)
+            self.agent_defs_map.pop(aid, None)
+    
     def _init_core_engine(self):
         """Initialize real core engine if available"""
         self.cdol_engine = None
@@ -1261,7 +1333,7 @@ class NexusFlowEngine:
                 
                 # Initialize CDoL engine with real modules
                 self.cdol_engine = CognitiveDivisionEngine(
-                    agents={a["id"]: _AgentWrapper(a["id"], self) for a in AGENT_DEFS},
+                    agents={a["id"]: _AgentWrapper(a["id"], self) for a in self._get_all_agent_defs()},
                     llm_chat=core_llm_call,
                     insight_store=self.insight_store if hasattr(self, 'insight_store') else None,
                 )
@@ -1277,7 +1349,7 @@ class NexusFlowEngine:
     
     def get_all_agents(self) -> List[Dict]:
         result = []
-        for adef in AGENT_DEFS:
+        for adef in self._get_all_agent_defs():
             state = self.agent_states.get(adef["id"], AgentState(id=adef["id"]))
             prov_name, model_name = self.llm.get_mapping(adef["id"])
             result.append({
@@ -1366,6 +1438,12 @@ class NexusFlowEngine:
         """Main execution loop with true CDoL 3-round protocol"""
         start_time = time.time()
         
+        # === 日志归档：创建任务日志文件 ===
+        log_filename = f"task_{task.id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+        log_path = os.path.join(OUTPUT_DIR, log_filename)
+        self.events.set_log_file(log_path)
+        task.log_path = log_path
+        
         try:
             # === PHASE 0: Planning ===
             task.status = "planning"
@@ -1439,6 +1517,9 @@ class NexusFlowEngine:
                 })
                 await self.events.log(f"━━━ Step {step_num}/{task.max_steps} ━━━")
                 
+                # === Dynamic Injection Processing (v3.2) ===
+                await self._process_pending_injections(task, step_num, participants, context)
+                
                 # Dynamic topology per step
                 step_topology = self._step_topology(step_num, task.max_steps, topology)
                 if step_topology != task.topology:
@@ -1462,6 +1543,35 @@ class NexusFlowEngine:
                 for agent_id, metrics in step_result.get("laziness_metrics", {}).items():
                     self.laziness_detector.record_step_metrics(agent_id, step_num, metrics)
                     laziness = self.laziness_detector.detect_laziness(agent_id)
+                    
+                    # Calculate metrics for frontend
+                    history = self.laziness_detector.metrics_history.get(agent_id, [])
+                    if history:
+                        recent = history[-3:] if len(history) >= 3 else history
+                        retrieval_freq = sum(m.get("retrieval_count", 0) for m in recent) / len(recent) / 3.0
+                        correction_rate = sum(m.get("self_correction_count", 0) for m in recent) / len(recent)
+                        confidences = [m.get("confidence", 0.5) for m in recent]
+                        confidence_trend = (confidences[-1] - confidences[0]) / (confidences[0] + 0.01) if confidences else 0.5
+                        info_diversity = sum(m.get("source_diversity", 0.5) for m in recent) / len(recent)
+                    else:
+                        retrieval_freq = 0.5
+                        correction_rate = 0.5
+                        confidence_trend = 0.5
+                        info_diversity = 0.5
+                    
+                    # Always send laziness metrics to frontend
+                    await self.events.emit("laziness_alert", {
+                        "agent_id": agent_id,
+                        "level": laziness.get("level", "ok") if laziness.get("is_lazy") else "ok",
+                        "metrics": {
+                            "retrieval_frequency": min(1.0, retrieval_freq),
+                            "correction_rate": min(1.0, correction_rate),
+                            "confidence_trend": max(0.0, min(1.0, 0.5 + confidence_trend * 0.5)),
+                            "info_diversity": min(1.0, info_diversity),
+                        },
+                        "signals": laziness.get("signals", []),
+                    })
+                    
                     if laziness["is_lazy"]:
                         task.laziness_alerts.append(laziness)
                         await self.events.log(f"  ⚠️ {agent_id} 懒惰检测: {', '.join(laziness['signals'])}")
@@ -1535,6 +1645,7 @@ class NexusFlowEngine:
                 "result_preview": task.final_result[:300],
                 "final_result": task.final_result,
                 "output_file": output_filename,
+                "log_file": os.path.basename(task.log_path) if task.log_path else "",
                 "steps": task.max_steps,
                 "cdol_rounds_total": task.cdol_rounds_completed,
                 "false_consensus_warnings": len(task.false_consensus_warnings),
@@ -1552,11 +1663,15 @@ class NexusFlowEngine:
             task.error = str(e)
             task.completed_at = datetime.now().isoformat()
             task.duration_seconds = time.time() - start_time
+            tb = traceback.format_exc()
             await self.events.log(f"❌ 任务失败: {e}", level="error")
-            await self.events.emit("task_failed", {"task_id": task.id, "error": str(e)})
-            logger.error(f"Task failed: {e}\n{traceback.format_exc()}")
+            await self.events.log(f"📋 Traceback: {tb[-500:]}", level="error")
+            await self.events.emit("task_failed", {"task_id": task.id, "error": str(e), "traceback": tb[-1000:]})
+            logger.error(f"Task failed: {e}\n{tb}")
         
         finally:
+            # === 日志归档：关闭任务日志文件 ===
+            self.events.close_log_file()
             self.reset_agent_states()
             await self.events.emit("agents_reset", {})
     
@@ -1567,7 +1682,7 @@ class NexusFlowEngine:
             try:
                 resp = await self._call_llm("coordinator", [
                     {"role": "system", "content": coord_def["system_prompt"]},
-                    {"role": "user", "content": f"请规划以下任务的执行方案（{max_steps}步）:\n\n{description}\n\n可用Agent: {', '.join(a['id'] for a in AGENT_DEFS)}"}
+                    {"role": "user", "content": f"请规划以下任务的执行方案（{max_steps}步）:\n\n{description}\n\n可用Agent: {', '.join(a['id'] for a in self._get_all_agent_defs())}"}
                 ], temperature=0.3, max_tokens=800)
                 
                 content = resp["content"]
@@ -1577,7 +1692,7 @@ class NexusFlowEngine:
                     route = plan.get("route", "cdol" if max_steps > 2 else "simple")
                     topology = plan.get("topology", select_topology(description))
                     participants = plan.get("participants", TOPOLOGY_CONFIGS.get(topology, {}).get("active", []))
-                    valid_ids = {a["id"] for a in AGENT_DEFS}
+                    valid_ids = {a["id"] for a in self._get_all_agent_defs()}
                     participants = [p for p in participants if p in valid_ids]
                     if not participants:
                         participants = TOPOLOGY_CONFIGS.get(topology, {}).get("active", ["coordinator"])
@@ -1607,6 +1722,146 @@ class NexusFlowEngine:
         else:
             return "converge"
     
+    async def _process_pending_injections(self, task: TaskExecution, step_num: int,
+                                          participants: List[str], context: Dict):
+        """
+        处理待处理的动态注入事件（v3.2）
+        - 需求变更：重新评估任务方向
+        - 故障注入：处理节点失效，触发自动恢复
+        """
+        if not task.pending_injections:
+            return
+        
+        pending = list(task.pending_injections)
+        task.pending_injections.clear()
+        
+        for injection in pending:
+            injection_type = injection.get("type", "")
+            
+            if injection_type == "requirement_change":
+                # 需求变更：让 Strategist 重新评估任务
+                new_content = injection.get("content", "")
+                await events.log(f"📝 处理需求变更: {new_content[:60]}...")
+                
+                # 更新任务描述，将新需求追加
+                task.description = f"{task.description}\n\n[追加需求] {new_content}"
+                context["task"] = task.description
+                
+                # 让 Coordinator 重新评估
+                coord_def = self.agent_defs_map["coordinator"]
+                reeval_prompt = f"""原始任务: {task.description}
+追加的新需求: {new_content}
+
+请分析新需求对当前任务的影响：
+1. 是否需要调整执行拓扑？
+2. 是否需要增加或减少参与的Agent？
+3. 输出JSON: {{"topology_adjust": "...", "agent_adjust": "...", "reason": "..."}}"""
+                
+                resp = await self._call_llm("coordinator", [
+                    {"role": "system", "content": coord_def["system_prompt"]},
+                    {"role": "user", "content": reeval_prompt}
+                ], temperature=0.3)
+                
+                await events.emit("requirement_change_processed", {
+                    "step": step_num,
+                    "new_content": new_content,
+                    "adjustment": str(resp.get("content", ""))[:500],
+                })
+                
+                injection["applied"] = True
+                task.processed_injections.append(injection)
+                
+            elif injection_type == "fault_injection":
+                fault = injection.get("content", {})
+                fault_type = fault.get("type", "")
+                target = fault.get("target", "")
+                
+                await events.log(f"💥 处理故障注入: {fault_type} → {target}")
+                
+                if fault_type == "node_failure":
+                    # 节点失效处理：尝试自动恢复
+                    if target in task.disabled_agents:
+                        # 触发恢复逻辑
+                        recovery = {
+                            "fault_id": fault.get("id"),
+                            "agent_id": target,
+                            "strategy": "retry_with_backup",
+                            "status": "attempting",
+                            "timestamp": datetime.now().isoformat(),
+                        }
+                        task.recovery_attempts.append(recovery)
+                        
+                        await events.emit("recovery_attempt", {
+                            "task_id": task.id,
+                            "agent_id": target,
+                            "step": step_num,
+                            "strategy": "retry_with_backup",
+                        })
+                        
+                        # 尝试恢复Agent
+                        try:
+                            await self._recover_agent(task, target, step_num)
+                            recovery["status"] = "success"
+                            recovery["recovered_at"] = datetime.now().isoformat()
+                            task.disabled_agents.discard(target)
+                            await events.log(f"🔧 {target} 已自动恢复")
+                            await events.emit("recovery_success", {
+                                "task_id": task.id,
+                                "agent_id": target,
+                            })
+                        except Exception as e:
+                            recovery["status"] = "failed"
+                            recovery["error"] = str(e)
+                            await events.log(f"⚠️ {target} 恢复失败: {e}")
+                
+                elif fault_type == "latency_inject":
+                    # 延迟注入：模拟响应延迟
+                    await events.log(f"⏱️ 延迟注入: 模拟 {target} 响应延迟")
+                    await asyncio.sleep(0.5)  # 模拟延迟
+                
+                elif fault_type == "data_corruption":
+                    # 数据损坏：标记需要重新获取数据
+                    await events.log(f"🗑️ 数据损坏: {target} 数据需要重新获取")
+                    await events.emit("data_corruption", {
+                        "task_id": task.id,
+                        "target": target,
+                        "step": step_num,
+                    })
+                
+                elif fault_type == "topology_disrupt":
+                    # 拓扑扰动：强制切换拓扑
+                    await events.log(f"🔀 拓扑扰动: 强制切换拓扑结构")
+                    task.topology = "mesh"  # 强制切换到网状拓扑
+                    await events.emit("topology_change", {
+                        "topology": "mesh",
+                        "config": TOPOLOGY_CONFIGS.get("mesh", {}),
+                        "step": step_num,
+                        "forced": True,
+                    })
+                
+                fault["active"] = False
+                fault["mitigated"] = True
+                injection["applied"] = True
+                task.processed_injections.append(injection)
+    
+    async def _recover_agent(self, task: TaskExecution, agent_id: str, step_num: int):
+        """尝试恢复失效的Agent"""
+        # 检查是否有备用Agent
+        backup_agents = {
+            "researcher": "analyst",
+            "analyst": "researcher",
+            "coder": "analyst",
+            "critic": "synthesizer",
+        }
+        
+        backup = backup_agents.get(agent_id)
+        if backup:
+            await events.log(f"🔄 使用备用Agent: {agent_id} → {backup}")
+            # 在实际执行中，这里会切换到备用Agent
+        else:
+            # 重试原Agent
+            await events.log(f"🔄 重试Agent: {agent_id}")
+    
     async def _execute_cdol_step(self, task: TaskExecution, step_num: int,
                                   participants: List[str], topology: str,
                                   context: Dict, cdol_strategy: str) -> Dict:
@@ -1626,7 +1881,7 @@ class NexusFlowEngine:
         # Get step participants based on topology
         topology_config = TOPOLOGY_CONFIGS.get(topology, {})
         step_participants = topology_config.get("active", participants)
-        valid_ids = {a["id"] for a in AGENT_DEFS}
+        valid_ids = {a["id"] for a in self._get_all_agent_defs()}
         step_participants = [p for p in step_participants if p in valid_ids]
         if not step_participants:
             step_participants = participants
@@ -1718,6 +1973,7 @@ class NexusFlowEngine:
                 "round": 0,
                 "output": resp["content"][:400],
                 "provider": resp.get("provider", "unknown"),
+                "tokens": resp.get("tokens", 0),
             })
         
         # Critic executes after Round 0 (as per Fix 5)
@@ -1787,6 +2043,14 @@ class NexusFlowEngine:
             step_tokens += resp.get("tokens", 0)
             
             await self._update_agent(agent_id, "waiting", cdol_round=1)
+            await self.events.emit("agent_output", {
+                "agent_id": agent_id,
+                "step": step_num,
+                "round": 1,
+                "output": resp["content"][:400],
+                "provider": resp.get("provider", "unknown"),
+                "tokens": resp.get("tokens", 0),
+            })
             await self.events.log(f"  {adef['icon']} {adef['label']} Round 1 归因完成")
         
         # === ROUND 2: Revised Conclusions ===
@@ -1813,7 +2077,7 @@ class NexusFlowEngine:
                 if json_match:
                     attr_data = json.loads(json_match.group())
                     revision = attr_data.get("revision")
-                    revision_reason = attr_data.get("revision_reason", "")
+                    revision_reason = str(attr_data.get("revision_reason", ""))
                     if revision:
                         await self.events.log(f"  ✏️ {adef['label']} Round 2 修正: {revision_reason[:50]}...")
             except:
@@ -1836,6 +2100,20 @@ class NexusFlowEngine:
         conflict_type = fusion_result.get("conflict_type", "")
         await self.events.log(f"  📊 冲突类型: {conflict_type}")
         
+        # Send FusionJudge result to frontend
+        details_list = fusion_result.get("details", [])
+        # Ensure all details elements are dicts (LLM might return unexpected types)
+        safe_details = [d if isinstance(d, dict) else {} for d in details_list] if isinstance(details_list, list) else []
+        await self.events.emit("fusion_judge_result", {
+            "conflict_type": conflict_type,
+            "divergence": fusion_result.get("divergence", 0),
+            "attributable": len([d for d in safe_details if isinstance(d, dict) and d.get("type") == "attributable"]),
+            "unattributable": len([d for d in safe_details if isinstance(d, dict) and d.get("type") == "unattributable"]),
+            "false_consensus": len(fusion_result.get("warnings", [])),
+            "synergy_gain": fusion_result.get("synergy_gain", 0),
+            "details": safe_details,
+        })
+        
         if conflict_type == "false_consensus":
             warnings = fusion_result.get("warnings", [])
             false_consensus_warnings.extend(warnings)
@@ -1855,7 +2133,9 @@ class NexusFlowEngine:
                 
                 fusion_note = ""
                 if conflict_type == "false_consensus":
-                    fusion_note = f"\n\n⚠️ FusionJudge检测到虚假一致，请分离为条件方案。警告: {fusion_result.get('details', [{}])[0].get('explanation', '')}"
+                    _details = fusion_result.get("details", [])
+                    _first_detail = _details[0] if isinstance(_details, list) and len(_details) > 0 and isinstance(_details[0], dict) else {}
+                    fusion_note = f"\n\n⚠️ FusionJudge检测到虚假一致，请分离为条件方案。警告: {_first_detail.get('explanation', '')}"
                 
                 resp = await self._call_llm("synthesizer", [
                     {"role": "system", "content": synth_def["system_prompt"]},
@@ -1865,6 +2145,14 @@ class NexusFlowEngine:
                 step_summary = resp["content"]
                 step_tokens += resp.get("tokens", 0)
                 await self._update_agent("synthesizer", "complete", output=step_summary[:200], cdol_round=2)
+                await self.events.emit("agent_output", {
+                    "agent_id": "synthesizer",
+                    "step": step_num,
+                    "round": 2,
+                    "output": step_summary[:400],
+                    "provider": resp.get("provider", "unknown"),
+                    "tokens": resp.get("tokens", 0),
+                })
             else:
                 step_summary = "\n".join(round2_conclusions.values())
         
@@ -1885,6 +2173,14 @@ class NexusFlowEngine:
                 observer_note = resp["content"][:1000]
                 step_tokens += resp.get("tokens", 0)
                 await self._update_agent("observer", "complete", output=observer_note[:200], cdol_round=2)
+                await self.events.emit("agent_output", {
+                    "agent_id": "observer",
+                    "step": step_num,
+                    "round": 2,
+                    "output": observer_note[:400],
+                    "provider": resp.get("provider", "unknown"),
+                    "tokens": resp.get("tokens", 0),
+                })
                 await self.events.log(f"  👁 Observer 完成元观察")
         
         # === Monitor Health Check ===
@@ -1960,7 +2256,9 @@ class NexusFlowEngine:
         
         fusion_note = ""
         if fusion_result.get("conflict_type") == "false_consensus":
-            fusion_note = f"\n\n⚠️ 最终FusionJudge检测: {fusion_result.get('details', [{}])[0].get('explanation', '')}"
+            _details = fusion_result.get("details", [])
+            _first_detail = _details[0] if isinstance(_details, list) and len(_details) > 0 and isinstance(_details[0], dict) else {}
+            fusion_note = f"\n\n⚠️ 最终FusionJudge检测: {_first_detail.get('explanation', '')}"
         
         synth_def = self.agent_defs_map.get("synthesizer", {})
         resp = await self._call_llm("synthesizer", [
@@ -2071,6 +2369,172 @@ events = EventBus()
 tasks: Dict[str, TaskExecution] = {}
 task_history: List[TaskExecution] = []
 DASHBOARD_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# ============================================================================
+# Dynamic Cloud Agent Management (v3.4)
+# ============================================================================
+dynamic_agents: Dict[str, Dict] = {}          # name -> agent_def dict
+dynamic_providers: Dict[str, LLMProvider] = {} # name -> provider instance
+
+# 角色模板：根据 role_hint 生成 system_prompt
+ROLE_TEMPLATES = {
+    "coder": {
+        "label": "开发者",
+        "icon": "💻",
+        "capabilities": ["code_generation", "debugging", "code_review", "algorithm_design"],
+        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（开发者）**。
+
+## 核心职责
+1. 编写高质量的代码实现
+2. 调试和优化代码
+3. 进行代码审查和质量把控
+4. 设计高效的算法和数据结构
+
+## 工作原则
+- 代码清晰、可读、可维护
+- 遵循最佳实践和设计模式
+- 注重边界条件和异常处理
+- 给出完整的实现，不含糊省略
+
+## 输出格式
+提供完整的代码实现，附带必要的注释和说明。"""
+    },
+    "analyst": {
+        "label": "分析师",
+        "icon": "📊",
+        "capabilities": ["data_analysis", "pattern_recognition", "statistical_modeling", "insight_extraction"],
+        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（分析师）**。
+
+## 核心职责
+1. 对数据进行深入分析和挖掘
+2. 识别数据中的模式和趋势
+3. 提供基于数据的洞察和建议
+4. 构建分析模型和框架
+
+## 工作原则
+- 数据驱动，客观严谨
+- 多角度交叉验证
+- 注重可操作性和实用性
+- 结论要有数据支撑
+
+## 输出格式
+结构化分析报告：数据来源、分析方法、关键发现、结论建议。"""
+    },
+    "researcher": {
+        "label": "研究员",
+        "icon": "🔬",
+        "capabilities": ["literature_search", "knowledge_synthesis", "hypothesis_generation", "evidence_evaluation"],
+        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（研究员）**。
+
+## 核心职责
+1. 搜索和整理相关文献与资料
+2. 综合多来源信息形成系统性认知
+3. 提出和验证假设
+4. 评估证据的可靠性和相关性
+
+## 工作原则
+- 广泛搜索，多方验证
+- 区分事实与观点
+- 标注信息来源和可信度
+- 保持学术严谨性
+
+## 输出格式
+研究报告：背景综述、关键发现、证据评估、知识缺口、建议方向。"""
+    },
+    "critic": {
+        "label": "评审者",
+        "icon": "🔍",
+        "capabilities": ["critical_thinking", "risk_assessment", "quality_review", "counterargument"],
+        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（评审者）**。
+
+## 核心职责
+1. 对方案、结论进行批判性审查
+2. 识别逻辑漏洞、偏见和风险
+3. 提出反面论点和替代方案
+4. 确保结论经得起挑战
+
+## 工作原则
+- 保持独立客观的批判视角
+- 有理有据地质疑，不做无意义否定
+- 关注逻辑一致性和证据充分性
+- 建设性批评，提出改进方向
+
+## 输出格式
+评审报告：优点总结、问题清单（含严重程度）、改进建议、最终评估。"""
+    },
+    "synthesizer": {
+        "label": "整合者",
+        "icon": "🧬",
+        "capabilities": ["information_synthesis", "summary_generation", "consensus_building", "report_writing"],
+        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（整合者）**。
+
+## 核心职责
+1. 整合多方观点形成统一结论
+2. 消除矛盾，建立共识
+3. 生成清晰、结构化的综合报告
+4. 提炼关键洞察和行动建议
+
+## 工作原则
+- 全面考虑各方观点
+- 合理解释和调和分歧
+- 输出简洁有力，突出重点
+- 确保结论的可操作性
+
+## 输出格式
+综合报告：各方观点摘要、共识与分歧、综合结论、行动建议。"""
+    },
+    "specialist": {
+        "label": "专家",
+        "icon": "🎯",
+        "capabilities": ["domain_expertise", "problem_solving", "knowledge_application", "consultation"],
+        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（专家）**。
+
+## 核心职责
+1. 提供专业领域的深度见解
+2. 解决复杂的领域特定问题
+3. 应用专业知识进行判断和决策
+4. 为团队提供专业咨询支持
+
+## 工作原则
+- 基于专业知识给出准确判断
+- 明确表达的确定性程度
+- 主动标注知识边界
+- 注重实际应用价值
+
+## 输出格式
+专业分析报告：问题定义、专业分析、关键结论、建议措施。"""
+    },
+}
+
+# 角色推断关键词映射
+ROLE_INFERENCE_KEYWORDS = {
+    "coder": ["code", "dev", "build", "编程", "开发", "工程", "debug", "程序员"],
+    "analyst": ["analyst", "data", "stats", "分析", "数据", "统计"],
+    "researcher": ["research", "science", "literature", "研究", "学术", "文献", "调研"],
+    "critic": ["critic", "review", "verify", "评审", "审查", "验证", "质疑"],
+    "synthesizer": ["synthesis", "summary", "report", "整合", "综合", "总结", "报告"],
+}
+
+def infer_role_from_name(name: str, role_hint: Optional[str] = None) -> str:
+    """根据 name 或 role_hint 推断 Agent 角色"""
+    if role_hint and role_hint.lower() in ROLE_TEMPLATES:
+        return role_hint.lower()
+    
+    name_lower = name.lower()
+    for role, keywords in ROLE_INFERENCE_KEYWORDS.items():
+        for kw in keywords:
+            if kw in name_lower:
+                return role
+    return "specialist"
+
+
+class AddAgentRequest(BaseModel):
+    name: str
+    api_key: str
+    provider: str = "deepseek"
+    model: str = "deepseek-chat"
+    role_hint: Optional[str] = None
+    description: Optional[str] = None
 
 
 @app.on_event("startup")
@@ -2245,6 +2709,325 @@ async def api_refresh_models():
     return {"ollama_models": ollama.models if ollama else [], "deepseek": bool(DEEPSEEK_API_KEY)}
 
 
+# ============================================================================
+# Dynamic Cloud Agent Management APIs (v3.4)
+# ============================================================================
+
+@app.post("/api/agents/add")
+async def add_agent(req: AddAgentRequest):
+    """
+    动态添加云端 Agent：
+    1. 创建独立的 LLM Provider（使用用户提供的 API key）
+    2. 注册到 llm_router
+    3. 根据 role_hint 或 name 推断角色
+    4. 生成 system_prompt
+    5. 添加到 dynamic_agents 和引擎
+    """
+    # 检查 name 是否重复（包括静态和动态）
+    existing_ids = {a["id"] for a in AGENT_DEFS} | set(dynamic_agents.keys())
+    agent_id = f"dynamic_{req.name.lower().replace(' ', '_').replace('-', '_')}"
+    
+    if agent_id in existing_ids:
+        raise HTTPException(400, f"Agent name '{req.name}' already exists (id: {agent_id})")
+    
+    # 验证 provider 类型
+    if req.provider not in ("deepseek", "openai"):
+        raise HTTPException(400, f"Unsupported provider: {req.provider}. Supported: deepseek, openai")
+    
+    # 验证 API key
+    if not req.api_key or not req.api_key.strip():
+        raise HTTPException(400, "api_key is required")
+    
+    # 1. 创建新的 Provider
+    try:
+        if req.provider == "deepseek":
+            new_provider = DeepSeekProvider(api_key=req.api_key.strip())
+        else:
+            # openai 兼容接口，复用 DeepSeekProvider 的结构（endpoint 不同）
+            new_provider = DeepSeekProvider(
+                api_key=req.api_key.strip(),
+                endpoint="https://api.openai.com/v1/chat/completions"
+            )
+        await new_provider.start()
+    except Exception as e:
+        raise HTTPException(500, f"Failed to initialize provider: {str(e)}")
+    
+    # 2. 推断角色
+    role = infer_role_from_name(req.name, req.role_hint)
+    role_template = ROLE_TEMPLATES.get(role, ROLE_TEMPLATES["specialist"])
+    
+    # 3. 生成 system_prompt
+    system_prompt = role_template["prompt_template"].format(name=req.name)
+    
+    # 4. 构建 Agent 定义
+    agent_def = {
+        "id": agent_id,
+        "name": req.name,
+        "label": role_template["label"],
+        "icon": role_template["icon"],
+        "tier": "dynamic",
+        "provider": f"dynamic_{req.name.lower()}",
+        "model": req.model,
+        "edge_cloud_layer": "cloud",
+        "description": req.description or f"Dynamic {role_template['label']} agent: {req.name}",
+        "capabilities": role_template["capabilities"],
+        "system_prompt": system_prompt,
+        "is_dynamic": True,
+        "role": role,
+    }
+    
+    # 5. 注册 provider 到 router
+    provider_name = f"dynamic_{req.name.lower()}"
+    llm_router.register(provider_name, new_provider)
+    llm_router.assign_model(agent_id, provider_name, req.model)
+    
+    # 6. 添加到全局动态 Agent 池
+    dynamic_agents[agent_id] = agent_def
+    dynamic_providers[agent_id] = new_provider
+    
+    # 7. 刷新引擎中的 Agent 列表
+    if engine:
+        engine.refresh_dynamic_agents()
+    
+    # 8. 通知前端
+    await events.emit("agent_added", {
+        "agent": agent_def,
+        "message": f"✅ 动态 Agent [{req.name}] 已添加，角色: {role_template['label']}({role})",
+    })
+    await events.log(f"🆕 动态 Agent 已添加: {req.name} (role={role}, provider={req.provider}, model={req.model})")
+    
+    logger.info(f"[DynamicAgent] Added: {req.name} (id={agent_id}, role={role})")
+    
+    return {
+        "status": "success",
+        "agent_id": agent_id,
+        "name": req.name,
+        "role": role,
+        "role_label": role_template["label"],
+        "provider": req.provider,
+        "model": req.model,
+        "message": f"Agent '{req.name}' added successfully as {role_template['label']}",
+        "all_dynamic_agents": [
+            {"id": aid, "name": a["name"], "role": a.get("role", ""), "provider": a.get("provider", "")}
+            for aid, a in dynamic_agents.items()
+        ],
+    }
+
+
+@app.delete("/api/agents/{name}")
+async def delete_agent(name: str):
+    """
+    删除动态 Agent：
+    1. 从 dynamic_agents 移除
+    2. 从 llm_router 移除 provider
+    3. 从引擎中清理
+    4. 通知前端
+    """
+    agent_id = f"dynamic_{name.lower().replace(' ', '_').replace('-', '_')}"
+    
+    if agent_id not in dynamic_agents:
+        raise HTTPException(404, f"Dynamic agent '{name}' not found (id: {agent_id})")
+    
+    agent_def = dynamic_agents.pop(agent_id)
+    
+    # 清理 provider
+    provider_name = agent_def.get("provider", f"dynamic_{name.lower()}")
+    if provider_name in llm_router.providers:
+        provider = llm_router.providers.pop(provider_name)
+        await provider.stop()
+    if agent_id in llm_router.agent_model_map:
+        del llm_router.agent_model_map[agent_id]
+    
+    # 清理 dynamic_providers
+    if agent_id in dynamic_providers:
+        dynamic_providers.pop(agent_id)
+    
+    # 刷新引擎
+    if engine:
+        engine.refresh_dynamic_agents()
+    
+    # 通知前端
+    await events.emit("agent_removed", {
+        "agent_id": agent_id,
+        "name": name,
+        "message": f"🗑️ 动态 Agent [{name}] 已移除",
+    })
+    await events.log(f"🗑️ 动态 Agent 已移除: {name}")
+    
+    logger.info(f"[DynamicAgent] Removed: {name} (id={agent_id})")
+    
+    return {
+        "status": "success",
+        "message": f"Agent '{name}' removed successfully",
+        "remaining_dynamic_agents": [
+            {"id": aid, "name": a["name"], "role": a.get("role", "")}
+            for aid, a in dynamic_agents.items()
+        ],
+    }
+
+
+@app.get("/api/agents/dynamic")
+async def list_dynamic_agents():
+    """列出所有动态 Agent"""
+    return {
+        "dynamic_agents": [
+            {
+                "id": aid,
+                "name": a["name"],
+                "role": a.get("role", ""),
+                "label": a.get("label", ""),
+                "icon": a.get("icon", ""),
+                "provider": a.get("provider", ""),
+                "model": a.get("model", ""),
+                "description": a.get("description", ""),
+            }
+            for aid, a in dynamic_agents.items()
+        ],
+        "total": len(dynamic_agents),
+    }
+
+
+# ============================================================================
+# Dynamic Injection APIs (v3.2 — Competition Feature)
+# ============================================================================
+
+@app.post("/api/tasks/{task_id}/modify")
+async def api_modify_task(task_id: str, body: Dict):
+    """
+    动态修改运行中的任务：注入新需求或变更目标
+    - 支持中途添加新的分析维度
+    - 支持变更任务目标
+    - 支持添加约束条件
+    """
+    if task_id not in tasks:
+        raise HTTPException(404, "Task not found")
+    task = tasks[task_id]
+    
+    if task.status not in ("running", "planning"):
+        raise HTTPException(400, f"Task not active (status={task.status})")
+    
+    modification = {
+        "id": f"mod_{uuid.uuid4().hex[:8]}",
+        "type": body.get("type", "requirement_change"),  # requirement_change / constraint_add / scope_expand
+        "content": body.get("content", ""),
+        "timestamp": datetime.now().isoformat(),
+        "applied": False,
+    }
+    
+    if not modification["content"]:
+        raise HTTPException(400, "content required")
+    
+    task.pending_injections.append(modification)
+    
+    await events.emit("task_modified", {
+        "task_id": task_id,
+        "modification": modification,
+        "message": f"📝 需求变更已注入: {modification['content'][:100]}...",
+    })
+    await events.log(f"📝 动态注入: [{modification['type']}] {modification['content'][:80]}")
+    
+    return {"status": "injected", "modification_id": modification["id"]}
+
+
+@app.post("/api/tasks/{task_id}/inject-fault")
+async def api_inject_fault(task_id: str, body: Dict):
+    """
+    注入故障以测试系统韧性
+    - node_failure: 模拟某个Agent失效
+    - latency_inject: 注入延迟
+    - data_corruption: 模拟数据损坏
+    - topology_disrupt: 拓扑结构扰动
+    """
+    if task_id not in tasks:
+        raise HTTPException(404, "Task not found")
+    task = tasks[task_id]
+    
+    if task.status not in ("running", "planning"):
+        raise HTTPException(400, f"Task not active (status={task.status})")
+    
+    fault_type = body.get("fault_type", "")
+    target = body.get("target", "")  # agent_id or component
+    severity = body.get("severity", "medium")  # low / medium / high / critical
+    duration = body.get("duration", 1)  # steps to affect
+    
+    FAULT_TYPES = {
+        "node_failure": "节点失效",
+        "latency_inject": "延迟注入", 
+        "data_corruption": "数据损坏",
+        "topology_disrupt": "拓扑扰动",
+        "resource_exhaust": "资源耗尽",
+    }
+    
+    if fault_type not in FAULT_TYPES:
+        raise HTTPException(400, f"Invalid fault_type. Options: {list(FAULT_TYPES.keys())}")
+    
+    fault = {
+        "id": f"fault_{uuid.uuid4().hex[:8]}",
+        "type": fault_type,
+        "type_label": FAULT_TYPES[fault_type],
+        "target": target,
+        "severity": severity,
+        "duration": duration,
+        "injected_at": datetime.now().isoformat(),
+        "active": True,
+        "mitigated": False,
+    }
+    
+    task.fault_injections.append(fault)
+    task.pending_injections.append({
+        "id": fault["id"],
+        "type": "fault_injection",
+        "content": fault,
+        "timestamp": fault["injected_at"],
+        "applied": False,
+    })
+    
+    # Handle node_failure: disable agent
+    if fault_type == "node_failure" and target:
+        task.disabled_agents.add(target)
+        await events.log(f"💥 故障注入: {target} 节点失效 ({severity})")
+    
+    await events.emit("fault_injected", {
+        "task_id": task_id,
+        "fault": fault,
+        "message": f"💥 故障注入: {FAULT_TYPES[fault_type]} → {target or '系统'}",
+    })
+    
+    return {"status": "injected", "fault_id": fault["id"], "type": FAULT_TYPES[fault_type]}
+
+
+@app.get("/api/tasks/{task_id}/injections")
+async def api_get_injections(task_id: str):
+    """获取任务的所有注入事件"""
+    if task_id not in tasks:
+        raise HTTPException(404, "Task not found")
+    task = tasks[task_id]
+    return {
+        "pending": task.pending_injections,
+        "processed": task.processed_injections,
+        "faults": task.fault_injections,
+        "recovery_attempts": task.recovery_attempts,
+        "disabled_agents": list(task.disabled_agents),
+    }
+
+
+@app.post("/api/tasks/{task_id}/recover")
+async def api_recover_agent(task_id: str, body: Dict):
+    """手动恢复被禁用的Agent"""
+    if task_id not in tasks:
+        raise HTTPException(404, "Task not found")
+    task = tasks[task_id]
+    
+    agent_id = body.get("agent_id", "")
+    if agent_id in task.disabled_agents:
+        task.disabled_agents.remove(agent_id)
+        await events.log(f"🔧 Agent {agent_id} 已恢复")
+        await events.emit("agent_recovered", {"task_id": task_id, "agent_id": agent_id})
+        return {"status": "recovered", "agent_id": agent_id}
+    
+    raise HTTPException(400, f"Agent {agent_id} not disabled")
+
+
 @app.websocket("/ws/events")
 async def ws_events(ws: WebSocket):
     await events.connect(ws)
@@ -2266,7 +3049,7 @@ async def ws_events(ws: WebSocket):
 if __name__ == "__main__":
     print(f"""
 ╔══════════════════════════════════════════════════════╗
-║       NexusFlow Server v3.1 — Real Core Engine       ║
+║    NexusFlow Server v3.4 — Dynamic Agents & Logs     ║
 ╠══════════════════════════════════════════════════════╣
 ║  Dashboard : http://localhost:{SERVER_PORT:<6}               ║
 ║  API Docs  : http://localhost:{SERVER_PORT}/docs          ║

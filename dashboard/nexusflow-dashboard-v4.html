@@ -644,6 +644,42 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
 }
 .drawer-output pre { white-space: pre-wrap; font-size: .78rem; line-height: 1.5; color: var(--text-2); }
 
+/* ─── Dynamic Injection Panel (v3.2) ─── */
+.injection-section {
+  margin-bottom: 4px;
+}
+.injection-label {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-coral {
+  background: var(--coral-dim);
+  color: var(--coral);
+  border: 1px solid var(--coral);
+}
+.btn-coral:hover {
+  background: var(--coral);
+  color: #fff;
+}
+.btn-mint {
+  background: var(--mint-dim);
+  color: var(--mint);
+  border: 1px solid var(--mint);
+}
+.btn-mint:hover {
+  background: var(--mint);
+  color: #fff;
+}
+.btn-sm {
+  padding: 6px 12px;
+  font-size: .72rem;
+}
+
 /* ─── Task Result Modal ─── */
 .result-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,.7);
@@ -766,6 +802,148 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
   .pipeline-stages { flex-wrap: wrap; justify-content: center; }
   .pipeline-meta { flex-wrap: wrap; justify-content: center; }
 }
+
+/* ─── Agent Pool Panel ─── */
+.agent-pool-panel {
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.agent-pool-title {
+  font-size: .85rem; font-weight: 600; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.agent-pool-list {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 420px; overflow-y: auto;
+  padding-right: 4px;
+}
+.pool-agent-card {
+  background: var(--bg-0);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  transition: all var(--ease);
+  display: flex; align-items: flex-start; gap: 10px;
+  position: relative;
+}
+.pool-agent-card:hover {
+  border-color: var(--bg-3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+.pool-agent-avatar {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  background: var(--bg-2);
+}
+.pool-agent-info { flex: 1; min-width: 0; }
+.pool-agent-name {
+  font-weight: 600; font-size: .82rem; color: var(--text-1);
+  display: flex; align-items: center; gap: 6px;
+}
+.pool-agent-role-tag {
+  font-size: .58rem; padding: 1px 6px; border-radius: 6px;
+  font-weight: 600; vertical-align: middle;
+}
+.pool-agent-provider {
+  font-size: .65rem; color: var(--text-3); margin-top: 2px;
+  display: flex; align-items: center; gap: 4px;
+}
+.pool-agent-desc {
+  font-size: .68rem; color: var(--text-3); margin-top: 4px;
+  line-height: 1.4;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.pool-agent-status {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  margin-top: 2px;
+}
+.pool-agent-status.online { background: var(--mint); box-shadow: 0 0 6px var(--mint-glow); }
+.pool-agent-status.busy { background: var(--yellow); animation: blink 1.5s infinite; }
+.pool-agent-status.offline { background: var(--text-3); }
+.pool-agent-badges {
+  display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap;
+}
+.pool-badge {
+  font-size: .58rem; padding: 1px 6px; border-radius: 6px;
+  font-weight: 600;
+}
+.pool-badge.custom { background: var(--yellow-dim); color: var(--yellow); }
+.pool-badge.builtin { background: var(--purple-dim); color: var(--purple); }
+.pool-badge.provider-deepseek { background: rgba(0,150,255,.12); color: #42a5f5; }
+.pool-badge.provider-ollama { background: rgba(76,175,80,.12); color: #66bb6a; }
+.pool-badge.provider-openai { background: rgba(16,163,127,.12); color: #10a37f; }
+.pool-delete-btn {
+  position: absolute; top: 6px; right: 6px;
+  width: 20px; height: 20px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none; background: transparent;
+  color: var(--text-3); font-size: .7rem;
+  transition: all var(--ease); opacity: 0;
+}
+.pool-agent-card:hover .pool-delete-btn { opacity: 1; }
+.pool-delete-btn:hover { background: var(--red-glow); color: var(--red); }
+.btn-add-agent {
+  width: 100%; padding: 10px; margin-top: 10px;
+  background: linear-gradient(135deg, var(--purple-dim), var(--coral-dim));
+  border: 1px dashed var(--bg-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-2); font-size: .78rem; font-weight: 600;
+  cursor: pointer; transition: all var(--ease);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-add-agent:hover {
+  border-color: var(--purple);
+  background: linear-gradient(135deg, var(--purple-dim), var(--coral-dim));
+  color: var(--text-1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--purple-glow);
+}
+
+/* ─── Add Agent Dialog ─── */
+.add-agent-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  z-index: 220; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+}
+.add-agent-overlay.open { opacity: 1; pointer-events: auto; }
+.add-agent-dialog {
+  background: var(--bg-1); border: 1px solid var(--bg-2);
+  border-radius: var(--radius-lg); width: 520px; max-width: 90vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  transform: scale(.95); transition: transform .25s ease;
+  max-height: 85vh; display: flex; flex-direction: column;
+}
+.add-agent-overlay.open .add-agent-dialog { transform: scale(1); }
+.add-agent-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 20px; border-bottom: 1px solid var(--bg-2);
+}
+.add-agent-title { font-size: 1rem; font-weight: 700; flex: 1; }
+.add-agent-body { padding: 20px; overflow-y: auto; flex: 1; }
+.add-agent-body .form-group { margin-bottom: 14px; }
+.add-agent-body .form-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.add-agent-footer {
+  padding: 14px 20px; border-top: 1px solid var(--bg-2);
+  display: flex; gap: 10px; justify-content: flex-end;
+}
+.btn-add-submit {
+  background: linear-gradient(135deg, var(--purple), var(--coral));
+  color: #fff; padding: 8px 20px; border-radius: var(--radius-sm);
+  font-size: .85rem; font-weight: 600; border: none; cursor: pointer;
+  transition: all var(--ease);
+  box-shadow: 0 2px 12px var(--purple-glow);
+}
+.btn-add-submit:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px var(--purple-glow);
+}
+.btn-add-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 </style>
 </head>
 <body>
@@ -1411,6 +1589,81 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
           <div class="event-log" id="eventLog"></div>
         </div>
       </div>
+      
+      <!-- Dynamic Injection Panel (v3.2) -->
+      <div class="panel-card" id="injectionPanel" style="display:none">
+        <div class="panel-header">
+          <span class="panel-icon">💉</span>
+          <span class="panel-title">动态注入控制</span>
+          <span class="panel-badge" id="injectionBadge" style="background:var(--red-dim);color:var(--red)">实验性功能</span>
+        </div>
+        <div class="panel-body" style="padding:12px">
+          <!-- Requirement Change -->
+          <div class="injection-section">
+            <div class="injection-label">📝 需求变更注入</div>
+            <textarea class="form-input" id="injectionInput" rows="2" placeholder="输入新的需求或约束..." style="font-size:.75rem;margin-bottom:8px"></textarea>
+            <button class="btn btn-sm btn-coral" onclick="injectRequirement()" style="width:100%;font-size:.72rem">
+              注入需求变更
+            </button>
+          </div>
+          
+          <!-- Fault Injection -->
+          <div class="injection-section" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bg-2)">
+            <div class="injection-label">💥 故障注入</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('node_failure','researcher')" style="font-size:.68rem" title="模拟Researcher节点失效">
+                🔥 研究员失效
+              </button>
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('node_failure','coder')" style="font-size:.68rem" title="模拟Coder节点失效">
+                🔥 编码师失效
+              </button>
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('latency_inject','all')" style="font-size:.68rem" title="注入全局延迟">
+                ⏱️ 延迟注入
+              </button>
+              <button class="btn btn-sm btn-ghost" onclick="injectFault('topology_disrupt','topology')" style="font-size:.68rem" title="强制切换拓扑">
+                🔀 拓扑扰动
+              </button>
+            </div>
+          </div>
+          
+          <!-- Recovery -->
+          <div class="injection-section" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bg-2)">
+            <div class="injection-label">🔧 手动恢复</div>
+            <div id="disabledAgentsList" style="font-size:.7rem;color:var(--text-2);margin:8px 0">
+              无失效Agent
+            </div>
+            <button class="btn btn-sm btn-mint" onclick="recoverAllAgents()" style="width:100%;font-size:.72rem">
+              恢复所有Agent
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Pool Panel -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <span class="panel-icon">🤖</span>
+          <span class="panel-title">云端 Agent 池</span>
+          <span class="panel-badge" id="agentPoolCount">0 个</span>
+        </div>
+        <div class="panel-body">
+          <div class="agent-pool-panel">
+            <div class="agent-pool-title">
+              <span>🤖</span>
+              <span>可用 Agent 列表</span>
+            </div>
+            <div class="agent-pool-list" id="agentPoolList">
+              <div style="text-align:center;padding:20px;color:var(--text-3);font-size:.78rem">
+                加载中...
+              </div>
+            </div>
+            <button class="btn-add-agent" onclick="openAddAgentDialog()">
+              <span>➕</span>
+              <span>添加 Agent</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Agents Detail Area -->
@@ -1469,6 +1722,61 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
     <div class="dialog-footer">
       <button class="btn btn-ghost" onclick="closeTaskDialog()">取消</button>
       <button class="btn btn-primary" id="btnSubmitTask" onclick="submitTask()">提交执行</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Agent Dialog -->
+<div class="add-agent-overlay" id="addAgentOverlay">
+  <div class="add-agent-dialog">
+    <div class="add-agent-header">
+      <span>🤖</span>
+      <span class="add-agent-title">添加云端 Agent</span>
+      <button class="drawer-close" onclick="closeAddAgentDialog()">✕</button>
+    </div>
+    <div class="add-agent-body">
+      <div class="form-group">
+        <label class="form-label">Agent 名称 <span style="color:var(--red)">*</span></label>
+        <input class="form-input" id="addAgentName" placeholder="例如：CodeReviewer" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">API Key <span style="color:var(--red)">*</span></label>
+        <input class="form-input" id="addAgentApiKey" type="password" placeholder="输入 API Key" />
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div>
+            <label class="form-label">Provider</label>
+            <select class="form-select" id="addAgentProvider">
+              <option value="deepseek">DeepSeek</option>
+              <option value="openai">OpenAI</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">模型</label>
+            <input class="form-input" id="addAgentModel" placeholder="deepseek-chat" value="deepseek-chat" />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">角色方向</label>
+        <select class="form-select" id="addAgentRole">
+          <option value="auto">自动推断</option>
+          <option value="coder">Coder 编码师</option>
+          <option value="analyst">Analyst 分析师</option>
+          <option value="researcher">Researcher 研究员</option>
+          <option value="critic">Critic 批评家</option>
+          <option value="synthesizer">Synthesizer 整合师</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">描述（可选）</label>
+        <textarea class="form-input" id="addAgentDesc" rows="3" placeholder="简要描述该 Agent 的专长或用途..."></textarea>
+      </div>
+    </div>
+    <div class="add-agent-footer">
+      <button class="btn btn-ghost" onclick="closeAddAgentDialog()">取消</button>
+      <button class="btn-add-submit" id="btnAddAgent" onclick="addAgent()">➕ 添加 Agent</button>
     </div>
   </div>
 </div>
@@ -2000,6 +2308,134 @@ function updateLazinessDetector(data) {
   }
 }
 
+// ─── Dynamic Injection Functions (v3.2) ───
+function showInjectionPanel() {
+  $('injectionPanel').style.display = '';
+}
+
+function hideInjectionPanel() {
+  $('injectionPanel').style.display = 'none';
+}
+
+async function injectRequirement() {
+  if (!selectedTask) {
+    showToast('请先选择一个运行中的任务', 'warning');
+    return;
+  }
+  
+  const content = $('injectionInput').value.trim();
+  if (!content) {
+    showToast('请输入需求变更内容', 'warning');
+    return;
+  }
+  
+  try {
+    const resp = await fetch(`${API_BASE}/api/tasks/${selectedTask}/modify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'requirement_change',
+        content: content,
+      }),
+    });
+    
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.detail || '注入失败');
+    }
+    
+    const result = await resp.json();
+    showToast(`✅ 需求变更已注入: ${result.modification_id}`, 'success');
+    $('injectionInput').value = '';
+    addEvent('injection', `📝 需求变更已注入: ${content.substring(0, 50)}...`);
+  } catch (e) {
+    showToast(`❌ 注入失败: ${e.message}`, 'error');
+    addEvent('error', `需求注入失败: ${e.message}`);
+  }
+}
+
+async function injectFault(faultType, target) {
+  if (!selectedTask) {
+    showToast('请先选择一个运行中的任务', 'warning');
+    return;
+  }
+  
+  const faultLabels = {
+    'node_failure': '节点失效',
+    'latency_inject': '延迟注入',
+    'topology_disrupt': '拓扑扰动',
+  };
+  
+  try {
+    const resp = await fetch(`${API_BASE}/api/tasks/${selectedTask}/inject-fault`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fault_type: faultType,
+        target: target,
+        severity: 'high',
+        duration: 3,
+      }),
+    });
+    
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.detail || '故障注入失败');
+    }
+    
+    const result = await resp.json();
+    showToast(`💥 ${faultLabels[faultType]}已注入: ${target}`, 'warning');
+    addEvent('fault', `💥 ${faultLabels[faultType]} → ${target}`);
+  } catch (e) {
+    showToast(`❌ 注入失败: ${e.message}`, 'error');
+    addEvent('error', `故障注入失败: ${e.message}`);
+  }
+}
+
+async function recoverAllAgents() {
+  if (!selectedTask) {
+    showToast('请先选择一个运行中的任务', 'warning');
+    return;
+  }
+  
+  try {
+    // 获取当前禁用的Agent列表
+    const resp = await fetch(`${API_BASE}/api/tasks/${selectedTask}/injections`);
+    const data = await resp.json();
+    
+    if (!data.disabled_agents || data.disabled_agents.length === 0) {
+      showToast('没有需要恢复的Agent', 'info');
+      return;
+    }
+    
+    // 逐个恢复
+    for (const agentId of data.disabled_agents) {
+      await fetch(`${API_BASE}/api/tasks/${selectedTask}/recover`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agent_id: agentId }),
+      });
+    }
+    
+    showToast(`🔧 已恢复 ${data.disabled_agents.length} 个Agent`, 'success');
+    addEvent('recovery', `🔧 已恢复所有失效Agent`);
+    updateDisabledAgentsList([]);
+  } catch (e) {
+    showToast(`❌ 恢复失败: ${e.message}`, 'error');
+  }
+}
+
+function updateDisabledAgentsList(disabledAgents) {
+  const el = $('disabledAgentsList');
+  if (!disabledAgents || disabledAgents.length === 0) {
+    el.innerHTML = '无失效Agent';
+    el.style.color = 'var(--mint)';
+  } else {
+    el.innerHTML = disabledAgents.map(id => `<span style="color:var(--red)">⚠️ ${id}</span>`).join('<br>');
+    el.style.color = 'var(--text-2)';
+  }
+}
+
 // ─── Update Insights ───
 function updateInsights(insights) {
   insightsData = insights || [];
@@ -2021,6 +2457,17 @@ function updateInsights(insights) {
   $('insightCountSynergy').textContent = cats.synergy;
   
   renderInsightList('all');
+}
+
+function addEvent(level, content) {
+  const log = $('eventLog');
+  const div = document.createElement('div');
+  div.className = 'event-item';
+  div.innerHTML = `<span class="event-time">${timeNow()}</span><span class="event-content">${content}</span>`;
+  log.insertBefore(div, log.firstChild);
+  while (log.children.length > 50) log.removeChild(log.lastChild);
+  eventCount++;
+  $('eventCount').textContent = eventCount;
 }
 
 function filterInsights(cat) {
@@ -2188,6 +2635,9 @@ function handleWSMessage(msg) {
       if (data.status === 'running') {
         $('statActiveTasks').textContent = parseInt($('statActiveTasks').textContent || 0) + 1;
         addEvent('task', `<strong>任务</strong> ${data.task_id} 开始运行`);
+        // 显示动态注入面板
+        selectedTask = data.task_id;
+        showInjectionPanel();
       }
       // completed/failed handled by dedicated task_complete/task_failed events
       break;
@@ -2283,6 +2733,49 @@ function handleWSMessage(msg) {
     case 'task_failed':
       $('statActiveTasks').textContent = Math.max(0, parseInt($('statActiveTasks').textContent || 0) - 1);
       addEvent('error', `<strong>任务</strong> ${data.task_id} 失败: ${data.error || ''}`);
+      break;
+    
+    // Dynamic Injection Events (v3.2)
+    case 'task_modified':
+      addEvent('injection', `📝 <strong>需求变更</strong>: ${data.modification?.content?.substring(0, 60) || '已注入'}...`);
+      break;
+    
+    case 'fault_injected':
+      addEvent('fault', `💥 <strong>故障注入</strong>: ${data.fault?.type_label || '未知'} → ${data.fault?.target || '系统'}`);
+      break;
+    
+    case 'recovery_attempt':
+      addEvent('recovery', `🔧 <strong>恢复尝试</strong>: ${data.agent_id} (${data.strategy})`);
+      break;
+    
+    case 'recovery_success':
+      addEvent('recovery', `✅ <strong>恢复成功</strong>: ${data.agent_id} 已恢复`);
+      updateDisabledAgentsList([]);
+      break;
+    
+    case 'agent_recovered':
+      addEvent('recovery', `🔧 <strong>Agent恢复</strong>: ${data.agent_id}`);
+      break;
+    
+    case 'data_corruption':
+      addEvent('fault', `🗑️ <strong>数据损坏</strong>: ${data.target} 需要重新获取`);
+      break;
+
+    // Agent Pool Events
+    case 'agent_pool_updated':
+      addEvent('agent', `<strong>🤖 Agent 池</strong> 列表已更新`);
+      loadAgentPool();
+      break;
+    
+    case 'agent_state':
+      // Update individual agent state in pool
+      if (agentPoolData.length > 0) {
+        const poolAgent = agentPoolData.find(a => a.id === data.agent_id || a.name === data.agent_id);
+        if (poolAgent) {
+          poolAgent.state = data.state || data.status || 'idle';
+          renderAgentList(agentPoolData);
+        }
+      }
       break;
 
     case 'log':
@@ -2426,6 +2919,179 @@ function startDemoMode() {
   }, 2000);
 }
 
+// ─── Agent Pool Functions ───
+let agentPoolData = [];
+
+const PROVIDER_ICONS = { deepseek: '🐋', ollama: '🦙', openai: '🟢' };
+const PROVIDER_LABELS = { deepseek: 'DeepSeek', ollama: 'Ollama', openai: 'OpenAI' };
+const ROLE_LABELS = { coder: '编码师', analyst: '分析师', researcher: '研究员', critic: '批评家', synthesizer: '整合师', auto: '自动推断' };
+const AGENT_ICONS_MAP = { coder: '💻', analyst: '📊', researcher: '🔍', critic: '🔥', synthesizer: '🔬', auto: '🤖' };
+
+async function loadAgentPool() {
+  try {
+    const resp = await fetch(API_BASE + '/api/agents');
+    if (resp.ok) {
+      const agents = await resp.json();
+      agentPoolData = agents.agents || agents || [];
+      renderAgentList(agentPoolData);
+    }
+  } catch (e) {
+    // Fallback: use built-in agents as pool data
+    agentPoolData = AGENTS.map(a => ({
+      id: a.id,
+      name: a.name,
+      label: a.label || a.name,
+      icon: a.icon,
+      provider: 'ollama',
+      role: 'auto',
+      description: a.description,
+      is_builtin: true,
+      state: a.state || 'idle',
+    }));
+    renderAgentList(agentPoolData);
+  }
+}
+
+function renderAgentList(agents) {
+  const container = $('agentPoolList');
+  if (!agents || agents.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-3);font-size:.78rem">暂无 Agent，点击下方添加</div>';
+    $('agentPoolCount').textContent = '0 个';
+    return;
+  }
+  
+  container.innerHTML = agents.map(agent => {
+    const isBuiltin = agent.is_builtin !== false;
+    const provider = agent.provider || 'ollama';
+    const role = agent.role || 'auto';
+    const stateClass = agent.state === 'thinking' || agent.state === 'busy' ? 'busy' : (agent.state === 'idle' || agent.state === 'online' || agent.state === 'complete') ? 'online' : 'offline';
+    const icon = agent.icon || AGENT_ICONS_MAP[role] || '🤖';
+    const name = agent.label || agent.name || agent.id;
+    const providerIcon = PROVIDER_ICONS[provider] || '🤖';
+    const providerLabel = PROVIDER_LABELS[provider] || provider;
+    
+    return `
+      <div class="pool-agent-card" data-agent-id="${escapeHtml(agent.id || agent.name)}">
+        <div class="pool-agent-avatar">${icon}</div>
+        <div class="pool-agent-info">
+          <div class="pool-agent-name">
+            ${escapeHtml(name)}
+            <span class="pool-agent-role-tag" style="background:var(--purple-dim);color:var(--purple)">${ROLE_LABELS[role] || role}</span>
+          </div>
+          <div class="pool-agent-provider">
+            <span>${providerIcon}</span>
+            <span>${escapeHtml(providerLabel)}</span>
+            ${agent.model ? `<span style="margin-left:4px;color:var(--text-3)">· ${escapeHtml(agent.model)}</span>` : ''}
+          </div>
+          ${agent.description ? `<div class="pool-agent-desc">${escapeHtml(agent.description)}</div>` : ''}
+          <div class="pool-agent-badges">
+            ${isBuiltin ? '<span class="pool-badge builtin">内置</span>' : '<span class="pool-badge custom">🔑 自定义</span>'}
+            <span class="pool-badge provider-${escapeHtml(provider)}">${providerIcon} ${escapeHtml(providerLabel)}</span>
+          </div>
+        </div>
+        <div class="pool-agent-status ${stateClass}" title="${stateClass === 'online' ? '在线' : stateClass === 'busy' ? '忙碌' : '离线'}"></div>
+        ${!isBuiltin ? `<button class="pool-delete-btn" onclick="removeAgent('${escapeHtml(agent.id || agent.name)}')" title="删除">✕</button>` : ''}
+      </div>
+    `;
+  }).join('');
+  
+  $('agentPoolCount').textContent = `${agents.length} 个`;
+}
+
+function openAddAgentDialog() {
+  $('addAgentOverlay').classList.add('open');
+  $('addAgentName').value = '';
+  $('addAgentApiKey').value = '';
+  $('addAgentProvider').value = 'deepseek';
+  $('addAgentModel').value = 'deepseek-chat';
+  $('addAgentRole').value = 'auto';
+  $('addAgentDesc').value = '';
+  $('btnAddAgent').disabled = false;
+  $('btnAddAgent').textContent = '➕ 添加 Agent';
+  setTimeout(() => $('addAgentName').focus(), 100);
+}
+
+function closeAddAgentDialog() {
+  $('addAgentOverlay').classList.remove('open');
+}
+
+async function addAgent() {
+  const name = $('addAgentName').value.trim();
+  const apiKey = $('addAgentApiKey').value.trim();
+  const provider = $('addAgentProvider').value;
+  const model = $('addAgentModel').value.trim() || (provider === 'deepseek' ? 'deepseek-chat' : 'gpt-4');
+  const role = $('addAgentRole').value;
+  const description = $('addAgentDesc').value.trim();
+  
+  if (!name) {
+    showToast('请输入 Agent 名称', 'warning');
+    $('addAgentName').focus();
+    return;
+  }
+  if (!apiKey) {
+    showToast('请输入 API Key', 'warning');
+    $('addAgentApiKey').focus();
+    return;
+  }
+  
+  const btn = $('btnAddAgent');
+  btn.disabled = true;
+  btn.textContent = '添加中...';
+  
+  const formData = {
+    name: name,
+    api_key: apiKey,
+    provider: provider,
+    model: model,
+    role: role,
+    description: description,
+  };
+  
+  try {
+    const resp = await fetch(API_BASE + '/api/agents/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    
+    const result = await resp.json();
+    
+    if (resp.ok && result.success !== false) {
+      showToast('Agent 添加成功', 'success');
+      closeAddAgentDialog();
+      addEvent('agent', `<strong>🤖 Agent 池</strong> 新增 "${escapeHtml(name)}" (${PROVIDER_LABELS[provider]})`);
+      loadAgentPool();
+    } else {
+      showToast('添加失败: ' + (result.error || '未知错误'), 'error');
+      btn.disabled = false;
+      btn.textContent = '➕ 添加 Agent';
+    }
+  } catch (e) {
+    showToast('添加失败: ' + e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '➕ 添加 Agent';
+  }
+}
+
+async function removeAgent(name) {
+  if (!confirm(`确定要删除 Agent "${name}" 吗？`)) return;
+  
+  try {
+    const resp = await fetch(`${API_BASE}/api/agents/${encodeURIComponent(name)}`, { method: 'DELETE' });
+    const result = await resp.json();
+    
+    if (resp.ok && result.success !== false) {
+      showToast('Agent 已删除', 'success');
+      addEvent('agent', `<strong>🤖 Agent 池</strong> 已删除 "${escapeHtml(name)}"`);
+      loadAgentPool();
+    } else {
+      showToast('删除失败: ' + (result.error || '未知错误'), 'error');
+    }
+  } catch (e) {
+    showToast('删除失败: ' + e.message, 'error');
+  }
+}
+
 // ─── Initialize ───
 document.addEventListener('DOMContentLoaded', () => {
   // Render initial state
@@ -2443,6 +3109,9 @@ document.addEventListener('DOMContentLoaded', () => {
     startDemoMode();
   });
   
+  // Load agent pool
+  loadAgentPool();
+  
   // Update clock
   updateClock();
   setInterval(updateClock, 1000);
@@ -2459,6 +3128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') {
       closeDrawer();
       closeTaskDialog();
+      closeAddAgentDialog();
     }
     if (e.key === 'n' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();

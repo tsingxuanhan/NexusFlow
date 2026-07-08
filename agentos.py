@@ -108,7 +108,7 @@ class AsyncTask:
 
 class AgentOS:
     """
-    xuanshu-agents AgentOS 运行时
+    NexusFlow AgentOS 运行时
 
     将Agent能力暴露为HTTP API，支持：
     - 对话交互
@@ -177,7 +177,7 @@ class AgentOS:
             )
 
         app = FastAPI(
-            title="xuanshu-agents AgentOS",
+            title="NexusFlow AgentOS",
             description="铉枢·炉守 Agent运行时API",
             version="4.0.0",
         )

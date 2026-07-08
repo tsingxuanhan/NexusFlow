@@ -436,7 +436,7 @@ class PersistentVectorStore(InMemoryVectorStore):
     持久化向量存储
     
     继承 InMemoryVectorStore，添加持久化功能：
-    - 保存到 ./xuanshu-agents/data/vector_memory.json
+    - 保存到 ./NexusFlow/data/vector_memory.json
     - 每 N 次 add 自动保存，也支持手动 save()
     - 启动时自动加载
     - 使用原子写入避免数据损坏
@@ -555,8 +555,8 @@ class ChromaDBVectorStore(VectorStore):
     def __init__(
         self,
         embedding_provider: Optional[EmbeddingProvider] = None,
-        persist_path: str = "./xuanshu-agents/data/chroma_db",
-        collection_name: str = "xuanshu_memory"
+        persist_path: str = "./NexusFlow/data/chroma_db",
+        collection_name: str = "nexusflow_memory"
     ):
         # 检查是否可用
         if ChromaDBVectorStore._available is None:

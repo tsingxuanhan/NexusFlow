@@ -3,7 +3,7 @@
 铉枢·炉守 Open Design MCP桥接工具
 XuanHub × Open Design — Phase 1 MCP互连
 
-将Open Design的10个MCP设计工具桥接到xuanshu-agents工具系统
+将Open Design的10个MCP设计工具桥接到NexusFlow工具系统
 通过MCP Client V2连接open-design-mcp stdio服务器
 """
 
@@ -345,7 +345,7 @@ class ODDesignTool(BaseTool):
     """
     Open Design桥接工具
     
-    将OD的10个MCP设计工具映射为xuanshu-agents BaseTool
+    将OD的10个MCP设计工具映射为NexusFlow BaseTool
     Agent通过name参数指定要调用的OD子工具
     
     用法:

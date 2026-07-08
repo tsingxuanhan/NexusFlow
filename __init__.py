@@ -1,4 +1,4 @@
-# xuanshu-agents v4.0
+# NexusFlow v2.7 — 基于动态认知拓扑的超长程群体智能引擎
 from base_agent import BaseAgent
 from a2a_protocol import A2AProtocol, A2ANetwork, P2PChannel
 from vector_memory import VectorMemory, EnhancedVectorMemory, StructuredSlotMemory

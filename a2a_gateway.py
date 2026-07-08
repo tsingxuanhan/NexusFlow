@@ -35,7 +35,7 @@ class A2AAgentInfo:
     agent_url: str = ""
     capabilities: List[str] = field(default_factory=list)
     description: str = ""
-    framework: str = ""  # xuanshu / crewai / langgraph / auto_gen
+    framework: str = ""  # nexusflow / crewai / langgraph / auto_gen
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict:
@@ -93,7 +93,7 @@ class A2AGateway:
         
         # 注册自己
         gateway.register_self(A2AAgentInfo(
-            agent_id="xuanshu-planner",
+            agent_id="nexusflow-planner",
             agent_name="StrategyAgent",
             capabilities=["plan_task", "decompose"],
         ))
@@ -106,13 +106,13 @@ class A2AGateway:
             agent_id="external-researcher",
             task=A2ATask(
                 description="Research SSC cement latest papers",
-                sender_id="xuanshu-planner",
+                sender_id="nexusflow-planner",
                 receiver_id="external-researcher",
             )
         )
     """
     
-    def __init__(self, self_agent_id: str = "xuanshu-agents"):
+    def __init__(self, self_agent_id: str = "nexusflow"):
         self.self_agent_id = self_agent_id
         self._agents: Dict[str, A2AAgentInfo] = {}
         self._tasks: Dict[str, A2ATask] = {}

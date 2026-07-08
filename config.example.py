@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-xuanshu-agents 配置文件模板
+NexusFlow 配置文件模板
 复制此文件为 config.py 并填入真实值
 cp config.example.py config.py
 """
@@ -264,7 +264,7 @@ MCP_SERVER_CONFIG = {
 # A2A Gateway配置
 A2A_GATEWAY_CONFIG = {
     "enabled": True,
-    "self_agent_id": "xuanshu-agents",
+    "self_agent_id": "NexusFlow",
     "discover_on_start": False,
     "known_agents": {},  # {agent_id: {url, capabilities}} — 在运行时填充
 }

@@ -268,7 +268,7 @@ class MCPClient:
                 "sampling": {}
             },
             "clientInfo": {
-                "name": "xuanshu-agents",
+                "name": "nexusflow",
                 "version": "1.0.0"
             }
         })

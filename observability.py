@@ -243,7 +243,7 @@ class OTelExporter:
     参考: OpenTelemetry Collector + Microsoft Agent Framework
     """
     
-    def __init__(self, service_name: str = "xuanshu-agents"):
+    def __init__(self, service_name: str = "NexusFlow"):
         self.service_name = service_name
         self._traces: List[Dict] = []
     

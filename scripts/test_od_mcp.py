@@ -200,7 +200,7 @@ async def test_bridge_tool():
 async def run_all_tests():
     """运行所有测试"""
     print("=" * 60)
-    print("Open Design × xuanshu-agents MCP Phase 1 连通性测试")
+    print("Open Design × NexusFlow MCP Phase 1 连通性测试")
     print("=" * 60)
     
     results = {}

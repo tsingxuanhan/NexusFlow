@@ -29,7 +29,7 @@ class FileOpsSecurity:
         "./knowledge",
         "./data",
         "./reports",
-        "/tmp/xuanshu",
+        "/tmp/nexusflow",
     ]
     
     # 禁止访问的路径模式

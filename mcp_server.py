@@ -3,7 +3,7 @@
 铉枢·炉守 MCP Server模式
 XuanHub MCP Server — Phase 3
 
-将xuanshu-agents的能力暴露为MCP Server，被其他Agent/框架调用。
+将NexusFlow的能力暴露为MCP Server，被其他Agent/框架调用。
 """
 
 import json
@@ -50,7 +50,7 @@ class MCPServerResource:
 
 class XuanshuMCPServer:
     """
-    将xuanshu-agents的能力暴露为MCP Server
+    将NexusFlow的能力暴露为MCP Server
     
     功能:
     - 注册Agent能力为MCP工具
@@ -67,7 +67,7 @@ class XuanshuMCPServer:
     - codeact_exec: CodeAct代码执行
     """
     
-    def __init__(self, name: str = "xuanshu-agents", version: str = "4.0.0"):
+    def __init__(self, name: str = "nexusflow", version: str = "2.7.0"):
         self.name = name
         self.version = version
         self._tools: Dict[str, MCPServerTool] = {}

@@ -319,7 +319,7 @@ def create_core_memory_with_defaults(
     if not cm.get("project_info"):
         cm.update("project_info",
             f"项目: {project_name}\n"
-            f"框架: xuanshu-agents v4.0\n"
+            f"框架: NexusFlow v2.7\n"
             f"模型: DeepSeek PRO(推理) + Flash(验证/轻量)"
         )
 

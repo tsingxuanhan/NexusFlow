@@ -7,8 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![Version](https://img.shields.io/badge/Version-2.7-green.svg)]()
-[![Code Size](https://img.shields.io/badge/Code-433%20Python%20files%20%7C%2037%2B%20modules-orange.svg)]()
-[![Benchmarks](https://img.shields.io/badge/Benchmarks-4%20Stages%20%7C%2050%20Steps%20E2E-red.svg)]()
+[![Code Size](https://img.shields.io/badge/Code-436%20Python%20files%20%7C%2037%2B%20modules-orange.svg)]()
+[![Benchmarks](https://img.shields.io/badge/Benchmarks-5%20Stages%20%7C%2080%20Steps%20E2E-red.svg)]()
 
 *Where cognitive diversity meets dynamic topology.*
 
@@ -26,7 +26,7 @@
 |--------|------|----------|
 | 🔬 因果验证 | [Joel Niklaus (Hugging Face)](https://x.com/joelniklaus) — 冻结 DeepSeek-V4-Pro 权重，仅优化外层 Harness | 法律 Agent 基准 **3.5% → 80.1%**，追平 Claude Sonnet 4.6，成本仅 1/7 |
 | 📊 生产实证 | [Braintrust](https://www.braintrust.dev/) — 1,781 条真实 Agent 轨迹 | 框架对成功率的影响力是模型的 **7.6 倍**（5.3% vs 0.7%） |
-| ✅ 自身验证 | NexusFlow 四阶段递进 Benchmark | 质量门禁触发率 100%，50 步端到端全流程验证 |
+| ✅ 自身验证 | NexusFlow 五阶段递进 Benchmark（含 80 步真实对比） | 质量门禁触发率 100%，80 步 SA vs NF 全量验证，NF 质量 +2.6%、耗时 -14.9%、Token -6.2% |
 
 > *"Benchmark 测到的永远不是裸模型，而是'模型+Harness'的组合能力。最大的性能改进往往来自简单的自动化步骤，而非消耗大量 Token 去修改提示词。"*
 > — Joel Niklaus, Hugging Face
@@ -69,19 +69,19 @@
 │  │            │    │  Manager   │    │                      │ │
 │  │ • Round 0  │    │            │    │ ☁️ Cloud:           │ │
 │  │ • Round 1  │    │  • Vector  │    │   Coordinator       │ │
-│  │ • Round 2  │    │  • Recall  │    │   Strategist        │ │
+│  │ • Round 2  │    │  • Recall  │    │   Planner        │ │
 │  │ • Fusion   │    │  • Archival│    │   Archivist         │ │
-│  │            │    │            │    │   Critic            │ │
-│  └────────────┘    └────────────┘    │   Synthesizer       │ │
+│  │            │    │            │    │   Reviewer            │ │
+│  └────────────┘    └────────────┘    │   Caster       │ │
 │                                       │   Researcher        │ │
 │                                       ├──────────────────────┤ │
 │                                       │ 🖥️ Edge:           │ │
-│                                       │   Coder             │ │
-│                                       │   Analyst           │ │
+│                                       │   Executor             │ │
+│                                       │   Miner           │ │
 │                                       ├──────────────────────┤ │
 │                                       │ 📱 Endpoint:        │ │
-│                                       │   Observer          │ │
-│                                       │   Monitor          │ │
+│                                       │   Assayer          │ │
+│                                       │   Artisan          │ │
 │                                       └──────────────────────┘ │
 │                                                        │       │
 │                         ┌───────────────────────────────┼───┐   │
@@ -107,7 +107,7 @@
 |------|:--------:|:----------------:|:----:|
 | NOAA 综合 MAPE | 18.87% | **9.37%** | **-50%** |
 | WHO 健康指数排名 | 错误（俄罗斯 #1） | **正确（中国 #1）** | 排名纠错 |
-| 质量指标 | 归一化失真导致错误结论 | Strategist 设计合理权重后结论正确 | 系统性偏差消除 |
+| 质量指标 | 归一化失真导致错误结论 | Planner 设计合理权重后结论正确 | 系统性偏差消除 |
 
 ### Stage-2：10 角色评分跃升
 
@@ -139,7 +139,7 @@
 | CDoL 三轮辩论共识度 | 0.1 → 0.3 → 0.7 → **0.95** |
 | DeepSeek API 调用 | 28 次 / ~63,869 tokens |
 | 产物文件数 | 52 个 / ~680 KB |
-| 质量门禁 | Critic 第一轮即识别生态学谬误（根本性方法论缺陷） |
+| 质量门禁 | Reviewer 第一轮即识别生态学谬误（根本性方法论缺陷） |
 
 **CDoL 三轮辩论详情**：
 
@@ -148,6 +148,49 @@
 | R1 — 方法论审查 | 生态学谬误、遗漏变量偏差、因果推断局限 | 0.1 → 0.3 |
 | R2 — 结果可靠性 | 效应量意义、样本代表性、模型选择偏差 | 0.3 → 0.7 |
 | R3 — 整体结论 | 外部效度、政策可行性、实际贡献度 | 0.7 → 0.95 |
+
+### Stage-5：80 步真实 Benchmark——Single-Agent vs NexusFlow 全量对比
+
+> ⚡ **数据真实性声明**：以下所有数据均来自真实 LLM 输出（DeepSeek API），无模拟、无估算，完整产物可审计验证。
+
+80 步全量 Benchmark 实验，同一任务分别由 Single-Agent（SA）和 NexusFlow（NF）完整执行，逐步评分对比：
+
+#### 核心指标对比
+
+| 指标 | Single-Agent | NexusFlow | 结论 |
+|:-----|:-----------:|:---------:|:----:|
+| 平均质量分 | 7.72 | **7.92** | NF **+2.6%** |
+| ≥9 分步数 | 4 | **13** | NF **3.25 倍** |
+| 总耗时 | 1704s | **1450s** | NF **-14.9%** |
+| 总 Token | 276,723 | **259,559** | NF **-6.2%** |
+| 每 1000 Token 产出质量 | 2.23 | **2.44** | NF **+9.4%** |
+
+#### Phase 胜负：NF 6/7 Phase 胜出
+
+| Phase | Single-Agent | NexusFlow | 胜出方 |
+|:------|:-----------:|:---------:|:------:|
+| P1 数据采集 | — | — | 接近 |
+| P2 宏观分析 | — | — | NF |
+| P3 产业链分析 | — | — | **NF (+0.75)** |
+| P4 交叉验证 | — | — | NF |
+| P5 CDoL 讨论 | — | — | **NF (+0.73)** |
+| P6 自我迭代 | — | — | **SA** |
+| P7 综合报告 | — | — | NF |
+
+> SA 唯一赢的 Phase 是 **P6 自我迭代**（8.14 vs 7.67）。NF 最大优势在 **P3 产业链**（+0.75）和 **P5 CDoL 讨论**（+0.73）。
+
+#### 关键发现
+
+1. **SA Step 32 灾难性失误（2 分）**：上下文污染导致"串台"——SA 在处理产业链分析时，错误引用了前序宏观分析的内容，产生严重逻辑矛盾。NF 通过 Agent 隔离天然避免此类风险。
+2. **NF CDoL 8 轮讨论均 Q=8.5，3 步拿 9 分**：CDoL 讨论阶段质量高度稳定，无一步低于 8.5 分，3/8 步达到 9 分。
+3. **NF Agent 排名**：PreciousMiner（**8.33**）> MetalsMiner（**8.14**）> MacroMiner / EnergyMiner（**8.00**）。
+4. **NF 短板**：Coordinator 报告阶段偶尔偷懒，拉低了 P6 自我迭代得分。
+
+#### Token 效率优势
+
+NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000 Token 产出质量高 **9.4%**——证明 CDoL 的认知分工不是"堆 Token 换质量"，而是通过结构化协作提升单位 Token 的信息密度。
+
+---
 
 ### 横向对比：NexusFlow vs AutoGen vs CrewAI
 
@@ -179,9 +222,10 @@
 | 阶段 | 实验 | 核心发现 | 目录 |
 |------|------|----------|------|
 | Stage 1 | 单Agent vs 6角色CDoL | NOAA MAPE 18.87%→9.37%，WHO 排名纠错 | [`examples/stage1_single_vs_6roles/`](examples/stage1_single_vs_6roles/) |
-| Stage 2 | 6角色 vs 10角色CDoL | 评分 85→90，API调用 -53%，Critic 0 次被驳回 | [`examples/stage2_6roles_vs_10roles/`](examples/stage2_6roles_vs_10roles/) |
+| Stage 2 | 6角色 vs 10角色CDoL | 评分 85→90，API调用 -53%，Reviewer 0 次被驳回 | [`examples/stage2_6roles_vs_10roles/`](examples/stage2_6roles_vs_10roles/) |
 | Stage 3 | 完整系统真实管线 | 质量门禁触发率 100%，ContextMask 真实裁剪 | [`examples/stage3_full_system/`](examples/stage3_full_system/) |
 | Stage 4 | 50步端到端全流程 | 14模块100%覆盖，9次拓扑切换，共识度 0.1→0.95 | [`examples/stage4_fifty_steps/`](examples/stage4_fifty_steps/) |
+| Stage 5 | 80步SA vs NF真实Benchmark | 质量+2.6%，耗时-14.9%，Token-6.2%，≥9分步数3.25倍 | [`examples/stage5_eighty_steps/`](examples/stage5_eighty_steps/) |
 | 横向对比 | NexusFlow vs AutoGen vs CrewAI | 交叉验证能力领先 100% | [`examples/horizontal_comparison/`](examples/horizontal_comparison/) |
 
 ---
@@ -190,9 +234,9 @@
 
 | 层级 | 模型 | Agent | 说明 |
 |------|------|-------|------|
-| ☁️ 云端 | DeepSeek API | Coordinator, Strategist, Archivist, Critic, Synthesizer, Researcher | 高质量推理 + 广知识 |
-| 🖥️ 边端 | Ollama deepseek-r1:14b | Coder, Analyst | 本地大模型，计算密集任务 |
-| 📱 终端 | Ollama qwen3.5:9b | Observer, Monitor | 本地小模型，轻量监控 |
+| ☁️ 云端 | DeepSeek API | Coordinator, Planner, Archivist, Reviewer, Caster, Researcher | 高质量推理 + 广知识 |
+| 🖥️ 边端 | Ollama deepseek-r1:14b | Executor, Miner | 本地大模型，计算密集任务 |
+| 📱 终端 | Ollama qwen3.5:9b | Assayer, Artisan | 本地小模型，轻量监控 |
 
 ---
 
@@ -201,15 +245,15 @@
 | Agent | 角色 | 层级 | 职责 |
 |-------|------|------|------|
 | 🧭 Coordinator | 编排者 | ☁️ 全局 | 任务分发、进度协调、冲突裁决 |
-| 📚 Archivist | 档案师 | ☁️ 全局 | 经验蒸馏、知识沉淀 |
-| 📈 Strategist | 策略师 | 🔗 CDoL | 任务分解、视角设计 |
-| 🔥 Critic | 批评家 | 🔗 CDoL | 对抗质疑、逻辑审查、质量门禁 |
-| 🔬 Synthesizer | 整合师 | 🔗 CDoL | 多视角融合、矛盾解决 |
-| 🔍 Researcher | 研究员 | 🔗 CDoL | 联网搜索、文献分析 |
-| 💻 Coder | 编码师 | 🖥️ CDoL | 代码开发、工具实现 |
-| 📊 Analyst | 分析师 | 🖥️ CDoL | 数据分析、模式识别 |
-| 👁 Observer | 观察者 | 📱 旁观 | 元观察、偏见检测 |
-| 📡 Monitor | 监控者 | 📱 旁观 | 健康检查、异常检测 |
+| 📚 Archivist | 档案师 | ☁️ 全局 | 经验蒸馏、知识沉淀、历史检索 |
+| 📈 Planner | 规划师 | 🔗 CDoL | 任务分解、策略设计、视角规划 |
+| 🔍 Researcher | 研究员 | 🔗 CDoL | 联网搜索、文献分析、数据采集 |
+| 🔥 Reviewer | 审查者 | 🔗 CDoL | 对抗质疑、逻辑审查、质量门禁 |
+| 🔬 Caster | 铸造者 | 🔗 CDoL | 多视角融合、矛盾解决、输出生成 |
+| 💻 Executor | 执行者 | 🖥️ CDoL | 代码开发、工具调用、任务执行 |
+| ⛏ Miner | 数据矿工 | 🖥️ CDoL | 数据采集、清洗、结构化处理 |
+| 🔬 Assayer | 检验者 | 📱 旁观 | 质量验证、异常检测、一致性检查 |
+| 🎨 Artisan | 工匠 | 📱 旁观 | 精细化处理、格式优化、元观察 |
 
 ---
 

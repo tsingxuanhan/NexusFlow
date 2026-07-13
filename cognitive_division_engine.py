@@ -18,7 +18,7 @@ XuanHub v4.0 Phase 7 — 深度协同推理核心
 不依赖：networkx、gradio 等可选依赖
 """
 
-import asyncio
+
 import logging
 import time
 from dataclasses import dataclass, field
@@ -1549,19 +1549,47 @@ class CognitiveDivisionEngine:
             for ctype, count in summary.items():
                 metrics[f"ratio_{ctype}"] = count / total
         
-        # 4. 协同增益比（简化估算）
-        # 认知分工 vs 单Agent的推理深度对比
+        # 4. 协同增益比（三分量加权公式，§4.1.5a）
+        # synergy_gain = 0.4 × conclusion_delta + 0.3 × contradiction_resolution + 0.3 × confidence_delta
+        
+        # 4a. conclusion_delta: 结论修正幅度（round0→round2的推理链变化）
         avg_chain_depth = 0
+        avg_revised_depth = 0
         if round0:
-            avg_chain_depth = sum(
-                len(c.reasoning_chain) for c in round0
-            ) / len(round0)
+            avg_chain_depth = sum(len(c.reasoning_chain) for c in round0) / len(round0)
+        if revised:
+            avg_revised_depth = sum(len(c.reasoning_chain) for c in revised) / len(revised)
         metrics["avg_reasoning_depth"] = avg_chain_depth
         
-        # 协同增益 = 多Agent推理深度 / 单Agent期望深度
-        baseline_depth = avg_chain_depth * 0.8  # 单Agent基线约80%
+        # 推理链增长归一化（上限2倍→映射到0-1）
+        if avg_chain_depth > 0 and avg_revised_depth > 0:
+            depth_ratio = avg_revised_depth / avg_chain_depth
+            conclusion_delta = min(max((depth_ratio - 1.0), 0.0), 1.0)  # clip to [0,1]
+        else:
+            conclusion_delta = 0.0
+        metrics["conclusion_delta"] = conclusion_delta
+        
+        # 4b. contradiction_resolution: 矛盾解决率（可归因矛盾占比）
+        contradiction_resolution = 0.0
+        if judgment.contradiction_report:
+            total_pairs = judgment.contradiction_report.get("total_pairs", 0)
+            if total_pairs > 0:
+                types_summary = judgment.contradiction_report.get("types_summary", {})
+                # attributable + true_convergence = resolved; unattributable + false_consensus = unresolved
+                resolved = types_summary.get("attributable", 0) + types_summary.get("true_convergence", 0)
+                contradiction_resolution = resolved / total_pairs
+        metrics["contradiction_resolution"] = contradiction_resolution
+        
+        # 4c. confidence_delta: 置信度提升幅度
+        avg_conf_r0 = sum(c.confidence for c in round0) / len(round0) if round0 else 0.5
+        avg_conf_rev = sum(c.confidence for c in revised) / len(revised) if revised else 0.5
+        # 归一化到0-1：最大提升0.5（从0.5到1.0）→ 映射到0-1
+        confidence_delta = min(max((avg_conf_rev - avg_conf_r0) / 0.5, 0.0), 1.0)
+        metrics["confidence_delta"] = confidence_delta
+        
+        # 三分量加权
         metrics["synergy_gain"] = (
-            avg_chain_depth / baseline_depth if baseline_depth > 0 else 1.0
+            0.4 * conclusion_delta + 0.3 * contradiction_resolution + 0.3 * confidence_delta
         )
         
         # 5. 视角桥接度

@@ -48,10 +48,9 @@ PLANNER_SYSTEM_PROMPT = """你是"规划者"，铉枢项目中的策略推理核
 
 
 class StrategyAgent:
-    """策略Agent — TeLLAgent双Agent分离的PRO模型端
+    """⚠️ DEPRECATED: 使用 PlannerAgent 代替。此类保留仅为向后兼容。
     
-    负责深度推理、任务分解、策略选择。
-    与ExecutionAgent配合：Strategy思考→Execution执行→Strategy评估。
+    策略Agent — TeLLAgent双Agent分离的PRO模型端（旧版实现）
     """
     
     def __init__(self, base_agent: BaseAgent):

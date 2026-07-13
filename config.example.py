@@ -9,7 +9,7 @@ import os
 
 # DeepSeek API配置 — 从环境变量读取
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "sk-your-key-here")
-DEEPSEEK_ENDPOINT = os.environ.get("DEEPSEEK_ENDPOINT", "http://127.0.0.1:XXXX/v1/chat/completions")
+DEEPSEEK_ENDPOINT = os.environ.get("DEEPSEEK_ENDPOINT", "https://api.deepseek.com/v1/chat/completions")
 
 # 模型配置
 MODELS = {

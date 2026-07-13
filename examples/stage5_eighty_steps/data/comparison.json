@@ -1,0 +1,152 @@
+{
+  "experiment_date": "2026-07-08T21:35:42.549506",
+  "experiment_type": "公平对比: 80步 vs 80步",
+  "total_steps": 160,
+  "total_api_calls": 320,
+  "data_source": "AKShare大宗商品数据（14个接口真实采集）",
+  "llm": "deepseek-chat (DeepSeek API)",
+  "single_agent": {
+    "mode": "single_agent",
+    "total_steps": 80,
+    "success_steps": 80,
+    "error_steps": 0,
+    "total_tokens": 276723,
+    "total_time_sec": 1703.9,
+    "total_time_min": 28.4,
+    "avg_quality": 7.72,
+    "max_quality": 9,
+    "min_quality": 2,
+    "avg_time_per_step": 21.3,
+    "avg_tokens_per_step": 3459.0,
+    "quality_distribution": {
+      "9-10": 4,
+      "7-8": 74,
+      "5-6": 1,
+      "3-4": 0,
+      "1-2": 1
+    },
+    "phase_summary": {
+      "P1": {
+        "steps": 6,
+        "tokens": 18387,
+        "time_sec": 134.6,
+        "avg_quality": 7.83
+      },
+      "P2": {
+        "steps": 24,
+        "tokens": 91722,
+        "time_sec": 618.6,
+        "avg_quality": 7.62
+      },
+      "P3": {
+        "steps": 6,
+        "tokens": 21025,
+        "time_sec": 139.9,
+        "avg_quality": 7.0
+      },
+      "P4": {
+        "steps": 8,
+        "tokens": 24987,
+        "time_sec": 185.0,
+        "avg_quality": 7.88
+      },
+      "P5": {
+        "steps": 17,
+        "tokens": 53831,
+        "time_sec": 249.0,
+        "avg_quality": 7.65
+      },
+      "P6": {
+        "steps": 7,
+        "tokens": 25722,
+        "time_sec": 134.4,
+        "avg_quality": 8.14
+      },
+      "P7": {
+        "steps": 12,
+        "tokens": 41049,
+        "time_sec": 242.3,
+        "avg_quality": 8.0
+      }
+    }
+  },
+  "nexusflow": {
+    "mode": "nexusflow",
+    "total_steps": 80,
+    "success_steps": 80,
+    "error_steps": 0,
+    "total_tokens": 259559,
+    "total_time_sec": 1449.8,
+    "total_time_min": 24.2,
+    "avg_quality": 7.92,
+    "max_quality": 9,
+    "min_quality": 3,
+    "avg_time_per_step": 18.12,
+    "avg_tokens_per_step": 3244.5,
+    "quality_distribution": {
+      "9-10": 13,
+      "7-8": 62,
+      "5-6": 4,
+      "3-4": 1,
+      "1-2": 0
+    },
+    "phase_summary": {
+      "P1": {
+        "steps": 5,
+        "tokens": 19530,
+        "time_sec": 105.1,
+        "avg_quality": 8.0
+      },
+      "P2": {
+        "steps": 12,
+        "tokens": 41740,
+        "time_sec": 222.3,
+        "avg_quality": 7.92
+      },
+      "P3": {
+        "steps": 8,
+        "tokens": 26403,
+        "time_sec": 149.8,
+        "avg_quality": 7.75
+      },
+      "P4": {
+        "steps": 10,
+        "tokens": 32545,
+        "time_sec": 196.3,
+        "avg_quality": 8.0
+      },
+      "P5": {
+        "steps": 8,
+        "tokens": 26139,
+        "time_sec": 162.8,
+        "avg_quality": 8.38
+      },
+      "P6": {
+        "steps": 12,
+        "tokens": 37911,
+        "time_sec": 180.1,
+        "avg_quality": 7.67
+      },
+      "P7": {
+        "steps": 5,
+        "tokens": 15714,
+        "time_sec": 82.9,
+        "avg_quality": 8.2
+      },
+      "P8": {
+        "steps": 20,
+        "tokens": 59577,
+        "time_sec": 350.4,
+        "avg_quality": 7.85
+      }
+    }
+  },
+  "deltas": {
+    "quality_diff": 0.2,
+    "quality_pct": 2.6,
+    "time_diff": -254.1,
+    "time_pct": -14.9,
+    "token_diff": -17164,
+    "token_pct": -6.2
+  }
+}

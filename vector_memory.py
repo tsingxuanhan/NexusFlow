@@ -1322,7 +1322,7 @@ class MemorySlot:
     参考: Mem0 multi-scope + Oracle structured memory
     
     典型用途:
-    - 用户偏好: {"偏好": "MiMo API优先"}
+    - 用户偏好: {"偏好": "DeepSeek API优先"}
     - 项目状态: {"xuan-hub版本": "v3.3"}
     - 决策记录: {"向量数据库": "暂用NGramTFIDF，环境改善后升级ChromaDB"}
     """
@@ -1486,7 +1486,7 @@ class EnhancedVectorMemory(VectorMemory):
         evm = EnhancedVectorMemory()
         
         # 设置事实槽
-        evm.set_slot("用户偏好", "MiMo API优先")
+        evm.set_slot("用户偏好", "DeepSeek API优先")
         
         # 添加语义记忆
         evm.add("SSC的主要成分是矿渣", importance=0.7)

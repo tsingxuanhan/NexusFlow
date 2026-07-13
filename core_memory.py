@@ -71,7 +71,7 @@ class CoreMemory:
 
     用法：
         cm = CoreMemory()
-        cm.update("user_profile", "用户偏好: MiMo优先，DeepSeek兜底")
+        cm.update("user_profile", "用户偏好: DeepSeek API优先，本地Ollama兜底")
         prompt = cm.to_system_prompt()
     """
 

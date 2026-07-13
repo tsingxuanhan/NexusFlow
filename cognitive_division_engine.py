@@ -1509,7 +1509,7 @@ class CognitiveDivisionEngine:
         # P0: Insight提炼 — 从本次执行中提取可复用经验
         insight = self.distiller.distill(result, task_description)
         self.insight_store.add(insight)
-        result.insights = insight  # 动态附加，不修改dataclass定义
+        result.insights = insight  # 写入CDoLResult.insights字段
         logger.info(
             f"[CDoLEngine] Insight提炼完成: "
             f"strategy={insight['strategy_effectiveness']['strategy']}, "
@@ -1657,8 +1657,13 @@ class InsightDistiller:
         """分析本次策略有效性"""
         strategy = "unknown"
         if result.perspective_assignments:
-            mask = result.perspective_assignments[0].context_mask
-            strategy = mask.abstraction_level or "evidence_split"
+            assignment = result.perspective_assignments[0]
+            if assignment.role_constraint:
+                strategy = assignment.role_constraint
+            elif "：" in assignment.perspective_question:
+                strategy = assignment.perspective_question.split("：")[0]
+            else:
+                strategy = "evidence_split"
         
         revision_rate = result.metrics.get("revision_rate", 0.0)
         
@@ -1796,12 +1801,12 @@ class InsightDistiller:
                         if hasattr(conclusion, 'content') and conclusion.content:
                             steps.append(str(conclusion.content)[:200])
         if not steps:
-            steps = ["根据任务目标导航到目标页面", "定位关键交互元素", "执行操作并验证结果"]
+            steps = ["明确任务目标与约束条件", "分步执行核心分析流程", "验证结论一致性与完整性"]
         return steps[:10]  # 限制步骤数量
     
     def _infer_completion_criteria(self, result: CDoLResult) -> List[str]:
         """推断任务完成标准"""
-        criteria = ["页面状态符合预期", "操作结果已验证"]
+        criteria = ["任务目标已达成", "输出结果已通过一致性验证"]
         if result.synergy_gain > 1.2:
             criteria.append("多Agent交叉验证通过")
         return criteria

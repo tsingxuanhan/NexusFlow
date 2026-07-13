@@ -35,7 +35,7 @@ class MemoryManager:
 
     用法：
         mm = MemoryManager()
-        mm.remember("用户偏好MiMo优先", memory_type="core", block="user_profile")
+        mm.remember("用户偏好DeepSeek API优先", memory_type="core", block="user_profile")
         mm.remember("SSC水泥的纳米SiO2改性可提升强度", memory_type="archival", domain="materials")
         mm.remember("数据清洗任务失败，Flash更适合", memory_type="recall", episode_type=EpisodeType.ERROR)
 

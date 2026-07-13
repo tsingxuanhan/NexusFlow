@@ -38,8 +38,8 @@
 - **CDoL 认知分工引擎**（1,960 行）：六种视角分解策略 + 三轮有损通信协议 + FusionJudge 虚假一致检测，将"信息不对称"从缺陷转化为认知资源
 - **自适应上下文管理器**（1,642 行）：解决清华 & OpenBMB 发现的"大窗口懒惰症"——上下文越大，Agent 越倾向浅层推理
 - **三层信息架构**（AgentInformationPolicy，511 行）：全局视野层 / CDoL 参与层 / 旁观记录层，为每个 Agent 分配角色化 ContextMask
-- **动态拓扑路由器**（869 行）：运行时重建 Agent 协作图，支持五种拓扑模式（Sequential / Parallel / Tree / Star / Dynamic）
-- **端边云三层调度器**（535 行）：隐私优先调度，MiMo + DeepSeek 兜底策略
+- **动态拓扑路由器**（869 行）：运行时重建 Agent 协作图，支持五种拓扑模式（Sequential / Parallel / Hybrid / Star / Dynamic）
+- **端边云三层调度器**（535 行）：隐私优先调度，云端 DeepSeek API + 本地 Ollama 兜底
 - **统一编排器**（NexusOrchestrator，478 行）：自动路由分类（simple / research / coding / cdol），任务完成后自动触发 Archivist 蒸馏归档
 
 ---
@@ -234,9 +234,9 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 
 | 层级 | 模型 | Agent | 说明 |
 |------|------|-------|------|
-| ☁️ 云端 | DeepSeek API | Coordinator, Planner, Archivist, Reviewer, Caster, Researcher | 高质量推理 + 广知识 |
-| 🖥️ 边端 | Ollama deepseek-r1:14b | Executor, Miner | 本地大模型，计算密集任务 |
-| 📱 终端 | Ollama qwen3.5:9b | Assayer, Artisan | 本地小模型，轻量监控 |
+| ☁️ 云端 | DeepSeek API (deepseek-v4-pro/flash) | Coordinator, Planner, Archivist, Reviewer, Caster, Researcher | 高质量推理 + 广知识 |
+| 🖥️ 边端 | Ollama 本地模型（可配置） | Executor, Miner | 本地大模型，计算密集任务 |
+| 📱 终端 | Ollama 本地模型（可配置） | Assayer, Artisan | 本地小模型，轻量监控 |
 
 ---
 

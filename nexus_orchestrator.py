@@ -10,6 +10,7 @@ XuanHub v4.0 Phase 7
 import logging
 import time
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any, Dict, List, Optional, Callable
 
 from agent_information_policy import (
@@ -26,7 +27,7 @@ logger = logging.getLogger("NexusOrchestrator")
 # 任务路由类型
 # ============================================================================
 
-class TaskRoute(str):
+class TaskRoute(str, Enum):
     SIMPLE = "simple"          # 单Agent直接处理
     CDOL = "cdol"              # CDoL多Agent协作
     RESEARCH = "research"      # 文献研究任务

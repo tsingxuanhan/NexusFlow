@@ -1,0 +1,47 @@
+{
+  "experiment": {
+    "date": "2026-07-13T12:05:30.943559",
+    "task_description": "分析WHO BRICS五国（巴西、俄罗斯、印度、中国、南非）的医疗卫生体系特点与挑战",
+    "mode": "模拟运行",
+    "llm": "DeepSeek Chat (deepseek-chat)",
+    "api_endpoint": "https://api.deepseek.com/v1",
+    "python_version": "3.13.14",
+    "autogen_version": "0.7.5",
+    "autogen_ext_version": "0.7.5"
+  },
+  "results": [
+    {
+      "framework": "NexusFlow",
+      "mode": "simulated",
+      "task": "分析WHO BRICS五国（巴西、俄罗斯、印度、中国、南非）的医疗卫生体系特点与挑战",
+      "score": 92,
+      "elapsed": 69.5,
+      "api_calls": 43,
+      "tokens": 20500,
+      "timestamp": "2026-07-13T12:05:30.943526",
+      "note": "基于 Stage-2 CDoL 引擎实验记录"
+    },
+    {
+      "framework": "AutoGen",
+      "mode": "simulated",
+      "task": "分析WHO BRICS五国（巴西、俄罗斯、印度、中国、南非）的医疗卫生体系特点与挑战",
+      "score": 88,
+      "elapsed": 36.5,
+      "api_calls": 17,
+      "tokens": 6329,
+      "timestamp": "2026-07-13T12:05:30.943550",
+      "note": "模拟数据基于历史实验结果"
+    },
+    {
+      "framework": "CrewAI",
+      "mode": "simulated",
+      "task": "分析WHO BRICS五国（巴西、俄罗斯、印度、中国、南非）的医疗卫生体系特点与挑战",
+      "score": 85,
+      "elapsed": 42.0,
+      "api_calls": 18,
+      "tokens": 5171,
+      "timestamp": "2026-07-13T12:05:30.943556",
+      "note": "CrewAI 在 Python 3.13 上无法安装 (hash 校验不通过)，使用模拟数据"
+    }
+  ]
+}

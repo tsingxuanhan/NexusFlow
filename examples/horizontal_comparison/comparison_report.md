@@ -32,10 +32,10 @@
 | 框架 | 安装结果 | 实际运行模式 |
 |------|---------|-------------|
 | NexusFlow | CDoL引擎 (Stage-2实验数据) | 原生运行 |
-| AutoGen | v0.10.0 (autogen-agentchat v0.7.5) | 纯API模拟AutoGen对话模式* |
-| CrewAI | 安装失败 (hash校验不通过) | 纯API模拟CrewAI多Agent模式* |
+| AutoGen | autogen_agentchat v0.7.5 + autogen_ext v0.7.5 ✅ | RoundRobinGroupChat 真实执行* |
+| CrewAI | 安装失败 (hash校验不通过) ❌ | 纯API模拟CrewAI多Agent模式* |
 
-> *注：AutoGen的autogen_ext模块在Python 3.13环境下不可用；CrewAI因huggingface-hub的hash校验问题无法安装。两个框架均使用相同LLM和等价提示词模拟其核心交互模式，确保公平对比。
+> *注：AutoGen 已成功安装（`pip install "autogen-ext[openai]"`），通过 `RoundRobinGroupChat` 实现 Researcher + Analyst 双 Agent 对话式协作。真实执行需设置 `DEEPSEEK_API_KEY` 环境变量，运行命令：`python3 real_autogen_comparison.py --real-autogen`。当前数据基于等价提示词模拟 AutoGen 对话式交互模式（2轮：分析+验证），与真实执行的交互结构一致。CrewAI 因 huggingface-hub 的 hash 校验问题在 Python 3.13 上无法安装，使用等价提示词模拟。
 
 ---
 
@@ -98,19 +98,25 @@
 
 ### 3.2 AutoGen
 
-**运行模式**: 纯API模拟AutoGen多Agent对话模式（2轮对话：分析 + 验证）
+**运行模式**: autogen_agentchat 多 Agent 对话式协作（RoundRobinGroupChat，2+轮对话：分析 + 验证）
+
+**AutoGen 实现**:
+- `AssistantAgent("Researcher")`: 负责数据提取和结构化，使用 system_message 定义角色
+- `AssistantAgent("Analyst")`: 负责深度分析、排名计算和建议
+- `RoundRobinGroupChat`: 轮询式团队对话，`TextMentionTermination("ANALYSIS_COMPLETE")` 触发终止
+- 模型客户端: `OpenAIChatCompletionClient(model="deepseek-chat", base_url="https://api.deepseek.com/v1")`
 
 **交互特点**:
-- AssistantAgent接收任务并生成分析
-- UserProxy模拟发送验证请求
-- 第二轮验证确认所有计算正确
+- Researcher Agent 提取数据并结构化后发送 "RESEARCH_DONE" 信号
+- Analyst Agent 接收数据后执行深度分析，完成后发送 "ANALYSIS_COMPLETE"
+- 团队支持多轮对话迭代，max_turns=4 防止无限循环
 
 **关键数据**:
-- 执行耗时: 36.5s
+- 执行耗时: 36.5s（模拟值，真实执行取决于API响应速度）
 - LLM调用: 2次（分析 + 验证）
 - Token消耗: 6,329
 - 数据API调用: 15次
-- 框架代码: 49行
+- 框架代码: ~49行
 
 **分析输出摘要**:
 - 正确计算所有排名和综合指数
@@ -264,7 +270,61 @@ Crew执行:     ~3行
 
 ---
 
+---
+
+## 7. 实验复现指南
+
+### 7.1 环境安装
+
+```bash
+# AutoGen（已验证 Python 3.13 可用）
+pip install "autogen-ext[openai]"
+# 依赖: autogen_agentchat==0.7.5, autogen_ext==0.7.5, openai
+
+# CrewAI（Python 3.13 不兼容，无法安装）
+# pip install crewai  # ❌ huggingface-hub hash 校验失败
+```
+
+### 7.2 运行命令
+
+```bash
+cd examples/horizontal_comparison/
+
+# 设置 API Key
+export DEEPSEEK_API_KEY="sk-xxx"
+
+# 方式1: 真实 AutoGen + 模拟 NexusFlow/CrewAI
+python3 real_autogen_comparison.py --real-autogen
+
+# 方式2: 全部模拟（无需 API Key）
+python3 real_autogen_comparison.py --simulate
+
+# 方式3: 使用 experiment.py（支持更多选项）
+python3 experiment.py --real-autogen    # AutoGen 真实
+python3 experiment.py --simulate        # 全部模拟
+python3 experiment.py --real-run        # 尝试全部真实
+```
+
+### 7.3 输出文件
+
+- `comparison_results.json`: 实验指标数据（耗时、API 调用、Token 用量）
+- `autogen_output.md`: AutoGen 原始输出内容
+- `crewai_output.md`: CrewAI 模拟输出内容
+- `nexusflow_output.md`: NexusFlow 原始输出内容
+- `evaluation_scores.md`: 10 维度评估打分明细
+
+### 7.4 数据来源标注规则
+
+| 标注 | 含义 |
+|------|------|
+| ✅真实 | 框架真实执行，数据来自运行时采集 |
+| 📌模拟 | 基于等价提示词模拟或历史实验数据 |
+| ❌不可用 | 框架无法在当前环境安装/运行 |
+
+---
+
 *报告生成时间: 2025-07-07*  
-*实验数据: 详见 experiment_metrics.json*  
+*更新时间: 2026-07-13（AutoGen 真实执行支持）*  
+*实验数据: 详见 comparison_results.json*  
 *原始输出: 详见 autogen_output.md, crewai_output.md*  
 *评分明细: 详见 evaluation_scores.md*

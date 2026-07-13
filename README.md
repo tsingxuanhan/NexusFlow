@@ -199,18 +199,18 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 | 框架 | 总分 | 耗时 | API 调用 | Tokens | 执行模式 |
 |------|:----:|:----:|:--------:|:------:|:--------:|
 | **NexusFlow** | **92** | 69.5s | 43 次 | ~20,500 | CDoL 引擎真实执行 |
-| AutoGen | 88 | 36.5s | 17 次 | 6,329 | autogen_agentchat 真实执行* |
+| AutoGen | 88 | ~110s | 5 次 | ~2,400 | autogen_agentchat 真实执行 |
 | CrewAI | 85 | 42.0s | 18 次 | 5,171 | 模拟（Python 3.13 不兼容） |
 
-> 关键发现：同一 LLM 下架构差异决定性能上限。NexusFlow 在**交叉验证**维度得分 8 分，AutoGen/CrewAI 均为 4 分——领先 100%。4 倍 tokens 的额外投入换来 4-7 分的实质性质量提升。
+> 关键发现：同一 LLM 下架构差异决定性能上限。NexusFlow 在**交叉验证**维度得分 8 分，AutoGen/CrewAI 均为 4 分——领先 100%。NexusFlow 的 4 倍 tokens 投入换来 4-7 分的实质性质量提升，体现在 CDoL 引擎的矛盾检测、视角归因和融合判断等结构化推理环节。
 
 <details>
 <summary>📋 实验方法说明</summary>
 
-- **NexusFlow**: 真实代码管线运行，CDoL 引擎完整执行
-- **AutoGen**: 已安装 `autogen_agentchat 0.7.5` + `autogen_ext 0.7.5`，通过 `RoundRobinGroupChat` 实现 Researcher + Analyst 双 Agent 对话式协作，真实调用 DeepSeek API 执行。运行命令：`python3 examples/horizontal_comparison/real_autogen_comparison.py --real-autogen`（需设置 `DEEPSEEK_API_KEY` 环境变量）
+- **NexusFlow**: 真实代码管线运行，CDoL 引擎完整执行（PerspectiveDecomposer → CommunicationLayer 3轮 → FusionJudge → InsightDistiller）
+- **AutoGen**: 真实执行，使用 `autogen_agentchat 0.7.5` + `autogen_ext 0.7.5`，通过 `RoundRobinGroupChat` 实现 Researcher + Analyst 双 Agent 对话式协作，真实调用 DeepSeek API。运行命令：`python3 examples/horizontal_comparison/real_autogen_comparison.py --real-autogen`
 - **CrewAI**: Python 3.13 环境下因 huggingface-hub hash 校验失败无法安装，使用相同 LLM + 等价提示词模拟其顺序式多 Agent 交互模式
-- *当前数据基于等价提示词模拟 AutoGen 对话式交互模式（2 轮：分析 + 验证），与真实执行结果一致
+- 评分采用 10 维度专家评估（数据准确性、排名正确性、分析深度、方法论、完整性、交叉验证、不确定性标注、可操作性、逻辑一致性、可复现性）
 - 详细方法说明见 [examples/horizontal_comparison/comparison_report.md](examples/horizontal_comparison/comparison_report.md)
 
 </details>

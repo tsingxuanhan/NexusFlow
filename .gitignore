@@ -20,3 +20,5 @@ od-design/
 .local/
 *.egg-info/
 examples/output/
+.coverage
+htmlcov/

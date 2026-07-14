@@ -1,0 +1,47 @@
+{
+  "BRA": {
+    "train_years": 13,
+    "intercept": -398.3036,
+    "slope": 0.235,
+    "predicted_2019": 76.13,
+    "actual_2019": 75.47815778,
+    "absolute_error": 0.65,
+    "APE_percent": 0.86
+  },
+  "RUS": {
+    "train_years": 13,
+    "intercept": -907.4748,
+    "slope": 0.4857,
+    "predicted_2019": 73.18,
+    "actual_2019": 73.21856487,
+    "absolute_error": 0.04,
+    "APE_percent": 0.06
+  },
+  "IND": {
+    "train_years": 13,
+    "intercept": -761.1507,
+    "slope": 0.4122,
+    "predicted_2019": 71.14,
+    "actual_2019": 70.72711152,
+    "absolute_error": 0.42,
+    "APE_percent": 0.59
+  },
+  "CHN": {
+    "train_years": 13,
+    "intercept": -739.9573,
+    "slope": 0.4053,
+    "predicted_2019": 78.36,
+    "actual_2019": 77.31273653,
+    "absolute_error": 1.05,
+    "APE_percent": 1.35
+  },
+  "ZAF": {
+    "train_years": 13,
+    "intercept": -613.6011,
+    "slope": 0.3333,
+    "predicted_2019": 59.39,
+    "actual_2019": 65.83739077,
+    "absolute_error": 6.45,
+    "APE_percent": 9.79
+  }
+}

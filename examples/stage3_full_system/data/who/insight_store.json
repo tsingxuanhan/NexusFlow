@@ -1,0 +1,198 @@
+[
+  {
+    "task_type": "evidence_based",
+    "strategy_effectiveness": {
+      "strategy": "mixed",
+      "effectiveness": 1.0,
+      "revision_rate": 1.0,
+      "recommendation": "reduce_complexity"
+    },
+    "contradiction_patterns": {
+      "dominant_type": "attributable",
+      "false_consensus_detected": false,
+      "distribution": {
+        "attributable": 1.0,
+        "unattributable": 0.0,
+        "false_consensus": 0.0,
+        "true_convergence": 0.0
+      },
+      "insight": "可归因矛盾为主——视角分解有效，差异可从信息差异解释"
+    },
+    "decomposition_quality": {
+      "bridgeability": 1.0,
+      "assessment": "high_quality"
+    },
+    "synergy_analysis": {
+      "synergy_gain": 1.0,
+      "revision_rate": 1.0,
+      "avg_reasoning_depth": 0.0,
+      "assessment": "no_synergy"
+    },
+    "task_skills": {
+      "skill_id": "skill_1783408808",
+      "applicable_scenario": "数据分析/实验处理",
+      "task_description": "WHO全球健康综合诊断任务：对BRICS五国（中国、巴西、俄罗斯、印度、南非）健康状况进行多维度评估。\n维度：1)预期寿命 2)疾病负担 3)妇幼健康 4)免疫覆盖 5)环境健康 6)综合健康指数。\n要求：各国各维度评分(0-100)、综合排名、置信度。\n\n## 已采集数据\n[{\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"中国\", \"cc\": \"CHN\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 4387970,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"CHN\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"WPR\\\",\\n      \\\"ParentLocation\\\": \\\"Western Pacific\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"70.8 [70.4-71.3]\\\",\\n      \\\"NumericValue\\\": 70.838861380,\\n      \\\"Low\\\": 70.448812010,\\n      \\\"High\\\": 71.280096710,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeD\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"巴西\", \"cc\": \"BRA\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1497755,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"BRA\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"AMR\\\",\\n      \\\"ParentLocation\\\": \\\"Americas\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"71.5 [71.2-71.8]\\\",\\n      \\\"NumericValue\\\": 71.499543800,\\n      \\\"Low\\\": 71.219393410,\\n      \\\"High\\\": 71.809743110,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensio\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"俄罗斯\", \"cc\": \"RUS\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 3358549,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"RUS\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"EUR\\\",\\n      \\\"ParentLocation\\\": \\\"Europe\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_MLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"58.8 [58.8-58.9]\\\",\\n      \\\"NumericValue\\\": 58.826619230,\\n      \\\"Low\\\": 58.777360780,\\n      \\\"High\\\": 58.903018150,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensionBe\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"印度\", \"cc\": \"IND\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1068377,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"IND\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"SEAR\\\",\\n      \\\"ParentLocation\\\": \\\"South-East Asia\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_FMLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"64.3 [63.8-65.0]\\\",\\n      \\\"NumericValue\\\": 64.288133630,\\n      \\\"Low\\\": 63.796560730,\\n      \\\"High\\\": 65.045944210,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n  \n\n## 分析要求\n1. 每个维度独立评分(0-100)\n2. 综合排名\n3. 置信度评估\n4. 局限性说明\n",
+      "execution_steps": [
+        "根据任务目标导航到目标页面",
+        "定位关键交互元素",
+        "执行操作并验证结果"
+      ],
+      "completion_criteria": [
+        "页面状态符合预期",
+        "操作结果已验证"
+      ],
+      "failure_handling": "如果执行失败，回顾推理过程并检查假设是否成立",
+      "source": "InsightDistiller_auto_extraction",
+      "timestamp": 1783408808.373416,
+      "model_compatible": true
+    },
+    "timestamp": 1783408808.3734183
+  },
+  {
+    "task_type": "evidence_based",
+    "strategy_effectiveness": {
+      "strategy": "mixed",
+      "effectiveness": 1.0,
+      "revision_rate": 1.0,
+      "recommendation": "reduce_complexity"
+    },
+    "contradiction_patterns": {
+      "dominant_type": "attributable",
+      "false_consensus_detected": false,
+      "distribution": {
+        "attributable": 1.0,
+        "unattributable": 0.0,
+        "false_consensus": 0.0,
+        "true_convergence": 0.0
+      },
+      "insight": "可归因矛盾为主——视角分解有效，差异可从信息差异解释"
+    },
+    "decomposition_quality": {
+      "bridgeability": 1.0,
+      "assessment": "high_quality"
+    },
+    "synergy_analysis": {
+      "synergy_gain": 1.0,
+      "revision_rate": 1.0,
+      "avg_reasoning_depth": 0.0,
+      "assessment": "no_synergy"
+    },
+    "task_skills": {
+      "skill_id": "skill_1783408957",
+      "applicable_scenario": "数据分析/实验处理",
+      "task_description": "WHO全球健康综合诊断任务：对BRICS五国（中国、巴西、俄罗斯、印度、南非）健康状况进行多维度评估。\n维度：1)预期寿命 2)疾病负担 3)妇幼健康 4)免疫覆盖 5)环境健康 6)综合健康指数。\n要求：各国各维度评分(0-100)、综合排名、置信度。\n\n## 已采集数据\n[{\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"中国\", \"cc\": \"CHN\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 4387970,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"CHN\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"WPR\\\",\\n      \\\"ParentLocation\\\": \\\"Western Pacific\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"70.8 [70.4-71.3]\\\",\\n      \\\"NumericValue\\\": 70.838861380,\\n      \\\"Low\\\": 70.448812010,\\n      \\\"High\\\": 71.280096710,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeD\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"巴西\", \"cc\": \"BRA\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1497755,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"BRA\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"AMR\\\",\\n      \\\"ParentLocation\\\": \\\"Americas\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"71.5 [71.2-71.8]\\\",\\n      \\\"NumericValue\\\": 71.499543800,\\n      \\\"Low\\\": 71.219393410,\\n      \\\"High\\\": 71.809743110,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensio\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"俄罗斯\", \"cc\": \"RUS\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 3358549,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"RUS\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"EUR\\\",\\n      \\\"ParentLocation\\\": \\\"Europe\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_MLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"58.8 [58.8-58.9]\\\",\\n      \\\"NumericValue\\\": 58.826619230,\\n      \\\"Low\\\": 58.777360780,\\n      \\\"High\\\": 58.903018150,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensionBe\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"印度\", \"cc\": \"IND\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1068377,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"IND\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"SEAR\\\",\\n      \\\"ParentLocation\\\": \\\"South-East Asia\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_FMLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"64.3 [63.8-65.0]\\\",\\n      \\\"NumericValue\\\": 64.288133630,\\n      \\\"Low\\\": 63.796560730,\\n      \\\"High\\\": 65.045944210,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n  \n\n## 分析要求\n1. 每个维度独立评分(0-100)\n2. 综合排名\n3. 置信度评估\n4. 局限性说明\n",
+      "execution_steps": [
+        "根据任务目标导航到目标页面",
+        "定位关键交互元素",
+        "执行操作并验证结果"
+      ],
+      "completion_criteria": [
+        "页面状态符合预期",
+        "操作结果已验证"
+      ],
+      "failure_handling": "如果执行失败，回顾推理过程并检查假设是否成立",
+      "source": "InsightDistiller_auto_extraction",
+      "timestamp": 1783408957.487286,
+      "model_compatible": true
+    },
+    "timestamp": 1783408957.4872873
+  },
+  {
+    "task_type": "evidence_based",
+    "strategy_effectiveness": {
+      "strategy": "mixed",
+      "effectiveness": 1.0,
+      "revision_rate": 1.0,
+      "recommendation": "reduce_complexity"
+    },
+    "contradiction_patterns": {
+      "dominant_type": "attributable",
+      "false_consensus_detected": false,
+      "distribution": {
+        "attributable": 1.0,
+        "unattributable": 0.0,
+        "false_consensus": 0.0,
+        "true_convergence": 0.0
+      },
+      "insight": "可归因矛盾为主——视角分解有效，差异可从信息差异解释"
+    },
+    "decomposition_quality": {
+      "bridgeability": 1.0,
+      "assessment": "high_quality"
+    },
+    "synergy_analysis": {
+      "synergy_gain": 1.0,
+      "revision_rate": 1.0,
+      "avg_reasoning_depth": 0.0,
+      "assessment": "no_synergy"
+    },
+    "task_skills": {
+      "skill_id": "skill_1783409127",
+      "applicable_scenario": "数据分析/实验处理",
+      "task_description": "WHO全球健康综合诊断任务：对BRICS五国（中国、巴西、俄罗斯、印度、南非）健康状况进行多维度评估。\n维度：1)预期寿命 2)疾病负担 3)妇幼健康 4)免疫覆盖 5)环境健康 6)综合健康指数。\n要求：各国各维度评分(0-100)、综合排名、置信度。\n\n## 已采集数据\n[{\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"中国\", \"cc\": \"CHN\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 4387970,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"CHN\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"WPR\\\",\\n      \\\"ParentLocation\\\": \\\"Western Pacific\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"70.8 [70.4-71.3]\\\",\\n      \\\"NumericValue\\\": 70.838861380,\\n      \\\"Low\\\": 70.448812010,\\n      \\\"High\\\": 71.280096710,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeD\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"巴西\", \"cc\": \"BRA\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1497755,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"BRA\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"AMR\\\",\\n      \\\"ParentLocation\\\": \\\"Americas\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"71.5 [71.2-71.8]\\\",\\n      \\\"NumericValue\\\": 71.499543800,\\n      \\\"Low\\\": 71.219393410,\\n      \\\"High\\\": 71.809743110,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensio\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"俄罗斯\", \"cc\": \"RUS\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 3358549,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"RUS\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"EUR\\\",\\n      \\\"ParentLocation\\\": \\\"Europe\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_MLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"58.8 [58.8-58.9]\\\",\\n      \\\"NumericValue\\\": 58.826619230,\\n      \\\"Low\\\": 58.777360780,\\n      \\\"High\\\": 58.903018150,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensionBe\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"印度\", \"cc\": \"IND\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1068377,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"IND\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"SEAR\\\",\\n      \\\"ParentLocation\\\": \\\"South-East Asia\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_FMLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"64.3 [63.8-65.0]\\\",\\n      \\\"NumericValue\\\": 64.288133630,\\n      \\\"Low\\\": 63.796560730,\\n      \\\"High\\\": 65.045944210,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n  \n\n## 分析要求\n1. 每个维度独立评分(0-100)\n2. 综合排名\n3. 置信度评估\n4. 局限性说明\n",
+      "execution_steps": [
+        "根据任务目标导航到目标页面",
+        "定位关键交互元素",
+        "执行操作并验证结果"
+      ],
+      "completion_criteria": [
+        "页面状态符合预期",
+        "操作结果已验证"
+      ],
+      "failure_handling": "如果执行失败，回顾推理过程并检查假设是否成立",
+      "source": "InsightDistiller_auto_extraction",
+      "timestamp": 1783409127.1711628,
+      "model_compatible": true
+    },
+    "timestamp": 1783409127.1711645
+  },
+  {
+    "task_type": "evidence_based",
+    "strategy_effectiveness": {
+      "strategy": "abstract",
+      "effectiveness": 1.0,
+      "revision_rate": 1.0,
+      "recommendation": "reduce_complexity"
+    },
+    "contradiction_patterns": {
+      "dominant_type": "attributable",
+      "false_consensus_detected": false,
+      "distribution": {
+        "attributable": 1.0,
+        "unattributable": 0.0,
+        "false_consensus": 0.0,
+        "true_convergence": 0.0
+      },
+      "insight": "可归因矛盾为主——视角分解有效，差异可从信息差异解释"
+    },
+    "decomposition_quality": {
+      "bridgeability": 1.0,
+      "assessment": "high_quality"
+    },
+    "synergy_analysis": {
+      "synergy_gain": 1.0,
+      "revision_rate": 1.0,
+      "avg_reasoning_depth": 0.0,
+      "assessment": "no_synergy"
+    },
+    "task_skills": {
+      "skill_id": "skill_1783409315",
+      "applicable_scenario": "数据分析/实验处理",
+      "task_description": "WHO全球健康综合诊断任务：对BRICS五国（中国、巴西、俄罗斯、印度、南非）健康状况进行多维度评估。\n维度：1)预期寿命 2)疾病负担 3)妇幼健康 4)免疫覆盖 5)环境健康 6)综合健康指数。\n要求：各国各维度评分(0-100)、综合排名、置信度。\n\n## 已采集数据\n[{\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"中国\", \"cc\": \"CHN\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 4387970,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"CHN\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"WPR\\\",\\n      \\\"ParentLocation\\\": \\\"Western Pacific\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"70.8 [70.4-71.3]\\\",\\n      \\\"NumericValue\\\": 70.838861380,\\n      \\\"Low\\\": 70.448812010,\\n      \\\"High\\\": 71.280096710,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeD\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"巴西\", \"cc\": \"BRA\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1497755,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"BRA\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"AMR\\\",\\n      \\\"ParentLocation\\\": \\\"Americas\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_BTSX\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"71.5 [71.2-71.8]\\\",\\n      \\\"NumericValue\\\": 71.499543800,\\n      \\\"Low\\\": 71.219393410,\\n      \\\"High\\\": 71.809743110,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensio\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"俄罗斯\", \"cc\": \"RUS\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 3358549,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"RUS\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"EUR\\\",\\n      \\\"ParentLocation\\\": \\\"Europe\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_MLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"58.8 [58.8-58.9]\\\",\\n      \\\"NumericValue\\\": 58.826619230,\\n      \\\"Low\\\": 58.777360780,\\n      \\\"High\\\": 58.903018150,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n      \\\"TimeDimensionBe\"}, {\"indicator\": \"life_expectancy\", \"code\": \"WHOSIS_000001\", \"country\": \"印度\", \"cc\": \"IND\", \"data\": \"{\\n  \\\"@odata.context\\\": \\\"https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000001\\\",\\n  \\\"value\\\": [\\n    {\\n      \\\"Id\\\": 1068377,\\n      \\\"IndicatorCode\\\": \\\"WHOSIS_000001\\\",\\n      \\\"SpatialDimType\\\": \\\"COUNTRY\\\",\\n      \\\"SpatialDim\\\": \\\"IND\\\",\\n      \\\"TimeDimType\\\": \\\"YEAR\\\",\\n      \\\"ParentLocationCode\\\": \\\"SEAR\\\",\\n      \\\"ParentLocation\\\": \\\"South-East Asia\\\",\\n      \\\"Dim1Type\\\": \\\"SEX\\\",\\n      \\\"Dim1\\\": \\\"SEX_FMLE\\\",\\n      \\\"TimeDim\\\": 2000,\\n      \\\"Dim2Type\\\": null,\\n      \\\"Dim2\\\": null,\\n      \\\"Dim3Type\\\": null,\\n      \\\"Dim3\\\": null,\\n      \\\"DataSourceDimType\\\": null,\\n      \\\"DataSourceDim\\\": null,\\n      \\\"Value\\\": \\\"64.3 [63.8-65.0]\\\",\\n      \\\"NumericValue\\\": 64.288133630,\\n      \\\"Low\\\": 63.796560730,\\n      \\\"High\\\": 65.045944210,\\n      \\\"Comments\\\": null,\\n      \\\"Date\\\": \\\"2024-08-02T09:43:39.193+02:00\\\",\\n      \\\"TimeDimensionValue\\\": \\\"2000\\\",\\n  \n\n## 分析要求\n1. 每个维度独立评分(0-100)\n2. 综合排名\n3. 置信度评估\n4. 局限性说明\n",
+      "execution_steps": [
+        "根据任务目标导航到目标页面",
+        "定位关键交互元素",
+        "执行操作并验证结果"
+      ],
+      "completion_criteria": [
+        "页面状态符合预期",
+        "操作结果已验证"
+      ],
+      "failure_handling": "如果执行失败，回顾推理过程并检查假设是否成立",
+      "source": "InsightDistiller_auto_extraction",
+      "timestamp": 1783409315.0635145,
+      "model_compatible": true
+    },
+    "timestamp": 1783409315.063516
+  }
+]

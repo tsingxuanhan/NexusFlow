@@ -1,0 +1,80 @@
+{
+  "@odata.context": "https://ghoapi.azureedge.net/api/$metadata#Indicator",
+  "value": [
+    {
+      "IndicatorCode": "AIR_10",
+      "IndicatorName": "Ambient air pollution  attributable DALYs per 100'000 children under 5 years",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_6",
+      "IndicatorName": "Ambient air pollution  attributable deaths per 100'000 children under 5 years",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_43",
+      "IndicatorName": "Ambient air pollution attributable DALYs",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_7",
+      "IndicatorName": "Ambient air pollution attributable DALYs",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_9",
+      "IndicatorName": "Ambient air pollution attributable DALYs  (per 100 000 population)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_90",
+      "IndicatorName": "Ambient air pollution attributable DALYs  (per 100 000 population, age-standardized)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_8",
+      "IndicatorName": "Ambient air pollution attributable DALYs  in children under 5 years",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_71",
+      "IndicatorName": "Ambient air pollution attributable DALYs in children under 15 years",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_5",
+      "IndicatorName": "Ambient air pollution attributable death rate (per 100 000 population)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_42",
+      "IndicatorName": "Ambient air pollution attributable death rate (per 100 000 population, age-standardized)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_41",
+      "IndicatorName": "Ambient air pollution attributable deaths",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_50",
+      "IndicatorName": "Ambient air pollution attributable deaths (per 100 000 population, age-standardized)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_72",
+      "IndicatorName": "Ambient air pollution attributable deaths in children under 15 years",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_4",
+      "IndicatorName": "Ambient air pollution attributable deaths in children under 5 years",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "AIR_73",
+      "IndicatorName": "Ambient air pollution attributable YLL in children under 15 years",
+      "Language": "EN"
+    }
+  ]
+}

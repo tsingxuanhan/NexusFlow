@@ -1,0 +1,65 @@
+{
+  "method": "linear_regression",
+  "training_period": "2000-2012",
+  "prediction_year": 2019,
+  "results": {
+    "BRA": {
+      "training_years": "2000-2012",
+      "n_training": 13,
+      "slope_b": 0.2319,
+      "intercept_a": -392.9,
+      "predicted_2019": 75.33,
+      "actual_2019": 78.73,
+      "error": -3.4,
+      "ape_percent": 4.32
+    },
+    "RUS": {
+      "training_years": "2000-2012",
+      "n_training": 13,
+      "slope_b": -0.0723,
+      "intercept_a": 210.08,
+      "predicted_2019": 64.18,
+      "actual_2019": 68.17,
+      "error": -3.99,
+      "ape_percent": 5.85
+    },
+    "IND": {
+      "training_years": "2000-2012",
+      "n_training": 13,
+      "slope_b": 0.2534,
+      "intercept_a": -442.64,
+      "predicted_2019": 69.06,
+      "actual_2019": 70.73,
+      "error": -1.67,
+      "ape_percent": 2.36
+    },
+    "CHN": {
+      "training_years": "2000-2012",
+      "n_training": 13,
+      "slope_b": 0.3127,
+      "intercept_a": -552.96,
+      "predicted_2019": 78.47,
+      "actual_2019": 74.58,
+      "error": 3.9,
+      "ape_percent": 5.23
+    },
+    "ZAF": {
+      "training_years": "2000-2012",
+      "n_training": 13,
+      "slope_b": 0.4273,
+      "intercept_a": -801.47,
+      "predicted_2019": 61.22,
+      "actual_2019": 68.85,
+      "error": -7.63,
+      "ape_percent": 11.08
+    }
+  },
+  "overall_mape": 5.77,
+  "country_mape": {
+    "巴西": 4.32,
+    "俄罗斯": 5.85,
+    "印度": 2.36,
+    "中国": 5.23,
+    "南非": 11.08
+  }
+}

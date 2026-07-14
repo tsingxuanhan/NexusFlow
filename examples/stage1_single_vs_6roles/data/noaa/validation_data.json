@@ -1,0 +1,122 @@
+{
+  "北京": {
+    "2023": {
+      "avg_tmax": 19.73,
+      "avg_tmin": 10.6,
+      "total_prcp": 625.2,
+      "n_tmax": 242,
+      "n_tmin": 110,
+      "n_prcp": 356,
+      "extreme_tmax_days": 9,
+      "extreme_tmin_days": 5,
+      "extreme_prcp_days": 4
+    },
+    "2024": {
+      "avg_tmax": 20.54,
+      "avg_tmin": 11.27,
+      "total_prcp": 859.6,
+      "n_tmax": 214,
+      "n_tmin": 142,
+      "n_prcp": 347,
+      "extreme_tmax_days": 0,
+      "extreme_tmin_days": 0,
+      "extreme_prcp_days": 4
+    }
+  },
+  "天津": {
+    "2023": {
+      "avg_tmax": 21.82,
+      "avg_tmin": 8.36,
+      "total_prcp": 718.2,
+      "n_tmax": 333,
+      "n_tmin": 333,
+      "n_prcp": 334,
+      "extreme_tmax_days": 13,
+      "extreme_tmin_days": 12,
+      "extreme_prcp_days": 3
+    },
+    "2024": {
+      "avg_tmax": 22.1,
+      "avg_tmin": 9.04,
+      "total_prcp": 678.1,
+      "n_tmax": 336,
+      "n_tmin": 331,
+      "n_prcp": 333,
+      "extreme_tmax_days": 6,
+      "extreme_tmin_days": 5,
+      "extreme_prcp_days": 3
+    }
+  },
+  "石家庄": {
+    "2023": {
+      "avg_tmax": 22.6,
+      "avg_tmin": 10.16,
+      "total_prcp": 708.3,
+      "n_tmax": 332,
+      "n_tmin": 333,
+      "n_prcp": 335,
+      "extreme_tmax_days": 16,
+      "extreme_tmin_days": 6,
+      "extreme_prcp_days": 3
+    },
+    "2024": {
+      "avg_tmax": 22.71,
+      "avg_tmin": 10.63,
+      "total_prcp": 755.1,
+      "n_tmax": 336,
+      "n_tmin": 331,
+      "n_prcp": 333,
+      "extreme_tmax_days": 12,
+      "extreme_tmin_days": 0,
+      "extreme_prcp_days": 5
+    }
+  },
+  "济南": {
+    "2023": {
+      "avg_tmax": 21.52,
+      "avg_tmin": 10.5,
+      "total_prcp": 432.0,
+      "n_tmax": 206,
+      "n_tmin": 207,
+      "n_prcp": 207,
+      "extreme_tmax_days": 7,
+      "extreme_tmin_days": 6,
+      "extreme_prcp_days": 1
+    },
+    "2024": {
+      "avg_tmax": 24.49,
+      "avg_tmin": 13.22,
+      "total_prcp": 621.9,
+      "n_tmax": 265,
+      "n_tmin": 265,
+      "n_prcp": 266,
+      "extreme_tmax_days": 6,
+      "extreme_tmin_days": 3,
+      "extreme_prcp_days": 3
+    }
+  },
+  "西安": {
+    "2023": {
+      "avg_tmax": 22.45,
+      "avg_tmin": 10.8,
+      "total_prcp": 711.1,
+      "n_tmax": 332,
+      "n_tmin": 334,
+      "n_prcp": 334,
+      "extreme_tmax_days": 7,
+      "extreme_tmin_days": 0,
+      "extreme_prcp_days": 1
+    },
+    "2024": {
+      "avg_tmax": 23.58,
+      "avg_tmin": 12.31,
+      "total_prcp": 536.2,
+      "n_tmax": 332,
+      "n_tmin": 334,
+      "n_prcp": 334,
+      "extreme_tmax_days": 10,
+      "extreme_tmin_days": 0,
+      "extreme_prcp_days": 2
+    }
+  }
+}

@@ -32,12 +32,12 @@ from dataclasses import dataclass, field
 # ============================================================
 # 0. 环境配置
 # ============================================================
-NEXUSFLOW_DIR = "."
-OUTPUT_BASE = "./examples/output"
-NOAA_CLI = "./skills/noaa/bin/_cli_wrapper.py"
-WHO_CLI = "./skills/who/scripts/_cli_wrapper.py"
+NEXUSFLOW_DIR = "/app/data/所有对话/主对话/NexusFlow-repo"
+OUTPUT_BASE = "/app/data/所有对话/主对话/nexusflow-ppt"
+NOAA_CLI = "/app/data/所有对话/主对话/.skills/skill_noaa-data-skill/bin/_cli_wrapper.py"
+WHO_CLI = "/app/data/所有对话/主对话/.skills/skill_who-data-skill/scripts/_cli_wrapper.py"
 
-DEEPSEEK_API_KEY = "YOUR_DEEPSEEK_API_KEY"  # Set your API key here
+DEEPSEEK_API_KEY = "sk-your-key-here"
 DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # 添加NexusFlow到sys.path
@@ -111,7 +111,7 @@ def call_noaa(operation: str, params: Dict[str, str] = None) -> str:
             cmd.extend(["--param", f"{k}={v}"])
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=60,
-                          cwd="./skills/noaa")
+                          cwd="/app/data/所有对话/主对话/.skills/skill_noaa-data-skill")
         return r.stdout.strip()
     except Exception as e:
         return f"[NOAA_ERROR: {e}]"
@@ -125,7 +125,7 @@ def call_who(operation: str, params: Dict[str, str] = None) -> str:
             cmd.extend(["--param", f"{k}={v}"])
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=60,
-                          cwd="./skills/who")
+                          cwd="/app/data/所有对话/主对话/.skills/skill_who-data-skill")
         return r.stdout.strip()
     except Exception as e:
         return f"[WHO_ERROR: {e}]"

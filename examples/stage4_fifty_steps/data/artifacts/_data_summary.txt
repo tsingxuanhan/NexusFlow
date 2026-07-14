@@ -1,0 +1,70 @@
+NOAA_TEMP:
+ERR:upstream HTTP 400
+{"statusCode":"400","userMessage":"There was an error with the request.","developerMessage":"The date range must be less than 10 years."}
+
+
+NOAA_PRCP:
+ERR:upstream HTTP 400
+{"statusCode":"400","userMessage":"There was an error with the request.","developerMessage":"The date range must be less than 10 years."}
+
+
+WHO_LE:
+{
+  "@odata.context": "https://ghoapi.azureedge.net/api/$metadata#WHOSIS_000002",
+  "value": [
+    {
+      "Id": 18198,
+      "IndicatorCode": "WHOSIS_000002",
+      "SpatialDimType": "COUNTRY",
+      "SpatialDim": "SLV",
+      "TimeDimType": "YEAR",
+      "ParentLocationCode": "AMR",
+      "ParentLocation": "Americas",
+      "Dim1Type": "SEX",
+      "Dim1": "SEX_MLE",
+      "TimeDim": 2010,
+      "Dim2Type": null,
+      "Dim2": null,
+      "Dim3Type": null,
+      "Dim3": null,
+      "DataSourceDimType": null,
+      "DataSourceDim": null,
+      "Value": "61.4 [60.8-62.1]",
+      "NumericValue"
+
+WHO_NCD:
+ERR:upstream HTTP 404
+
+
+
+LIT:
+好的，遵照您的指令，我将以Researcher Agent的身份，模拟完成气候-健康领域的系统文献综述步骤4至8。
+
+---
+
+### **Step 4: 关键文献列表 (10篇)**
+
+以下是筛选出的10篇在气候-健康领域具有代表性或里程碑意义的文献，涵盖了不同气候因子、健康结局及研究方法。
+
+1.  **Watts, N., et al. (2018).** “The 2018 report of the Lancet Countdown on health and climate change: shaping the health of nations for centuries to come.” *The Lancet*, 392(10163), 2479-2514.
+    *   **核心发现:** 量化了气候变化对全球健康的广泛影响，包括热相关死亡增加、传染病传播范围扩大、粮食安全威胁及劳动力损失，并强调减排的健康协同效益。
+
+2.  **Gasparrini, A., et al. (2015).** “Mortality risk attributable to high and low ambient temperature: a multicountry observational study.” *The Lancet*, 386(9991), 369-375.
+    *   **核心发现:** 在13个国家中，发现非最优温度（冷热）导致的死亡负担中，寒冷导致的死亡占比远高于炎热，但热相关死亡风险上升更快，且地区差异显著。
+
+3.  **Patz, J. A., et al. (2014).** “Climate change and global health: quantifying a growing ethical crisis.” *
+
+HYPO:
+好的，收到您的文献综述。作为Strategist Agent，我将基于您提供的10篇关键文献，提炼核心矛盾与共识，生成可验证的假设，并构建验证框架与批判性审查意见。
+
+### **Step 9: 生成H1/H2/H3假设**
+
+基于文献综述，我识别出三个核心研究空白与矛盾点，并据此生成三个层次的假设。
+
+**H1 (基础假设): 温度-死亡率关系的非线性与地域异质性**
+*   **假设陈述:** 在全球范围内，非最优环境温度（冷/热）导致的超额死亡风险呈非线性“J”或“U”型分布，且该分布的形状、最适温度（MMT）及冷/热效应占比存在显著的地域异质性，主要受当地气候基线、人口年龄结构及社会经济适应能力（如空调普及率、医疗可及性）的调节。
+*   **文献依据:** 直接基于 **Gasparrini et al. (2015)** 的多国研究核心发现（寒冷负担高但热风险上升快、地区差异显著）。同时，**Watts et al. (2018)** 和 **Haines & Ebi (2019)** 均强调了脆弱人群（如老年人、低收入群体）的差异化风险，为地域异质性提供了理论支持。
+
+**H2 (机制假设): 气候驱动的传染病传播风险模型存在关键“盲点”**
+*   **假设陈述:** 现有基于气候因子（温度、降水）的媒介传染病（如登革热）全球风险模型（如**Caminade et al., 2019**）在预测未来风险时，显著低估了非气候因素（如城市化速率、人类移动模式、病毒进化、公共卫生干预措施）的放大或抑制效应，导致模型在区域尺度上的预测准确性不足，尤其是在高纬度“新风险区”。
+*   **文献依据:** **Caminade et al. (2019)** 的模型本身就是一个基于气候的预测，其局限性（未包含非气候因素）是研究的自然延伸。**Patz et al. (2

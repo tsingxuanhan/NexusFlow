@@ -328,3 +328,64 @@ python3 experiment.py --real-run        # 尝试全部真实
 *实验数据: 详见 comparison_results.json*  
 *原始输出: 详见 autogen_output.md, crewai_output.md*  
 *评分明细: 详见 evaluation_scores.md*
+
+---
+
+## 8. NexusFlow 真实执行补充（2026-07-14）
+
+### 8.1 补充说明
+
+此前NexusFlow数据基于Stage-2 CDoL引擎实验记录模拟。本次补充使用**NexusFlow CDoL三轮协议真实执行**（7次DeepSeek API调用），验证横向对比的可靠性。
+
+### 8.2 真实执行配置
+
+| 项目 | 值 |
+|------|-----|
+| 执行方式 | NexusFlow CDoL三轮协议（Researcher/Analyst/Strategist + Critic + Synthesizer） |
+| Round 0 | 3个Agent独立分析（信息不对称） |
+| Round 1 | Critic独立审查 |
+| Round 2 | Agent基于反馈修正 |
+| Fusion | Synthesizer综合最终报告 |
+| LLM | deepseek-chat (DeepSeek API) |
+| 温度 | 0.5 |
+
+### 8.3 真实执行结果
+
+| 指标 | NexusFlow (real) | AutoGen (real) | CrewAI (simulated) |
+|------|:----------------:|:--------------:|:------------------:|
+| **得分** | **84.5** | **90.0** | 85 |
+| 耗时 | 89.8s | 131.1s | 42.0s |
+| API调用 | 7次 | 5次 | 18次 |
+| Tokens | 18,799 | 2,426 | 5,171 |
+| 数据准确性 | 10/10 | 10/10 | 10/10 |
+| 排名正确性 | 8/10 | 8/10 | 9/10 |
+| 分析深度 | 7/10 | 10/10 | 9/10 |
+| 方法论 | 9/10 | 8/10 | 9/10 |
+| 交叉验证 | 7/10 | 9/10 | 4/10 |
+| 逻辑一致性 | 10/10 | 9/10 | 9/10 |
+| 可复现性 | 10/10 | 10/10 | 9/10 |
+
+### 8.4 分析与讨论
+
+**简单查询任务 vs 复杂任务**：
+
+在这个简单的WHO数据查询+排名任务上，AutoGen得分(90.0)略高于NexusFlow(84.5)。这并不意外：
+
+1. **任务特征**：简单查询任务的瓶颈在于数据精确传递，而非复杂编排。AutoGen的双Agent多轮对话模式天然适合数据反复验证。
+
+2. **NexusFlow的优势在复杂任务**：在Stage-5的80步端到端大宗商品分析中，NexusFlow相比Single-Agent提升了2.6%质量、降低了14.9%耗时、减少了6.2% Token消耗——这才是NexusFlow的核心价值。
+
+3. **CDoL的价值**：NexusFlow的CDoL三轮协议在简单任务上的额外开销（7次API vs AutoGen的5次）换来的是独立审查和修正机制。在更复杂的任务中，这个机制的价值更显著。
+
+**结论**：横向对比验证了NexusFlow在标准任务上与主流框架的竞争力（差距<6%），而Stage-4/5的端到端实验证明了NexusFlow在复杂任务上的独特优势。
+
+### 8.5 输出文件
+
+- `nexusflow_real_v2_output.md`: NexusFlow CDoL真实执行完整输出
+- `nexusflow_real_v2_output.json`: 含CDoL详细元数据
+- `evaluate_real_outputs.py`: 确定性评估脚本（可复现）
+- `real_evaluation_results.json`: 评估结果
+
+---
+
+*更新时间: 2026-07-14（NexusFlow真实执行补充）*  

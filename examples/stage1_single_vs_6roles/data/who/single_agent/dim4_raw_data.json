@@ -1,0 +1,1066 @@
+{
+  "DTP3_Coverage": {
+    "BRA": {
+      "indicator": "WHS4_100",
+      "country": "BRA",
+      "data": [
+        {
+          "year": 2000,
+          "value": 98.0
+        },
+        {
+          "year": 2001,
+          "value": 98.0
+        },
+        {
+          "year": 2002,
+          "value": 99.0
+        },
+        {
+          "year": 2003,
+          "value": 99.0
+        },
+        {
+          "year": 2004,
+          "value": 99.0
+        },
+        {
+          "year": 2005,
+          "value": 99.0
+        },
+        {
+          "year": 2006,
+          "value": 99.0
+        },
+        {
+          "year": 2007,
+          "value": 99.0
+        },
+        {
+          "year": 2008,
+          "value": 99.0
+        },
+        {
+          "year": 2009,
+          "value": 99.0
+        },
+        {
+          "year": 2010,
+          "value": 99.0
+        },
+        {
+          "year": 2011,
+          "value": 99.0
+        },
+        {
+          "year": 2012,
+          "value": 95.0
+        },
+        {
+          "year": 2013,
+          "value": 97.0
+        },
+        {
+          "year": 2014,
+          "value": 93.0
+        },
+        {
+          "year": 2015,
+          "value": 96.0
+        },
+        {
+          "year": 2016,
+          "value": 89.0
+        },
+        {
+          "year": 2017,
+          "value": 83.0
+        },
+        {
+          "year": 2018,
+          "value": 87.0
+        },
+        {
+          "year": 2019,
+          "value": 70.0
+        },
+        {
+          "year": 2020,
+          "value": 77.0
+        },
+        {
+          "year": 2021,
+          "value": 68.0
+        },
+        {
+          "year": 2022,
+          "value": 77.0
+        },
+        {
+          "year": 2023,
+          "value": 90.0
+        },
+        {
+          "year": 2024,
+          "value": 91.0
+        }
+      ]
+    },
+    "RUS": {
+      "indicator": "WHS4_100",
+      "country": "RUS",
+      "data": [
+        {
+          "year": 2000,
+          "value": 96.0
+        },
+        {
+          "year": 2001,
+          "value": 96.0
+        },
+        {
+          "year": 2002,
+          "value": 97.0
+        },
+        {
+          "year": 2003,
+          "value": 96.0
+        },
+        {
+          "year": 2004,
+          "value": 97.0
+        },
+        {
+          "year": 2005,
+          "value": 98.0
+        },
+        {
+          "year": 2006,
+          "value": 98.0
+        },
+        {
+          "year": 2007,
+          "value": 98.0
+        },
+        {
+          "year": 2008,
+          "value": 98.0
+        },
+        {
+          "year": 2009,
+          "value": 98.0
+        },
+        {
+          "year": 2010,
+          "value": 97.0
+        },
+        {
+          "year": 2011,
+          "value": 97.0
+        },
+        {
+          "year": 2012,
+          "value": 97.0
+        },
+        {
+          "year": 2013,
+          "value": 97.0
+        },
+        {
+          "year": 2014,
+          "value": 97.0
+        },
+        {
+          "year": 2015,
+          "value": 97.0
+        },
+        {
+          "year": 2016,
+          "value": 97.0
+        },
+        {
+          "year": 2017,
+          "value": 97.0
+        },
+        {
+          "year": 2018,
+          "value": 97.0
+        },
+        {
+          "year": 2019,
+          "value": 97.0
+        },
+        {
+          "year": 2020,
+          "value": 97.0
+        },
+        {
+          "year": 2021,
+          "value": 97.0
+        },
+        {
+          "year": 2022,
+          "value": 97.0
+        },
+        {
+          "year": 2023,
+          "value": 97.0
+        },
+        {
+          "year": 2024,
+          "value": 97.0
+        }
+      ]
+    },
+    "IND": {
+      "indicator": "WHS4_100",
+      "country": "IND",
+      "data": [
+        {
+          "year": 2000,
+          "value": 58.0
+        },
+        {
+          "year": 2001,
+          "value": 59.0
+        },
+        {
+          "year": 2002,
+          "value": 59.0
+        },
+        {
+          "year": 2003,
+          "value": 61.0
+        },
+        {
+          "year": 2004,
+          "value": 63.0
+        },
+        {
+          "year": 2005,
+          "value": 65.0
+        },
+        {
+          "year": 2006,
+          "value": 65.0
+        },
+        {
+          "year": 2007,
+          "value": 64.0
+        },
+        {
+          "year": 2008,
+          "value": 70.0
+        },
+        {
+          "year": 2009,
+          "value": 74.0
+        },
+        {
+          "year": 2010,
+          "value": 79.0
+        },
+        {
+          "year": 2011,
+          "value": 82.0
+        },
+        {
+          "year": 2012,
+          "value": 82.0
+        },
+        {
+          "year": 2013,
+          "value": 83.0
+        },
+        {
+          "year": 2014,
+          "value": 85.0
+        },
+        {
+          "year": 2015,
+          "value": 87.0
+        },
+        {
+          "year": 2016,
+          "value": 88.0
+        },
+        {
+          "year": 2017,
+          "value": 89.0
+        },
+        {
+          "year": 2018,
+          "value": 90.0
+        },
+        {
+          "year": 2019,
+          "value": 91.0
+        },
+        {
+          "year": 2020,
+          "value": 85.0
+        },
+        {
+          "year": 2021,
+          "value": 85.0
+        },
+        {
+          "year": 2022,
+          "value": 93.0
+        },
+        {
+          "year": 2023,
+          "value": 91.0
+        },
+        {
+          "year": 2024,
+          "value": 94.0
+        }
+      ]
+    },
+    "CHN": {
+      "indicator": "WHS4_100",
+      "country": "CHN",
+      "data": [
+        {
+          "year": 2000,
+          "value": 85.0
+        },
+        {
+          "year": 2001,
+          "value": 86.0
+        },
+        {
+          "year": 2002,
+          "value": 86.0
+        },
+        {
+          "year": 2003,
+          "value": 86.0
+        },
+        {
+          "year": 2004,
+          "value": 87.0
+        },
+        {
+          "year": 2005,
+          "value": 87.0
+        },
+        {
+          "year": 2006,
+          "value": 93.0
+        },
+        {
+          "year": 2007,
+          "value": 93.0
+        },
+        {
+          "year": 2008,
+          "value": 97.0
+        },
+        {
+          "year": 2009,
+          "value": 99.0
+        },
+        {
+          "year": 2010,
+          "value": 99.0
+        },
+        {
+          "year": 2011,
+          "value": 99.0
+        },
+        {
+          "year": 2012,
+          "value": 99.0
+        },
+        {
+          "year": 2013,
+          "value": 99.0
+        },
+        {
+          "year": 2014,
+          "value": 99.0
+        },
+        {
+          "year": 2015,
+          "value": 99.0
+        },
+        {
+          "year": 2016,
+          "value": 99.0
+        },
+        {
+          "year": 2017,
+          "value": 99.0
+        },
+        {
+          "year": 2018,
+          "value": 99.0
+        },
+        {
+          "year": 2019,
+          "value": 99.0
+        },
+        {
+          "year": 2020,
+          "value": 99.0
+        },
+        {
+          "year": 2021,
+          "value": 99.0
+        },
+        {
+          "year": 2022,
+          "value": 99.0
+        },
+        {
+          "year": 2023,
+          "value": 96.0
+        },
+        {
+          "year": 2024,
+          "value": 97.0
+        }
+      ]
+    },
+    "ZAF": {
+      "indicator": "WHS4_100",
+      "country": "ZAF",
+      "data": [
+        {
+          "year": 2000,
+          "value": 73.0
+        },
+        {
+          "year": 2001,
+          "value": 71.0
+        },
+        {
+          "year": 2002,
+          "value": 70.0
+        },
+        {
+          "year": 2003,
+          "value": 69.0
+        },
+        {
+          "year": 2004,
+          "value": 74.0
+        },
+        {
+          "year": 2005,
+          "value": 81.0
+        },
+        {
+          "year": 2006,
+          "value": 84.0
+        },
+        {
+          "year": 2007,
+          "value": 85.0
+        },
+        {
+          "year": 2008,
+          "value": 82.0
+        },
+        {
+          "year": 2009,
+          "value": 81.0
+        },
+        {
+          "year": 2010,
+          "value": 77.0
+        },
+        {
+          "year": 2011,
+          "value": 75.0
+        },
+        {
+          "year": 2012,
+          "value": 71.0
+        },
+        {
+          "year": 2013,
+          "value": 81.0
+        },
+        {
+          "year": 2014,
+          "value": 85.0
+        },
+        {
+          "year": 2015,
+          "value": 85.0
+        },
+        {
+          "year": 2016,
+          "value": 85.0
+        },
+        {
+          "year": 2017,
+          "value": 84.0
+        },
+        {
+          "year": 2018,
+          "value": 82.0
+        },
+        {
+          "year": 2019,
+          "value": 85.0
+        },
+        {
+          "year": 2020,
+          "value": 84.0
+        },
+        {
+          "year": 2021,
+          "value": 86.0
+        },
+        {
+          "year": 2022,
+          "value": 85.0
+        },
+        {
+          "year": 2023,
+          "value": 79.0
+        },
+        {
+          "year": 2024,
+          "value": 74.0
+        }
+      ]
+    }
+  },
+  "BCG_Coverage": {
+    "BRA": {
+      "indicator": "WHS4_543",
+      "country": "BRA",
+      "data": [
+        {
+          "year": 2000,
+          "value": 99.0
+        },
+        {
+          "year": 2001,
+          "value": 99.0
+        },
+        {
+          "year": 2002,
+          "value": 99.0
+        },
+        {
+          "year": 2003,
+          "value": 99.0
+        },
+        {
+          "year": 2004,
+          "value": 99.0
+        },
+        {
+          "year": 2005,
+          "value": 99.0
+        },
+        {
+          "year": 2006,
+          "value": 99.0
+        },
+        {
+          "year": 2007,
+          "value": 99.0
+        },
+        {
+          "year": 2008,
+          "value": 99.0
+        },
+        {
+          "year": 2009,
+          "value": 99.0
+        },
+        {
+          "year": 2010,
+          "value": 99.0
+        },
+        {
+          "year": 2011,
+          "value": 99.0
+        },
+        {
+          "year": 2012,
+          "value": 99.0
+        },
+        {
+          "year": 2013,
+          "value": 99.0
+        },
+        {
+          "year": 2014,
+          "value": 99.0
+        },
+        {
+          "year": 2015,
+          "value": 99.0
+        },
+        {
+          "year": 2016,
+          "value": 96.0
+        },
+        {
+          "year": 2017,
+          "value": 94.0
+        },
+        {
+          "year": 2018,
+          "value": 98.0
+        },
+        {
+          "year": 2019,
+          "value": 85.0
+        },
+        {
+          "year": 2020,
+          "value": 73.0
+        },
+        {
+          "year": 2021,
+          "value": 69.0
+        },
+        {
+          "year": 2022,
+          "value": 88.0
+        },
+        {
+          "year": 2023,
+          "value": 79.0
+        },
+        {
+          "year": 2024,
+          "value": 95.0
+        }
+      ]
+    },
+    "RUS": {
+      "indicator": "WHS4_543",
+      "country": "RUS",
+      "data": [
+        {
+          "year": 2000,
+          "value": 96.0
+        },
+        {
+          "year": 2001,
+          "value": 96.0
+        },
+        {
+          "year": 2002,
+          "value": 97.0
+        },
+        {
+          "year": 2003,
+          "value": 97.0
+        },
+        {
+          "year": 2004,
+          "value": 96.0
+        },
+        {
+          "year": 2005,
+          "value": 97.0
+        },
+        {
+          "year": 2006,
+          "value": 97.0
+        },
+        {
+          "year": 2007,
+          "value": 97.0
+        },
+        {
+          "year": 2008,
+          "value": 96.0
+        },
+        {
+          "year": 2009,
+          "value": 96.0
+        },
+        {
+          "year": 2010,
+          "value": 96.0
+        },
+        {
+          "year": 2011,
+          "value": 95.0
+        },
+        {
+          "year": 2012,
+          "value": 96.0
+        },
+        {
+          "year": 2013,
+          "value": 96.0
+        },
+        {
+          "year": 2014,
+          "value": 96.0
+        },
+        {
+          "year": 2015,
+          "value": 96.0
+        },
+        {
+          "year": 2016,
+          "value": 96.0
+        },
+        {
+          "year": 2017,
+          "value": 95.0
+        },
+        {
+          "year": 2018,
+          "value": 95.0
+        },
+        {
+          "year": 2019,
+          "value": 96.0
+        },
+        {
+          "year": 2020,
+          "value": 95.0
+        },
+        {
+          "year": 2021,
+          "value": 95.0
+        },
+        {
+          "year": 2022,
+          "value": 96.0
+        },
+        {
+          "year": 2023,
+          "value": 96.0
+        },
+        {
+          "year": 2024,
+          "value": 96.0
+        }
+      ]
+    },
+    "IND": {
+      "indicator": "WHS4_543",
+      "country": "IND",
+      "data": [
+        {
+          "year": 2000,
+          "value": 74.0
+        },
+        {
+          "year": 2001,
+          "value": 75.0
+        },
+        {
+          "year": 2002,
+          "value": 75.0
+        },
+        {
+          "year": 2003,
+          "value": 77.0
+        },
+        {
+          "year": 2004,
+          "value": 80.0
+        },
+        {
+          "year": 2005,
+          "value": 86.0
+        },
+        {
+          "year": 2006,
+          "value": 86.0
+        },
+        {
+          "year": 2007,
+          "value": 87.0
+        },
+        {
+          "year": 2008,
+          "value": 86.0
+        },
+        {
+          "year": 2009,
+          "value": 88.0
+        },
+        {
+          "year": 2010,
+          "value": 89.0
+        },
+        {
+          "year": 2011,
+          "value": 90.0
+        },
+        {
+          "year": 2012,
+          "value": 90.0
+        },
+        {
+          "year": 2013,
+          "value": 91.0
+        },
+        {
+          "year": 2014,
+          "value": 89.0
+        },
+        {
+          "year": 2015,
+          "value": 87.0
+        },
+        {
+          "year": 2016,
+          "value": 89.0
+        },
+        {
+          "year": 2017,
+          "value": 92.0
+        },
+        {
+          "year": 2018,
+          "value": 92.0
+        },
+        {
+          "year": 2019,
+          "value": 92.0
+        },
+        {
+          "year": 2020,
+          "value": 85.0
+        },
+        {
+          "year": 2021,
+          "value": 84.0
+        },
+        {
+          "year": 2022,
+          "value": 91.0
+        },
+        {
+          "year": 2023,
+          "value": 89.0
+        },
+        {
+          "year": 2024,
+          "value": 91.0
+        }
+      ]
+    },
+    "CHN": {
+      "indicator": "WHS4_543",
+      "country": "CHN",
+      "data": [
+        {
+          "year": 2000,
+          "value": 84.0
+        },
+        {
+          "year": 2001,
+          "value": 85.0
+        },
+        {
+          "year": 2002,
+          "value": 85.0
+        },
+        {
+          "year": 2003,
+          "value": 85.0
+        },
+        {
+          "year": 2004,
+          "value": 86.0
+        },
+        {
+          "year": 2005,
+          "value": 86.0
+        },
+        {
+          "year": 2006,
+          "value": 92.0
+        },
+        {
+          "year": 2007,
+          "value": 94.0
+        },
+        {
+          "year": 2008,
+          "value": 97.0
+        },
+        {
+          "year": 2009,
+          "value": 99.0
+        },
+        {
+          "year": 2010,
+          "value": 99.0
+        },
+        {
+          "year": 2011,
+          "value": 99.0
+        },
+        {
+          "year": 2012,
+          "value": 99.0
+        },
+        {
+          "year": 2013,
+          "value": 99.0
+        },
+        {
+          "year": 2014,
+          "value": 99.0
+        },
+        {
+          "year": 2015,
+          "value": 99.0
+        },
+        {
+          "year": 2016,
+          "value": 99.0
+        },
+        {
+          "year": 2017,
+          "value": 99.0
+        },
+        {
+          "year": 2018,
+          "value": 99.0
+        },
+        {
+          "year": 2019,
+          "value": 99.0
+        },
+        {
+          "year": 2020,
+          "value": 99.0
+        },
+        {
+          "year": 2021,
+          "value": 99.0
+        },
+        {
+          "year": 2022,
+          "value": 99.0
+        },
+        {
+          "year": 2023,
+          "value": 99.0
+        },
+        {
+          "year": 2024,
+          "value": 99.0
+        }
+      ]
+    },
+    "ZAF": {
+      "indicator": "WHS4_543",
+      "country": "ZAF",
+      "data": [
+        {
+          "year": 2000,
+          "value": 89.0
+        },
+        {
+          "year": 2001,
+          "value": 86.0
+        },
+        {
+          "year": 2002,
+          "value": 84.0
+        },
+        {
+          "year": 2003,
+          "value": 81.0
+        },
+        {
+          "year": 2004,
+          "value": 78.0
+        },
+        {
+          "year": 2005,
+          "value": 76.0
+        },
+        {
+          "year": 2006,
+          "value": 79.0
+        },
+        {
+          "year": 2007,
+          "value": 79.0
+        },
+        {
+          "year": 2008,
+          "value": 84.0
+        },
+        {
+          "year": 2009,
+          "value": 82.0
+        },
+        {
+          "year": 2010,
+          "value": 81.0
+        },
+        {
+          "year": 2011,
+          "value": 84.0
+        },
+        {
+          "year": 2012,
+          "value": 86.0
+        },
+        {
+          "year": 2013,
+          "value": 88.0
+        },
+        {
+          "year": 2014,
+          "value": 93.0
+        },
+        {
+          "year": 2015,
+          "value": 83.0
+        },
+        {
+          "year": 2016,
+          "value": 79.0
+        },
+        {
+          "year": 2017,
+          "value": 75.0
+        },
+        {
+          "year": 2018,
+          "value": 70.0
+        },
+        {
+          "year": 2019,
+          "value": 84.0
+        },
+        {
+          "year": 2020,
+          "value": 86.0
+        },
+        {
+          "year": 2021,
+          "value": 86.0
+        },
+        {
+          "year": 2022,
+          "value": 84.0
+        },
+        {
+          "year": 2023,
+          "value": 79.0
+        },
+        {
+          "year": 2024,
+          "value": 74.0
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "Cancer_ASDR": {
+    "BRA": {
+      "indicator": "SA_0000001807",
+      "country": "BRA",
+      "data": [
+        {
+          "year": 2019,
+          "value": 137.839313575
+        },
+        {
+          "year": 2019,
+          "value": 102.819813171
+        }
+      ]
+    },
+    "RUS": {
+      "indicator": "SA_0000001807",
+      "country": "RUS",
+      "data": [
+        {
+          "year": 2019,
+          "value": 173.721315817
+        },
+        {
+          "year": 2019,
+          "value": 129.18517913
+        }
+      ]
+    },
+    "IND": {
+      "indicator": "SA_0000001807",
+      "country": "IND",
+      "data": [
+        {
+          "year": 2019,
+          "value": 107.174754235
+        },
+        {
+          "year": 2019,
+          "value": 80.122983032
+        }
+      ]
+    },
+    "CHN": {
+      "indicator": "SA_0000001807",
+      "country": "CHN",
+      "data": [
+        {
+          "year": 2019,
+          "value": 133.718524419
+        },
+        {
+          "year": 2019,
+          "value": 179.61283552
+        }
+      ]
+    },
+    "ZAF": {
+      "indicator": "SA_0000001807",
+      "country": "ZAF",
+      "data": [
+        {
+          "year": 2019,
+          "value": 133.524157045
+        },
+        {
+          "year": 2019,
+          "value": 179.783530797
+        }
+      ]
+    }
+  },
+  "CVD_ASDR": {
+    "BRA": {
+      "indicator": "SA_0000001808",
+      "country": "BRA",
+      "data": [
+        {
+          "year": 2019,
+          "value": 6.302023468
+        },
+        {
+          "year": 2019,
+          "value": 6.259496932
+        }
+      ]
+    },
+    "RUS": {
+      "indicator": "SA_0000001808",
+      "country": "RUS",
+      "data": [
+        {
+          "year": 2019,
+          "value": 6.921591425
+        },
+        {
+          "year": 2019,
+          "value": 6.940359208
+        }
+      ]
+    },
+    "IND": {
+      "indicator": "SA_0000001808",
+      "country": "IND",
+      "data": [
+        {
+          "year": 2019,
+          "value": 6.175432305
+        },
+        {
+          "year": 2019,
+          "value": 6.263591057
+        }
+      ]
+    },
+    "CHN": {
+      "indicator": "SA_0000001808",
+      "country": "CHN",
+      "data": [
+        {
+          "year": 2019,
+          "value": 3.666461742
+        },
+        {
+          "year": 2019,
+          "value": 3.652346386
+        }
+      ]
+    },
+    "ZAF": {
+      "indicator": "SA_0000001808",
+      "country": "ZAF",
+      "data": [
+        {
+          "year": 2019,
+          "value": 4.325254821
+        },
+        {
+          "year": 2019,
+          "value": 4.291116407
+        }
+      ]
+    }
+  }
+}

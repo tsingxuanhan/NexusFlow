@@ -1,0 +1,41 @@
+{
+  "air_pollution": {
+    "BRA": {
+      "2021": 788.842
+    },
+    "RUS": {
+      "2021": 778.087
+    },
+    "IND": {
+      "2021": 2162.799
+    },
+    "CHN": {
+      "2021": 1192.334
+    },
+    "ZAF": {
+      "2021": 1267.687
+    }
+  },
+  "analysis": {
+    "BRA": {
+      "air_daly_latest": 788.842,
+      "year": 2021
+    },
+    "RUS": {
+      "air_daly_latest": 778.087,
+      "year": 2021
+    },
+    "IND": {
+      "air_daly_latest": 2162.799,
+      "year": 2021
+    },
+    "CHN": {
+      "air_daly_latest": 1192.334,
+      "year": 2021
+    },
+    "ZAF": {
+      "air_daly_latest": 1267.687,
+      "year": 2021
+    }
+  }
+}

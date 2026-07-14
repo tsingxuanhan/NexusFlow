@@ -1,0 +1,710 @@
+{
+  "cities": {
+    "beijing": {
+      "name_cn": "北京",
+      "station": "GHCND:CHM00054511",
+      "lat": 39.8,
+      "lon": 116.47
+    },
+    "tianjin": {
+      "name_cn": "天津",
+      "station": "GHCND:CHM00054527",
+      "lat": 39.08,
+      "lon": 117.05
+    },
+    "shijiazhuang": {
+      "name_cn": "石家庄",
+      "station": "GHCND:CHM00053698",
+      "lat": 38.03,
+      "lon": 114.48
+    },
+    "jinan": {
+      "name_cn": "济南",
+      "station": "GHCND:CHM00054823",
+      "lat": 36.67,
+      "lon": 116.98
+    }
+  },
+  "years_test": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "results": {
+    "annual_averages": {
+      "beijing": {
+        "2015": {
+          "TMAX": 12.35,
+          "TMIN": 10.61,
+          "PRCP_total": 482.4,
+          "PRCP_daily_avg": 3.74
+        },
+        "2016": {
+          "TMAX": 5.6,
+          "TMIN": 12.2,
+          "PRCP_total": 713.1,
+          "PRCP_daily_avg": 6.92
+        },
+        "2017": {
+          "TMAX": 4.8,
+          "TMIN": 11.71,
+          "PRCP_total": 638.2,
+          "PRCP_daily_avg": 6.72
+        },
+        "2018": {
+          "TMAX": 17.94,
+          "TMIN": 10.85,
+          "PRCP_total": 644.6,
+          "PRCP_daily_avg": 8.26
+        },
+        "2019": {
+          "TMAX": 7.4,
+          "TMIN": 7.99,
+          "PRCP_total": 461.2,
+          "PRCP_daily_avg": 3.55
+        },
+        "2020": {
+          "TMAX": 19.85,
+          "TMIN": 9.06,
+          "PRCP_total": 529.0,
+          "PRCP_daily_avg": 1.45
+        },
+        "2021": {
+          "TMAX": 19.64,
+          "TMIN": 10.94,
+          "PRCP_total": 699.7,
+          "PRCP_daily_avg": 1.93
+        },
+        "2022": {
+          "TMAX": 18.71,
+          "TMIN": 10.39,
+          "PRCP_total": 584.0,
+          "PRCP_daily_avg": 1.61
+        }
+      },
+      "tianjin": {
+        "2015": {
+          "TMAX": 19.03,
+          "TMIN": 8.21,
+          "PRCP_total": 609.0,
+          "PRCP_daily_avg": 5.8
+        },
+        "2016": {
+          "TMAX": 19.11,
+          "TMIN": 8.44,
+          "PRCP_total": 655.1,
+          "PRCP_daily_avg": 5.75
+        },
+        "2017": {
+          "TMAX": 19.77,
+          "TMIN": 7.95,
+          "PRCP_total": 616.4,
+          "PRCP_daily_avg": 7.0
+        },
+        "2018": {
+          "TMAX": 19.26,
+          "TMIN": 7.84,
+          "PRCP_total": 749.3,
+          "PRCP_daily_avg": 8.61
+        },
+        "2019": {
+          "TMAX": 20.13,
+          "TMIN": 7.33,
+          "PRCP_total": 560.5,
+          "PRCP_daily_avg": 4.52
+        },
+        "2020": {
+          "TMAX": 20.52,
+          "TMIN": 7.88,
+          "PRCP_total": 775.7,
+          "PRCP_daily_avg": 2.17
+        },
+        "2021": {
+          "TMAX": 20.42,
+          "TMIN": 8.04,
+          "PRCP_total": 965.6,
+          "PRCP_daily_avg": 2.7
+        },
+        "2022": {
+          "TMAX": 20.47,
+          "TMIN": 7.53,
+          "PRCP_total": 621.1,
+          "PRCP_daily_avg": 1.72
+        }
+      },
+      "shijiazhuang": {
+        "2015": {
+          "TMAX": 19.51,
+          "TMIN": 9.03,
+          "PRCP_total": 658.5,
+          "PRCP_daily_avg": 6.52
+        },
+        "2016": {
+          "TMAX": 19.41,
+          "TMIN": 9.12,
+          "PRCP_total": 807.5,
+          "PRCP_daily_avg": 7.48
+        },
+        "2017": {
+          "TMAX": 20.08,
+          "TMIN": 9.45,
+          "PRCP_total": 583.4,
+          "PRCP_daily_avg": 6.78
+        },
+        "2018": {
+          "TMAX": 19.84,
+          "TMIN": 9.63,
+          "PRCP_total": 383.0,
+          "PRCP_daily_avg": 4.67
+        },
+        "2019": {
+          "TMAX": 20.44,
+          "TMIN": 8.71,
+          "PRCP_total": 516.9,
+          "PRCP_daily_avg": 4.53
+        },
+        "2020": {
+          "TMAX": 21.27,
+          "TMIN": 9.12,
+          "PRCP_total": 656.3,
+          "PRCP_daily_avg": 1.79
+        },
+        "2021": {
+          "TMAX": 22.02,
+          "TMIN": 9.91,
+          "PRCP_total": 1063.4,
+          "PRCP_daily_avg": 2.95
+        },
+        "2022": {
+          "TMAX": 21.64,
+          "TMIN": 9.09,
+          "PRCP_total": 446.8,
+          "PRCP_daily_avg": 1.24
+        }
+      },
+      "jinan": {
+        "2015": {
+          "TMAX": 16.13,
+          "TMIN": 10.39,
+          "PRCP_total": 846.3,
+          "PRCP_daily_avg": 7.3
+        },
+        "2016": {
+          "TMAX": 9.69,
+          "TMIN": 10.72,
+          "PRCP_total": 1211.4,
+          "PRCP_daily_avg": 11.32
+        },
+        "2017": {
+          "TMAX": 23.72,
+          "TMIN": 11.17,
+          "PRCP_total": 634.1,
+          "PRCP_daily_avg": 6.54
+        },
+        "2018": {
+          "TMAX": 19.91,
+          "TMIN": 10.55,
+          "PRCP_total": 926.5,
+          "PRCP_daily_avg": 8.27
+        },
+        "2019": {
+          "TMAX": 16.17,
+          "TMIN": 9.42,
+          "PRCP_total": 798.2,
+          "PRCP_daily_avg": 6.39
+        },
+        "2020": {
+          "TMAX": 21.2,
+          "TMIN": 9.94,
+          "PRCP_total": 637.0,
+          "PRCP_daily_avg": 1.74
+        },
+        "2021": {
+          "TMAX": 21.9,
+          "TMIN": 10.28,
+          "PRCP_total": 1047.5,
+          "PRCP_daily_avg": 2.89
+        },
+        "2022": {
+          "TMAX": 20.4,
+          "TMIN": 9.39,
+          "PRCP_total": 567.9,
+          "PRCP_daily_avg": 1.89
+        }
+      }
+    },
+    "extreme_events": {
+      "beijing": {
+        "2015": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 0
+        },
+        "2016": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 2,
+          "PRCP_gt50": 2
+        },
+        "2017": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 3
+        },
+        "2018": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 6,
+          "PRCP_gt50": 4
+        },
+        "2019": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 4,
+          "PRCP_gt50": 0
+        },
+        "2020": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 2,
+          "PRCP_gt50": 3
+        },
+        "2021": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 2
+        },
+        "2022": {
+          "TMAX_gt38": 2,
+          "TMIN_lt_n10": 3,
+          "PRCP_gt50": 1
+        }
+      },
+      "tianjin": {
+        "2015": {
+          "TMAX_gt38": 1,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 1
+        },
+        "2016": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 6,
+          "PRCP_gt50": 2
+        },
+        "2017": {
+          "TMAX_gt38": 2,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 4
+        },
+        "2018": {
+          "TMAX_gt38": 4,
+          "TMIN_lt_n10": 19,
+          "PRCP_gt50": 3
+        },
+        "2019": {
+          "TMAX_gt38": 3,
+          "TMIN_lt_n10": 3,
+          "PRCP_gt50": 3
+        },
+        "2020": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 5,
+          "PRCP_gt50": 3
+        },
+        "2021": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 15,
+          "PRCP_gt50": 4
+        },
+        "2022": {
+          "TMAX_gt38": 4,
+          "TMIN_lt_n10": 17,
+          "PRCP_gt50": 3
+        }
+      },
+      "shijiazhuang": {
+        "2015": {
+          "TMAX_gt38": 1,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 3
+        },
+        "2016": {
+          "TMAX_gt38": 1,
+          "TMIN_lt_n10": 3,
+          "PRCP_gt50": 3
+        },
+        "2017": {
+          "TMAX_gt38": 6,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 1
+        },
+        "2018": {
+          "TMAX_gt38": 4,
+          "TMIN_lt_n10": 5,
+          "PRCP_gt50": 1
+        },
+        "2019": {
+          "TMAX_gt38": 2,
+          "TMIN_lt_n10": 2,
+          "PRCP_gt50": 0
+        },
+        "2020": {
+          "TMAX_gt38": 4,
+          "TMIN_lt_n10": 4,
+          "PRCP_gt50": 3
+        },
+        "2021": {
+          "TMAX_gt38": 6,
+          "TMIN_lt_n10": 3,
+          "PRCP_gt50": 4
+        },
+        "2022": {
+          "TMAX_gt38": 9,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 2
+        }
+      },
+      "jinan": {
+        "2015": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 1,
+          "PRCP_gt50": 1
+        },
+        "2016": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 1,
+          "PRCP_gt50": 8
+        },
+        "2017": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 1
+        },
+        "2018": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 3,
+          "PRCP_gt50": 4
+        },
+        "2019": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 2,
+          "PRCP_gt50": 3
+        },
+        "2020": {
+          "TMAX_gt38": 3,
+          "TMIN_lt_n10": 3,
+          "PRCP_gt50": 1
+        },
+        "2021": {
+          "TMAX_gt38": 0,
+          "TMIN_lt_n10": 8,
+          "PRCP_gt50": 5
+        },
+        "2022": {
+          "TMAX_gt38": 3,
+          "TMIN_lt_n10": 0,
+          "PRCP_gt50": 3
+        }
+      }
+    },
+    "trends": {
+      "beijing": {
+        "TMAX_slope": 1.7777,
+        "TMIN_slope": -0.2223,
+        "PRCP_slope": 1.5857
+      },
+      "tianjin": {
+        "TMAX_slope": 0.2354,
+        "TMIN_slope": -0.0891,
+        "PRCP_slope": 22.9321
+      },
+      "shijiazhuang": {
+        "TMAX_slope": 0.3823,
+        "TMIN_slope": 0.0297,
+        "PRCP_slope": 1.7881
+      },
+      "jinan": {
+        "TMAX_slope": 0.9484,
+        "TMIN_slope": -0.1668,
+        "PRCP_slope": -34.3798
+      }
+    },
+    "data_coverage": {
+      "beijing": {
+        "2015": {
+          "total_records": 310,
+          "tmax_days": 74,
+          "tmin_days": 107,
+          "prcp_days": 129
+        },
+        "2016": {
+          "total_records": 196,
+          "tmax_days": 2,
+          "tmin_days": 91,
+          "prcp_days": 103
+        },
+        "2017": {
+          "total_records": 199,
+          "tmax_days": 1,
+          "tmin_days": 103,
+          "prcp_days": 95
+        },
+        "2018": {
+          "total_records": 194,
+          "tmax_days": 7,
+          "tmin_days": 109,
+          "prcp_days": 78
+        },
+        "2019": {
+          "total_records": 291,
+          "tmax_days": 33,
+          "tmin_days": 128,
+          "prcp_days": 130
+        },
+        "2020": {
+          "total_records": 735,
+          "tmax_days": 242,
+          "tmin_days": 127,
+          "prcp_days": 366
+        },
+        "2021": {
+          "total_records": 754,
+          "tmax_days": 259,
+          "tmin_days": 133,
+          "prcp_days": 362
+        },
+        "2022": {
+          "total_records": 760,
+          "tmax_days": 255,
+          "tmin_days": 143,
+          "prcp_days": 362
+        }
+      },
+      "tianjin": {
+        "2015": {
+          "total_records": 693,
+          "tmax_days": 363,
+          "tmin_days": 225,
+          "prcp_days": 105
+        },
+        "2016": {
+          "total_records": 710,
+          "tmax_days": 365,
+          "tmin_days": 231,
+          "prcp_days": 114
+        },
+        "2017": {
+          "total_records": 675,
+          "tmax_days": 364,
+          "tmin_days": 223,
+          "prcp_days": 88
+        },
+        "2018": {
+          "total_records": 675,
+          "tmax_days": 361,
+          "tmin_days": 227,
+          "prcp_days": 87
+        },
+        "2019": {
+          "total_records": 745,
+          "tmax_days": 363,
+          "tmin_days": 258,
+          "prcp_days": 124
+        },
+        "2020": {
+          "total_records": 1082,
+          "tmax_days": 365,
+          "tmin_days": 359,
+          "prcp_days": 357
+        },
+        "2021": {
+          "total_records": 1069,
+          "tmax_days": 358,
+          "tmin_days": 352,
+          "prcp_days": 358
+        },
+        "2022": {
+          "total_records": 1083,
+          "tmax_days": 360,
+          "tmin_days": 361,
+          "prcp_days": 361
+        }
+      },
+      "shijiazhuang": {
+        "2015": {
+          "total_records": 710,
+          "tmax_days": 362,
+          "tmin_days": 247,
+          "prcp_days": 101
+        },
+        "2016": {
+          "total_records": 711,
+          "tmax_days": 365,
+          "tmin_days": 238,
+          "prcp_days": 108
+        },
+        "2017": {
+          "total_records": 684,
+          "tmax_days": 362,
+          "tmin_days": 236,
+          "prcp_days": 86
+        },
+        "2018": {
+          "total_records": 685,
+          "tmax_days": 360,
+          "tmin_days": 243,
+          "prcp_days": 82
+        },
+        "2019": {
+          "total_records": 726,
+          "tmax_days": 363,
+          "tmin_days": 249,
+          "prcp_days": 114
+        },
+        "2020": {
+          "total_records": 1098,
+          "tmax_days": 366,
+          "tmin_days": 365,
+          "prcp_days": 366
+        },
+        "2021": {
+          "total_records": 1075,
+          "tmax_days": 358,
+          "tmin_days": 355,
+          "prcp_days": 361
+        },
+        "2022": {
+          "total_records": 1085,
+          "tmax_days": 361,
+          "tmin_days": 362,
+          "prcp_days": 361
+        }
+      },
+      "jinan": {
+        "2015": {
+          "total_records": 532,
+          "tmax_days": 200,
+          "tmin_days": 216,
+          "prcp_days": 116
+        },
+        "2016": {
+          "total_records": 355,
+          "tmax_days": 30,
+          "tmin_days": 218,
+          "prcp_days": 107
+        },
+        "2017": {
+          "total_records": 350,
+          "tmax_days": 30,
+          "tmin_days": 223,
+          "prcp_days": 97
+        },
+        "2018": {
+          "total_records": 374,
+          "tmax_days": 57,
+          "tmin_days": 205,
+          "prcp_days": 112
+        },
+        "2019": {
+          "total_records": 454,
+          "tmax_days": 97,
+          "tmin_days": 232,
+          "prcp_days": 125
+        },
+        "2020": {
+          "total_records": 1090,
+          "tmax_days": 363,
+          "tmin_days": 360,
+          "prcp_days": 366
+        },
+        "2021": {
+          "total_records": 1075,
+          "tmax_days": 358,
+          "tmin_days": 354,
+          "prcp_days": 362
+        },
+        "2022": {
+          "total_records": 901,
+          "tmax_days": 300,
+          "tmin_days": 300,
+          "prcp_days": 301
+        }
+      }
+    }
+  },
+  "predictions": {
+    "beijing": {
+      "2023": {
+        "TMAX": 21.29,
+        "TMIN": 9.47,
+        "PRCP_total": 601.16,
+        "extreme_TMAX_gt38": 2,
+        "extreme_TMIN_lt_n10": 4,
+        "extreme_PRCP_gt50": 2
+      },
+      "2024": {
+        "TMAX": 23.06,
+        "TMIN": 9.25,
+        "PRCP_total": 602.75,
+        "extreme_TMAX_gt38": 2,
+        "extreme_TMIN_lt_n10": 4,
+        "extreme_PRCP_gt50": 2
+      }
+    },
+    "tianjin": {
+      "2023": {
+        "TMAX": 20.9,
+        "TMIN": 7.5,
+        "PRCP_total": 797.28,
+        "extreme_TMAX_gt38": 3,
+        "extreme_TMIN_lt_n10": 24,
+        "extreme_PRCP_gt50": 5
+      },
+      "2024": {
+        "TMAX": 21.13,
+        "TMIN": 7.41,
+        "PRCP_total": 820.21,
+        "extreme_TMAX_gt38": 3,
+        "extreme_TMIN_lt_n10": 26,
+        "extreme_PRCP_gt50": 5
+      }
+    },
+    "shijiazhuang": {
+      "2023": {
+        "TMAX": 22.25,
+        "TMIN": 9.39,
+        "PRCP_total": 647.52,
+        "extreme_TMAX_gt38": 11,
+        "extreme_TMIN_lt_n10": 3,
+        "extreme_PRCP_gt50": 2
+      },
+      "2024": {
+        "TMAX": 22.63,
+        "TMIN": 9.42,
+        "PRCP_total": 649.31,
+        "extreme_TMAX_gt38": 12,
+        "extreme_TMIN_lt_n10": 3,
+        "extreme_PRCP_gt50": 2
+      }
+    },
+    "jinan": {
+      "2023": {
+        "TMAX": 22.91,
+        "TMIN": 9.48,
+        "PRCP_total": 678.9,
+        "extreme_TMAX_gt38": 4,
+        "extreme_TMIN_lt_n10": 6,
+        "extreme_PRCP_gt50": 3
+      },
+      "2024": {
+        "TMAX": 23.85,
+        "TMIN": 9.31,
+        "PRCP_total": 644.52,
+        "extreme_TMAX_gt38": 4,
+        "extreme_TMIN_lt_n10": 6,
+        "extreme_PRCP_gt50": 3
+      }
+    }
+  }
+}

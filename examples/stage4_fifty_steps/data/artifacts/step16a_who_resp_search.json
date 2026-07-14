@@ -1,0 +1,25 @@
+{
+  "@odata.context": "https://ghoapi.azureedge.net/api/$metadata#Indicator",
+  "value": [
+    {
+      "IndicatorCode": "WHS4_106",
+      "IndicatorName": "Care-seeking for children with symptoms of acute respiratory infection (%)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCD_CCS_CRD_GUIDE",
+      "IndicatorName": "Existence of evidence-based national guidelines/protocols/standards for the management of chronic respiratory diseases",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCD_CCS_CRDPlan",
+      "IndicatorName": "Existence of operational policy/strategy/action plan for chronic respiratory diseases",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCDMORT3070",
+      "IndicatorName": "Probability (%) of dying between age 30 and exact age 70 from any of cardiovascular disease, cancer, diabetes, or chronic respiratory disease",
+      "Language": "EN"
+    }
+  ]
+}

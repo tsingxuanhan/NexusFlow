@@ -1,0 +1,1557 @@
+{
+  "metadata": {
+    "task": "NOAA Climate Change Multi-Dimensional Diagnosis",
+    "agent": "single_agent",
+    "cities": [
+      "北京",
+      "天津",
+      "石家庄",
+      "济南",
+      "西安"
+    ],
+    "station_used": {
+      "北京": "GHCND:CHM00054511",
+      "天津": "GHCND:CHM00054527",
+      "石家庄": "GHCND:CHM00053698",
+      "济南": "GHCND:CHM00054823",
+      "西安": "GHCND:CHM00057131"
+    },
+    "training_period": "2015-2022",
+    "test_period": "2023",
+    "execution_time_seconds": 102.1,
+    "api_calls": 60,
+    "total_data_points": 31858,
+    "steps": 6,
+    "data_issues": [
+      "西安 2015 station GHCND:CHM00057036: exception 'metadata'",
+      "西安 main station GHCND:CHM00057036 insufficient TMAX/TMIN, switched to GHCND:CHM00057131"
+    ]
+  },
+  "data_quality": {
+    "北京": {
+      "2015": {
+        "total": 310,
+        "fetched": 310,
+        "tmax": 74,
+        "tmin": 107,
+        "prcp": 129
+      },
+      "2016": {
+        "total": 196,
+        "fetched": 196,
+        "tmax": 2,
+        "tmin": 91,
+        "prcp": 103
+      },
+      "2017": {
+        "total": 199,
+        "fetched": 199,
+        "tmax": 1,
+        "tmin": 103,
+        "prcp": 95
+      },
+      "2018": {
+        "total": 194,
+        "fetched": 194,
+        "tmax": 7,
+        "tmin": 109,
+        "prcp": 78
+      },
+      "2019": {
+        "total": 291,
+        "fetched": 291,
+        "tmax": 33,
+        "tmin": 128,
+        "prcp": 130
+      },
+      "2020": {
+        "total": 735,
+        "fetched": 735,
+        "tmax": 242,
+        "tmin": 127,
+        "prcp": 366
+      },
+      "2021": {
+        "total": 754,
+        "fetched": 754,
+        "tmax": 259,
+        "tmin": 133,
+        "prcp": 362
+      },
+      "2022": {
+        "total": 760,
+        "fetched": 760,
+        "tmax": 255,
+        "tmin": 143,
+        "prcp": 362
+      },
+      "2023": {
+        "total": 708,
+        "fetched": 708,
+        "tmax": 242,
+        "tmin": 110,
+        "prcp": 356
+      }
+    },
+    "天津": {
+      "2015": {
+        "total": 693,
+        "fetched": 693,
+        "tmax": 363,
+        "tmin": 225,
+        "prcp": 105
+      },
+      "2016": {
+        "total": 710,
+        "fetched": 710,
+        "tmax": 365,
+        "tmin": 231,
+        "prcp": 114
+      },
+      "2017": {
+        "total": 675,
+        "fetched": 675,
+        "tmax": 364,
+        "tmin": 223,
+        "prcp": 88
+      },
+      "2018": {
+        "total": 675,
+        "fetched": 675,
+        "tmax": 361,
+        "tmin": 227,
+        "prcp": 87
+      },
+      "2019": {
+        "total": 745,
+        "fetched": 745,
+        "tmax": 363,
+        "tmin": 258,
+        "prcp": 124
+      },
+      "2020": {
+        "total": 1081,
+        "fetched": 1081,
+        "tmax": 365,
+        "tmin": 359,
+        "prcp": 357
+      },
+      "2021": {
+        "total": 1068,
+        "fetched": 1068,
+        "tmax": 358,
+        "tmin": 352,
+        "prcp": 358
+      },
+      "2022": {
+        "total": 1082,
+        "fetched": 1082,
+        "tmax": 360,
+        "tmin": 361,
+        "prcp": 361
+      },
+      "2023": {
+        "total": 1040,
+        "fetched": 1040,
+        "tmax": 346,
+        "tmin": 347,
+        "prcp": 347
+      }
+    },
+    "石家庄": {
+      "2015": {
+        "total": 710,
+        "fetched": 710,
+        "tmax": 362,
+        "tmin": 247,
+        "prcp": 101
+      },
+      "2016": {
+        "total": 711,
+        "fetched": 711,
+        "tmax": 365,
+        "tmin": 238,
+        "prcp": 108
+      },
+      "2017": {
+        "total": 684,
+        "fetched": 684,
+        "tmax": 362,
+        "tmin": 236,
+        "prcp": 86
+      },
+      "2018": {
+        "total": 685,
+        "fetched": 685,
+        "tmax": 360,
+        "tmin": 243,
+        "prcp": 82
+      },
+      "2019": {
+        "total": 726,
+        "fetched": 726,
+        "tmax": 363,
+        "tmin": 249,
+        "prcp": 114
+      },
+      "2020": {
+        "total": 1097,
+        "fetched": 1097,
+        "tmax": 366,
+        "tmin": 365,
+        "prcp": 366
+      },
+      "2021": {
+        "total": 1074,
+        "fetched": 1074,
+        "tmax": 358,
+        "tmin": 355,
+        "prcp": 361
+      },
+      "2022": {
+        "total": 1084,
+        "fetched": 1084,
+        "tmax": 361,
+        "tmin": 362,
+        "prcp": 361
+      },
+      "2023": {
+        "total": 1037,
+        "fetched": 1037,
+        "tmax": 344,
+        "tmin": 346,
+        "prcp": 347
+      }
+    },
+    "济南": {
+      "2015": {
+        "total": 532,
+        "fetched": 532,
+        "tmax": 200,
+        "tmin": 216,
+        "prcp": 116
+      },
+      "2016": {
+        "total": 355,
+        "fetched": 355,
+        "tmax": 30,
+        "tmin": 218,
+        "prcp": 107
+      },
+      "2017": {
+        "total": 350,
+        "fetched": 350,
+        "tmax": 30,
+        "tmin": 223,
+        "prcp": 97
+      },
+      "2018": {
+        "total": 374,
+        "fetched": 374,
+        "tmax": 57,
+        "tmin": 205,
+        "prcp": 112
+      },
+      "2019": {
+        "total": 454,
+        "fetched": 454,
+        "tmax": 97,
+        "tmin": 232,
+        "prcp": 125
+      },
+      "2020": {
+        "total": 1089,
+        "fetched": 1089,
+        "tmax": 363,
+        "tmin": 360,
+        "prcp": 366
+      },
+      "2021": {
+        "total": 1074,
+        "fetched": 1074,
+        "tmax": 358,
+        "tmin": 354,
+        "prcp": 362
+      },
+      "2022": {
+        "total": 901,
+        "fetched": 901,
+        "tmax": 300,
+        "tmin": 300,
+        "prcp": 301
+      },
+      "2023": {
+        "total": 620,
+        "fetched": 620,
+        "tmax": 206,
+        "tmin": 207,
+        "prcp": 207
+      }
+    },
+    "西安": {
+      "2015": {
+        "total": 471,
+        "fetched": 471,
+        "tmax": 99,
+        "tmin": 237,
+        "prcp": 135
+      },
+      "2016": {
+        "total": 351,
+        "fetched": 351,
+        "tmax": 1,
+        "tmin": 234,
+        "prcp": 116
+      },
+      "2017": {
+        "total": 363,
+        "fetched": 363,
+        "tmax": 2,
+        "tmin": 235,
+        "prcp": 126
+      },
+      "2018": {
+        "total": 400,
+        "fetched": 400,
+        "tmax": 31,
+        "tmin": 245,
+        "prcp": 124
+      },
+      "2019": {
+        "total": 496,
+        "fetched": 496,
+        "tmax": 72,
+        "tmin": 250,
+        "prcp": 174
+      },
+      "2020": {
+        "total": 1094,
+        "fetched": 1094,
+        "tmax": 363,
+        "tmin": 365,
+        "prcp": 366
+      },
+      "2021": {
+        "total": 1085,
+        "fetched": 1085,
+        "tmax": 362,
+        "tmin": 361,
+        "prcp": 362
+      },
+      "2022": {
+        "total": 1084,
+        "fetched": 1084,
+        "tmax": 361,
+        "tmin": 361,
+        "prcp": 362
+      },
+      "2023": {
+        "total": 1041,
+        "fetched": 1041,
+        "tmax": 346,
+        "tmin": 348,
+        "prcp": 347
+      }
+    }
+  },
+  "dimension1_trends": {
+    "北京": {
+      "annual_tmax": [
+        12.35,
+        5.6,
+        4.8,
+        17.94,
+        7.4,
+        19.85,
+        19.64,
+        18.71
+      ],
+      "annual_tmin": [
+        10.61,
+        12.2,
+        11.71,
+        10.85,
+        7.99,
+        9.06,
+        10.94,
+        10.39
+      ],
+      "annual_prcp": [
+        482.4,
+        713.1,
+        638.2,
+        644.6,
+        461.2,
+        529.0,
+        699.7,
+        584.0
+      ],
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "tmax_trend_per_decade": 17.7773,
+      "tmin_trend_per_decade": -2.2229,
+      "prcp_trend_per_decade": 15.86,
+      "tmax_r2": 0.4406,
+      "tmin_r2": 0.159,
+      "prcp_r2": 0.0016,
+      "hottest_year": 2020,
+      "hottest_tmax": 19.85,
+      "coldest_year": 2019,
+      "coldest_tmin": 7.99,
+      "spring_start_trend": -6.5,
+      "autumn_end_trend": 6.63,
+      "seasonal_data": [
+        {
+          "year": 2015,
+          "spring_start_doy": 83,
+          "autumn_end_doy": 301
+        },
+        {
+          "year": 2016,
+          "spring_start_doy": null,
+          "autumn_end_doy": null
+        },
+        {
+          "year": 2017,
+          "spring_start_doy": null,
+          "autumn_end_doy": null
+        },
+        {
+          "year": 2018,
+          "spring_start_doy": null,
+          "autumn_end_doy": 283
+        },
+        {
+          "year": 2019,
+          "spring_start_doy": null,
+          "autumn_end_doy": 302
+        },
+        {
+          "year": 2020,
+          "spring_start_doy": 67,
+          "autumn_end_doy": 321
+        },
+        {
+          "year": 2021,
+          "spring_start_doy": 68,
+          "autumn_end_doy": 319
+        },
+        {
+          "year": 2022,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 322
+        }
+      ]
+    },
+    "天津": {
+      "annual_tmax": [
+        19.03,
+        19.11,
+        19.77,
+        19.26,
+        20.13,
+        20.52,
+        20.42,
+        20.47
+      ],
+      "annual_tmin": [
+        8.21,
+        8.44,
+        7.95,
+        7.84,
+        7.33,
+        7.88,
+        8.04,
+        7.53
+      ],
+      "annual_prcp": [
+        609.0,
+        655.1,
+        616.4,
+        749.3,
+        560.5,
+        775.7,
+        965.6,
+        621.1
+      ],
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "tmax_trend_per_decade": 2.3541,
+      "tmin_trend_per_decade": -0.8912,
+      "prcp_trend_per_decade": 229.32,
+      "tmax_r2": 0.8263,
+      "tmin_r2": 0.3778,
+      "prcp_r2": 0.1819,
+      "hottest_year": 2020,
+      "hottest_tmax": 20.52,
+      "coldest_year": 2019,
+      "coldest_tmin": 7.33,
+      "spring_start_trend": -0.43,
+      "autumn_end_trend": 2.46,
+      "seasonal_data": [
+        {
+          "year": 2015,
+          "spring_start_doy": 73,
+          "autumn_end_doy": 308
+        },
+        {
+          "year": 2016,
+          "spring_start_doy": 62,
+          "autumn_end_doy": 299
+        },
+        {
+          "year": 2017,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 312
+        },
+        {
+          "year": 2018,
+          "spring_start_doy": 72,
+          "autumn_end_doy": 317
+        },
+        {
+          "year": 2019,
+          "spring_start_doy": 60,
+          "autumn_end_doy": 317
+        },
+        {
+          "year": 2020,
+          "spring_start_doy": 71,
+          "autumn_end_doy": 322
+        },
+        {
+          "year": 2021,
+          "spring_start_doy": 68,
+          "autumn_end_doy": 319
+        },
+        {
+          "year": 2022,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 319
+        }
+      ]
+    },
+    "石家庄": {
+      "annual_tmax": [
+        19.51,
+        19.41,
+        20.08,
+        19.84,
+        20.44,
+        21.27,
+        22.02,
+        21.64
+      ],
+      "annual_tmin": [
+        9.03,
+        9.12,
+        9.45,
+        9.63,
+        8.71,
+        9.12,
+        9.91,
+        9.09
+      ],
+      "annual_prcp": [
+        658.5,
+        807.5,
+        583.4,
+        383.0,
+        516.9,
+        656.3,
+        1063.4,
+        446.8
+      ],
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "tmax_trend_per_decade": 3.8226,
+      "tmin_trend_per_decade": 0.2972,
+      "prcp_trend_per_decade": 17.88,
+      "tmax_r2": 0.8808,
+      "tmin_r2": 0.036,
+      "prcp_r2": 0.0004,
+      "hottest_year": 2021,
+      "hottest_tmax": 22.02,
+      "coldest_year": 2019,
+      "coldest_tmin": 8.71,
+      "spring_start_trend": 0.57,
+      "autumn_end_trend": 2.69,
+      "seasonal_data": [
+        {
+          "year": 2015,
+          "spring_start_doy": 60,
+          "autumn_end_doy": 308
+        },
+        {
+          "year": 2016,
+          "spring_start_doy": 62,
+          "autumn_end_doy": 315
+        },
+        {
+          "year": 2017,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 325
+        },
+        {
+          "year": 2018,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 316
+        },
+        {
+          "year": 2019,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 316
+        },
+        {
+          "year": 2020,
+          "spring_start_doy": 67,
+          "autumn_end_doy": 324
+        },
+        {
+          "year": 2021,
+          "spring_start_doy": 68,
+          "autumn_end_doy": 330
+        },
+        {
+          "year": 2022,
+          "spring_start_doy": 60,
+          "autumn_end_doy": 330
+        }
+      ]
+    },
+    "济南": {
+      "annual_tmax": [
+        16.13,
+        9.69,
+        23.72,
+        19.91,
+        16.17,
+        21.2,
+        21.9,
+        20.4
+      ],
+      "annual_tmin": [
+        10.39,
+        10.72,
+        11.17,
+        10.55,
+        9.42,
+        9.94,
+        10.28,
+        9.39
+      ],
+      "annual_prcp": [
+        846.3,
+        1211.4,
+        634.1,
+        926.5,
+        798.2,
+        637.0,
+        1047.5,
+        567.9
+      ],
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "tmax_trend_per_decade": 9.4835,
+      "tmin_trend_per_decade": -1.6676,
+      "prcp_trend_per_decade": -343.8,
+      "tmax_r2": 0.2694,
+      "tmin_r2": 0.4318,
+      "prcp_r2": 0.1428,
+      "hottest_year": 2017,
+      "hottest_tmax": 23.72,
+      "coldest_year": 2022,
+      "coldest_tmin": 9.39,
+      "spring_start_trend": -5.01,
+      "autumn_end_trend": 4.61,
+      "seasonal_data": [
+        {
+          "year": 2015,
+          "spring_start_doy": 66,
+          "autumn_end_doy": 309
+        },
+        {
+          "year": 2016,
+          "spring_start_doy": 100,
+          "autumn_end_doy": null
+        },
+        {
+          "year": 2017,
+          "spring_start_doy": 121,
+          "autumn_end_doy": 311
+        },
+        {
+          "year": 2018,
+          "spring_start_doy": 101,
+          "autumn_end_doy": 299
+        },
+        {
+          "year": 2019,
+          "spring_start_doy": 72,
+          "autumn_end_doy": 327
+        },
+        {
+          "year": 2020,
+          "spring_start_doy": 66,
+          "autumn_end_doy": 323
+        },
+        {
+          "year": 2021,
+          "spring_start_doy": 63,
+          "autumn_end_doy": 332
+        },
+        {
+          "year": 2022,
+          "spring_start_doy": 60,
+          "autumn_end_doy": 330
+        }
+      ]
+    },
+    "西安": {
+      "annual_tmax": [
+        14.25,
+        5.9,
+        11.8,
+        20.23,
+        12.8,
+        21.56,
+        22.23,
+        22.03
+      ],
+      "annual_tmin": [
+        10.83,
+        11.22,
+        10.88,
+        10.68,
+        10.32,
+        10.37,
+        10.41,
+        10.93
+      ],
+      "annual_prcp": [
+        636.5,
+        602.2,
+        747.4,
+        521.4,
+        686.2,
+        654.1,
+        1010.0,
+        560.4
+      ],
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "tmax_trend_per_decade": 18.8131,
+      "tmin_trend_per_decade": -0.6159,
+      "prcp_trend_per_decade": 165.62,
+      "tmax_r2": 0.5806,
+      "tmin_r2": 0.2247,
+      "prcp_r2": 0.0713,
+      "hottest_year": 2021,
+      "hottest_tmax": 22.23,
+      "coldest_year": 2019,
+      "coldest_tmin": 10.32,
+      "spring_start_trend": -6.06,
+      "autumn_end_trend": 5.83,
+      "seasonal_data": [
+        {
+          "year": 2015,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 307
+        },
+        {
+          "year": 2016,
+          "spring_start_doy": null,
+          "autumn_end_doy": null
+        },
+        {
+          "year": 2017,
+          "spring_start_doy": null,
+          "autumn_end_doy": null
+        },
+        {
+          "year": 2018,
+          "spring_start_doy": 101,
+          "autumn_end_doy": 291
+        },
+        {
+          "year": 2019,
+          "spring_start_doy": 151,
+          "autumn_end_doy": 327
+        },
+        {
+          "year": 2020,
+          "spring_start_doy": 61,
+          "autumn_end_doy": 324
+        },
+        {
+          "year": 2021,
+          "spring_start_doy": 62,
+          "autumn_end_doy": 330
+        },
+        {
+          "year": 2022,
+          "spring_start_doy": 60,
+          "autumn_end_doy": 325
+        }
+      ]
+    }
+  },
+  "dimension2_extremes": {
+    "北京": {
+      "heatwaves": {
+        "count": 3,
+        "avg_duration": 3.7,
+        "max_intensity": 37.8,
+        "total_days": 11
+      },
+      "coldwaves": {
+        "count": 0,
+        "avg_duration": null,
+        "max_intensity": null,
+        "total_days": 0
+      },
+      "droughts": {
+        "count": 52,
+        "avg_duration": 26.5,
+        "max_intensity": 75,
+        "total_days": 1380
+      },
+      "heavy_rains": {
+        "count": 15,
+        "avg_duration": 1.0,
+        "max_intensity": 262.6,
+        "total_days": 15
+      }
+    },
+    "天津": {
+      "heatwaves": {
+        "count": 21,
+        "avg_duration": 4.0,
+        "max_intensity": 40.1,
+        "total_days": 85
+      },
+      "coldwaves": {
+        "count": 8,
+        "avg_duration": 4.1,
+        "max_intensity": -11.1,
+        "total_days": 33
+      },
+      "droughts": {
+        "count": 56,
+        "avg_duration": 24.0,
+        "max_intensity": 71,
+        "total_days": 1342
+      },
+      "heavy_rains": {
+        "count": 23,
+        "avg_duration": 1.0,
+        "max_intensity": 170.2,
+        "total_days": 23
+      }
+    },
+    "石家庄": {
+      "heatwaves": {
+        "count": 20,
+        "avg_duration": 4.7,
+        "max_intensity": 42.6,
+        "total_days": 93
+      },
+      "coldwaves": {
+        "count": 2,
+        "avg_duration": 3.0,
+        "max_intensity": -11.9,
+        "total_days": 6
+      },
+      "droughts": {
+        "count": 59,
+        "avg_duration": 24.6,
+        "max_intensity": 53,
+        "total_days": 1449
+      },
+      "heavy_rains": {
+        "count": 17,
+        "avg_duration": 1.0,
+        "max_intensity": 228.6,
+        "total_days": 17
+      }
+    },
+    "济南": {
+      "heatwaves": {
+        "count": 9,
+        "avg_duration": 4.4,
+        "max_intensity": 38.8,
+        "total_days": 40
+      },
+      "coldwaves": {
+        "count": 3,
+        "avg_duration": 3.7,
+        "max_intensity": -12.1,
+        "total_days": 11
+      },
+      "droughts": {
+        "count": 44,
+        "avg_duration": 23.8,
+        "max_intensity": 60,
+        "total_days": 1045
+      },
+      "heavy_rains": {
+        "count": 27,
+        "avg_duration": 1.0,
+        "max_intensity": 198.1,
+        "total_days": 27
+      }
+    },
+    "西安": {
+      "heatwaves": {
+        "count": 12,
+        "avg_duration": 7.2,
+        "max_intensity": 40.4,
+        "total_days": 86
+      },
+      "coldwaves": {
+        "count": 0,
+        "avg_duration": null,
+        "max_intensity": null,
+        "total_days": 0
+      },
+      "droughts": {
+        "count": 39,
+        "avg_duration": 20.7,
+        "max_intensity": 43,
+        "total_days": 808
+      },
+      "heavy_rains": {
+        "count": 6,
+        "avg_duration": 1.0,
+        "max_intensity": 104.4,
+        "total_days": 6
+      }
+    }
+  },
+  "dimension3_comfort": {
+    "北京": {
+      "yearly": {
+        "2015": {
+          "comfort_days": 1,
+          "discomfort_days": 0,
+          "valid_days": 163,
+          "total_days": 365,
+          "comfort_score": 0.61
+        },
+        "2016": {
+          "comfort_days": 0,
+          "discomfort_days": 2,
+          "valid_days": 93,
+          "total_days": 366,
+          "comfort_score": 0.0
+        },
+        "2017": {
+          "comfort_days": 0,
+          "discomfort_days": 0,
+          "valid_days": 104,
+          "total_days": 365,
+          "comfort_score": 0.0
+        },
+        "2018": {
+          "comfort_days": 0,
+          "discomfort_days": 7,
+          "valid_days": 114,
+          "total_days": 365,
+          "comfort_score": 0.0
+        },
+        "2019": {
+          "comfort_days": 1,
+          "discomfort_days": 4,
+          "valid_days": 151,
+          "total_days": 365,
+          "comfort_score": 0.66
+        },
+        "2020": {
+          "comfort_days": 10,
+          "discomfort_days": 10,
+          "valid_days": 291,
+          "total_days": 366,
+          "comfort_score": 3.44
+        },
+        "2021": {
+          "comfort_days": 12,
+          "discomfort_days": 4,
+          "valid_days": 302,
+          "total_days": 365,
+          "comfort_score": 3.97
+        },
+        "2022": {
+          "comfort_days": 15,
+          "discomfort_days": 19,
+          "valid_days": 308,
+          "total_days": 365,
+          "comfort_score": 4.87
+        }
+      },
+      "avg_comfort_score": 1.69,
+      "avg_comfort_days": 4.9,
+      "avg_discomfort_days": 5.8
+    },
+    "天津": {
+      "yearly": {
+        "2015": {
+          "comfort_days": 40,
+          "discomfort_days": 8,
+          "valid_days": 364,
+          "total_days": 365,
+          "comfort_score": 10.99
+        },
+        "2016": {
+          "comfort_days": 45,
+          "discomfort_days": 17,
+          "valid_days": 366,
+          "total_days": 366,
+          "comfort_score": 12.3
+        },
+        "2017": {
+          "comfort_days": 25,
+          "discomfort_days": 23,
+          "valid_days": 365,
+          "total_days": 365,
+          "comfort_score": 6.85
+        },
+        "2018": {
+          "comfort_days": 34,
+          "discomfort_days": 45,
+          "valid_days": 363,
+          "total_days": 365,
+          "comfort_score": 9.37
+        },
+        "2019": {
+          "comfort_days": 32,
+          "discomfort_days": 24,
+          "valid_days": 363,
+          "total_days": 365,
+          "comfort_score": 8.82
+        },
+        "2020": {
+          "comfort_days": 53,
+          "discomfort_days": 21,
+          "valid_days": 366,
+          "total_days": 366,
+          "comfort_score": 14.48
+        },
+        "2021": {
+          "comfort_days": 60,
+          "discomfort_days": 21,
+          "valid_days": 361,
+          "total_days": 365,
+          "comfort_score": 16.62
+        },
+        "2022": {
+          "comfort_days": 41,
+          "discomfort_days": 39,
+          "valid_days": 362,
+          "total_days": 365,
+          "comfort_score": 11.33
+        }
+      },
+      "avg_comfort_score": 11.35,
+      "avg_comfort_days": 41.2,
+      "avg_discomfort_days": 24.8
+    },
+    "石家庄": {
+      "yearly": {
+        "2015": {
+          "comfort_days": 51,
+          "discomfort_days": 10,
+          "valid_days": 365,
+          "total_days": 365,
+          "comfort_score": 13.97
+        },
+        "2016": {
+          "comfort_days": 59,
+          "discomfort_days": 12,
+          "valid_days": 366,
+          "total_days": 366,
+          "comfort_score": 16.12
+        },
+        "2017": {
+          "comfort_days": 46,
+          "discomfort_days": 28,
+          "valid_days": 364,
+          "total_days": 365,
+          "comfort_score": 12.64
+        },
+        "2018": {
+          "comfort_days": 51,
+          "discomfort_days": 25,
+          "valid_days": 363,
+          "total_days": 365,
+          "comfort_score": 14.05
+        },
+        "2019": {
+          "comfort_days": 38,
+          "discomfort_days": 28,
+          "valid_days": 364,
+          "total_days": 365,
+          "comfort_score": 10.44
+        },
+        "2020": {
+          "comfort_days": 61,
+          "discomfort_days": 19,
+          "valid_days": 366,
+          "total_days": 366,
+          "comfort_score": 16.67
+        },
+        "2021": {
+          "comfort_days": 74,
+          "discomfort_days": 25,
+          "valid_days": 361,
+          "total_days": 365,
+          "comfort_score": 20.5
+        },
+        "2022": {
+          "comfort_days": 39,
+          "discomfort_days": 31,
+          "valid_days": 362,
+          "total_days": 365,
+          "comfort_score": 10.77
+        }
+      },
+      "avg_comfort_score": 14.39,
+      "avg_comfort_days": 52.4,
+      "avg_discomfort_days": 22.2
+    },
+    "济南": {
+      "yearly": {
+        "2015": {
+          "comfort_days": 22,
+          "discomfort_days": 5,
+          "valid_days": 302,
+          "total_days": 365,
+          "comfort_score": 7.28
+        },
+        "2016": {
+          "comfort_days": 0,
+          "discomfort_days": 1,
+          "valid_days": 229,
+          "total_days": 366,
+          "comfort_score": 0.0
+        },
+        "2017": {
+          "comfort_days": 4,
+          "discomfort_days": 0,
+          "valid_days": 235,
+          "total_days": 365,
+          "comfort_score": 1.7
+        },
+        "2018": {
+          "comfort_days": 8,
+          "discomfort_days": 5,
+          "valid_days": 234,
+          "total_days": 365,
+          "comfort_score": 3.42
+        },
+        "2019": {
+          "comfort_days": 11,
+          "discomfort_days": 5,
+          "valid_days": 260,
+          "total_days": 365,
+          "comfort_score": 4.23
+        },
+        "2020": {
+          "comfort_days": 78,
+          "discomfort_days": 15,
+          "valid_days": 366,
+          "total_days": 366,
+          "comfort_score": 21.31
+        },
+        "2021": {
+          "comfort_days": 75,
+          "discomfort_days": 34,
+          "valid_days": 361,
+          "total_days": 365,
+          "comfort_score": 20.78
+        },
+        "2022": {
+          "comfort_days": 53,
+          "discomfort_days": 21,
+          "valid_days": 302,
+          "total_days": 365,
+          "comfort_score": 17.55
+        }
+      },
+      "avg_comfort_score": 9.53,
+      "avg_comfort_days": 31.4,
+      "avg_discomfort_days": 10.8
+    },
+    "西安": {
+      "yearly": {
+        "2015": {
+          "comfort_days": 3,
+          "discomfort_days": 2,
+          "valid_days": 276,
+          "total_days": 365,
+          "comfort_score": 1.09
+        },
+        "2016": {
+          "comfort_days": 0,
+          "discomfort_days": 1,
+          "valid_days": 234,
+          "total_days": 366,
+          "comfort_score": 0.0
+        },
+        "2017": {
+          "comfort_days": 0,
+          "discomfort_days": 0,
+          "valid_days": 235,
+          "total_days": 365,
+          "comfort_score": 0.0
+        },
+        "2018": {
+          "comfort_days": 8,
+          "discomfort_days": 1,
+          "valid_days": 261,
+          "total_days": 365,
+          "comfort_score": 3.07
+        },
+        "2019": {
+          "comfort_days": 3,
+          "discomfort_days": 0,
+          "valid_days": 267,
+          "total_days": 365,
+          "comfort_score": 1.12
+        },
+        "2020": {
+          "comfort_days": 77,
+          "discomfort_days": 22,
+          "valid_days": 366,
+          "total_days": 366,
+          "comfort_score": 21.04
+        },
+        "2021": {
+          "comfort_days": 74,
+          "discomfort_days": 35,
+          "valid_days": 362,
+          "total_days": 365,
+          "comfort_score": 20.44
+        },
+        "2022": {
+          "comfort_days": 83,
+          "discomfort_days": 51,
+          "valid_days": 362,
+          "total_days": 365,
+          "comfort_score": 22.93
+        }
+      },
+      "avg_comfort_score": 8.71,
+      "avg_comfort_days": 31.0,
+      "avg_discomfort_days": 14.0
+    }
+  },
+  "dimension4_ranking": {
+    "北京": {
+      "CRI": 0.3349,
+      "hw_normalized": 0.0,
+      "cw_normalized": 0.0,
+      "dr_normalized": 0.65,
+      "hr_normalized": 0.4286,
+      "tt_normalized": 0.9371,
+      "raw_counts": {
+        "heatwaves": 3,
+        "coldwaves": 0,
+        "droughts": 52,
+        "heavy_rains": 15,
+        "tmax_trend": 17.7773
+      },
+      "rank": 4
+    },
+    "天津": {
+      "CRI": 0.7914,
+      "hw_normalized": 1.0,
+      "cw_normalized": 1.0,
+      "dr_normalized": 0.85,
+      "hr_normalized": 0.8095,
+      "tt_normalized": 0.0,
+      "raw_counts": {
+        "heatwaves": 21,
+        "coldwaves": 8,
+        "droughts": 56,
+        "heavy_rains": 23,
+        "tmax_trend": 2.3541
+      },
+      "rank": 1
+    },
+    "石家庄": {
+      "CRI": 0.6253,
+      "hw_normalized": 0.9444,
+      "cw_normalized": 0.25,
+      "dr_normalized": 1.0,
+      "hr_normalized": 0.5238,
+      "tt_normalized": 0.0892,
+      "raw_counts": {
+        "heatwaves": 20,
+        "coldwaves": 2,
+        "droughts": 59,
+        "heavy_rains": 17,
+        "tmax_trend": 3.8226
+      },
+      "rank": 2
+    },
+    "济南": {
+      "CRI": 0.44,
+      "hw_normalized": 0.3333,
+      "cw_normalized": 0.375,
+      "dr_normalized": 0.25,
+      "hr_normalized": 1.0,
+      "tt_normalized": 0.4332,
+      "raw_counts": {
+        "heatwaves": 9,
+        "coldwaves": 3,
+        "droughts": 44,
+        "heavy_rains": 27,
+        "tmax_trend": 9.4835
+      },
+      "rank": 3
+    },
+    "西安": {
+      "CRI": 0.3,
+      "hw_normalized": 0.5,
+      "cw_normalized": 0.0,
+      "dr_normalized": 0.0,
+      "hr_normalized": 0.0,
+      "tt_normalized": 1.0,
+      "raw_counts": {
+        "heatwaves": 12,
+        "coldwaves": 0,
+        "droughts": 39,
+        "heavy_rains": 6,
+        "tmax_trend": 18.8131
+      },
+      "rank": 5
+    }
+  },
+  "dimension5_backtest": {
+    "北京": {
+      "predictions": {
+        "mean_tmax": 20.49,
+        "mean_tmin": 10.17,
+        "total_prcp": 585.6,
+        "heatwave_count": 0,
+        "heavy_rain_count": 2,
+        "comfort_score": 1.69
+      },
+      "actual_2023": {
+        "mean_tmax": 19.73,
+        "mean_tmin": 10.6,
+        "total_prcp": 625.2,
+        "max_tmax": 41.1,
+        "min_tmin": -15.5,
+        "heatwave_count": 3,
+        "coldwave_count": 0,
+        "drought_count": 8,
+        "heavy_rain_count": 4,
+        "comfort_score": 3.15,
+        "comfort_days": 9,
+        "discomfort_days": 32
+      },
+      "mape": {
+        "tmax": 3.83,
+        "tmin": 4.05,
+        "prcp": 6.33,
+        "comfort": 46.35,
+        "overall": 15.14
+      },
+      "extreme_2023": {
+        "heatwaves": 3,
+        "coldwaves": 0,
+        "droughts": 8,
+        "heavy_rains": 4
+      }
+    },
+    "天津": {
+      "predictions": {
+        "mean_tmax": 20.71,
+        "mean_tmin": 7.44,
+        "total_prcp": 644.0,
+        "heatwave_count": 3,
+        "heavy_rain_count": 3,
+        "comfort_score": 11.35
+      },
+      "actual_2023": {
+        "mean_tmax": 20.99,
+        "mean_tmin": 7.52,
+        "total_prcp": 718.2,
+        "max_tmax": 41.1,
+        "min_tmin": -17.9,
+        "heatwave_count": 5,
+        "coldwave_count": 3,
+        "drought_count": 9,
+        "heavy_rain_count": 3,
+        "comfort_score": 17.29,
+        "comfort_days": 60,
+        "discomfort_days": 53
+      },
+      "mape": {
+        "tmax": 1.33,
+        "tmin": 1.07,
+        "prcp": 10.33,
+        "comfort": 34.36,
+        "overall": 11.77
+      },
+      "extreme_2023": {
+        "heatwaves": 5,
+        "coldwaves": 3,
+        "droughts": 9,
+        "heavy_rains": 3
+      }
+    },
+    "石家庄": {
+      "predictions": {
+        "mean_tmax": 22.02,
+        "mean_tmin": 9.12,
+        "total_prcp": 448.6,
+        "heatwave_count": 2,
+        "heavy_rain_count": 2,
+        "comfort_score": 14.39
+      },
+      "actual_2023": {
+        "mean_tmax": 21.88,
+        "mean_tmin": 9.41,
+        "total_prcp": 708.3,
+        "max_tmax": 42.1,
+        "min_tmin": -14.0,
+        "heatwave_count": 6,
+        "coldwave_count": 2,
+        "drought_count": 8,
+        "heavy_rain_count": 3,
+        "comfort_score": 23.05,
+        "comfort_days": 80,
+        "discomfort_days": 58
+      },
+      "mape": {
+        "tmax": 0.62,
+        "tmin": 3.12,
+        "prcp": 36.67,
+        "comfort": 37.57,
+        "overall": 19.49
+      },
+      "extreme_2023": {
+        "heatwaves": 6,
+        "coldwaves": 2,
+        "droughts": 8,
+        "heavy_rains": 3
+      }
+    },
+    "济南": {
+      "predictions": {
+        "mean_tmax": 21.35,
+        "mean_tmin": 9.22,
+        "total_prcp": 533.5,
+        "heatwave_count": 1,
+        "heavy_rain_count": 3,
+        "comfort_score": 9.53
+      },
+      "actual_2023": {
+        "mean_tmax": 21.52,
+        "mean_tmin": 10.5,
+        "total_prcp": 432.0,
+        "max_tmax": 40.1,
+        "min_tmin": -13.6,
+        "heatwave_count": 1,
+        "coldwave_count": 1,
+        "drought_count": 7,
+        "heavy_rain_count": 1,
+        "comfort_score": 21.26,
+        "comfort_days": 44,
+        "discomfort_days": 24
+      },
+      "mape": {
+        "tmax": 0.79,
+        "tmin": 12.17,
+        "prcp": 23.5,
+        "comfort": 55.17,
+        "overall": 22.91
+      },
+      "extreme_2023": {
+        "heatwaves": 1,
+        "coldwaves": 1,
+        "droughts": 7,
+        "heavy_rains": 1
+      }
+    },
+    "西安": {
+      "predictions": {
+        "mean_tmax": 23.91,
+        "mean_tmin": 10.87,
+        "total_prcp": 577.0,
+        "heatwave_count": 2,
+        "heavy_rain_count": 1,
+        "comfort_score": 8.71
+      },
+      "actual_2023": {
+        "mean_tmax": 21.77,
+        "mean_tmin": 10.14,
+        "total_prcp": 711.1,
+        "max_tmax": 39.1,
+        "min_tmin": -8.9,
+        "heatwave_count": 6,
+        "coldwave_count": 0,
+        "drought_count": 7,
+        "heavy_rain_count": 1,
+        "comfort_score": 24.43,
+        "comfort_days": 85,
+        "discomfort_days": 35
+      },
+      "mape": {
+        "tmax": 9.81,
+        "tmin": 7.24,
+        "prcp": 18.86,
+        "comfort": 64.35,
+        "overall": 25.06
+      },
+      "extreme_2023": {
+        "heatwaves": 6,
+        "coldwaves": 0,
+        "droughts": 7,
+        "heavy_rains": 1
+      }
+    }
+  }
+}

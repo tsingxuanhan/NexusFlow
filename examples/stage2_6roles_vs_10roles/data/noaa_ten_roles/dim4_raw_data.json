@@ -1,0 +1,37 @@
+{
+  "北京": {
+    "avg_tmax": 18.5,
+    "avg_tmin": 8.4,
+    "avg_prcp": 488.3,
+    "comfort_score": 67.1,
+    "ranking": 5
+  },
+  "天津": {
+    "avg_tmax": 19.0,
+    "avg_tmin": 8.4,
+    "avg_prcp": 550.1,
+    "comfort_score": 69.1,
+    "ranking": 4
+  },
+  "石家庄": {
+    "avg_tmax": 19.8,
+    "avg_tmin": 9.8,
+    "avg_prcp": 566.9,
+    "comfort_score": 74.4,
+    "ranking": 2
+  },
+  "济南": {
+    "avg_tmax": 19.9,
+    "avg_tmin": 10.4,
+    "avg_prcp": 760.4,
+    "comfort_score": 72.3,
+    "ranking": 3
+  },
+  "西安": {
+    "avg_tmax": 20.3,
+    "avg_tmin": 10.4,
+    "avg_prcp": 596.2,
+    "comfort_score": 77.2,
+    "ranking": 1
+  }
+}

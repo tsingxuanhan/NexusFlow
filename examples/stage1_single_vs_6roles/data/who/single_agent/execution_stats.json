@@ -1,0 +1,26 @@
+{
+  "execution_mode": "single_agent",
+  "start_timestamp": 1783403986,
+  "end_timestamp": 1783404561,
+  "elapsed_seconds": 575,
+  "elapsed_formatted": "9分35秒",
+  "total_api_calls": 55,
+  "total_data_points": 875,
+  "dimensions_completed": 7,
+  "countries_covered": 5,
+  "data_issues_encountered": 2,
+  "data_issues_resolved": 2,
+  "issues_detail": [
+    "WHS2_160/161 无数据 -> 替换为 SA_0000001807/SA_0000001808",
+    "AIR_9 无数据 -> 替换为 AIR_43"
+  ],
+  "quality_check": "self_check_only",
+  "backtest_mape": 2.53,
+  "data_points_by_dimension": {
+    "dim1": 220,
+    "dim2": 20,
+    "dim3": 355,
+    "dim4": 250,
+    "dim5": 30
+  }
+}

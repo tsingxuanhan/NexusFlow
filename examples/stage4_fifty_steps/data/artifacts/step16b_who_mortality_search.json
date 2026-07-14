@@ -1,0 +1,80 @@
+{
+  "@odata.context": "https://ghoapi.azureedge.net/api/$metadata#Indicator",
+  "value": [
+    {
+      "IndicatorCode": "CHILDMORT10TO19",
+      "IndicatorName": "Adolescent mortality rate (per 1 000 age specific cohort)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "MORTADO",
+      "IndicatorName": "Adolescent mortality rate (per 1 000 age specific cohort)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "WHOSIS_000004",
+      "IndicatorName": "Adult mortality rate (probability of dying between 15 and 60 years per 1000 population)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "WHS2_160",
+      "IndicatorName": "Age-standardized mortality rate by cause (per 100 000 population) - Cancer",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "WHS2_161",
+      "IndicatorName": "Age-standardized mortality rate by cause (per 100 000 population) - Cardiovascular",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "WHS2_131",
+      "IndicatorName": "Age-standardized NCD mortality rate  (per 100 000 population)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "SDGROADAGE",
+      "IndicatorName": "Age-standardized road traffic  mortality (per 100 000 population)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "SA_0000001473",
+      "IndicatorName": "Alcohol-related disease mortality, per 100,000 (15+ years)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "SA_0000001472",
+      "IndicatorName": "Alcohol-related injury mortality, per 1,000",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "MALARIA_EST_MORTALITY",
+      "IndicatorName": "Estimated malaria mortality rate (per 100 000 population)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCD_CCS_MORT_TARGET",
+      "IndicatorName": "Existence of a national target on NCD mortality",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "imr",
+      "IndicatorName": "Infant mortality rate (deaths per 1000 live births)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "MDG_0000000001",
+      "IndicatorName": "Infant mortality rate (probability of dying between birth and age 1 per 1000 live births)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "PRISON_D3_DEATHS_COVID_MRATE",
+      "IndicatorName": "In-prison COVID-19 mortality rate (per 100 000 incarcerated persons per year)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "PRISON_D3_DEATHS_DRUG_MRATE",
+      "IndicatorName": "In-prison drug overdose mortality rate (per 100 000 incarcerated persons per year)",
+      "Language": "EN"
+    }
+  ]
+}

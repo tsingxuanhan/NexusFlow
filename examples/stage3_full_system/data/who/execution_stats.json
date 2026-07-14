@@ -1,0 +1,28 @@
+{
+  "task_name": "WHO Health Diagnosis",
+  "total_time_seconds": 206.04110646247864,
+  "deepseek_api_calls": 16,
+  "data_skill_calls": 25,
+  "total_tokens": 56162,
+  "agent_interactions": 15,
+  "cdol_synergy_gain": 1.0,
+  "cdol_round0_conclusions": 6,
+  "cdol_round1_attributions": 6,
+  "cdol_round2_revised": 6,
+  "nexusflow_modules_used": [
+    "AgentInformationPolicy",
+    "AgentTier",
+    "get_information_policy",
+    "CognitiveDivisionEngine",
+    "PerspectiveDecomposer",
+    "CommunicationLayer",
+    "FusionJudge",
+    "InsightDistiller",
+    "InsightStore",
+    "ContextMask",
+    "IntermediateConclusion",
+    "CDoLResult",
+    "GlobalMemoryPool",
+    "create_context_manager"
+  ]
+}

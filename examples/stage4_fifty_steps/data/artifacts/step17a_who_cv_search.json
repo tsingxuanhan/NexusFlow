@@ -1,0 +1,35 @@
+{
+  "@odata.context": "https://ghoapi.azureedge.net/api/$metadata#Indicator",
+  "value": [
+    {
+      "IndicatorCode": "WHS2_161",
+      "IndicatorName": "Age-standardized mortality rate by cause (per 100 000 population) - Cardiovascular",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCD_CCS_riskstrat",
+      "IndicatorName": "Availability of cardiovascular risk stratification in 50% or more primary health care facilities",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCD_CCS_CVD_GUIDE",
+      "IndicatorName": "Existence of evidence-based national guidelines/protocols/standards for the management of cardiovascular diseases",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCD_CCS_CVDPlan",
+      "IndicatorName": "Existence of operational policy/strategy/action plan for cardiovascular diseases",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "PRISON_D4_CARDIOVASC_DIAG_TOT",
+      "IndicatorName": "In-prison cardiovascular disease diagnosis (number of diagnoses)",
+      "Language": "EN"
+    },
+    {
+      "IndicatorCode": "NCDMORT3070",
+      "IndicatorName": "Probability (%) of dying between age 30 and exact age 70 from any of cardiovascular disease, cancer, diabetes, or chronic respiratory disease",
+      "Language": "EN"
+    }
+  ]
+}

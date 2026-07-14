@@ -1,0 +1,47 @@
+{
+  "北京": {
+    "tmax_per_decade": 3.6382,
+    "tmin_per_decade": -0.9783,
+    "prcp_per_decade": 15.9,
+    "tmax_r_squared": 0.8094,
+    "tmin_r_squared": 0.3633,
+    "prcp_r_squared": 0.0016,
+    "method": "monthly_anomaly"
+  },
+  "天津": {
+    "tmax_per_decade": 2.3366,
+    "tmin_per_decade": -1.4519,
+    "prcp_per_decade": 229.3,
+    "tmax_r_squared": 0.8176,
+    "tmin_r_squared": 0.8086,
+    "prcp_r_squared": 0.1819,
+    "method": "monthly_anomaly"
+  },
+  "石家庄": {
+    "tmax_per_decade": 3.6613,
+    "tmin_per_decade": -0.8051,
+    "prcp_per_decade": 17.9,
+    "tmax_r_squared": 0.877,
+    "tmin_r_squared": 0.4526,
+    "prcp_r_squared": 0.0004,
+    "method": "monthly_anomaly"
+  },
+  "济南": {
+    "tmax_per_decade": 2.8065,
+    "tmin_per_decade": -0.5062,
+    "prcp_per_decade": -343.8,
+    "tmax_r_squared": 0.5476,
+    "tmin_r_squared": 0.1728,
+    "prcp_r_squared": 0.1428,
+    "method": "monthly_anomaly"
+  },
+  "西安": {
+    "tmax_per_decade": 3.899,
+    "tmin_per_decade": -0.4825,
+    "prcp_per_decade": 165.6,
+    "tmax_r_squared": 0.5571,
+    "tmin_r_squared": 0.1935,
+    "prcp_r_squared": 0.0713,
+    "method": "monthly_anomaly"
+  }
+}

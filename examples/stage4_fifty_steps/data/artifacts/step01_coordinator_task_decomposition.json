@@ -1,0 +1,332 @@
+```json
+{
+  "task": "基于NOAA气候数据和WHO健康数据，分析气候变化与公共健康之间的关联关系",
+  "total_steps": 50,
+  "phases": 8,
+  "dag": {
+    "phase_1_data_source_identification_and_access": {
+      "description": "识别并获取NOAA和WHO数据源，建立数据访问通道",
+      "steps": [
+        {
+          "id": 1,
+          "name": "解析NOAA GHCND数据集结构",
+          "inputs": ["NOAA数据门户文档"],
+          "outputs": ["GHCND变量清单、时间粒度、地理覆盖范围"],
+          "depends_on": []
+        },
+        {
+          "id": 2,
+          "name": "解析NOAA GSOY数据集结构",
+          "inputs": ["NOAA数据门户文档"],
+          "outputs": ["GSOY变量清单、年度聚合方式、可用城市列表"],
+          "depends_on": [1]
+        },
+        {
+          "id": 3,
+          "name": "解析WHO GHO数据集结构",
+          "inputs": ["WHO GHO API文档"],
+          "outputs": ["GHO指标代码(呼吸系统疾病、心血管疾病)、国家分类、时间范围"],
+          "depends_on": []
+        },
+        {
+          "id": 4,
+          "name": "获取NOAA API访问密钥",
+          "inputs": ["NOAA注册流程"],
+          "outputs": ["API密钥、请求速率限制"],
+          "depends_on": []
+        },
+        {
+          "id": 5,
+          "name": "获取WHO GHO数据访问方式",
+          "inputs": ["WHO GHO API文档"],
+          "outputs": ["API端点、查询参数格式"],
+          "depends_on": [3]
+        },
+        {
+          "id": 6,
+          "name": "确定全球主要城市列表（≥50个城市）",
+          "inputs": ["NOAA GSOY城市列表", "WHO国家列表"],
+          "outputs": ["候选城市-国家映射表"],
+          "depends_on": [2, 3]
+        },
+        {
+          "id": 7,
+          "name": "建立数据获取脚本框架",
+          "inputs": ["API密钥", "城市列表", "时间范围(2000-2020)"],
+          "outputs": ["Python数据抓取脚本初始版本"],
+          "depends_on": [4, 5, 6]
+        }
+      ]
+    },
+    "phase_2_climate_data_acquisition": {
+      "description": "从NOAA获取全球主要城市的气温和降水数据",
+      "steps": [
+        {
+          "id": 8,
+          "name": "获取GHCND日度气温数据（最高/最低/平均）",
+          "inputs": ["GHCND API", "城市列表"],
+          "outputs": ["日度气温数据集(原始JSON)"],
+          "depends_on": [7]
+        },
+        {
+          "id": 9,
+          "name": "获取GHCND日度降水数据",
+          "inputs": ["GHCND API", "城市列表"],
+          "outputs": ["日度降水数据集(原始JSON)"],
+          "depends_on": [7]
+        },
+        {
+          "id": 10,
+          "name": "获取GSOY年度气温数据",
+          "inputs": ["GSOY API", "城市列表"],
+          "outputs": ["年度气温数据集(原始JSON)"],
+          "depends_on": [7]
+        },
+        {
+          "id": 11,
+          "name": "获取GSOY年度降水数据",
+          "inputs": ["GSOY API", "城市列表"],
+          "outputs": ["年度降水数据集(原始JSON)"],
+          "depends_on": [7]
+        },
+        {
+          "id": 12,
+          "name": "处理数据缺失值（插补或标记）",
+          "inputs": ["步骤8-11原始数据"],
+          "outputs": ["清洗后的日度/年度气候数据"],
+          "depends_on": [8, 9, 10, 11]
+        },
+        {
+          "id": 13,
+          "name": "计算气候变量统计量（均值、方差、极端值）",
+          "inputs": ["清洗后气候数据"],
+          "outputs": ["月度/季度/年度气候统计指标"],
+          "depends_on": [12]
+        },
+        {
+          "id": 14,
+          "name": "按城市和年份整合气候数据",
+          "inputs": ["步骤13统计指标"],
+          "outputs": ["气候数据宽表（城市×年份×变量）"],
+          "depends_on": [13]
+        }
+      ]
+    },
+    "phase_3_health_data_acquisition": {
+      "description": "从WHO获取各国呼吸系统疾病和心血管疾病负担数据",
+      "steps": [
+        {
+          "id": 15,
+          "name": "获取呼吸系统疾病患病率指标（GHO代码RESP_PREV）",
+          "inputs": ["WHO API", "国家列表"],
+          "outputs": ["呼吸系统疾病患病率原始数据"],
+          "depends_on": [7]
+        },
+        {
+          "id": 16,
+          "name": "获取呼吸系统疾病死亡率指标（GHO代码RESP_MORT）",
+          "inputs": ["WHO API", "国家列表"],
+          "outputs": ["呼吸系统疾病死亡率原始数据"],
+          "depends_on": [7]
+        },
+        {
+          "id": 17,
+          "name": "获取心血管疾病患病率指标（GHO代码CVD_PREV）",
+          "inputs": ["WHO API", "国家列表"],
+          "outputs": ["心血管疾病患病率原始数据"],
+          "depends_on": [7]
+        },
+        {
+          "id": 18,
+          "name": "获取心血管疾病死亡率指标（GHO代码CVD_MORT）",
+          "inputs": ["WHO API", "国家列表"],
+          "outputs": ["心血管疾病死亡率原始数据"],
+          "depends_on": [7]
+        },
+        {
+          "id": 19,
+          "name": "获取国家人口统计数据（年龄标准化因子）",
+          "inputs": ["WHO API", "世界银行API"],
+          "outputs": ["人口年龄结构数据"],
+          "depends_on": [7]
+        },
+        {
+          "id": 20,
+          "name": "清洗健康数据（处理缺失值、异常值）",
+          "inputs": ["步骤15-19原始数据"],
+          "outputs": ["标准化健康指标数据集"],
+          "depends_on": [15, 16, 17, 18, 19]
+        },
+        {
+          "id": 21,
+          "name": "计算年龄标准化率",
+          "inputs": ["步骤20数据"],
+          "outputs": ["年龄标准化患病率和死亡率"],
+          "depends_on": [20]
+        },
+        {
+          "id": 22,
+          "name": "按国家和年份整合健康数据",
+          "inputs": ["步骤21数据"],
+          "outputs": ["健康数据宽表（国家×年份×指标）"],
+          "depends_on": [21]
+        }
+      ]
+    },
+    "phase_4_data_integration_and_harmonization": {
+      "description": "将气候数据与健康数据按城市-国家-年份维度整合",
+      "steps": [
+        {
+          "id": 23,
+          "name": "建立城市-国家映射表",
+          "inputs": ["步骤6映射表", "步骤14气候数据"],
+          "outputs": ["统一地理编码表"],
+          "depends_on": [6, 14]
+        },
+        {
+          "id": 24,
+          "name": "匹配气候数据与健康数据的时间跨度（2000-2020）",
+          "inputs": ["步骤14气候数据", "步骤22健康数据"],
+          "outputs": ["时间对齐后的数据对"],
+          "depends_on": [14, 22]
+        },
+        {
+          "id": 25,
+          "name": "按年份合并气候和健康宽表",
+          "inputs": ["步骤23映射表", "步骤24对齐数据"],
+          "outputs": ["综合数据集（城市-年份-气候-健康）"],
+          "depends_on": [23, 24]
+        },
+        {
+          "id": 26,
+          "name": "处理城市级与国家级数据粒度差异",
+          "inputs": ["步骤25综合数据"],
+          "outputs": ["多粒度数据集（城市级气候+国家级健康）"],
+          "depends_on": [25]
+        },
+        {
+          "id": 27,
+          "name": "添加区域分类变量（气候带、收入水平等）",
+          "inputs": ["步骤26数据", "外部分类数据"],
+          "outputs": ["带区域标签的综合数据集"],
+          "depends_on": [26]
+        },
+        {
+          "id": 28,
+          "name": "数据标准化与归一化",
+          "inputs": ["步骤27数据"],
+          "outputs": ["标准化综合数据集（用于统计分析）"],
+          "depends_on": [27]
+        },
+        {
+          "id": 29,
+          "name": "探索性数据分析（描述性统计、分布可视化）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["EDA报告（图表+统计摘要）"],
+          "depends_on": [28]
+        }
+      ]
+    },
+    "phase_5_association_analysis_and_lag_effect": {
+      "description": "分析气候变量与健康指标的关联强度及滞后效应",
+      "steps": [
+        {
+          "id": 30,
+          "name": "计算皮尔逊相关系数（气候vs健康）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["相关系数矩阵（含显著性p值）"],
+          "depends_on": [28]
+        },
+        {
+          "id": 31,
+          "name": "计算斯皮尔曼秩相关系数（稳健性检验）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["秩相关系数矩阵"],
+          "depends_on": [28]
+        },
+        {
+          "id": 32,
+          "name": "构建线性回归模型（温度→呼吸系统疾病）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["回归系数、R²、残差分析"],
+          "depends_on": [28]
+        },
+        {
+          "id": 33,
+          "name": "构建线性回归模型（降水→心血管疾病）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["回归系数、R²、残差分析"],
+          "depends_on": [28]
+        },
+        {
+          "id": 34,
+          "name": "构建多元回归模型（温度+降水→健康指标）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["多元回归结果、交互效应检验"],
+          "depends_on": [28]
+        },
+        {
+          "id": 35,
+          "name": "滞后效应分析（1-5年滞后）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["滞后相关系数图、最优滞后长度"],
+          "depends_on": [28]
+        },
+        {
+          "id": 36,
+          "name": "交叉相关函数（CCF）分析",
+          "inputs": ["步骤28时间序列数据"],
+          "outputs": ["CCF图、时滞响应模式"],
+          "depends_on": [35]
+        },
+        {
+          "id": 37,
+          "name": "分布式滞后非线性模型（DLNM）构建",
+          "inputs": ["步骤28数据"],
+          "outputs": ["DLNM参数估计、滞后-响应曲面"],
+          "depends_on": [36]
+        }
+      ]
+    },
+    "phase_6_regional_heterogeneity_analysis": {
+      "description": "分析不同区域（气候带、收入水平）的关联异质性",
+      "steps": [
+        {
+          "id": 38,
+          "name": "按气候带分组分析（热带/温带/寒带）",
+          "inputs": ["步骤28数据", "步骤27区域标签"],
+          "outputs": ["分组相关系数、组间差异检验"],
+          "depends_on": [30, 31, 27]
+        },
+        {
+          "id": 39,
+          "name": "按收入水平分组分析（高/中/低收入国家）",
+          "inputs": ["步骤28数据", "步骤27区域标签"],
+          "outputs": ["分组回归结果、ANOVA分析"],
+          "depends_on": [32, 33, 27]
+        },
+        {
+          "id": 40,
+          "name": "按人口密度分组分析",
+          "inputs": ["步骤28数据", "外部人口密度数据"],
+          "outputs": ["分组相关性比较"],
+          "depends_on": [30, 31]
+        },
+        {
+          "id": 41,
+          "name": "多水平模型（混合效应模型）构建",
+          "inputs": ["步骤28数据"],
+          "outputs": ["随机截距/斜率模型、组内组间变异"],
+          "depends_on": [38, 39, 40]
+        },
+        {
+          "id": 42,
+          "name": "空间自相关分析（全局莫兰指数）",
+          "inputs": ["步骤28数据"],
+          "outputs": ["空间自相关统计量、LISA图"],
+          "depends_on": [41]
+        },
+        {
+          "id": 43,
+          "name": "地理加权回归（GWR）",
+          "inputs": ["步骤28数据

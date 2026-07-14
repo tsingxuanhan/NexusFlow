@@ -1,0 +1,92 @@
+[
+  {
+    "agent": "strategist",
+    "tier": "cloud",
+    "time": 37.10870099067688,
+    "prompt_len": 4891
+  },
+  {
+    "agent": "researcher",
+    "tier": "cloud",
+    "time": 48.13502621650696,
+    "prompt_len": 4915
+  },
+  {
+    "agent": "coder",
+    "tier": "edge",
+    "time": 52.96490931510925,
+    "prompt_len": 4866
+  },
+  {
+    "agent": "analyst",
+    "tier": "edge",
+    "time": 59.11812162399292,
+    "prompt_len": 4835
+  },
+  {
+    "agent": "observer",
+    "tier": "terminal",
+    "time": 67.23189210891724,
+    "prompt_len": 4839
+  },
+  {
+    "agent": "coordinator",
+    "tier": "cloud",
+    "time": 75.11605477333069,
+    "prompt_len": 4786
+  },
+  {
+    "agent": "strategist",
+    "tier": "cloud",
+    "time": 85.40717697143555,
+    "prompt_len": 5234
+  },
+  {
+    "agent": "researcher",
+    "tier": "cloud",
+    "time": 97.51375818252563,
+    "prompt_len": 5437
+  },
+  {
+    "agent": "coder",
+    "tier": "edge",
+    "time": 107.8702323436737,
+    "prompt_len": 5378
+  },
+  {
+    "agent": "analyst",
+    "tier": "edge",
+    "time": 120.17357635498047,
+    "prompt_len": 5341
+  },
+  {
+    "agent": "observer",
+    "tier": "terminal",
+    "time": 131.55349206924438,
+    "prompt_len": 5350
+  },
+  {
+    "agent": "coordinator",
+    "tier": "cloud",
+    "time": 141.4708001613617,
+    "prompt_len": 5191
+  },
+  {
+    "agent": "critic",
+    "tier": "cloud",
+    "time": 151.44710612297058,
+    "prompt_len": 5001
+  },
+  {
+    "agent": "synthesizer",
+    "tier": "cloud",
+    "time": 161.0864109992981,
+    "prompt_len": 8837
+  },
+  {
+    "agent": "archivist",
+    "tier": "cloud",
+    "time": 181.13063073158264,
+    "prompt_len": 6534
+  }
+]

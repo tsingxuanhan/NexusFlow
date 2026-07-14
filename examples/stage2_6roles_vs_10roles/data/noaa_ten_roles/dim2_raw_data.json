@@ -1,0 +1,42 @@
+{
+  "北京": {
+    "estimated_annual_hot_days": 0,
+    "estimated_annual_cold_days": 6,
+    "sample_extreme_high_tmax": 34.2,
+    "sample_extreme_low_tmin": -12.4,
+    "sample_year": 2019,
+    "note": "基于2019年GHCND日数据采样推算，实际年度统计需完整日数据"
+  },
+  "天津": {
+    "estimated_annual_hot_days": 3,
+    "estimated_annual_cold_days": 3,
+    "sample_extreme_high_tmax": 36.1,
+    "sample_extreme_low_tmin": -11.2,
+    "sample_year": 2019,
+    "note": "基于2019年GHCND日数据采样推算，实际年度统计需完整日数据"
+  },
+  "石家庄": {
+    "estimated_annual_hot_days": 6,
+    "estimated_annual_cold_days": 9,
+    "sample_extreme_high_tmax": 37.3,
+    "sample_extreme_low_tmin": -13.5,
+    "sample_year": 2019,
+    "note": "基于2019年GHCND日数据采样推算，实际年度统计需完整日数据"
+  },
+  "济南": {
+    "estimated_annual_hot_days": 9,
+    "estimated_annual_cold_days": 3,
+    "sample_extreme_high_tmax": 38.2,
+    "sample_extreme_low_tmin": -10.5,
+    "sample_year": 2019,
+    "note": "基于2019年GHCND日数据采样推算，实际年度统计需完整日数据"
+  },
+  "西安": {
+    "estimated_annual_hot_days": 12,
+    "estimated_annual_cold_days": 0,
+    "sample_extreme_high_tmax": 39.1,
+    "sample_extreme_low_tmin": -8.5,
+    "sample_year": 2019,
+    "note": "基于2019年GHCND日数据采样推算，实际年度统计需完整日数据"
+  }
+}

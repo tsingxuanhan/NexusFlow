@@ -533,7 +533,7 @@ class DynamicTopologyRouter:
             # 分析是否有可并行的子链
             parallel_groups = self._detect_parallel_opportunities(chain, task)
             if parallel_groups:
-                plan.topology_type = "hybrid"
+                plan.topology_type = "parallel"  # 检测到并行机会时使用并行拓扑
             else:
                 plan.topology_type = "dynamic"
             

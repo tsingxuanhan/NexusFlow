@@ -1,0 +1,263 @@
+{
+  "route_ablation": {
+    "oracle": {
+      "mode": "oracle",
+      "stage_routes": {
+        "阶段1": "sequential",
+        "阶段2": "dynamic",
+        "阶段3": "parallel",
+        "阶段4": "sequential"
+      },
+      "elapsed": 67.88157415390015,
+      "quality": {
+        "scores": {
+          "completeness": 4,
+          "depth": 5,
+          "consistency": 3,
+          "novelty": 4,
+          "actionability": 3
+        },
+        "composite": 0.39,
+        "reason": "输出严重偏离任务要求：阶段1数据格式错误（应为JSON，实际为Markdown表格），阶段2缺失，阶段3内容与阶段2无关且自相矛盾，阶段4报告主题与任务无关，整体未覆盖任何阶段的核心目标。",
+        "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 5,\n  \"consistency\": 3,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出严重偏离任务要求：阶段1数据格式错误（应为JSON，实际为Markdown表格），阶段2缺失，阶段3内容与阶段2无关且自相矛盾，阶段4报告主题与任务无关，整体未覆盖任何阶段的核心目标。\"\n}"
+      },
+      "output_length": 11079
+    },
+    "auto": {
+      "mode": "auto",
+      "stage_routes": {
+        "阶段1": "sequential",
+        "阶段2": "dynamic",
+        "阶段3": "parallel",
+        "阶段4": "sequential"
+      },
+      "elapsed": 63.962034940719604,
+      "quality": {
+        "scores": {
+          "completeness": 4,
+          "depth": 3,
+          "consistency": 5,
+          "novelty": 2,
+          "actionability": 3
+        },
+        "composite": 0.35,
+        "reason": "系统输出严重偏离任务要求：阶段1数据收集格式错误（表格而非JSON），阶段2分析内容被截断且未完成CDoL协议，阶段3交叉验证逻辑混乱，阶段4报告与任务无关（讨论宏观经济而非大模型趋势），整体覆盖不全、推理浅薄、缺乏原创性且不可操作。",
+        "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 2,\n  \"actionability\": 3,\n  \"brief_reason\": \"系统输出严重偏离任务要求：阶段1数据收集格式错误（表格而非JSON），阶段2分析内容被截断且未完成CDoL协议，阶段3交叉验证逻辑混乱，阶段4报告与任务无关（讨论宏观经济而非大模型趋势），整体覆盖不全、推理浅薄、缺乏原创性且不可操作。\"\n}"
+      },
+      "output_length": 10011
+    },
+    "reverse": {
+      "mode": "reverse",
+      "stage_routes": {
+        "阶段1": "dynamic",
+        "阶段2": "sequential",
+        "阶段3": "sequential",
+        "阶段4": "dynamic"
+      },
+      "elapsed": 67.41516160964966,
+      "quality": {
+        "scores": {
+          "completeness": 4,
+          "depth": 7,
+          "consistency": 6,
+          "novelty": 6,
+          "actionability": 5
+        },
+        "composite": 0.56,
+        "reason": "系统输出未按任务要求分阶段输出，阶段1数据收集部分格式错误（非JSON），阶段2和3的分析混杂且未明确区分CDoL和parallel协议，阶段4报告缺失，整体遗漏严重；但深度分析部分有因果链条和独到见解，逻辑基本自洽。",
+        "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 7,\n  \"consistency\": 6,\n  \"novelty\": 6,\n  \"actionability\": 5,\n  \"brief_reason\": \"系统输出未按任务要求分阶段输出，阶段1数据收集部分格式错误（非JSON），阶段2和3的分析混杂且未明确区分CDoL和parallel协议，阶段4报告缺失，整体遗漏严重；但深度分析部分有因果链条和独到见解，逻辑基本自洽。\"\n}"
+      },
+      "output_length": 10699
+    }
+  },
+  "round_ablation": {
+    "round_2": {
+      "max_rounds": 2,
+      "actual_rounds": 2,
+      "terminated_early": false,
+      "elapsed": 156.072083234787,
+      "synergy_gain": 0.39,
+      "quality": {
+        "scores": {
+          "completeness": 8,
+          "depth": 7,
+          "consistency": 6,
+          "novelty": 5,
+          "actionability": 4
+        },
+        "composite": 0.63,
+        "reason": "覆盖了所有四个维度并提供了具体数据，但推理链存在矛盾（如MoE效率提升幅度不一致），缺乏独到见解，且结论可操作性不足。",
+        "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 6,\n  \"novelty\": 5,\n  \"actionability\": 4,\n  \"brief_reason\": \"覆盖了所有四个维度并提供了具体数据，但推理链存在矛盾（如MoE效率提升幅度不一致），缺乏独到见解，且结论可操作性不足。\"\n}"
+      },
+      "output_length": 6551,
+      "communication_rounds": [
+        {
+          "round": 1,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 0.95
+        },
+        {
+          "round": 2,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 1.0
+        }
+      ]
+    },
+    "round_3": {
+      "max_rounds": 3,
+      "actual_rounds": 3,
+      "terminated_early": false,
+      "elapsed": 207.74794363975525,
+      "synergy_gain": 0.39,
+      "quality": {
+        "scores": {
+          "completeness": 8,
+          "depth": 7,
+          "consistency": 9,
+          "novelty": 6,
+          "actionability": 7
+        },
+        "composite": 0.75,
+        "reason": "覆盖了所有四个维度，数据详实且修正后逻辑自洽，但部分分析仍偏常规，缺乏更颠覆性的原创洞察。",
+        "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 9,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据详实且修正后逻辑自洽，但部分分析仍偏常规，缺乏更颠覆性的原创洞察。\"\n}"
+      },
+      "output_length": 6007,
+      "communication_rounds": [
+        {
+          "round": 1,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 0.95
+        },
+        {
+          "round": 2,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 1.0
+        },
+        {
+          "round": 3,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 1.0
+        }
+      ]
+    },
+    "round_4": {
+      "max_rounds": 4,
+      "actual_rounds": 4,
+      "terminated_early": false,
+      "elapsed": 301.3749330043793,
+      "synergy_gain": 0.39,
+      "quality": {
+        "scores": {
+          "completeness": 7,
+          "depth": 6,
+          "consistency": 8,
+          "novelty": 5,
+          "actionability": 6
+        },
+        "composite": 0.65,
+        "reason": "覆盖了所有四个维度，数据点较具体，但深度不足（如参数效率分析未深入机制），新颖性一般（多为已知趋势），行动建议较笼统。",
+        "raw_response": "{\n  \"completeness\": 7,\n  \"depth\": 6,\n  \"consistency\": 8,\n  \"novelty\": 5,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点较具体，但深度不足（如参数效率分析未深入机制），新颖性一般（多为已知趋势），行动建议较笼统。\"\n}"
+      },
+      "output_length": 7153,
+      "communication_rounds": [
+        {
+          "round": 1,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 0.95
+        },
+        {
+          "round": 2,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 1.0
+        },
+        {
+          "round": 3,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 5,
+          "avg_confidence": 1.0
+        },
+        {
+          "round": 4,
+          "action": "revision_round",
+          "contradiction_type": "attributable",
+          "revision_count": 4,
+          "avg_confidence": 1.0
+        }
+      ]
+    }
+  },
+  "topology_switch_cost": {
+    "sequential": {
+      "topology": "sequential",
+      "switch_count": 0,
+      "switch_overhead": 0,
+      "elapsed": 69.37118816375732,
+      "quality": {
+        "scores": {
+          "completeness": 4,
+          "depth": 5,
+          "consistency": 3,
+          "novelty": 4,
+          "actionability": 3
+        },
+        "composite": 0.39,
+        "reason": "系统输出严重偏离任务要求：阶段1数据收集格式错误（应为JSON，实际为Markdown表格），阶段2-4内容与任务无关（分别涉及产品分析和宏观经济），导致覆盖不全、逻辑断裂、结论不可操作。",
+        "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 5,\n  \"consistency\": 3,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"系统输出严重偏离任务要求：阶段1数据收集格式错误（应为JSON，实际为Markdown表格），阶段2-4内容与任务无关（分别涉及产品分析和宏观经济），导致覆盖不全、逻辑断裂、结论不可操作。\"\n}"
+      },
+      "output_length": 8457
+    },
+    "hybrid": {
+      "topology": "hybrid",
+      "switch_count": 0,
+      "switch_overhead": 0,
+      "elapsed": 91.24963855743408,
+      "quality": {
+        "scores": {
+          "completeness": 5,
+          "depth": 6,
+          "consistency": 4,
+          "novelty": 5,
+          "actionability": 3
+        },
+        "composite": 0.475,
+        "reason": "阶段1数据收集完整但未输出JSON格式；阶段2和3内容混淆且阶段3缺失；阶段4报告与任务要求脱节，整体一致性差，可操作性不足。",
+        "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 6,\n  \"consistency\": 4,\n  \"novelty\": 5,\n  \"actionability\": 3,\n  \"brief_reason\": \"阶段1数据收集完整但未输出JSON格式；阶段2和3内容混淆且阶段3缺失；阶段4报告与任务要求脱节，整体一致性差，可操作性不足。\"\n}"
+      },
+      "output_length": 11153
+    },
+    "dynamic": {
+      "topology": "dynamic",
+      "switch_count": 3,
+      "switch_overhead": 7.5,
+      "elapsed": 85.17194962501526,
+      "quality": {
+        "scores": {
+          "completeness": 4,
+          "depth": 5,
+          "consistency": 3,
+          "novelty": 4,
+          "actionability": 3
+        },
+        "composite": 0.39,
+        "reason": "输出未按任务要求分阶段输出指定格式，阶段2和3内容缺失或混乱，阶段4与任务要求脱节，整体覆盖不全、逻辑不一致、可操作性差。",
+        "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 5,\n  \"consistency\": 3,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出未按任务要求分阶段输出指定格式，阶段2和3内容缺失或混乱，阶段4与任务要求脱节，整体覆盖不全、逻辑不一致、可操作性差。\"\n}"
+      },
+      "output_length": 10097
+    }
+  }
+}

@@ -202,6 +202,9 @@ class CDoLResult:
     synergy_gain: float = 1.0          # 协同增益比
     insights: Dict[str, Any] = field(default_factory=dict)  # P0: 结构化insight
     information_policy_summary: str = ""  # Phase 7: 信息策略摘要
+    communication_rounds: List[Dict[str, Any]] = field(default_factory=list)  # 动态终止：每轮记录
+    terminated_early: bool = False     # 是否提前终止（收敛）
+    total_revision_rounds: int = 1     # 实际执行的修正轮次数
 
 
 # ============================================================================
@@ -1375,14 +1378,20 @@ class CognitiveDivisionEngine:
         assignments: Optional[List[PerspectiveAssignment]] = None,
         strategy: Optional[str] = None,
         perspective_count: int = 2,
+        max_rounds: int = 3,
     ) -> CDoLResult:
-        """认知分工执行流程
+        """认知分工执行流程（支持动态终止）
+        
+        流程：Round 0 → [Round 1 → Round 2 → Judge] × N
+        Judge判定converge/true_convergence时提前终止；
+        达到max_rounds时强制终止。
         
         Args:
             task_description: 任务描述
             assignments: 预设的视角分配（None时自动生成）
             strategy: 分解策略（None时自动选择）
             perspective_count: 视角数量
+            max_rounds: 最大修正轮次数（默认3），即Round 1→2→Judge的循环上界
             
         Returns:
             CDoLResult: 认知分工执行结果
@@ -1471,39 +1480,95 @@ class CognitiveDivisionEngine:
             for c in round0_conclusions:
                 self.memory_pool.add_conclusion(c.agent_id, c)
         
-        # Step 2: Round 1 — 差异归因
-        round1_attributions = self.comm_layer.run_round_1(
-            conclusions=round0_conclusions,
-            assignments=assignments,
-            agents=self.agents,
-        )
+        # Step 2-N: 动态修正循环 — [Round 1 → Round 2 → Judge] × max_rounds
+        current_conclusions = round0_conclusions
+        round1_attributions = None
+        round2_revised = round0_conclusions  # fallback
+        judgment = None
+        communication_rounds_log = []
+        terminated_early = False
+        actual_rounds = 0
         
-        # Step 3: Round 2 — 修正结论
-        round2_revised = self.comm_layer.run_round_2(
-            attributions=round1_attributions,
-            original_conclusions=round0_conclusions,
-        )
+        for round_idx in range(1, max_rounds + 1):
+            actual_rounds = round_idx
+            logger.info(f"[CDoLEngine] === 修正轮次 {round_idx}/{max_rounds} ===")
+            
+            # Round 1: 差异归因
+            round1_attributions = self.comm_layer.run_round_1(
+                conclusions=current_conclusions,
+                assignments=assignments,
+                agents=self.agents,
+            )
+            
+            # Round 2: 修正结论
+            round2_revised = self.comm_layer.run_round_2(
+                attributions=round1_attributions,
+                original_conclusions=current_conclusions,
+            )
+            
+            # 融合判断
+            judgment = self.judge.judge(round2_revised)
+            
+            # 记录本轮
+            round_log = {
+                "round": round_idx,
+                "action": judgment.action,
+                "contradiction_type": judgment.contradiction_type,
+                "revision_count": sum(1 for a in round1_attributions if a.revision),
+                "avg_confidence": sum(c.confidence for c in round2_revised) / max(len(round2_revised), 1),
+            }
+            communication_rounds_log.append(round_log)
+            
+            logger.info(
+                f"[CDoLEngine] 轮次{round_idx}: action={judgment.action}, "
+                f"type={judgment.contradiction_type}"
+            )
+            
+            # 动态终止判定
+            if judgment.action == "converge":
+                logger.info(f"[CDoLEngine] 动态终止: 真实收敛 (轮次{round_idx})")
+                terminated_early = True
+                break
+            elif judgment.action == "backtrack":
+                logger.info(f"[CDoLEngine] 动态终止: 需要回溯 (轮次{round_idx})")
+                terminated_early = True
+                break
+            elif judgment.action == "revision_round":
+                # 继续下一轮修正，用修正后的结论作为下一轮输入
+                current_conclusions = round2_revised
+                if round_idx < max_rounds:
+                    logger.info(f"[CDoLEngine] 继续修正轮次...")
+                else:
+                    logger.info(f"[CDoLEngine] 达到最大轮次{max_rounds}，强制终止")
+            elif judgment.action == "deep_review":
+                # 虚假一致：也继续修正，但标记需要更深层审查
+                current_conclusions = round2_revised
+                logger.info(f"[CDoLEngine] 虚假一致 detected，继续深层修正...")
+                if round_idx >= max_rounds:
+                    logger.info(f"[CDoLEngine] 达到最大轮次{max_rounds}，强制终止")
         
-        # Step 4: 融合判断
-        judgment = self.judge.judge(round2_revised)
-        
-        # Step 5: 计算指标
+        # Step 3: 计算指标
         metrics = self._compute_metrics(
             round0_conclusions, round2_revised, judgment
         )
+        metrics["total_revision_rounds"] = actual_rounds
+        metrics["terminated_early"] = terminated_early
         
         result = CDoLResult(
-            final_answer=judgment.final_answer,
-            reasoning_tree=judgment.reasoning_tree,
-            contradiction_report=judgment.contradiction_report,
+            final_answer=judgment.final_answer if judgment else "",
+            reasoning_tree=judgment.reasoning_tree if judgment else {},
+            contradiction_report=judgment.contradiction_report if judgment else {},
             metrics=metrics,
             perspective_assignments=assignments,
             round0_conclusions=round0_conclusions,
-            round1_attributions=round1_attributions,
+            round1_attributions=round1_attributions or [],
             round2_revised=round2_revised,
             judgment=judgment,
             synergy_gain=metrics.get("synergy_gain", 1.0),
             information_policy_summary=policy_summary,
+            communication_rounds=communication_rounds_log,
+            terminated_early=terminated_early,
+            total_revision_rounds=actual_rounds,
         )
         
         # P0: Insight提炼 — 从本次执行中提取可复用经验

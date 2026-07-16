@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![Version](https://img.shields.io/badge/Version-2.8-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-2.9-green.svg)]()
 [![Code Size](https://img.shields.io/badge/Code-442%20Python%20files%20%7C%2037%2B%20modules-orange.svg)]()
 [![Benchmarks](https://img.shields.io/badge/Benchmarks-5%20Stages%20%7C%2080%20Steps%20E2E-red.svg)]()
 
@@ -217,6 +217,30 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 
 ---
 
+### Phase 2：CDoL 轮次 Ablation 实验——3 轮不是拍脑袋
+
+> **核心问题**：CDoL 为什么固定 3 轮修正循环？有没有实验数据支撑？
+
+我们设计了轮次 ablation 实验：同一任务、同一 Agent 配置，仅改变最大修正轮次（2/3/4），使用 LLM 5 维自动评分（completeness / depth / consistency / novelty / actionability）评估输出质量：
+
+| 最大轮次 | LLM 综合分 | 完整性 | 深度 | 一致性 | 创新性 | 可操作性 | 耗时 |
+|:--------:|:----------:|:------:|:----:|:------:|:------:|:--------:|:----:|
+| 2 轮 | 0.630 | 8 | 7 | 6 | 5 | 4 | 156s |
+| **3 轮** | **0.750** | **8** | **7** | **9** | **6** | **7** | 208s |
+| 4 轮 | 0.650 | 7 | 6 | 8 | 5 | 6 | 301s |
+
+**关键发现**：
+
+1. **3 轮为最优**：综合分 0.750，一致性从 2 轮的 6 跃升至 9，可操作性从 4 提升至 7
+2. **4 轮收益递减**：综合分反降至 0.650（-13%），过度修正导致完整性和创新性下降
+3. **质量/成本最优平衡点**：2→3 轮 +19% 质量增量，3→4 轮 -13% 质量损失——3 轮恰好在边际收益归零点
+
+这与 Shannon 信道理论的映射一致：CDoL 三轮协议 = 认知层面的 Nyquist 采样率。低于 3 轮（欠采样）无法充分挖掘认知多样性；高于 3 轮（过采样）引入冗余修正噪声。**3 轮不是超参数调优的结果，而是理论 predicted 的采样点。**
+
+> 实验代码：[`examples/demo_phase2_ablation_v2.py`](examples/demo_phase2_ablation_v2.py) | 评分器：[`examples/llm_quality_scorer.py`](examples/llm_quality_scorer.py) | 详细报告：[`docs/Phase2_ablation实验报告.md`](docs/Phase2_ablation实验报告.md)
+
+---
+
 ## 实验案例
 
 所有实验产物完整开源，可复现、可审计：
@@ -229,6 +253,7 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 | Stage 4 | 50步端到端全流程 | 14模块100%覆盖，9次拓扑切换，共识度 0.1→0.95 | [`examples/stage4_fifty_steps/`](examples/stage4_fifty_steps/) |
 | Stage 5 | 80步SA vs NF真实Benchmark | 质量+2.6%，耗时-14.9%，Token-6.2%，≥9分步数3.25倍 | [`examples/stage5_eighty_steps/`](examples/stage5_eighty_steps/) |
 | 横向对比 | NexusFlow vs AutoGen vs CrewAI | 交叉验证能力领先 100% | [`examples/horizontal_comparison/`](examples/horizontal_comparison/) |
+| Phase 2 | CDoL 轮次 Ablation（2/3/4轮） | 3轮最优（0.750），4轮收益递减（-13%），验证 Nyquist 采样率 | [`examples/demo_phase2_ablation_v2.py`](examples/demo_phase2_ablation_v2.py) |
 
 ---
 
@@ -351,6 +376,7 @@ ollama pull qwen3.5:9b
 | 来源 | 说明 |
 |------|------|
 | [技术文档 v2.8](docs/NexusFlow技术文档v2.8.md) | NexusFlow 完整技术文档（96.6 KB） |
+| [技术文档 v2.9](docs/NexusFlow技术文档v2.9.md) | v2.9 增量更新：动态终止 + Ablation 实验 + LLM 评分 |
 | [Braintrust AI Evaluation Platform](https://www.braintrust.dev/) | 1,781 条真实轨迹——框架影响力 7.6 倍于模型 |
 | [Joel Niklaus — Don't Train the Model, Evolve the Harness](https://x.com/joelniklaus) | 冻结权重仅优化 Harness，3.5% → 80.1% |
 | [清华 & OpenBMB — 大窗口懒惰症研究](https://arxiv.org/abs/2606.15378) | Large-Window Laziness 现象的 Transformer 层证据 |

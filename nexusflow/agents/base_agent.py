@@ -37,13 +37,13 @@ except ImportError:
     REQUEST_TIMEOUT = 120
 
 # 导入增强模块
-from checkpoint import (
+from .checkpoint import (
     CheckpointManager, 
     MemoryCheckpointer,
     SqliteCheckpointer,
     get_default_manager as get_checkpoint_manager
 )
-from handoff import (
+from .handoff import (
     HandoffManager,
     Handoff,
     HandoffContext,
@@ -52,7 +52,7 @@ from handoff import (
     create_handoff,
     get_handoff_manager
 )
-from circuit_breaker import (
+from .circuit_breaker import (
     get_circuit_breaker, 
     CircuitBreakerConfig, 
     CircuitBreakerOpenError
@@ -61,21 +61,21 @@ from circuit_breaker import (
 # 导入A2A协议 (延迟导入避免循环依赖)
 _A2A_AVAILABLE = True
 try:
-    from a2a_protocol import A2AProtocol, A2AMessageType, TaskStatus, get_a2a_network
+    from nexusflow.protocol.a2a_protocol import A2AProtocol, A2AMessageType, TaskStatus, get_a2a_network
 except ImportError:
     _A2A_AVAILABLE = False
 
 # 导入Guardrails
 _GUARDRAILS_AVAILABLE = True
 try:
-    from guardrails import GuardrailManager, GuardrailResult, GuardrailAction, create_default_guardrails
+    from .guardrails import GuardrailManager, GuardrailResult, GuardrailAction, create_default_guardrails
 except ImportError:
     _GUARDRAILS_AVAILABLE = False
 
 # 导入Quality模块 (Taste-Skill旋钮 + Impeccable自检)
 _QUALITY_AVAILABLE = True
 try:
-    from quality import (
+    from .quality import (
         QualityDials, AgentMode, MODE_PROFILES,
         ResearchPreset, RESEARCH_PRESETS, get_research_preset,
         ReviewPipeline, ReviewAction, ReviewResult,
@@ -89,7 +89,7 @@ except ImportError:
 # 导入可观测性
 _OBSERVABILITY_AVAILABLE = True
 try:
-    from observability import AgentTracer, MetricsCollector
+    from .observability import AgentTracer, MetricsCollector
 except ImportError:
     _OBSERVABILITY_AVAILABLE = False
 
@@ -97,8 +97,8 @@ except ImportError:
 _CHECKPOINT_WRITER_AVAILABLE = True
 _GOAL_VERIFIER_AVAILABLE = True
 try:
-    from checkpoint_writer import CheckpointWriter
-    from goal_verifier import GoalVerifier
+    from .checkpoint_writer import CheckpointWriter
+    from nexusflow.core.goal_verifier import GoalVerifier
 except ImportError:
     _CHECKPOINT_WRITER_AVAILABLE = False
     _GOAL_VERIFIER_AVAILABLE = False
@@ -735,7 +735,7 @@ class BaseAgent:
         Returns:
             TaskTree对象
         """
-        from task_tree import TaskTree
+        from nexusflow.cognition.task_tree import TaskTree
         
         # 切到PLAN模式
         old_mode = self.run_mode
@@ -789,7 +789,7 @@ class BaseAgent:
         Returns:
             Reflection对象
         """
-        from reflection import ReflectionLoop
+        from nexusflow.cognition.reflection import ReflectionLoop
         
         # 创建反思循环（使用当前agent的chat函数）
         reflection_loop = ReflectionLoop(
@@ -828,7 +828,7 @@ class BaseAgent:
         Returns:
             ToT搜索结果（含solution, path, score等）
         """
-        from tot import TreeOfThought
+        from nexusflow.cognition.tot import TreeOfThought
         
         tot = TreeOfThought(
             strategy_chat=self.chat,
@@ -856,7 +856,7 @@ class BaseAgent:
         Returns:
             {task_id: result_text}
         """
-        from task_tree import TaskScheduler
+        from nexusflow.cognition.task_tree import TaskScheduler
         
         results = {}
         executor = executor_agent or self
@@ -1017,9 +1017,9 @@ class BaseAgent:
         Args:
             data_dir: 记忆数据目录
         """
-        from memory_manager import MemoryManager, create_memory_manager
-        from sleeptime import SleeptimeEngine
-        from multi_hop_rag import MultiHopRAG
+        from nexusflow.memory.memory_manager import MemoryManager, create_memory_manager
+        from nexusflow.memory.sleeptime import SleeptimeEngine
+        from nexusflow.memory.multi_hop_rag import MultiHopRAG
 
         # 创建Memory Manager
         self._memory = create_memory_manager(
@@ -1186,7 +1186,7 @@ class BaseAgent:
     
     def _init_a2a_protocol(self) -> None:
         """初始化A2A协议实例"""
-        from a2a_protocol import A2AProtocol
+        from nexusflow.protocol.a2a_protocol import A2AProtocol
         
         # 获取Agent角色名
         role = self.__class__.__name__.replace("Agent", "").lower()
@@ -2198,10 +2198,10 @@ Final Answer: 你的最终答案
 
         包括：自主目标分解、元认知、跨领域迁移、持续学习管道
         """
-        from autonomous import AutonomousGoalHandler
-        from meta_cognition import MetaCognition
-        from cross_domain import CrossDomainTransfer
-        from continuous_learning import ContinuousLearningPipelineV41 as ContinuousLearningPipeline
+        from nexusflow.cognition.autonomous import AutonomousGoalHandler
+        from nexusflow.cognition.meta_cognition import MetaCognition
+        from nexusflow.cognition.cross_domain import CrossDomainTransfer
+        from nexusflow.cognition.continuous_learning import ContinuousLearningPipelineV41 as ContinuousLearningPipeline
 
         # 确保记忆系统已初始化
         if not hasattr(self, '_memory'):
@@ -2365,7 +2365,7 @@ Final Answer: 你的最终答案
         if not hasattr(self, '_continuous_learning'):
             self.init_agi()
 
-        from continuous_learning import InteractionOutcome
+        from nexusflow.cognition.continuous_learning import InteractionOutcome
         outcome_map = {
             "positive": InteractionOutcome.POSITIVE,
             "negative": InteractionOutcome.NEGATIVE,
@@ -2548,7 +2548,7 @@ Final Answer: 你的最终答案
             port: 监听端口
             mode: "http" 或 "stdio"
         """
-        from agentos import AgentOS
+        from server.agentos import AgentOS
 
         if not hasattr(self, '_agentos'):
             self._agentos = AgentOS(

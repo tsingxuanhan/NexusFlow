@@ -4,8 +4,8 @@
 XuanHub Caster Agent for Code Generation
 """
 
-from base_agent import BaseAgent
-from vector_memory import get_vector_memory
+from nexusflow.agents.base_agent import BaseAgent
+from nexusflow.memory.vector_memory import get_vector_memory
 import logging
 
 logger = logging.getLogger("CasterAgent")

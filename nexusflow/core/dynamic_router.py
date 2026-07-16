@@ -428,7 +428,7 @@ class DynamicTopologyRouter:
             视角分配字典列表
         """
         try:
-            from cognitive_division_engine import PerspectiveDecomposer
+            from .cognitive_division_engine import PerspectiveDecomposer
             decomposer = PerspectiveDecomposer()
             plan = decomposer.decompose(
                 task.description,

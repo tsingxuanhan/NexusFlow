@@ -8,9 +8,9 @@ NexusFlow Dashboard Demo
 import sys, os, json, time, threading
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from dynamic_router import DynamicTopologyRouter, AgentCapabilityProfile, AgentLoadState
-from edge_cloud_scheduler import EdgeCloudScheduler, SchedulingPolicy
-from dashboard import NexusFlowDashboard
+from nexusflow.core.dynamic_router import DynamicTopologyRouter, AgentCapabilityProfile, AgentLoadState
+from nexusflow.core.edge_cloud_scheduler import EdgeCloudScheduler, SchedulingPolicy
+from server.dashboard import NexusFlowDashboard
 
 # ── 颜色 ──
 C = {"ok":"\033[92m","bold":"\033[1m","cyan":"\033[96m","reset":"\033[0m"}
@@ -58,7 +58,7 @@ scheduler.setup_default_tiers(local_gpu=True)
 print(f"  {C['ok']}✅ Scheduler 就绪 — 3 层资源池已配置{C['reset']}")
 
 # 预跑几轮路由 + 调度，建立历史记录
-from dynamic_router import TaskRequirement, TaskComplexity
+from nexusflow.core.dynamic_router import TaskRequirement, TaskComplexity
 pre_tasks = [
     ("pre-1", "分析低碳水泥纳米改性方案", ["research","analysis"], TaskComplexity.COMPLEX, 0),
     ("pre-2", "审查实验数据质量",       ["review","validation"],  TaskComplexity.MODERATE, 1),

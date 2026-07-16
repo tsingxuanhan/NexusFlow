@@ -36,8 +36,8 @@ class NexusFlowDashboard:
     NexusFlow 可视化监控面板
     
     用法:
-        from dynamic_router import DynamicTopologyRouter
-        from edge_cloud_scheduler import EdgeCloudScheduler
+        from nexusflow.core.dynamic_router import DynamicTopologyRouter
+        from nexusflow.core.edge_cloud_scheduler import EdgeCloudScheduler
         
         router = DynamicTopologyRouter()
         scheduler = EdgeCloudScheduler()
@@ -233,7 +233,7 @@ class NexusFlowDashboard:
         # 路由决策
         route_data = None
         if self.router:
-            from dynamic_router import TaskRequirement, TaskComplexity
+            from nexusflow.core.dynamic_router import TaskRequirement, TaskComplexity
             
             task_req = TaskRequirement(
                 task_id=task_id,

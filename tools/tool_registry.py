@@ -204,7 +204,7 @@ class ToolRegistry:
         if tool:
             # Guardrail检查
             if guardrails and self._enable_guardrails:
-                from guardrails import ToolGuardrail
+                from nexusflow.agents.guardrails import ToolGuardrail
                 # 简化: 只做参数验证
                 if not tool.validate(**params):
                     return ToolResult(success=False, error="Parameter validation failed")

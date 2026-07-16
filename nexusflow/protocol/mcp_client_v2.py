@@ -63,7 +63,7 @@ class MCPClientV2:
     
     def __init__(self):
         # 导入并复用MCPClient的基础能力
-        from mcp_client import MCPClient, MCPTool, MCPResource, StdioTransport, HTTPSTransport
+        from .mcp_client import MCPClient, MCPTool, MCPResource, StdioTransport, HTTPSTransport
         
         self._base_client = MCPClient()
         self._connected_servers: Dict[str, MCPServerInfo] = {}
@@ -240,7 +240,7 @@ class MCPClientV2:
         
         MCP tool "sql_query" → codeact global mcp_sql_query
         """
-        from mcp_client import MCPToolAdapter
+        from .mcp_client import MCPToolAdapter
         adapter = MCPToolAdapter(self._base_client)
         functions = adapter.get_all_functions()
         

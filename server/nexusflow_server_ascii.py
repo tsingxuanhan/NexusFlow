@@ -131,7 +131,7 @@ if AGENT4SCIENCE_NEXUS_PATH not in sys.path:
 # Import Real Core Engine Modules from agent4science_nexus
 # ============================================================================
 try:
-    from cognitive_division_engine import (
+    from nexusflow.core.cognitive_division_engine import (
         CognitiveDivisionEngine,
         CDoLResult,
         PerspectiveDecomposer,
@@ -147,18 +147,18 @@ try:
         ContradictionType,
         InsightDistiller,
     )
-    from adaptive_context_manager import (
+    from nexusflow.core.adaptive_context_manager import (
         AdaptiveContextManager,
         GlobalMemoryPool,
         LazinessDetector,
     )
-    from agent_information_policy import (
+    from nexusflow.core.agent_information_policy import (
         AgentInformationPolicy,
         AgentTier,
         get_information_policy,
         recommend_cdol_config,
     )
-    from nexus_orchestrator import (
+    from nexusflow.core.nexus_orchestrator import (
         NexusOrchestrator,
         TaskResult as NexusTaskResult,
     )

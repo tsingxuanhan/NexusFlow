@@ -54,13 +54,13 @@ from demo_full_system import (
 
 def setup_memory_pool():
     """初始化全局记忆池"""
-    from adaptive_context_manager import GlobalMemoryPool
+    from nexusflow.core.adaptive_context_manager import GlobalMemoryPool
     return GlobalMemoryPool()
 
 
 def setup_information_policy():
     """初始化信息策略"""
-    from agent_information_policy import get_information_policy
+    from nexusflow.core.agent_information_policy import get_information_policy
     return get_information_policy()
 
 # ============================================================

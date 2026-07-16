@@ -59,12 +59,12 @@ from llm_quality_scorer import score_output, DIMENSION_WEIGHTS
 
 
 def setup_memory_pool():
-    from adaptive_context_manager import GlobalMemoryPool
+    from nexusflow.core.adaptive_context_manager import GlobalMemoryPool
     return GlobalMemoryPool()
 
 
 def setup_information_policy():
-    from agent_information_policy import get_information_policy
+    from nexusflow.core.agent_information_policy import get_information_policy
     return get_information_policy()
 
 # ============================================================

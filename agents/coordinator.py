@@ -4,8 +4,8 @@
 XuanHub v4.0 Phase 6 — Multi-Agent Orchestration
 """
 
-from base_agent import BaseAgent, AgentRole, AgentRunMode
-from vector_memory import get_vector_memory
+from nexusflow.agents.base_agent import BaseAgent, AgentRole, AgentRunMode
+from nexusflow.memory.vector_memory import get_vector_memory
 from typing import List, Dict, Optional
 import logging
 import time

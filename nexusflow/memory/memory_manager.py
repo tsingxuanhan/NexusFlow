@@ -17,9 +17,9 @@ import os
 from typing import Any, Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 
-from core_memory import CoreMemory, CoreBlock, create_core_memory_with_defaults
-from archival_memory import ArchivalMemory, ArchivalEntry
-from recall_memory import RecallMemory, Episode, ProceduralRule, EpisodeType
+from .core_memory import CoreMemory, CoreBlock, create_core_memory_with_defaults
+from .archival_memory import ArchivalMemory, ArchivalEntry
+from .recall_memory import RecallMemory, Episode, ProceduralRule, EpisodeType
 
 logger = logging.getLogger("MemoryManager")
 
@@ -78,7 +78,7 @@ class MemoryManager:
         # Phase 7: 第四层 — Global Memory Pool（跨Agent推理产物汇聚）
         self.global_pool = None
         try:
-            from adaptive_context_manager import GlobalMemoryPool
+            from nexusflow.core.adaptive_context_manager import GlobalMemoryPool
             self.global_pool = GlobalMemoryPool(backing_store=self.archival)
         except ImportError:
             logger.warning("[MemoryManager] adaptive_context_manager not available, global_pool disabled")

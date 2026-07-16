@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Optional, Callable
 
-from agent_information_policy import (
+from .agent_information_policy import (
     AgentInformationPolicy,
     AgentTier,
     get_information_policy,
@@ -119,7 +119,7 @@ class NexusOrchestrator:
         self._agents = agents or {}
         
         # 3. 初始化全局记忆池
-        from adaptive_context_manager import GlobalMemoryPool, create_context_manager
+        from .adaptive_context_manager import GlobalMemoryPool, create_context_manager
         
         self.global_memory = GlobalMemoryPool()
         
@@ -130,7 +130,7 @@ class NexusOrchestrator:
         )
         
         # 5. 初始化CDoL引擎（集成信息策略）
-        from cognitive_division_engine import CognitiveDivisionEngine
+        from .cognitive_division_engine import CognitiveDivisionEngine
         
         self.cdol_engine = CognitiveDivisionEngine(
             agents=self._agents,

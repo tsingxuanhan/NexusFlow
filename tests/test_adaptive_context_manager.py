@@ -9,7 +9,7 @@ adaptive_context_manager 模块单元测试
 import math
 import pytest
 
-from adaptive_context_manager import (
+from nexusflow.core.adaptive_context_manager import (
     _cosine_similarity,
     _simple_hash_embed,
     LocalContextWindow,
@@ -215,7 +215,7 @@ def test_memory_pool_add_unknown_type_defaults_to_evidence():
 
 def test_memory_pool_add_conclusion_from_object():
     """测试 add_conclusion 接收 IntermediateConclusion 对象"""
-    from cognitive_division_engine import IntermediateConclusion
+    from nexusflow.core.cognitive_division_engine import IntermediateConclusion
     pool = GlobalMemoryPool()
     ic = IntermediateConclusion(agent_id="a1", conclusion="结论文本", confidence=0.9)
     item = pool.add_conclusion("a1", ic)

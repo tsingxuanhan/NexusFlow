@@ -42,35 +42,7 @@ Homepage = "https://github.com/tsingxuanhan/NexusFlow"
 Issues = "https://github.com/tsingxuanhan/NexusFlow/issues"
 
 [tool.setuptools]
-py-modules = [
-    "__init__",
-    "run",
-    "base_agent",
-    "a2a_protocol",
-    "a2a_gateway",
-    "vector_memory",
-    "guardrails",
-    "quality",
-    "checkpoint",
-    "checkpoint_writer",
-    "handoff",
-    "nexus_orchestrator",
-    "memory_manager",
-    "adaptive_context_manager",
-    "agent_information_policy",
-    "autonomous",
-    "observability",
-    "circuit_breaker",
-    "dynamic_router",
-    "edge_cloud_scheduler",
-    "goal_verifier",
-    "dashboard",
-    "mcp_client",
-    "core_memory",
-    "archival_memory",
-    "cognitive_division_engine",
-    "agentos",
-]
+py-modules = ["run"]
 
 [tool.setuptools.packages.find]
-include = ["agents*", "codeact*", "config*"]
+include = ["nexusflow*", "agents*", "codeact*", "config*", "server*", "tools*", "gateway*", "evaluation*", "iteration*"]

@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO, format='%(name)s - %(message)s')
 
 def test_insight_distiller_task_skills():
     """测试InsightDistiller的task_skills提取"""
-    from cognitive_division_engine import InsightDistiller, CDoLResult
+    from nexusflow.core.cognitive_division_engine import InsightDistiller, CDoLResult
     
     distiller = InsightDistiller()
     
@@ -54,7 +54,7 @@ def test_insight_distiller_task_skills():
 
 def test_skill_retriever():
     """测试SkillRetriever的检索功能"""
-    from skill_retriever import SkillRetriever, TaskSkillCard
+    from nexusflow.core.skill_retriever import SkillRetriever, TaskSkillCard
     
     retriever = SkillRetriever()
     
@@ -124,8 +124,8 @@ def test_skill_retriever():
 
 def test_insight_store_integration():
     """测试InsightStore与SkillRetriever的集成"""
-    from cognitive_division_engine import InsightDistiller, InsightStore, CDoLResult
-    from skill_retriever import SkillRetriever
+    from nexusflow.core.cognitive_division_engine import InsightDistiller, InsightStore, CDoLResult
+    from nexusflow.core.skill_retriever import SkillRetriever
     
     store = InsightStore()
     distiller = InsightDistiller()
@@ -180,7 +180,7 @@ def test_insight_store_integration():
 
 def test_skill_card_format():
     """测试TaskSkillCard的格式化和序列化"""
-    from skill_retriever import TaskSkillCard
+    from nexusflow.core.skill_retriever import TaskSkillCard
     
     skill = TaskSkillCard(
         skill_id="format_test",

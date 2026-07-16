@@ -4,8 +4,8 @@
 XuanHub Artisan Agent for Building Materials Q&A
 """
 
-from base_agent import BaseAgent
-from vector_memory import get_vector_memory
+from nexusflow.agents.base_agent import BaseAgent
+from nexusflow.memory.vector_memory import get_vector_memory
 from typing import List, Dict
 
 # 匠人系统提示词

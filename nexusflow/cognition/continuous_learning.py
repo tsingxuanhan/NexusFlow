@@ -431,7 +431,7 @@ class ContinuousLearningPipeline:
     def _outcome_to_episode_type(self, outcome: InteractionOutcome) -> Any:
         """将InteractionOutcome映射到EpisodeType"""
         try:
-            from recall_memory import EpisodeType
+            from nexusflow.memory.recall_memory import EpisodeType
             mapping = {
                 InteractionOutcome.POSITIVE: EpisodeType.INTERACTION,
                 InteractionOutcome.NEGATIVE: EpisodeType.ERROR,

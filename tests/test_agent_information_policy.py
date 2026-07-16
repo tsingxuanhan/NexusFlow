@@ -9,7 +9,7 @@ agent_information_policy 模块单元测试
 """
 import pytest
 
-from agent_information_policy import (
+from nexusflow.core.agent_information_policy import (
     AgentInformationPolicy,
     InformationProfile,
     AgentTier,

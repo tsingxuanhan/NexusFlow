@@ -271,7 +271,7 @@ class ODMCPConnection:
             return True
         
         try:
-            from mcp_client_v2 import MCPClientV2
+            from nexusflow.protocol.mcp_client_v2 import MCPClientV2
             
             self._client = MCPClientV2()
             env = self._resolve_env()

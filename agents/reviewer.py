@@ -4,8 +4,8 @@
 XuanHub v4.0 - Generalized Agent Role
 """
 
-from base_agent import BaseAgent, AgentRole, AgentRunMode
-from vector_memory import get_vector_memory
+from nexusflow.agents.base_agent import BaseAgent, AgentRole, AgentRunMode
+from nexusflow.memory.vector_memory import get_vector_memory
 from typing import List, Dict, Optional
 
 REVIEWER_SYSTEM_PROMPT = """你是"审查者"，铉枢项目中的质量守门员。

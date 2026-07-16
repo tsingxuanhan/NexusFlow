@@ -35,7 +35,7 @@ def run_nexusflow(task: str, api_key: str, real: bool = False) -> dict:
     if real:
         try:
             sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
-            from nexus_orchestrator import create_orchestrator
+            from nexusflow.core.nexus_orchestrator import create_orchestrator
             orchestrator = create_orchestrator(api_key=api_key)
             result_data = orchestrator.run(task)
             elapsed = time.time() - start

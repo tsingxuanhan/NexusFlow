@@ -4,8 +4,8 @@
 XuanHub v4.0 Phase 2 — Planning Engine + TeLLAgent双Agent分离
 """
 
-from base_agent import BaseAgent, AgentRole, AgentRunMode
-from vector_memory import get_vector_memory
+from nexusflow.agents.base_agent import BaseAgent, AgentRole, AgentRunMode
+from nexusflow.memory.vector_memory import get_vector_memory
 import logging
 import sys
 import os
@@ -13,7 +13,7 @@ import os
 # 技能蒸馏：SkillRetriever导入
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 try:
-    from skill_retriever import SkillRetriever, TaskSkillCard
+    from nexusflow.core.skill_retriever import SkillRetriever, TaskSkillCard
     SKILL_RETRIEVER_AVAILABLE = True
 except ImportError:
     SKILL_RETRIEVER_AVAILABLE = False
@@ -83,7 +83,7 @@ class StrategyAgent:
 2. [子任务描述] [依赖: T-xxx, T-yyy]
 - 支持标记Agent分配：[Planner]/[Researcher]/[Executor]/[Reviewer]"""
 
-        from task_tree import TaskTree
+        from nexusflow.cognition.task_tree import TaskTree
         
         # 切到PLAN模式
         old_mode = self.agent.run_mode
@@ -101,7 +101,7 @@ class StrategyAgent:
     
     def select_strategy(self, task) -> str:
         """选择执行策略：sequential/parallel/iterative/codeact"""
-        from task_tree import TaskScheduler
+        from nexusflow.cognition.task_tree import TaskScheduler
         
         # 借鉴TaskScheduler的策略选择逻辑
         scheduler = TaskScheduler(self.agent.todo)

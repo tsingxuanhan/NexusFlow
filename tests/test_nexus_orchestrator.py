@@ -10,7 +10,7 @@ nexus_orchestrator 模块单元测试
 import pytest
 from unittest.mock import patch, MagicMock
 
-from nexus_orchestrator import (
+from nexusflow.core.nexus_orchestrator import (
     NexusOrchestrator,
     TaskRoute,
     TaskResult,

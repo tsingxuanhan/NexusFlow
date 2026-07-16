@@ -4,8 +4,8 @@
 XuanHub v4.0 Phase 2 — Planning Engine + TeLLAgent双Agent分离
 """
 
-from base_agent import BaseAgent, AgentRole, AgentRunMode
-from vector_memory import get_vector_memory
+from nexusflow.agents.base_agent import BaseAgent, AgentRole, AgentRunMode
+from nexusflow.memory.vector_memory import get_vector_memory
 import logging
 
 logger = logging.getLogger("ExecutorAgent")
@@ -58,7 +58,7 @@ class ExecutionAgent:
         Returns:
             执行结果文本
         """
-        from task_tree import TaskNode
+        from nexusflow.cognition.task_tree import TaskNode
         
         # 构建执行prompt，含依赖信息
         deps_info = ""

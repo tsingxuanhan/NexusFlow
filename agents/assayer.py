@@ -4,8 +4,8 @@
 XuanHub Assayer Agent for Knowledge Verification
 """
 
-from base_agent import BaseAgent
-from vector_memory import get_vector_memory
+from nexusflow.agents.base_agent import BaseAgent
+from nexusflow.memory.vector_memory import get_vector_memory
 from typing import List, Dict
 
 # 试金系统提示词

@@ -167,26 +167,26 @@ def create_agents() -> Dict[str, SimpleAgent]:
 # 3. 导入 NexusFlow 核心模块
 # ============================================================
 def import_nexusflow():
-    from dynamic_router import (
+    from nexusflow.core.dynamic_router import (
         DynamicTopologyRouter, AgentCapabilityProfile,
         TaskRequirement, TaskComplexity, RoutePlan, AgentLoadState,
     )
-    from cognitive_division_engine import (
+    from nexusflow.core.cognitive_division_engine import (
         CognitiveDivisionEngine, PerspectiveDecomposer,
         CommunicationLayer, FusionJudge, InsightDistiller, InsightStore,
         ContextMask, IntermediateConclusion, CDoLResult,
         PerspectiveAssignment, DecompositionPlan,
     )
-    from edge_cloud_scheduler import (
+    from nexusflow.core.edge_cloud_scheduler import (
         EdgeCloudScheduler, DeployTier, SchedulingPolicy,
         TierResource, SchedulingDecision,
     )
-    from agent_information_policy import (
+    from nexusflow.core.agent_information_policy import (
         AgentInformationPolicy, AgentTier, InfoSliceType,
         InformationProfile, get_information_policy,
     )
-    from adaptive_context_manager import GlobalMemoryPool, create_context_manager
-    from nexus_orchestrator import NexusOrchestrator
+    from nexusflow.core.adaptive_context_manager import GlobalMemoryPool, create_context_manager
+    from nexusflow.core.nexus_orchestrator import NexusOrchestrator
 
     return {
         "DynamicTopologyRouter": DynamicTopologyRouter,

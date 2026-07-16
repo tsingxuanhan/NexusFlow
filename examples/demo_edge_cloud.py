@@ -8,7 +8,7 @@ NexusFlow 端-边-云调度 Demo
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from edge_cloud_scheduler import (
+from nexusflow.core.edge_cloud_scheduler import (
     EdgeCloudScheduler, TierResource, DeployTier, SchedulingPolicy, SchedulingDecision
 )
 

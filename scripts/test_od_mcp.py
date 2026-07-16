@@ -75,7 +75,7 @@ async def test_mcp_stdio_connection():
     print("\n=== Test 3: MCP stdio连接 ===")
     
     try:
-        from mcp_client_v2 import MCPClientV2
+        from nexusflow.protocol.mcp_client_v2 import MCPClientV2
         
         client = MCPClientV2()
         

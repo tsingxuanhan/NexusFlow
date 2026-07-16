@@ -85,7 +85,7 @@ def start_server(port: int = 8900):
         logger.error(f"Server 模块导入失败: {e}")
         logger.info("尝试启动 Gradio Dashboard...")
         try:
-            from dashboard import NexusFlowDashboard
+            from server.dashboard import NexusFlowDashboard
             dashboard = NexusFlowDashboard()
             dashboard.launch(server_port=port)
         except Exception as e2:

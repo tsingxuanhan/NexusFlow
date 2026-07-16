@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 if TYPE_CHECKING:
-    from base_agent import BaseAgent
+    from .base_agent import BaseAgent
 
 logger = logging.getLogger("Handoff")
 

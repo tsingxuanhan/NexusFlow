@@ -8,7 +8,7 @@ cognitive_division_engine 模块单元测试
 """
 import pytest
 
-from cognitive_division_engine import (
+from nexusflow.core.cognitive_division_engine import (
     ContextMask,
     PerspectiveAssignment,
     CDoLResult,

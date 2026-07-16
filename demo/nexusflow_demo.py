@@ -30,7 +30,7 @@ logger = logging.getLogger("NexusFlow-Demo")
 
 def setup_router():
     """初始化动态拓扑路由器，注册Agent"""
-    from dynamic_router import (
+    from nexusflow.core.dynamic_router import (
         DynamicTopologyRouter, AgentCapabilityProfile, AgentLoadState
     )
     
@@ -110,7 +110,7 @@ def setup_router():
 
 def setup_scheduler(local_gpu: bool = True):
     """初始化端-边-云调度器"""
-    from edge_cloud_scheduler import (
+    from nexusflow.core.edge_cloud_scheduler import (
         EdgeCloudScheduler, TierResource, DeployTier, SchedulingPolicy
     )
     
@@ -160,7 +160,7 @@ def setup_scheduler(local_gpu: bool = True):
 
 def demo_routing(router):
     """演示路由决策"""
-    from dynamic_router import TaskRequirement, TaskComplexity
+    from nexusflow.core.dynamic_router import TaskRequirement, TaskComplexity
     
     print("\n" + "="*60)
     print("🧠 Demo 1: 动态拓扑路由")
@@ -248,7 +248,7 @@ def demo_scheduling(scheduler):
 
 def demo_self_healing(router):
     """演示拓扑自愈"""
-    from dynamic_router import TaskRequirement, TaskComplexity
+    from nexusflow.core.dynamic_router import TaskRequirement, TaskComplexity
     
     print("\n" + "="*60)
     print("🔧 Demo 3: 拓扑自愈（Agent故障恢复）")
@@ -290,11 +290,11 @@ def demo_cognitive_division():
     5. 对比：单Agent全量信息 → 倾向某一方
               认知分工 → 条件依赖型混合方案
     """
-    from cognitive_division_engine import (
+    from nexusflow.core.cognitive_division_engine import (
         CognitiveDivisionEngine, PerspectiveDecomposer, CommunicationLayer,
         FusionJudge, IntermediateConclusion, PerspectiveAssignment, ContextMask,
     )
-    from adaptive_context_manager import GlobalMemoryPool, AdaptiveContextManager
+    from nexusflow.core.adaptive_context_manager import GlobalMemoryPool, AdaptiveContextManager
     
     print("\n" + "="*60)
     print("🧠 Demo 5: 认知分工协同推理 (Phase 7)")
@@ -456,7 +456,7 @@ def demo_cognitive_division():
     print("[Step 6] Insight提炼（借鉴Arbor HTR）")
     print(f"{'─'*40}")
     
-    from cognitive_division_engine import InsightDistiller, InsightStore, CDoLResult
+    from nexusflow.core.cognitive_division_engine import InsightDistiller, InsightStore, CDoLResult
     
     # 构造CDoLResult用于提炼
     cdol_result = CDoLResult(
@@ -504,7 +504,7 @@ def demo_adaptive_context():
     
     展示小窗口策略 + 懒惰检测 + 强制全局同步
     """
-    from adaptive_context_manager import (
+    from nexusflow.core.adaptive_context_manager import (
         AdaptiveContextManager, GlobalMemoryPool, LocalContextWindow,
         LazinessDetector, AdaptiveWindowController,
     )
@@ -569,7 +569,7 @@ def demo_dashboard(router, scheduler):
     print("="*60)
     
     try:
-        from dashboard import NexusFlowDashboard
+        from server.dashboard import NexusFlowDashboard
         
         dashboard = NexusFlowDashboard(
             router=router,

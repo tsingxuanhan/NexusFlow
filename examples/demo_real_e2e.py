@@ -28,10 +28,10 @@ from typing import Dict, List, Any, Optional
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
 
-from edge_cloud_scheduler import (
+from nexusflow.core.edge_cloud_scheduler import (
     EdgeCloudScheduler, DeployTier, SchedulingPolicy, TierResource, SchedulingDecision,
 )
-from dynamic_router import (
+from nexusflow.core.dynamic_router import (
     DynamicTopologyRouter, AgentCapabilityProfile, TaskRequirement, TaskComplexity,
     AgentLoadState,
 )

@@ -260,15 +260,15 @@ def create_agents() -> Dict[str, SimpleAgent]:
 
 def import_nexusflow():
     """导入NexusFlow核心组件"""
-    from agent_information_policy import (
+    from nexusflow.core.agent_information_policy import (
         AgentInformationPolicy, AgentTier, get_information_policy
     )
-    from cognitive_division_engine import (
+    from nexusflow.core.cognitive_division_engine import (
         CognitiveDivisionEngine, PerspectiveDecomposer,
         CommunicationLayer, FusionJudge, InsightDistiller, InsightStore,
         ContextMask, IntermediateConclusion, CDoLResult,
     )
-    from adaptive_context_manager import GlobalMemoryPool, create_context_manager
+    from nexusflow.core.adaptive_context_manager import GlobalMemoryPool, create_context_manager
     
     return {
         "AgentInformationPolicy": AgentInformationPolicy,

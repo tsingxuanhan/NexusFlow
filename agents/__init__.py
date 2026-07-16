@@ -22,11 +22,11 @@ from .coordinator import CoordinatorAgent
 from .archivist import ArchivistAgent
 
 # Phase 2: 规划引擎核心模块
-from task_tree import TaskNode, TaskTree, TaskScheduler
-from tot import TreeOfThought, GraphOfThought
-from reflection import ReflectionLoop, Reflection, ExperienceRule
+from nexusflow.cognition.task_tree import TaskNode, TaskTree, TaskScheduler
+from nexusflow.cognition.tot import TreeOfThought, GraphOfThought
+from nexusflow.cognition.reflection import ReflectionLoop, Reflection, ExperienceRule
 
-from a2a_protocol import A2AProtocol, get_a2a_network
+from nexusflow.protocol.a2a_protocol import A2AProtocol, get_a2a_network
 
 # 创建全局A2A网络
 a2a_network = get_a2a_network()
@@ -114,7 +114,7 @@ def create_full_team(domain: str = "materials") -> dict:
     
     # 导入信息策略（注意：在agents子包中需要用相对导入）
     try:
-        from ..agent_information_policy import AgentInformationPolicy, get_information_policy
+        from nexusflow.core.agent_information_policy import AgentInformationPolicy, get_information_policy
         team["information_policy"] = get_information_policy()
     except ImportError:
         team["information_policy"] = None
@@ -157,21 +157,21 @@ def get_agent_protocol(agent_name: str) -> A2AProtocol | None:
 # Phase 3: 工具生态模块
 from tools.code_exec import CodeActExecutor
 from tools.tool_registry import ToolRegistry
-from a2a_gateway import A2AGateway
+from nexusflow.protocol.a2a_gateway import A2AGateway
 
 # Phase 4: 知识记忆模块
-from core_memory import CoreMemory
-from archival_memory import ArchivalMemory
-from recall_memory import RecallMemory
-from memory_manager import MemoryManager
-from sleeptime import SleeptimeEngine
-from multi_hop_rag import MultiHopRAG
+from nexusflow.memory.core_memory import CoreMemory
+from nexusflow.memory.archival_memory import ArchivalMemory
+from nexusflow.memory.recall_memory import RecallMemory
+from nexusflow.memory.memory_manager import MemoryManager
+from nexusflow.memory.sleeptime import SleeptimeEngine
+from nexusflow.memory.multi_hop_rag import MultiHopRAG
 
 # Phase 5: AGI核心能力模块
-from autonomous import AutonomousGoalHandler, GoalStatus, GoalResult
-from meta_cognition import MetaCognition, ConfidenceLevel, ConfidenceAssessment, KnowledgeGap
-from cross_domain import CrossDomainTransfer, Analogy, AnalogyType
-from continuous_learning import ContinuousLearningPipeline, InteractionOutcome
+from nexusflow.cognition.autonomous import AutonomousGoalHandler, GoalStatus, GoalResult
+from nexusflow.cognition.meta_cognition import MetaCognition, ConfidenceLevel, ConfidenceAssessment, KnowledgeGap
+from nexusflow.cognition.cross_domain import CrossDomainTransfer, Analogy, AnalogyType
+from nexusflow.cognition.continuous_learning import ContinuousLearningPipeline, InteractionOutcome
 
 
 __all__ = [
@@ -203,9 +203,9 @@ __all__ = [
 
 # Phase 7: 认知分工 + 自适应上下文管理 + 信息策略（延迟导入）
 try:
-    from ..cognitive_division_engine import CognitiveDivisionEngine, CDoLResult
-    from ..adaptive_context_manager import AdaptiveContextManager, GlobalMemoryPool, LazinessDetector
-    from ..agent_information_policy import (
+    from nexusflow.core.cognitive_division_engine import CognitiveDivisionEngine, CDoLResult
+    from nexusflow.core.adaptive_context_manager import AdaptiveContextManager, GlobalMemoryPool, LazinessDetector
+    from nexusflow.core.agent_information_policy import (
         AgentInformationPolicy, AgentTier, InfoSliceType,
         InformationProfile, get_information_policy, recommend_cdol_config,
     )

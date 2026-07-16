@@ -349,7 +349,7 @@ class ReflectionLoop:
         
         从TaskTree中提取各节点的结果，生成结构化反思。
         """
-        from task_tree import TaskTree
+        from .task_tree import TaskTree
         
         results = {}
         expectations = {}

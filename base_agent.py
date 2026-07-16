@@ -26,7 +26,8 @@ try:
     from config import *
 except ImportError:
     # 备用配置
-    DEEPSEEK_API_KEY = ""
+    import os
+    DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
     DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
     MODELS = {"pro": "deepseek-v4-pro", "flash": "deepseek-v4-flash"}
     DEFAULT_PARAMS = {

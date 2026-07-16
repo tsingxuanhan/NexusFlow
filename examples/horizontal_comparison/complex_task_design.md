@@ -171,7 +171,7 @@
 
 ### 预期结果
 
-**NexusFlow应该在这个任务上显著优于AutoGen和CrewAI**，因为：
+**NexusFlow应该在这个任务上显著优于AutoGen**，因为：
 1. CDoL三轮协议能够处理更复杂的多维度分析
 2. 多Agent协作能够覆盖更多的专业领域
 3. Critic的独立审查能够提高报告质量
@@ -181,11 +181,6 @@
 1. 双Agent对话难以覆盖6个维度的深度分析
 2. 缺乏独立审查机制
 3. 可能遗漏某些关键维度
-
-**CrewAI可能的劣势**：
-1. 顺序传递模式可能导致信息损失
-2. 缺乏迭代优化机制
-3. 难以处理复杂的多维度权衡
 
 ### 实验配置
 
@@ -204,11 +199,6 @@ python3 autogen_complex_task.py \
   --max-rounds 10 \
   --output autogen_complex_output.md
 
-# CrewAI（如果可安装）
-python3 crewai_complex_task.py \
-  --task "energy_transition" \
-  --agents 6 \
-  --output crewai_complex_output.md
 ```
 
 ### 评估脚本
@@ -225,11 +215,10 @@ python3 crewai_complex_task.py \
 
 - NexusFlow：约10-15分钟（6个Agent×3轮CDoL + Synthesizer）
 - AutoGen：约8-12分钟（2个Agent×10轮对话）
-- CrewAI：约5-8分钟（6个Agent顺序执行）
 
 ## 结论
 
-这个复杂任务应该能够充分展示NexusFlow在复杂任务上的优势，预计得分应该达到85-90分，显著优于AutoGen和CrewAI。
+这个复杂任务应该能够充分展示NexusFlow在复杂任务上的优势，预计得分应该达到85-90分，显著优于AutoGen。
 
 即使AutoGen在简单任务上得分更高（90分），但在复杂任务上，NexusFlow应该能够反超。
 

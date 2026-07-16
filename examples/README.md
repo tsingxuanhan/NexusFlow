@@ -43,7 +43,7 @@ examples/
 │       ├── nf_results.json       # NexusFlow逐步骤详细结果
 │       ├── sa_results.json       # Single-Agent逐步骤详细结果
 │       ├── full_outputs_*.json   # 完整输出
-└── horizontal_comparison/        # 横向对比: NexusFlow vs AutoGen vs CrewAI
+└── horizontal_comparison/        # 横向对比: NexusFlow vs AutoGen
     ├── README.md
     ├── comparison_report.md      # 完整对比报告
     ├── comparison_results.json   # 实验指标JSON
@@ -63,7 +63,7 @@ examples/
 | Stage-3 | NexusFlow完整代码管线 | **全部真实执行**（14个模块调用） |
 | Stage-4 | 50步端到端真实执行 | **全部真实执行** |
 | Stage-5 | 80步公平对比真实执行 | **全部真实执行**（Single-Agent vs NexusFlow） |
-| 横向对比 | CDoL真实执行 + AutoGen真实 | **NexusFlow/AutoGen真实，CrewAI模拟** |
+| 横向对比 | CDoL真实执行 + AutoGen真实 | **NexusFlow/AutoGen真实执行** |
 
 ## 核心数据摘要
 
@@ -89,6 +89,5 @@ examples/
 |------|:----:|:----:|:-------:|:------:|:----:|
 | AutoGen | 90.0 | 131.1s | 5 | 2,426 | real |
 | NexusFlow | 84.5 | 89.8s | 7 | 18,799 | real (CDoL) |
-| CrewAI | 85 | 42.0s | 18 | 5,171 | simulated |
 
 > 注: 横向对比是简单查询任务，NexusFlow的核心优势在复杂任务（Stage-4/5）。

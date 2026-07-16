@@ -59,12 +59,6 @@ outputs_to_score = [
         "task_desc": SIMPLE_TASK,
     },
     {
-        "name": "CrewAI",
-        "task": "simple",
-        "file": "crewai_output.md",
-        "task_desc": SIMPLE_TASK,
-    },
-    {
         "name": "NexusFlow",
         "task": "complex",
         "file": "nexusflow_complex_output.md",
@@ -124,7 +118,7 @@ print(f"{'='*60}")
 
 # 打印汇总
 print("\n## 简单任务评分汇总（WHO BRICS 医疗卫生）")
-for name in ["NexusFlow", "AutoGen", "CrewAI"]:
+for name in ["NexusFlow", "AutoGen"]:
     if name in results["simple"]:
         r = results["simple"][name]
         print(f"  {name}: {r['composite_100']}分 (C={r['scores']['completeness']} D={r['scores']['depth']} Cons={r['scores']['consistency']} N={r['scores']['novelty']} A={r['scores']['actionability']})")

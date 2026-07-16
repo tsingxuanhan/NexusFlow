@@ -279,22 +279,6 @@ def run_nexusflow_real(task: str, api_key: str) -> dict:
 
 
 # ──────────────────────────────────────────────────────────────
-# CrewAI 模拟
-# ──────────────────────────────────────────────────────────────
-
-def run_crewai_simulated(task: str) -> dict:
-    """CrewAI 模拟数据（Python 3.13 无法安装）"""
-    return {
-        "framework": "CrewAI",
-        "mode": "simulated",
-        "task": task,
-        "score": 85,
-        "elapsed": 42.0,
-        "api_calls": 18,
-        "tokens": 5171,
-        "timestamp": datetime.now().isoformat(),
-        "note": "CrewAI 在 Python 3.13 上无法安装 (hash 校验不通过)，使用模拟数据",
-    }
 
 
 # ──────────────────────────────────────────────────────────────
@@ -441,10 +425,6 @@ async def main():
             print(f"  ❌ AutoGen 真实执行失败: {e}")
             print("  📌 回退到模拟数据...")
             results.append(run_autogen_simulated(args.task))
-    
-    # ── CrewAI ──
-    print("🟢 CrewAI [模拟 - Python 3.13 无法安装]")
-    results.append(run_crewai_simulated(args.task))
     
     # ── 保存结果 ──
     output_data = {

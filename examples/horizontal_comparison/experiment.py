@@ -3,16 +3,15 @@
 """
 NexusFlow 横向对比实验脚本
 ==========================
-对比 NexusFlow vs AutoGen vs CrewAI 在相同任务上的表现
+对比 NexusFlow vs AutoGen 在相同任务上的表现
 
 运行模式:
   --simulate        全部使用模拟数据（默认 fallback）
-  --real-autogen    AutoGen 真实执行 + NexusFlow/CrewAI 模拟
-  --real-run        尝试所有框架真实执行（CrewAI 始终模拟）
+  --real-autogen    AutoGen 真实执行 + NexusFlow 模拟
+  --real-run        尝试所有框架真实执行
 
 注意：
 - AutoGen 需要安装: pip install "autogen-ext[openai]"
-- CrewAI 在 Python 3.13 上无法安装，始终使用模拟数据
 - DeepSeek API Key 通过环境变量 DEEPSEEK_API_KEY 提供
 """
 
@@ -175,25 +174,6 @@ def run_autogen(task: str, real: bool = False) -> dict:
 
 
 # ──────────────────────────────────────────────────────────────
-# CrewAI (始终模拟)
-# ──────────────────────────────────────────────────────────────
-
-def run_crewai(task: str) -> dict:
-    """运行 CrewAI（模拟 - Python 3.13 无法安装）"""
-    print("🟢 运行 CrewAI...")
-    result = {
-        "framework": "CrewAI",
-        "mode": "simulated",
-        "task": task,
-        "score": 85,
-        "elapsed": 42.0,
-        "api_calls": 18,
-        "tokens": 5171,
-        "timestamp": datetime.now().isoformat(),
-        "note": "CrewAI 在 Python 3.13 上无法安装 (hash 校验不通过)，使用模拟数据"
-    }
-    print(f"   📌 模拟数据: 得分 {result['score']}, 耗时 {result['elapsed']}s")
-    return result
 
 
 # ──────────────────────────────────────────────────────────────
@@ -207,7 +187,7 @@ def main():
     parser.add_argument("--output", default="comparison_results.json")
     parser.add_argument("--simulate", action="store_true", help="全部使用模拟数据")
     parser.add_argument("--real-autogen", action="store_true", help="AutoGen 真实执行，其他模拟")
-    parser.add_argument("--real-run", action="store_true", help="尝试所有框架真实执行（CrewAI 始终模拟）")
+    parser.add_argument("--real-run", action="store_true", help="尝试所有框架真实执行")
     args = parser.parse_args()
     
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), args.output)
@@ -236,8 +216,6 @@ def main():
     else:
         results.append(run_autogen(args.task, real=real_autogen))
     
-    # CrewAI (始终模拟)
-    results.append(run_crewai(args.task))
     
     # 保存结果
     output_data = {

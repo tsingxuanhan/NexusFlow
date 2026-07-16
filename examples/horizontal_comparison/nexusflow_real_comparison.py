@@ -3,7 +3,7 @@
 NexusFlow 横向对比 - 真实执行版
 ================================
 用NexusFlow CDoL三轮协议 + DeepSeek API真实调用，
-执行与AutoGen/CrewAI完全相同的WHO BRICS任务。
+执行与AutoGen完全相同的WHO BRICS任务。
 
 对比指标: score / elapsed / api_calls / tokens
 """

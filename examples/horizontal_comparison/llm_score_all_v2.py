@@ -58,12 +58,6 @@ outputs_to_score = [
         "task_desc": SIMPLE_TASK,
     },
     {
-        "name": "CrewAI",
-        "task": "simple",
-        "file": "crewai_output.md",
-        "task_desc": SIMPLE_TASK,
-    },
-    {
         "name": "NexusFlow",
         "task": "complex",
         "file": "nexusflow_complex_output.md",
@@ -122,7 +116,7 @@ print(f"✅ 评分结果已保存到: {output_path}")
 print(f"{'='*60}")
 
 print("\n## 简单任务评分汇总（WHO BRICS 医疗卫生）")
-for name in ["NexusFlow", "AutoGen", "CrewAI"]:
+for name in ["NexusFlow", "AutoGen"]:
     if name in results["simple"]:
         r = results["simple"][name]
         print(f"  {name}: {r['composite_100']}分 (C={r['scores']['completeness']} D={r['scores']['depth']} Cons={r['scores']['consistency']} N={r['scores']['novelty']} A={r['scores']['actionability']})")
@@ -138,9 +132,8 @@ print("\n\n## 关键发现")
 nf_simple = results["simple"].get("NexusFlow", {}).get("composite_100", 0)
 nf_complex = results["complex"].get("NexusFlow", {}).get("composite_100", 0)
 ag = results["simple"].get("AutoGen", {}).get("composite_100", 0)
-cr = results["simple"].get("CrewAI", {}).get("composite_100", 0)
 
-print(f"  简单任务: NexusFlow {nf_simple} vs AutoGen {ag} vs CrewAI {cr}")
+print(f"  简单任务: NexusFlow {nf_simple} vs AutoGen {ag}")
 print(f"  复杂任务: NexusFlow {nf_complex}")
 if nf_complex > nf_simple:
     print(f"  ✅ NexusFlow 复杂任务({nf_complex}) > 简单任务({nf_simple})，提升 {round(nf_complex-nf_simple,1)} 分")

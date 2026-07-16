@@ -1,0 +1,11 @@
+[
+  {
+    "name": "demo_full_system.py",
+    "path": "./codeact/scripts/demo_full_system.py",
+    "description": "NexusFlow完整系统Demo - 动态拓扑路由(sequential/hybrid/star) × CDoL三轮协议 × 端边云调度 × 信息不对称策略, 10个Agent全部参与, 真实DeepSeek API调用, 自动生成HTML可视化报告",
+    "params": {
+      "result_mode": "display_only"
+    },
+    "status": "active"
+  }
+]

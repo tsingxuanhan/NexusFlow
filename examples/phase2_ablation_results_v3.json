@@ -1,0 +1,1130 @@
+{
+  "route_ablation": {
+    "oracle": {
+      "stats": {
+        "mean": 0.416,
+        "std": 0.084,
+        "min": 0.35,
+        "max": 0.55,
+        "n": 5,
+        "values": [
+          0.35,
+          0.35,
+          0.48,
+          0.55,
+          0.35
+        ]
+      },
+      "runs": [
+        {
+          "mode": "oracle",
+          "elapsed": 80.5600757598877,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 2
+            },
+            "composite": 0.35,
+            "reason": "输出仅完成了阶段1的数据收集，完全遗漏了阶段2-4的分析、交叉验证和综合报告任务，且阶段1内容虽详细但缺乏深度因果链和独到见解，结论多为业界共识，可操作性极低。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 2,\n  \"brief_reason\": \"输出仅完成了阶段1的数据收集，完全遗漏了阶段2-4的分析、交叉验证和综合报告任务，且阶段1内容虽详细但缺乏深度因果链和独到见解，结论多为业界共识，可操作性极低。\"\n}"
+          },
+          "output_length": 11337
+        },
+        {
+          "mode": "oracle",
+          "elapsed": 65.28457903862,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 2
+            },
+            "composite": 0.35,
+            "reason": "输出严重偏离任务要求：阶段1数据收集正确但阶段2-4完全跑题，未按指定维度分析大模型趋势，而是转向了无关的制造业、地缘政治和生物制药话题，导致覆盖不全、深度浅、缺乏自洽性和可操作性。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 2,\n  \"brief_reason\": \"输出严重偏离任务要求：阶段1数据收集正确但阶段2-4完全跑题，未按指定维度分析大模型趋势，而是转向了无关的制造业、地缘政治和生物制药话题，导致覆盖不全、深度浅、缺乏自洽性和可操作性。\"\n}"
+          },
+          "output_length": 9639
+        },
+        {
+          "mode": "oracle",
+          "elapsed": 71.19888472557068,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 4,
+              "actionability": 5
+            },
+            "composite": 0.48,
+            "reason": "输出覆盖了阶段1和阶段4，但阶段2和阶段3严重缺失，导致整体不完整；分析停留在现象描述，缺乏深层因果链；观点多为业界共识，缺乏独到洞察；结论有方向性但缺乏具体可执行步骤。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 5,\n  \"brief_reason\": \"输出覆盖了阶段1和阶段4，但阶段2和阶段3严重缺失，导致整体不完整；分析停留在现象描述，缺乏深层因果链；观点多为业界共识，缺乏独到洞察；结论有方向性但缺乏具体可执行步骤。\"\n}"
+          },
+          "output_length": 10081
+        },
+        {
+          "mode": "oracle",
+          "elapsed": 63.84991192817688,
+          "quality": {
+            "scores": {
+              "completeness": 6,
+              "depth": 5,
+              "consistency": 7,
+              "novelty": 4,
+              "actionability": 5
+            },
+            "composite": 0.55,
+            "reason": "阶段1数据收集较完整，但阶段2分析被阶段3质疑且未修正，阶段4报告与前面脱节，整体覆盖不均衡，深度一般，缺乏独到见解，可操作性有限。",
+            "raw_response": "{\n  \"completeness\": 6,\n  \"depth\": 5,\n  \"consistency\": 7,\n  \"novelty\": 4,\n  \"actionability\": 5,\n  \"brief_reason\": \"阶段1数据收集较完整，但阶段2分析被阶段3质疑且未修正，阶段4报告与前面脱节，整体覆盖不均衡，深度一般，缺乏独到见解，可操作性有限。\"\n}"
+          },
+          "output_length": 9926
+        },
+        {
+          "mode": "oracle",
+          "elapsed": 65.44179582595825,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 2
+            },
+            "composite": 0.35,
+            "reason": "系统输出严重偏离任务要求：阶段1数据收集正确但阶段2和阶段4内容空洞、未按指定维度分析，阶段3缺失，整体覆盖不足、缺乏深度和可操作性。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 2,\n  \"brief_reason\": \"系统输出严重偏离任务要求：阶段1数据收集正确但阶段2和阶段4内容空洞、未按指定维度分析，阶段3缺失，整体覆盖不足、缺乏深度和可操作性。\"\n}"
+          },
+          "output_length": 10322
+        }
+      ]
+    },
+    "auto": {
+      "stats": {
+        "mean": 0.458,
+        "std": 0.052,
+        "min": 0.39,
+        "max": 0.55,
+        "n": 5,
+        "values": [
+          0.39,
+          0.45,
+          0.45,
+          0.55,
+          0.45
+        ]
+      },
+      "runs": [
+        {
+          "mode": "auto",
+          "elapsed": 63.392269134521484,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 3,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.39,
+            "reason": "输出内容与任务要求严重偏离：阶段1数据收集部分格式错误（应为JSON但输出Markdown表格），阶段2和阶段3内容缺失或与任务无关，阶段4报告主题不匹配，整体覆盖度、逻辑一致性和可操作性均不足。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 3,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出内容与任务要求严重偏离：阶段1数据收集部分格式错误（应为JSON但输出Markdown表格），阶段2和阶段3内容缺失或与任务无关，阶段4报告主题不匹配，整体覆盖度、逻辑一致性和可操作性均不足。\"\n}"
+          },
+          "output_length": 9846
+        },
+        {
+          "mode": "auto",
+          "elapsed": 62.77015399932861,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 3,
+              "actionability": 4
+            },
+            "composite": 0.45,
+            "reason": "系统输出仅完成了阶段1的数据收集和部分分析，阶段2、3、4内容缺失或与任务要求严重偏离，覆盖不全、分析浅层、缺乏独到见解和可操作步骤。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 3,\n  \"actionability\": 4,\n  \"brief_reason\": \"系统输出仅完成了阶段1的数据收集和部分分析，阶段2、3、4内容缺失或与任务要求严重偏离，覆盖不全、分析浅层、缺乏独到见解和可操作步骤。\"\n}"
+          },
+          "output_length": 10275
+        },
+        {
+          "mode": "auto",
+          "elapsed": 71.31963181495667,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 3,
+              "actionability": 4
+            },
+            "composite": 0.45,
+            "reason": "输出覆盖了阶段1和阶段4，但阶段2和阶段3内容缺失或严重不完整，导致整体覆盖度不足；分析停留在表面描述，缺乏深层因果链；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 3,\n  \"actionability\": 4,\n  \"brief_reason\": \"输出覆盖了阶段1和阶段4，但阶段2和阶段3内容缺失或严重不完整，导致整体覆盖度不足；分析停留在表面描述，缺乏深层因果链；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。\"\n}"
+          },
+          "output_length": 10823
+        },
+        {
+          "mode": "auto",
+          "elapsed": 59.28043174743652,
+          "quality": {
+            "scores": {
+              "completeness": 6,
+              "depth": 5,
+              "consistency": 7,
+              "novelty": 4,
+              "actionability": 5
+            },
+            "composite": 0.55,
+            "reason": "覆盖了任务要求的4个阶段，但阶段2和阶段4内容较简略，缺乏深度分析和独到见解，结论多为业界共识，可操作性一般。",
+            "raw_response": "{\n  \"completeness\": 6,\n  \"depth\": 5,\n  \"consistency\": 7,\n  \"novelty\": 4,\n  \"actionability\": 5,\n  \"brief_reason\": \"覆盖了任务要求的4个阶段，但阶段2和阶段4内容较简略，缺乏深度分析和独到见解，结论多为业界共识，可操作性一般。\"\n}"
+          },
+          "output_length": 8647
+        },
+        {
+          "mode": "auto",
+          "elapsed": 63.77577543258667,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 3,
+              "actionability": 4
+            },
+            "composite": 0.45,
+            "reason": "输出覆盖了阶段1和阶段4，但阶段2和阶段3内容缺失或严重不完整，分析停留在表面描述，缺乏深层因果链和独到见解，结论空泛且可操作性低。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 3,\n  \"actionability\": 4,\n  \"brief_reason\": \"输出覆盖了阶段1和阶段4，但阶段2和阶段3内容缺失或严重不完整，分析停留在表面描述，缺乏深层因果链和独到见解，结论空泛且可操作性低。\"\n}"
+          },
+          "output_length": 10172
+        }
+      ]
+    },
+    "reverse": {
+      "stats": {
+        "mean": 0.502,
+        "std": 0.1,
+        "min": 0.365,
+        "max": 0.66,
+        "n": 5,
+        "values": [
+          0.45,
+          0.66,
+          0.48,
+          0.365,
+          0.555
+        ]
+      },
+      "runs": [
+        {
+          "mode": "reverse",
+          "elapsed": 75.1726770401001,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 5,
+              "consistency": 6,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.45,
+            "reason": "输出严重偏离任务要求，仅部分覆盖阶段1数据收集，阶段2分析混入无关宏观经济内容，阶段3和4完全缺失，且未按指定格式输出，整体质量低。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 5,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出严重偏离任务要求，仅部分覆盖阶段1数据收集，阶段2分析混入无关宏观经济内容，阶段3和4完全缺失，且未按指定格式输出，整体质量低。\"\n}"
+          },
+          "output_length": 11187
+        },
+        {
+          "mode": "reverse",
+          "elapsed": 70.76927351951599,
+          "quality": {
+            "scores": {
+              "completeness": 6,
+              "depth": 7,
+              "consistency": 7,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.66,
+            "reason": "覆盖了任务要求的4个阶段，但阶段2和3的CDoL与并行验证描述不完整，深度较好但部分观点为业界共识，结论有可操作预测。",
+            "raw_response": "{\n  \"completeness\": 6,\n  \"depth\": 7,\n  \"consistency\": 7,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了任务要求的4个阶段，但阶段2和3的CDoL与并行验证描述不完整，深度较好但部分观点为业界共识，结论有可操作预测。\"\n}"
+          },
+          "output_length": 10661
+        },
+        {
+          "mode": "reverse",
+          "elapsed": 83.53565216064453,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 5,
+              "consistency": 6,
+              "novelty": 4,
+              "actionability": 5
+            },
+            "composite": 0.48,
+            "reason": "输出偏离了任务要求的4阶段分析框架，仅部分覆盖数据收集和综合报告，缺少多维度分析和交叉验证；推理有一定深度但存在主题跳跃（从大模型转向半导体），且结论多为业界共识，缺乏独到见解。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 5,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 5,\n  \"brief_reason\": \"输出偏离了任务要求的4阶段分析框架，仅部分覆盖数据收集和综合报告，缺少多维度分析和交叉验证；推理有一定深度但存在主题跳跃（从大模型转向半导体），且结论多为业界共识，缺乏独到见解。\"\n}"
+          },
+          "output_length": 12530
+        },
+        {
+          "mode": "reverse",
+          "elapsed": 78.09702658653259,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 3
+            },
+            "composite": 0.365,
+            "reason": "输出严重偏离任务要求，将AI技术趋势分析错误地转向了全球供应链和半导体行业分析，仅阶段1部分符合要求，阶段2-4完全跑题，导致覆盖度、深度和可操作性极低。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出严重偏离任务要求，将AI技术趋势分析错误地转向了全球供应链和半导体行业分析，仅阶段1部分符合要求，阶段2-4完全跑题，导致覆盖度、深度和可操作性极低。\"\n}"
+          },
+          "output_length": 11997
+        },
+        {
+          "mode": "reverse",
+          "elapsed": 75.91293358802795,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 6,
+              "consistency": 7,
+              "novelty": 6,
+              "actionability": 5
+            },
+            "composite": 0.555,
+            "reason": "输出在阶段1和阶段2中偏离了任务要求（未完成数据收集的JSON输出，且阶段2分析未覆盖所有四个维度），但阶段3和阶段4的推理链较深、有独到洞察，整体覆盖不足且可操作性一般。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 6,\n  \"consistency\": 7,\n  \"novelty\": 6,\n  \"actionability\": 5,\n  \"brief_reason\": \"输出在阶段1和阶段2中偏离了任务要求（未完成数据收集的JSON输出，且阶段2分析未覆盖所有四个维度），但阶段3和阶段4的推理链较深、有独到洞察，整体覆盖不足且可操作性一般。\"\n}"
+          },
+          "output_length": 11941
+        }
+      ]
+    },
+    "direction_consistent": false
+  },
+  "round_ablation": {
+    "round_2": {
+      "stats": {
+        "mean": 0.715,
+        "std": 0.034,
+        "min": 0.65,
+        "max": 0.75,
+        "n": 5,
+        "values": [
+          0.73,
+          0.715,
+          0.75,
+          0.73,
+          0.65
+        ]
+      },
+      "representative": {
+        "max_rounds": 2,
+        "actual_rounds": 2,
+        "terminated_early": false,
+        "elapsed": 152.4265010356903,
+        "synergy_gain": 0.39,
+        "quality": {
+          "scores": {
+            "completeness": 8,
+            "depth": 7,
+            "consistency": 8,
+            "novelty": 6,
+            "actionability": 7
+          },
+          "composite": 0.73,
+          "reason": "覆盖了所有四个维度，数据点丰富且具体，推理链较深（如参数效率提升、开源差距量化），但新颖性一般（多为业界共识），行动建议较具体但缺乏时间节点细化。",
+          "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富且具体，推理链较深（如参数效率提升、开源差距量化），但新颖性一般（多为业界共识），行动建议较具体但缺乏时间节点细化。\"\n}"
+        },
+        "output_length": 6120
+      },
+      "all_runs": [
+        {
+          "max_rounds": 2,
+          "actual_rounds": 2,
+          "terminated_early": false,
+          "elapsed": 152.4265010356903,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.73,
+            "reason": "覆盖了所有四个维度，数据点丰富且具体，推理链较深（如参数效率提升、开源差距量化），但新颖性一般（多为业界共识），行动建议较具体但缺乏时间节点细化。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富且具体，推理链较深（如参数效率提升、开源差距量化），但新颖性一般（多为业界共识），行动建议较具体但缺乏时间节点细化。\"\n}"
+          },
+          "output_length": 6120
+        },
+        {
+          "max_rounds": 2,
+          "actual_rounds": 2,
+          "terminated_early": false,
+          "elapsed": 147.43815970420837,
+          "synergy_gain": 0.384,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 6
+            },
+            "composite": 0.715,
+            "reason": "覆盖了所有四个维度，数据点具体，推理链较完整，但部分观点较常规，缺乏深度因果分析和可操作步骤。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点具体，推理链较完整，但部分观点较常规，缺乏深度因果分析和可操作步骤。\"\n}"
+          },
+          "output_length": 5753
+        },
+        {
+          "max_rounds": 2,
+          "actual_rounds": 2,
+          "terminated_early": false,
+          "elapsed": 127.39346551895142,
+          "synergy_gain": 0.384,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 9,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.75,
+            "reason": "分析覆盖了所有四个维度，数据点具体，逻辑自洽，但部分观点（如MoE效率提升、开源追赶闭源）为业界共识，缺乏突破性洞察。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 9,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"分析覆盖了所有四个维度，数据点具体，逻辑自洽，但部分观点（如MoE效率提升、开源追赶闭源）为业界共识，缺乏突破性洞察。\"\n}"
+          },
+          "output_length": 6105
+        },
+        {
+          "max_rounds": 2,
+          "actual_rounds": 2,
+          "terminated_early": false,
+          "elapsed": 139.33335161209106,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.73,
+            "reason": "覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点较常规，缺乏突破性洞察。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点较常规，缺乏突破性洞察。\"\n}"
+          },
+          "output_length": 6102
+        },
+        {
+          "max_rounds": 2,
+          "actual_rounds": 2,
+          "terminated_early": false,
+          "elapsed": 163.15204858779907,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 7,
+              "depth": 6,
+              "consistency": 8,
+              "novelty": 5,
+              "actionability": 6
+            },
+            "composite": 0.65,
+            "reason": "覆盖了所有四个维度，数据点丰富，但深度不足，多为现象描述，缺乏因果链条和独到洞察，结论基本自洽但部分数据不一致。",
+            "raw_response": "{\n  \"completeness\": 7,\n  \"depth\": 6,\n  \"consistency\": 8,\n  \"novelty\": 5,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富，但深度不足，多为现象描述，缺乏因果链条和独到洞察，结论基本自洽但部分数据不一致。\"\n}"
+          },
+          "output_length": 6261
+        }
+      ]
+    },
+    "round_3": {
+      "stats": {
+        "mean": 0.699,
+        "std": 0.037,
+        "min": 0.63,
+        "max": 0.73,
+        "n": 5,
+        "values": [
+          0.73,
+          0.73,
+          0.715,
+          0.69,
+          0.63
+        ]
+      },
+      "representative": {
+        "max_rounds": 3,
+        "actual_rounds": 3,
+        "terminated_early": false,
+        "elapsed": 213.32124042510986,
+        "synergy_gain": 0.39,
+        "quality": {
+          "scores": {
+            "completeness": 8,
+            "depth": 7,
+            "consistency": 8,
+            "novelty": 6,
+            "actionability": 7
+          },
+          "composite": 0.73,
+          "reason": "覆盖了所有四个维度，数据点丰富且具体，但部分分析（如MoE效率、开源差距）仍停留在业界共识层面，缺乏更深入的因果链或原创洞察。",
+          "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富且具体，但部分分析（如MoE效率、开源差距）仍停留在业界共识层面，缺乏更深入的因果链或原创洞察。\"\n}"
+        },
+        "output_length": 6160
+      },
+      "all_runs": [
+        {
+          "max_rounds": 3,
+          "actual_rounds": 3,
+          "terminated_early": false,
+          "elapsed": 213.32124042510986,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.73,
+            "reason": "覆盖了所有四个维度，数据点丰富且具体，但部分分析（如MoE效率、开源差距）仍停留在业界共识层面，缺乏更深入的因果链或原创洞察。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富且具体，但部分分析（如MoE效率、开源差距）仍停留在业界共识层面，缺乏更深入的因果链或原创洞察。\"\n}"
+          },
+          "output_length": 6160
+        },
+        {
+          "max_rounds": 3,
+          "actual_rounds": 3,
+          "terminated_early": false,
+          "elapsed": 171.1978952884674,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.73,
+            "reason": "覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点（如开源追赶闭源）较常规，缺乏颠覆性洞察。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点（如开源追赶闭源）较常规，缺乏颠覆性洞察。\"\n}"
+          },
+          "output_length": 5822
+        },
+        {
+          "max_rounds": 3,
+          "actual_rounds": 3,
+          "terminated_early": false,
+          "elapsed": 182.74722456932068,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 6
+            },
+            "composite": 0.715,
+            "reason": "覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点较常规，行动建议不够具体。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点较常规，行动建议不够具体。\"\n}"
+          },
+          "output_length": 6554
+        },
+        {
+          "max_rounds": 3,
+          "actual_rounds": 3,
+          "terminated_early": false,
+          "elapsed": 197.30250644683838,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 7,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 6
+            },
+            "composite": 0.69,
+            "reason": "覆盖了所有四个维度，有具体模型和数据点，但部分分析停留在描述层面，缺乏深层因果链和独到洞察，且可操作性建议不够具体。",
+            "raw_response": "{\n  \"completeness\": 7,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度，有具体模型和数据点，但部分分析停留在描述层面，缺乏深层因果链和独到洞察，且可操作性建议不够具体。\"\n}"
+          },
+          "output_length": 6051
+        },
+        {
+          "max_rounds": 3,
+          "actual_rounds": 3,
+          "terminated_early": false,
+          "elapsed": 197.4008469581604,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 7,
+              "depth": 6,
+              "consistency": 7,
+              "novelty": 5,
+              "actionability": 6
+            },
+            "composite": 0.63,
+            "reason": "覆盖了所有四个维度，但部分数据点（如参数规模推测）不够精确，推理链较浅，缺乏深层因果分析，观点多为业界共识，行动建议较泛化。",
+            "raw_response": "{\n  \"completeness\": 7,\n  \"depth\": 6,\n  \"consistency\": 7,\n  \"novelty\": 5,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度，但部分数据点（如参数规模推测）不够精确，推理链较浅，缺乏深层因果分析，观点多为业界共识，行动建议较泛化。\"\n}"
+          },
+          "output_length": 6455
+        }
+      ]
+    },
+    "round_4": {
+      "stats": {
+        "mean": 0.703,
+        "std": 0.03,
+        "min": 0.65,
+        "max": 0.73,
+        "n": 5,
+        "values": [
+          0.73,
+          0.715,
+          0.69,
+          0.73,
+          0.65
+        ]
+      },
+      "representative": {
+        "max_rounds": 4,
+        "actual_rounds": 4,
+        "terminated_early": false,
+        "elapsed": 240.68879461288452,
+        "synergy_gain": 0.39,
+        "quality": {
+          "scores": {
+            "completeness": 8,
+            "depth": 7,
+            "consistency": 8,
+            "novelty": 6,
+            "actionability": 7
+          },
+          "composite": 0.73,
+          "reason": "覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点（如开源追赶、多模态Demo阶段）为业界共识，缺乏突破性洞察。",
+          "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点（如开源追赶、多模态Demo阶段）为业界共识，缺乏突破性洞察。\"\n}"
+        },
+        "output_length": 6355
+      },
+      "all_runs": [
+        {
+          "max_rounds": 4,
+          "actual_rounds": 4,
+          "terminated_early": false,
+          "elapsed": 240.68879461288452,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.73,
+            "reason": "覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点（如开源追赶、多模态Demo阶段）为业界共识，缺乏突破性洞察。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点（如开源追赶、多模态Demo阶段）为业界共识，缺乏突破性洞察。\"\n}"
+          },
+          "output_length": 6355
+        },
+        {
+          "max_rounds": 4,
+          "actual_rounds": 4,
+          "terminated_early": false,
+          "elapsed": 236.27132415771484,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 6
+            },
+            "composite": 0.715,
+            "reason": "覆盖了所有4个维度，数据点丰富且具体，推理链较完整，但部分观点（如MoE效率、开源追赶）为业界共识，缺乏独到洞察，行动建议较笼统。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有4个维度，数据点丰富且具体，推理链较完整，但部分观点（如MoE效率、开源追赶）为业界共识，缺乏独到洞察，行动建议较笼统。\"\n}"
+          },
+          "output_length": 6761
+        },
+        {
+          "max_rounds": 4,
+          "actual_rounds": 4,
+          "terminated_early": false,
+          "elapsed": 244.8332588672638,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 7,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 6
+            },
+            "composite": 0.69,
+            "reason": "覆盖了所有四个维度，有具体模型和数据点，但部分分析（如多模态风险、行业应用分化）深度不足，且缺乏对数据质量和训练效率的深入讨论。",
+            "raw_response": "{\n  \"completeness\": 7,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度，有具体模型和数据点，但部分分析（如多模态风险、行业应用分化）深度不足，且缺乏对数据质量和训练效率的深入讨论。\"\n}"
+          },
+          "output_length": 6491
+        },
+        {
+          "max_rounds": 4,
+          "actual_rounds": 4,
+          "terminated_early": false,
+          "elapsed": 224.34126329421997,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 8,
+              "depth": 7,
+              "consistency": 8,
+              "novelty": 6,
+              "actionability": 7
+            },
+            "composite": 0.73,
+            "reason": "覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点较常规，缺乏颠覆性洞察。",
+            "raw_response": "{\n  \"completeness\": 8,\n  \"depth\": 7,\n  \"consistency\": 8,\n  \"novelty\": 6,\n  \"actionability\": 7,\n  \"brief_reason\": \"覆盖了所有四个维度，数据点丰富，推理链较深，但部分观点较常规，缺乏颠覆性洞察。\"\n}"
+          },
+          "output_length": 5902
+        },
+        {
+          "max_rounds": 4,
+          "actual_rounds": 4,
+          "terminated_early": false,
+          "elapsed": 263.71636033058167,
+          "synergy_gain": 0.39,
+          "quality": {
+            "scores": {
+              "completeness": 7,
+              "depth": 6,
+              "consistency": 8,
+              "novelty": 5,
+              "actionability": 6
+            },
+            "composite": 0.65,
+            "reason": "覆盖了所有四个维度并提供了具体模型和数据，但深度上多为现象描述，缺乏多层因果链分析；观点较常规，缺乏独到洞察；结论基本自洽但部分数据点（如性能差距百分比）在不同Agent间略有矛盾；可操作性一般，有方向但步骤不够具体。",
+            "raw_response": "{\n  \"completeness\": 7,\n  \"depth\": 6,\n  \"consistency\": 8,\n  \"novelty\": 5,\n  \"actionability\": 6,\n  \"brief_reason\": \"覆盖了所有四个维度并提供了具体模型和数据，但深度上多为现象描述，缺乏多层因果链分析；观点较常规，缺乏独到洞察；结论基本自洽但部分数据点（如性能差距百分比）在不同Agent间略有矛盾；可操作性一般，有方向但步骤不够具体。\"\n}"
+          },
+          "output_length": 6437
+        }
+      ]
+    },
+    "inverted_u_verified": false
+  },
+  "topology_switch_cost": {
+    "sequential": {
+      "stats": {
+        "mean": 0.41,
+        "std": 0.048,
+        "min": 0.35,
+        "max": 0.48,
+        "n": 5,
+        "values": [
+          0.45,
+          0.39,
+          0.35,
+          0.38,
+          0.48
+        ]
+      },
+      "representative": {
+        "topology": "sequential",
+        "switch_count": 0,
+        "switch_overhead": 0,
+        "elapsed": 47.86848425865173,
+        "quality": {
+          "scores": {
+            "completeness": 5,
+            "depth": 4,
+            "consistency": 6,
+            "novelty": 4,
+            "actionability": 3
+          },
+          "composite": 0.45,
+          "reason": "系统输出仅完成了阶段1的数据收集，阶段2的分析被截断且未按CDoL协议执行，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不全、分析浅层、缺乏可操作结论。",
+          "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"系统输出仅完成了阶段1的数据收集，阶段2的分析被截断且未按CDoL协议执行，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不全、分析浅层、缺乏可操作结论。\"\n}"
+        },
+        "output_length": 7564
+      },
+      "all_runs": [
+        {
+          "topology": "sequential",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 47.86848425865173,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.45,
+            "reason": "系统输出仅完成了阶段1的数据收集，阶段2的分析被截断且未按CDoL协议执行，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不全、分析浅层、缺乏可操作结论。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"系统输出仅完成了阶段1的数据收集，阶段2的分析被截断且未按CDoL协议执行，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不全、分析浅层、缺乏可操作结论。\"\n}"
+          },
+          "output_length": 7564
+        },
+        {
+          "topology": "sequential",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 49.557191371917725,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 3,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.39,
+            "reason": "输出覆盖了阶段1的数据收集和阶段4的报告，但阶段2和3的分析缺失，导致任务要求严重遗漏；推理停留在表面描述，缺乏深层因果链；阶段1和阶段4的结论存在矛盾（如开源与闭源分化 vs 开源生态爆发），内部不一致；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 3,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出覆盖了阶段1的数据收集和阶段4的报告，但阶段2和3的分析缺失，导致任务要求严重遗漏；推理停留在表面描述，缺乏深层因果链；阶段1和阶段4的结论存在矛盾（如开源与闭源分化 vs 开源生态爆发），内部不一致；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。\"\n}"
+          },
+          "output_length": 7398
+        },
+        {
+          "topology": "sequential",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 49.25134468078613,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 2
+            },
+            "composite": 0.35,
+            "reason": "输出严重偏离任务要求：阶段1数据收集正确但阶段2-4完全跑题，未按指定维度分析大模型趋势，而是转向金融投资分析，导致任务完成度极低；推理浅层且缺乏因果链，结论多为常识性陈述，无具体可执行步骤。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 2,\n  \"brief_reason\": \"输出严重偏离任务要求：阶段1数据收集正确但阶段2-4完全跑题，未按指定维度分析大模型趋势，而是转向金融投资分析，导致任务完成度极低；推理浅层且缺乏因果链，结论多为常识性陈述，无具体可执行步骤。\"\n}"
+          },
+          "output_length": 7359
+        },
+        {
+          "topology": "sequential",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 51.6706759929657,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 4
+            },
+            "composite": 0.38,
+            "reason": "输出严重偏离任务要求：阶段1仅提供了表格和简单分析，未输出指定JSON格式；阶段2内容被截断且包含无关文本；阶段4报告与任务无关，整体覆盖不足、分析浅显、缺乏独到见解。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 4,\n  \"brief_reason\": \"输出严重偏离任务要求：阶段1仅提供了表格和简单分析，未输出指定JSON格式；阶段2内容被截断且包含无关文本；阶段4报告与任务无关，整体覆盖不足、分析浅显、缺乏独到见解。\"\n}"
+          },
+          "output_length": 7972
+        },
+        {
+          "topology": "sequential",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 55.00015163421631,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 5,
+              "consistency": 6,
+              "novelty": 5,
+              "actionability": 4
+            },
+            "composite": 0.48,
+            "reason": "输出未按任务要求的4阶段结构执行，阶段1数据收集部分虽详细但偏离了JSON格式要求，阶段2-4内容缺失或混入无关分析，导致覆盖严重不足；推理有一定深度但缺乏因果链条，结论较常规，可操作性一般。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 5,\n  \"consistency\": 6,\n  \"novelty\": 5,\n  \"actionability\": 4,\n  \"brief_reason\": \"输出未按任务要求的4阶段结构执行，阶段1数据收集部分虽详细但偏离了JSON格式要求，阶段2-4内容缺失或混入无关分析，导致覆盖严重不足；推理有一定深度但缺乏因果链条，结论较常规，可操作性一般。\"\n}"
+          },
+          "output_length": 8569
+        }
+      ]
+    },
+    "hybrid": {
+      "stats": {
+        "mean": 0.414,
+        "std": 0.052,
+        "min": 0.35,
+        "max": 0.46,
+        "n": 5,
+        "values": [
+          0.45,
+          0.35,
+          0.46,
+          0.46,
+          0.35
+        ]
+      },
+      "representative": {
+        "topology": "hybrid",
+        "switch_count": 0,
+        "switch_overhead": 0,
+        "elapsed": 67.0861382484436,
+        "quality": {
+          "scores": {
+            "completeness": 5,
+            "depth": 4,
+            "consistency": 6,
+            "novelty": 4,
+            "actionability": 3
+          },
+          "composite": 0.45,
+          "reason": "阶段1数据收集较完整，但阶段2分析未按四个维度展开，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不足、深度浅、缺乏可操作步骤。",
+          "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"阶段1数据收集较完整，但阶段2分析未按四个维度展开，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不足、深度浅、缺乏可操作步骤。\"\n}"
+        },
+        "output_length": 10714
+      },
+      "all_runs": [
+        {
+          "topology": "hybrid",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 67.0861382484436,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.45,
+            "reason": "阶段1数据收集较完整，但阶段2分析未按四个维度展开，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不足、深度浅、缺乏可操作步骤。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"阶段1数据收集较完整，但阶段2分析未按四个维度展开，阶段3和阶段4内容与任务要求严重偏离，整体覆盖不足、深度浅、缺乏可操作步骤。\"\n}"
+          },
+          "output_length": 10714
+        },
+        {
+          "topology": "hybrid",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 64.8438458442688,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 2
+            },
+            "composite": 0.35,
+            "reason": "阶段1数据收集较完整，但阶段2输出完全偏离任务要求（从AI技术分析转向宏观经济与金融市场），导致整体严重不完整、深度不足、缺乏原创性且不可操作。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 2,\n  \"brief_reason\": \"阶段1数据收集较完整，但阶段2输出完全偏离任务要求（从AI技术分析转向宏观经济与金融市场），导致整体严重不完整、深度不足、缺乏原创性且不可操作。\"\n}"
+          },
+          "output_length": 9806
+        },
+        {
+          "topology": "hybrid",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 70.16953110694885,
+          "quality": {
+            "scores": {
+              "completeness": 6,
+              "depth": 5,
+              "consistency": 4,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.46,
+            "reason": "输出覆盖了阶段1和阶段4，但阶段2和阶段3内容缺失或严重不完整，导致整体覆盖不足；分析停留在表面描述，缺乏深层因果链；阶段4的结论与阶段1数据脱节，存在逻辑不一致；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。",
+            "raw_response": "{\n  \"completeness\": 6,\n  \"depth\": 5,\n  \"consistency\": 4,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出覆盖了阶段1和阶段4，但阶段2和阶段3内容缺失或严重不完整，导致整体覆盖不足；分析停留在表面描述，缺乏深层因果链；阶段4的结论与阶段1数据脱节，存在逻辑不一致；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。\"\n}"
+          },
+          "output_length": 11264
+        },
+        {
+          "topology": "hybrid",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 73.24211382865906,
+          "quality": {
+            "scores": {
+              "completeness": 6,
+              "depth": 5,
+              "consistency": 4,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.46,
+            "reason": "阶段1数据收集较完整，但阶段2分析深度不足且与阶段3交叉验证存在逻辑矛盾，阶段4报告偏离了原始任务要求，整体缺乏可操作步骤。",
+            "raw_response": "{\n  \"completeness\": 6,\n  \"depth\": 5,\n  \"consistency\": 4,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"阶段1数据收集较完整，但阶段2分析深度不足且与阶段3交叉验证存在逻辑矛盾，阶段4报告偏离了原始任务要求，整体缺乏可操作步骤。\"\n}"
+          },
+          "output_length": 11619
+        },
+        {
+          "topology": "hybrid",
+          "switch_count": 0,
+          "switch_overhead": 0,
+          "elapsed": 55.86112332344055,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 2
+            },
+            "composite": 0.35,
+            "reason": "输出仅完成了阶段1的数据收集，阶段2-4完全偏离任务要求，且阶段2内容不完整、与任务无关，严重遗漏任务核心部分。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 2,\n  \"brief_reason\": \"输出仅完成了阶段1的数据收集，阶段2-4完全偏离任务要求，且阶段2内容不完整、与任务无关，严重遗漏任务核心部分。\"\n}"
+          },
+          "output_length": 9158
+        }
+      ]
+    },
+    "dynamic": {
+      "stats": {
+        "mean": 0.401,
+        "std": 0.042,
+        "min": 0.35,
+        "max": 0.45,
+        "n": 5,
+        "values": [
+          0.39,
+          0.365,
+          0.45,
+          0.45,
+          0.35
+        ]
+      },
+      "representative": {
+        "topology": "dynamic",
+        "switch_count": 3,
+        "switch_overhead": 7.5,
+        "elapsed": 82.23751974105835,
+        "quality": {
+          "scores": {
+            "completeness": 5,
+            "depth": 4,
+            "consistency": 3,
+            "novelty": 4,
+            "actionability": 3
+          },
+          "composite": 0.39,
+          "reason": "输出仅完成了阶段1的数据收集，阶段2-4内容不完整或偏离任务要求，且阶段4与任务无关，导致覆盖严重不足；分析停留在表面描述，缺乏深层因果链；阶段3和4内容与任务要求矛盾，逻辑不连贯；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。",
+          "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 3,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出仅完成了阶段1的数据收集，阶段2-4内容不完整或偏离任务要求，且阶段4与任务无关，导致覆盖严重不足；分析停留在表面描述，缺乏深层因果链；阶段3和4内容与任务要求矛盾，逻辑不连贯；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。\"\n}"
+        },
+        "output_length": 12026
+      },
+      "all_runs": [
+        {
+          "topology": "dynamic",
+          "switch_count": 3,
+          "switch_overhead": 7.5,
+          "elapsed": 82.23751974105835,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 3,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.39,
+            "reason": "输出仅完成了阶段1的数据收集，阶段2-4内容不完整或偏离任务要求，且阶段4与任务无关，导致覆盖严重不足；分析停留在表面描述，缺乏深层因果链；阶段3和4内容与任务要求矛盾，逻辑不连贯；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 3,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出仅完成了阶段1的数据收集，阶段2-4内容不完整或偏离任务要求，且阶段4与任务无关，导致覆盖严重不足；分析停留在表面描述，缺乏深层因果链；阶段3和4内容与任务要求矛盾，逻辑不连贯；观点多为业界共识，缺乏独到洞察；结论空泛，缺乏具体可执行步骤。\"\n}"
+          },
+          "output_length": 12026
+        },
+        {
+          "topology": "dynamic",
+          "switch_count": 3,
+          "switch_overhead": 7.5,
+          "elapsed": 71.52246594429016,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 3
+            },
+            "composite": 0.365,
+            "reason": "输出严重偏离任务要求：阶段1数据收集正确但阶段2、3、4内容与任务无关（阶段2和3实际讨论数字化转型，阶段4讨论产业趋势），且阶段2输出不完整，整体覆盖度、深度和可操作性均不足。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出严重偏离任务要求：阶段1数据收集正确但阶段2、3、4内容与任务无关（阶段2和3实际讨论数字化转型，阶段4讨论产业趋势），且阶段2输出不完整，整体覆盖度、深度和可操作性均不足。\"\n}"
+          },
+          "output_length": 10209
+        },
+        {
+          "topology": "dynamic",
+          "switch_count": 3,
+          "switch_overhead": 7.5,
+          "elapsed": 62.271957874298096,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 3,
+              "actionability": 4
+            },
+            "composite": 0.45,
+            "reason": "阶段1数据收集较完整，但阶段2和阶段4严重偏离任务要求（阶段2未按CDoL协议输出多Agent协作分析，阶段4输出的是宏观经济分析而非AI技术报告），整体覆盖不足、分析浅层且缺乏可操作步骤。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 3,\n  \"actionability\": 4,\n  \"brief_reason\": \"阶段1数据收集较完整，但阶段2和阶段4严重偏离任务要求（阶段2未按CDoL协议输出多Agent协作分析，阶段4输出的是宏观经济分析而非AI技术报告），整体覆盖不足、分析浅层且缺乏可操作步骤。\"\n}"
+          },
+          "output_length": 8498
+        },
+        {
+          "topology": "dynamic",
+          "switch_count": 3,
+          "switch_overhead": 7.5,
+          "elapsed": 69.43980383872986,
+          "quality": {
+            "scores": {
+              "completeness": 5,
+              "depth": 4,
+              "consistency": 6,
+              "novelty": 4,
+              "actionability": 3
+            },
+            "composite": 0.45,
+            "reason": "输出覆盖了阶段1和部分阶段4，但阶段2和阶段3严重缺失，分析停留在表面描述，缺乏深层因果链和独到见解，结论空泛且可操作性低。",
+            "raw_response": "{\n  \"completeness\": 5,\n  \"depth\": 4,\n  \"consistency\": 6,\n  \"novelty\": 4,\n  \"actionability\": 3,\n  \"brief_reason\": \"输出覆盖了阶段1和部分阶段4，但阶段2和阶段3严重缺失，分析停留在表面描述，缺乏深层因果链和独到见解，结论空泛且可操作性低。\"\n}"
+          },
+          "output_length": 10096
+        },
+        {
+          "topology": "dynamic",
+          "switch_count": 3,
+          "switch_overhead": 7.5,
+          "elapsed": 68.79142928123474,
+          "quality": {
+            "scores": {
+              "completeness": 4,
+              "depth": 3,
+              "consistency": 5,
+              "novelty": 3,
+              "actionability": 2
+            },
+            "composite": 0.35,
+            "reason": "输出仅完成了阶段1的数据收集和阶段4的综合报告，完全缺失阶段2和阶段3的核心分析任务，且阶段4内容与任务要求的大模型趋势分析无关，整体严重偏离任务要求。",
+            "raw_response": "{\n  \"completeness\": 4,\n  \"depth\": 3,\n  \"consistency\": 5,\n  \"novelty\": 3,\n  \"actionability\": 2,\n  \"brief_reason\": \"输出仅完成了阶段1的数据收集和阶段4的综合报告，完全缺失阶段2和阶段3的核心分析任务，且阶段4内容与任务要求的大模型趋势分析无关，整体严重偏离任务要求。\"\n}"
+          },
+          "output_length": 10348
+        }
+      ]
+    },
+    "dynamic_better": false
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "simple": {
+    "NexusFlow": {
+      "scores": {
+        "completeness": 8,
+        "depth": 7,
+        "consistency": 9,
+        "novelty": 6,
+        "actionability": 7
+      },
+      "composite_01": 0.75,
+      "composite_100": 75.0,
+      "reason": "报告覆盖了所有任务要求，排名计算准确，深度分析有因果链条，但部分洞察（如俄罗斯的悖论）较常见，且行动建议偏宏观。",
+      "file": "nexusflow_real_output.md",
+      "output_length": 3295
+    },
+    "AutoGen": {
+      "scores": {
+        "completeness": 8,
+        "depth": 7,
+        "consistency": 9,
+        "novelty": 5,
+        "actionability": 6
+      },
+      "composite_01": 0.72,
+      "composite_100": 72.0,
+      "reason": "覆盖了所有任务要求，数据整理和排名计算准确，因果分析有一定深度，但缺乏独到见解，结论较常规。",
+      "file": "autogen_output.md",
+      "output_length": 6043
+    },
+    "CrewAI": {
+      "scores": {
+        "completeness": 9,
+        "depth": 8,
+        "consistency": 9,
+        "novelty": 7,
+        "actionability": 8
+      },
+      "composite_01": 0.83,
+      "composite_100": 83.0,
+      "reason": "覆盖了所有任务要求，数据准确，分析深入且逻辑自洽，提出了有洞察力的政策建议，但部分观点（如对南非和印度的分析）仍属常见共识，创新性略逊于顶尖水平。",
+      "file": "crewai_output.md",
+      "output_length": 6636
+    }
+  },
+  "complex": {
+    "NexusFlow": {
+      "scores": {
+        "completeness": 8,
+        "depth": 7,
+        "consistency": 9,
+        "novelty": 7,
+        "actionability": 6
+      },
+      "composite_01": 0.75,
+      "composite_100": 75.0,
+      "reason": "报告覆盖了所有6个评估维度，数据统一、逻辑自洽，但未来预测和具体建议略显空泛，创新性中等。",
+      "file": "nexusflow_complex_output.md",
+      "output_length": 13973
+    }
+  }
+}

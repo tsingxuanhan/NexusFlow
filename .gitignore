@@ -22,3 +22,6 @@ od-design/
 examples/output/
 .coverage
 htmlcov/
+
+# Historical version archives (not for git tracking)
+iteration/versions/

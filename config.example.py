@@ -166,7 +166,7 @@ TELLAGENT_CONFIG = {
 PROJECT_INFO = {
     "name": "铉枢·炉守",
     "full_name": "XuanHub - 面向低碳建筑材料研究的便携式AI工作站框架",
-    "version": "4.0",
+    "version": "2.9",
     "github_repo": "https://github.com/tsingxuanhan/xuan-hub",
     "lab": "济南大学绿色与智能建筑材料重点实验室",
     "advisor": "侯鹏坤",

@@ -24,4 +24,7 @@ examples/output/
 htmlcov/
 
 # Historical version archives (not for git tracking)
-iteration/versions/
+docs/iteration/versions/
+
+# CodeAct runtime output
+codeact/

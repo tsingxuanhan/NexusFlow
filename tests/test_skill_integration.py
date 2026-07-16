@@ -222,7 +222,7 @@ def test_planner_integration():
     """测试PlannerAgent与SkillRetriever的集成"""
     # 只需要测试导入和初始化，不需要完整的Agent运行
     try:
-        from agents.planner import SKILL_RETRIEVER_AVAILABLE, SkillRetriever
+        from nexusflow.agents.planner import SKILL_RETRIEVER_AVAILABLE, SkillRetriever
     except ImportError as e:
         if "crewai" in str(e):
             print("⚠️ Planner集成测试跳过：缺少crewai依赖")

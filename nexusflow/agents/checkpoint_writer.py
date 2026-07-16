@@ -39,21 +39,38 @@ from enum import Enum
 
 logger = logging.getLogger("CheckpointWriter")
 
-# 导入配置
+# 导入配置 — 优先从 config/config.yaml 加载，回退到 config.py（向后兼容）
 try:
-    from config import (
-        DEEPSEEK_API_KEY, DEEPSEEK_ENDPOINT,
-        MODELS, DEFAULT_PARAMS, REQUEST_TIMEOUT
+    from config import (  # noqa: F401 — 向后兼容旧的 config.py
+        DEEPSEEK_API_KEY as _cfg_key, DEEPSEEK_ENDPOINT as _cfg_endpoint,
+        MODELS as _cfg_models, DEFAULT_PARAMS as _cfg_params, REQUEST_TIMEOUT as _cfg_timeout
     )
 except ImportError:
-    DEEPSEEK_API_KEY = ""
-    DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
-    MODELS = {"pro": "deepseek-v4-pro", "flash": "deepseek-v4-flash"}
-    DEFAULT_PARAMS = {
-        "pro": {"temperature": 1.0, "top_p": 1.0, "max_tokens": 4096},
-        "flash": {"temperature": 1.0, "top_p": 1.0, "max_tokens": 2048}
-    }
-    REQUEST_TIMEOUT = 120
+    _cfg_key, _cfg_endpoint, _cfg_models, _cfg_params, _cfg_timeout = None, None, None, None, None
+
+import yaml as _yaml
+_config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'config', 'config.yaml')
+_cfg = {}
+if os.path.exists(_config_path):
+    try:
+        with open(_config_path, 'r', encoding='utf-8') as _f:
+            _cfg = _yaml.safe_load(_f) or {}
+    except Exception:
+        _cfg = {}
+
+DEEPSEEK_API_KEY = _cfg_key or os.environ.get("DEEPSEEK_API_KEY", "")
+DEEPSEEK_ENDPOINT = _cfg_endpoint or "https://api.deepseek.com/v1/chat/completions"
+MODELS = _cfg_models or {"pro": _cfg.get('models', {}).get('pro', {}).get('name', 'deepseek-v4-pro'),
+                          "flash": _cfg.get('models', {}).get('flash', {}).get('name', 'deepseek-v4-flash')}
+DEFAULT_PARAMS = _cfg_params or {
+    "pro": {"temperature": _cfg.get('models', {}).get('pro', {}).get('temperature', 1.0),
+            "top_p": _cfg.get('models', {}).get('pro', {}).get('top_p', 1.0),
+            "max_tokens": _cfg.get('models', {}).get('pro', {}).get('max_tokens', 4096)},
+    "flash": {"temperature": _cfg.get('models', {}).get('flash', {}).get('temperature', 1.0),
+              "top_p": _cfg.get('models', {}).get('flash', {}).get('top_p', 1.0),
+              "max_tokens": _cfg.get('models', {}).get('flash', {}).get('max_tokens', 2048)}
+}
+REQUEST_TIMEOUT = _cfg_timeout if _cfg_timeout is not None else _cfg.get('api', {}).get('timeout', 120)
 
 
 class ContextThreshold(Enum):

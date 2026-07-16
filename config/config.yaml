@@ -1,0 +1,388 @@
+# -*- coding: utf-8 -*-
+# ============================================================
+# NexusFlow 配置文件
+# 复制此文件为 config.yaml 并根据需要修改
+# 敏感信息（API Key等）请在 .env 中配置
+# ============================================================
+
+# ============================================================
+# 模型配置
+# ============================================================
+models:
+  pro:
+    name: "deepseek-v4-pro"
+    temperature: 1.0
+    top_p: 1.0
+    max_tokens: 4096
+    frequency_penalty: 0
+    presence_penalty: 0
+  flash:
+    name: "deepseek-v4-flash"
+    temperature: 1.0
+    top_p: 1.0
+    max_tokens: 2048
+    frequency_penalty: 0
+    presence_penalty: 0
+
+# ============================================================
+# API 配置
+# ============================================================
+api:
+  timeout: 120
+  max_retries: 3
+  retry_delay: 5
+  max_history_length: 50
+
+# ============================================================
+# 领域注册
+# ============================================================
+domains:
+  materials:
+    display_name: "低碳建筑材料"
+    description: "SSC/MBCMs/LC3/纳米改性/混凝土耐久性"
+    default_model: "flash"
+  ai_ml:
+    display_name: "AI与机器学习"
+    description: "深度学习/NLP/LLM/Agent框架/RAG"
+    default_model: "flash"
+  general:
+    display_name: "通用"
+    description: "通用知识问答与任务执行"
+    default_model: "flash"
+
+# ============================================================
+# 记忆系统
+# ============================================================
+memory:
+  core:
+    max_tokens: 4000
+    auto_update: true
+    persist: true
+    file: "data/core_memory.json"
+  archival:
+    index_type: "ngram_tfidf"
+    chunk_size: 500
+    overlap: 50
+    top_k: 5
+    persist: true
+    file: "data/archival_memory.json"
+  recall:
+    max_episodes: 1000
+    decay_rate: 0.01
+    dopamine_threshold: 0.3
+    persist: true
+    file: "data/recall_memory.json"
+
+# ============================================================
+# 上下文压缩器
+# ============================================================
+compactor:
+  threshold: 8000
+  keep_recent: 4
+  model: "flash"
+
+# ============================================================
+# Plan/Execute/Reflect 模式
+# ============================================================
+mode:
+  plan:
+    model: "pro"
+    temperature: 1.0
+    max_tokens: 4096
+  execute:
+    model: "flash"
+    temperature: 0.3
+    max_tokens: 4096
+  reflect:
+    model: "pro"
+    temperature: 0.7
+    max_tokens: 4096
+
+# ============================================================
+# 规划引擎
+# ============================================================
+task_tree:
+  auto_propagate: true
+  max_depth: 4
+  default_model:
+    plan: "pro"
+    execute: "flash"
+    research: "flash"
+    review: "flash"
+    codeact: "flash"
+
+tree_of_thought:
+  branch_factor: 3
+  max_depth: 4
+  search_strategy: "bfs"
+  evaluation_threshold: 0.5
+  strategy_model: "pro"
+  evaluation_model: "flash"
+
+reflection:
+  replan_threshold: 0.4
+  local_replan_threshold: 0.6
+  max_iterations: 3
+  experience_confidence_init: 0.6
+  auto_extract_rules: true
+
+tellagent:
+  strategy_model: "pro"
+  execution_model: "flash"
+  auto_evaluate: true
+  auto_replan: true
+  max_replan_attempts: 2
+
+# ============================================================
+# 工具生态
+# ============================================================
+tools:
+  web_search:
+    enabled: true
+    default_engine: "general"
+    default_limit: 5
+    timeout: 10
+  file_ops:
+    enabled: true
+    max_read_lines: 1000
+    max_write_size: 10485760
+    allowed_roots:
+      - "./data"
+      - "./output"
+      - "./knowledge"
+      - "./reports"
+  data_query:
+    enabled: true
+    default_limit: 100
+    max_dataset_size: 100000
+  api_caller:
+    enabled: true
+    default_timeout: 30
+    max_retries: 2
+  calculator:
+    enabled: true
+    numpy_available: true
+  git_ops:
+    enabled: true
+    allowed_commands:
+      - "status"
+      - "log"
+      - "diff"
+      - "add"
+      - "commit"
+      - "push"
+      - "pull"
+      - "fetch"
+      - "branch"
+      - "tag"
+      - "checkout"
+      - "merge"
+      - "remote"
+      - "show"
+  pdf_reader:
+    enabled: true
+    max_pages: 50
+    extract_tables: false
+  browser:
+    enabled: true
+    default_wait: 3
+    simple_mode: true
+  scheduler:
+    enabled: true
+    max_tasks: 50
+
+codeact:
+  timeout: 15
+  max_output_length: 10000
+  enable_guardrails: true
+  persist_locals: true
+
+tool_registry:
+  enable_guardrails: true
+  auto_discover_mcp: false
+  mcp_registry_url: "https://registry.modelcontextprotocol.io"
+
+# ============================================================
+# MCP
+# ============================================================
+mcp:
+  protocol_version: "2026-07-01"
+  registry_url: "https://registry.modelcontextprotocol.io"
+  discover_on_start: false
+  servers: {}
+  server:
+    enabled: false
+    host: "127.0.0.1"
+    port: 9090
+    mode: "stdio"
+
+# ============================================================
+# A2A Gateway
+# ============================================================
+a2a:
+  enabled: true
+  self_agent_id: "NexusFlow"
+  discover_on_start: false
+  known_agents: {}
+
+# ============================================================
+# 知识记忆
+# ============================================================
+memory_manager:
+  data_dir: "data"
+  core_max_tokens: 4000
+  archival_chunk_size: 500
+  archival_chunk_overlap: 50
+  recall_max_episodes: 1000
+  recall_decay_rate: 0.01
+  recall_dopamine_threshold: 0.3
+  auto_save: true
+
+sleeptime:
+  dream_interval: 3600
+  dopamine_threshold: 0.3
+  decay_rate: 0.01
+  pattern_min_frequency: 2
+  rule_min_confidence: 0.5
+  model: "flash"
+
+multihop_rag:
+  max_hops: 3
+  top_k_per_hop: 5
+  sufficient_threshold: 0.7
+  llm_query_generation: true
+
+knowledge_domains:
+  materials:
+    display_name: "材料科学"
+    priority: "P0"
+    target_docs: 15
+    knowledge_dir: "knowledge"
+  ai_ml:
+    display_name: "AI与机器学习"
+    priority: "P0"
+    target_docs: 20
+    knowledge_dir: "knowledge/ai_ml"
+  computer_science:
+    display_name: "计算机科学"
+    priority: "P0"
+    target_docs: 15
+    knowledge_dir: "knowledge/cs"
+  math_stats:
+    display_name: "数学与统计"
+    priority: "P1"
+    target_docs: 10
+    knowledge_dir: "knowledge/math"
+  physics:
+    display_name: "物理学"
+    priority: "P1"
+    target_docs: 10
+    knowledge_dir: "knowledge/physics"
+  biology:
+    display_name: "生物学"
+    priority: "P2"
+    target_docs: 8
+    knowledge_dir: "knowledge/biology"
+  economics:
+    display_name: "经济学"
+    priority: "P2"
+    target_docs: 8
+    knowledge_dir: "knowledge/economics"
+  law:
+    display_name: "法律"
+    priority: "P2"
+    target_docs: 5
+    knowledge_dir: "knowledge/law"
+  psychology:
+    display_name: "心理学"
+    priority: "P2"
+    target_docs: 5
+    knowledge_dir: "knowledge/psychology"
+  history_philosophy:
+    display_name: "历史与哲学"
+    priority: "P2"
+    target_docs: 5
+    knowledge_dir: "knowledge/history"
+
+# ============================================================
+# AGI 核心能力
+# ============================================================
+autonomous:
+  max_decomposition_depth: 3
+  max_execution_steps: 20
+  confidence_threshold: 0.6
+  strategy_model: "pro"
+  execution_model: "flash"
+  auto_record_to_memory: true
+
+meta_cognition:
+  confidence_threshold_high: 0.8
+  confidence_threshold_low: 0.4
+  auto_gap_scan: true
+  auto_self_improve: false
+  gap_scan_interval: 86400
+
+cross_domain:
+  similarity_threshold: 0.5
+  max_analogies: 5
+  auto_transfer: false
+  store_transfer_patterns: true
+  validation_threshold: 0.5
+
+continuous_learning:
+  core_update_threshold: 0.7
+  consolidation_interval: 3600
+  batch_buffer_size: 10
+  auto_evaluate_outcome: true
+  auto_fill_p0_gaps: true
+
+agentos:
+  host: "127.0.0.1"
+  port: 9090
+  mode: "http"
+  cors_enabled: true
+  api_key_required: false
+  max_concurrent_tasks: 10
+
+# ============================================================
+# 认知分工（Phase 7）
+# ============================================================
+cdol:
+  enabled: true
+  max_rounds: 2
+  min_bridgeability: 0.3
+  false_consensus_threshold: 0.7
+
+# ============================================================
+# 上下文管理
+# ============================================================
+context:
+  window_default: 4096
+  window_min: 512
+  window_max: 32768
+  laziness_check_interval: 5
+  global_sync_interval: 10
+
+# ============================================================
+# 项目信息
+# ============================================================
+project:
+  name: "铉枢·炉守"
+  full_name: "XuanHub - 面向低碳建筑材料研究的便携式AI工作站框架"
+  version: "2.9"
+  github_repo: "https://github.com/tsingxuanhan/xuan-hub"
+  lab: "济南大学绿色与智能建筑材料重点实验室"
+  advisor: "侯鹏坤"
+  directions:
+    - "SSC"
+    - "MBCMs"
+    - "LC3"
+    - "纳米改性混凝土"
+    - "混凝土耐久性"
+
+# ============================================================
+# 输出
+# ============================================================
+output:
+  dir: "./output"
+  knowledge_dir: "./knowledge"

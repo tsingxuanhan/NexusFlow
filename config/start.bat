@@ -99,4 +99,4 @@ echo   Total VRAM: ~15.6GB / 16GB
 echo ==========================================================
 echo.
 
-python "%~dp0nexusflow_server.py"
+python "%~dp0..\server\nexusflow_server.py"

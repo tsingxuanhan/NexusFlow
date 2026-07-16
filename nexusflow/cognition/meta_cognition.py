@@ -12,6 +12,7 @@ Agent的自我认知能力：
 """
 
 import json
+import os
 import re
 import time
 import logging
@@ -265,11 +266,23 @@ class MetaCognition:
             return gaps
 
         # 获取领域配置
-        try:
-            from config import KNOWLEDGE_DOMAINS
-            domains_config = KNOWLEDGE_DOMAINS
-        except ImportError:
-            domains_config = {}
+        # 加载 KNOWLEDGE_DOMAINS — 优先 YAML > config.py > 默认空字典
+        domains_config = {}
+        _mc_cfg_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'config', 'config.yaml')
+        if os.path.exists(_mc_cfg_path):
+            try:
+                import yaml as _yaml
+                with open(_mc_cfg_path, 'r', encoding='utf-8') as _f:
+                    _mc_cfg = _yaml.safe_load(_f) or {}
+                domains_config = _mc_cfg.get('knowledge_domains', {})
+            except Exception:
+                pass
+        if not domains_config:
+            try:
+                from config import KNOWLEDGE_DOMAINS  # noqa: F401 — 向后兼容
+                domains_config = KNOWLEDGE_DOMAINS
+            except ImportError:
+                domains_config = {}
 
         for domain_key, config in domains_config.items():
             if domain and domain_key != domain:

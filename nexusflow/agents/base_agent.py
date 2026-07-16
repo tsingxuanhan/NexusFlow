@@ -21,20 +21,43 @@ class _nullcontext:
     def __enter__(self): return self
     def __exit__(self, *args): pass
 
-# 导入配置
+# 导入配置 — 优先从 config/config.yaml 加载，回退到 config.py（向后兼容）
+import os as _os
+_config = {}
+_config_path = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), 'config', 'config.yaml')
+if _os.path.exists(_config_path):
+    try:
+        import yaml
+        with open(_config_path, 'r', encoding='utf-8') as _f:
+            _config = yaml.safe_load(_f) or {}
+    except (ImportError, Exception):
+        _config = {}
+
+# 从 YAML 配置提取常用变量（优先 YAML > config.py > 环境变量 > 默认值）
+DEEPSEEK_API_KEY = (_config.get('models', {}).get('pro', {}).get('name')
+                    if False else "")  # placeholder, env var takes priority
 try:
-    from config import *
+    from config import *  # noqa: F401,F403 — 向后兼容旧的 config.py
 except ImportError:
-    # 备用配置
-    import os
-    DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-    DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
-    MODELS = {"pro": "deepseek-v4-pro", "flash": "deepseek-v4-flash"}
-    DEFAULT_PARAMS = {
-        "pro": {"temperature": 1.0, "top_p": 1.0, "max_tokens": 4096},
-        "flash": {"temperature": 1.0, "top_p": 1.0, "max_tokens": 2048}
+    pass
+
+DEEPSEEK_API_KEY = _os.environ.get("DEEPSEEK_API_KEY", DEEPSEEK_API_KEY if 'DEEPSEEK_API_KEY' in dir() else "")
+DEEPSEEK_ENDPOINT = _os.environ.get("DEEPSEEK_ENDPOINT", "https://api.deepseek.com/v1/chat/completions")
+MODELS = {"pro": _config.get('models', {}).get('pro', {}).get('name', 'deepseek-v4-pro'),
+          "flash": _config.get('models', {}).get('flash', {}).get('name', 'deepseek-v4-flash')}
+DEFAULT_PARAMS = {
+    "pro": {
+        "temperature": _config.get('models', {}).get('pro', {}).get('temperature', 1.0),
+        "top_p": _config.get('models', {}).get('pro', {}).get('top_p', 1.0),
+        "max_tokens": _config.get('models', {}).get('pro', {}).get('max_tokens', 4096),
+    },
+    "flash": {
+        "temperature": _config.get('models', {}).get('flash', {}).get('temperature', 1.0),
+        "top_p": _config.get('models', {}).get('flash', {}).get('top_p', 1.0),
+        "max_tokens": _config.get('models', {}).get('flash', {}).get('max_tokens', 2048),
     }
-    REQUEST_TIMEOUT = 120
+}
+REQUEST_TIMEOUT = _config.get('api', {}).get('timeout', 120)
 
 # 导入增强模块
 from .checkpoint import (

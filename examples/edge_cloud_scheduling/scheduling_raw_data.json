@@ -1,0 +1,672 @@
+{
+  "experiment_time": "2026-07-17T12:42:52.721782",
+  "elapsed_seconds": 0.0014116764068603516,
+  "policies": {
+    "privacy_first": [
+      {
+        "task_id": "T01_privacy_health",
+        "description": "个人健康数据分析（隐私等级：敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Privacy-sensitive: forced to edge tier"
+      },
+      {
+        "task_id": "T02_realtime_chat",
+        "description": "实时对话交互（低延迟要求）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T03_complex_reasoning",
+        "description": "复杂逻辑推理（高算力需求）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.9205665024630543,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.921 at fog"
+      },
+      {
+        "task_id": "T04_batch_cost",
+        "description": "大规模批处理（成本敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T05_mega_context",
+        "description": "超长文档分析（超大上下文窗口）",
+        "tier": "cloud",
+        "resource": "deepseek-api",
+        "confidence": 0.7692028985507247,
+        "latency_ms": 150.0,
+        "cost": 0.0005,
+        "privacy": false,
+        "fallback": "cloud",
+        "reason": "Balanced selection: score=0.769 at cloud"
+      },
+      {
+        "task_id": "T06_offline_simple",
+        "description": "离线简单分类任务",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T07_high_quality",
+        "description": "高质量科研分析（要求最强模型）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.9205665024630543,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.921 at fog"
+      },
+      {
+        "task_id": "T08_privacy_latency",
+        "description": "隐私+低延迟双约束（医疗实时监护）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Privacy-sensitive: forced to edge tier"
+      },
+      {
+        "task_id": "T09_general",
+        "description": "通用文本处理（无特殊约束）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T10_gpu_medium",
+        "description": "需GPU的中等任务（代码生成）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.9205665024630543,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.921 at fog"
+      }
+    ],
+    "latency_first": [
+      {
+        "task_id": "T01_privacy_health",
+        "description": "个人健康数据分析（隐私等级：敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Low latency: 5.0ms < budget 10000ms"
+      },
+      {
+        "task_id": "T02_realtime_chat",
+        "description": "实时对话交互（低延迟要求）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Low latency: 5.0ms < budget 2000ms"
+      },
+      {
+        "task_id": "T03_complex_reasoning",
+        "description": "复杂逻辑推理（高算力需求）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.85,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Fog latency acceptable: 15.0ms"
+      },
+      {
+        "task_id": "T04_batch_cost",
+        "description": "大规模批处理（成本敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Low latency: 5.0ms < budget 60000ms"
+      },
+      {
+        "task_id": "T05_mega_context",
+        "description": "超长文档分析（超大上下文窗口）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.0737,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Low latency: 5.0ms < budget 60000ms"
+      },
+      {
+        "task_id": "T06_offline_simple",
+        "description": "离线简单分类任务",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Low latency: 5.0ms < budget 5000ms"
+      },
+      {
+        "task_id": "T07_high_quality",
+        "description": "高质量科研分析（要求最强模型）",
+        "tier": "fog",
+        "resource": "campus-a100-server",
+        "confidence": 0.8,
+        "latency_ms": 30.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Fog latency acceptable: 30.0ms"
+      },
+      {
+        "task_id": "T08_privacy_latency",
+        "description": "隐私+低延迟双约束（医疗实时监护）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Low latency: 5.0ms < budget 1000ms"
+      },
+      {
+        "task_id": "T09_general",
+        "description": "通用文本处理（无特殊约束）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Low latency: 5.0ms < budget 30000ms"
+      },
+      {
+        "task_id": "T10_gpu_medium",
+        "description": "需GPU的中等任务（代码生成）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.85,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Fog latency acceptable: 15.0ms"
+      }
+    ],
+    "edge_preferred": [
+      {
+        "task_id": "T01_privacy_health",
+        "description": "个人健康数据分析（隐私等级：敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from edge"
+      },
+      {
+        "task_id": "T02_realtime_chat",
+        "description": "实时对话交互（低延迟要求）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from edge"
+      },
+      {
+        "task_id": "T03_complex_reasoning",
+        "description": "复杂逻辑推理（高算力需求）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.85,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from fog"
+      },
+      {
+        "task_id": "T04_batch_cost",
+        "description": "大规模批处理（成本敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from edge"
+      },
+      {
+        "task_id": "T05_mega_context",
+        "description": "超长文档分析（超大上下文窗口）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.0737,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from edge"
+      },
+      {
+        "task_id": "T06_offline_simple",
+        "description": "离线简单分类任务",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from edge"
+      },
+      {
+        "task_id": "T07_high_quality",
+        "description": "高质量科研分析（要求最强模型）",
+        "tier": "fog",
+        "resource": "campus-a100-server",
+        "confidence": 0.8,
+        "latency_ms": 30.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from fog"
+      },
+      {
+        "task_id": "T08_privacy_latency",
+        "description": "隐私+低延迟双约束（医疗实时监护）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from edge"
+      },
+      {
+        "task_id": "T09_general",
+        "description": "通用文本处理（无特殊约束）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": true,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from edge"
+      },
+      {
+        "task_id": "T10_gpu_medium",
+        "description": "需GPU的中等任务（代码生成）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.85,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Edge preferred: selected from fog"
+      }
+    ],
+    "cost_first": [
+      {
+        "task_id": "T01_privacy_health",
+        "description": "个人健康数据分析（隐私等级：敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at edge"
+      },
+      {
+        "task_id": "T02_realtime_chat",
+        "description": "实时对话交互（低延迟要求）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at edge"
+      },
+      {
+        "task_id": "T03_complex_reasoning",
+        "description": "复杂逻辑推理（高算力需求）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.85,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at fog"
+      },
+      {
+        "task_id": "T04_batch_cost",
+        "description": "大规模批处理（成本敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at edge"
+      },
+      {
+        "task_id": "T05_mega_context",
+        "description": "超长文档分析（超大上下文窗口）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.0737,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at edge"
+      },
+      {
+        "task_id": "T06_offline_simple",
+        "description": "离线简单分类任务",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at edge"
+      },
+      {
+        "task_id": "T07_high_quality",
+        "description": "高质量科研分析（要求最强模型）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.85,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at fog"
+      },
+      {
+        "task_id": "T08_privacy_latency",
+        "description": "隐私+低延迟双约束（医疗实时监护）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at edge"
+      },
+      {
+        "task_id": "T09_general",
+        "description": "通用文本处理（无特殊约束）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at edge"
+      },
+      {
+        "task_id": "T10_gpu_medium",
+        "description": "需GPU的中等任务（代码生成）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.85,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "-",
+        "reason": "Lowest cost: 0.000000/token at fog"
+      }
+    ],
+    "balanced": [
+      {
+        "task_id": "T01_privacy_health",
+        "description": "个人健康数据分析（隐私等级：敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T02_realtime_chat",
+        "description": "实时对话交互（低延迟要求）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T03_complex_reasoning",
+        "description": "复杂逻辑推理（高算力需求）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.9205665024630543,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.921 at fog"
+      },
+      {
+        "task_id": "T04_batch_cost",
+        "description": "大规模批处理（成本敏感）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T05_mega_context",
+        "description": "超长文档分析（超大上下文窗口）",
+        "tier": "cloud",
+        "resource": "deepseek-api",
+        "confidence": 0.7692028985507247,
+        "latency_ms": 150.0,
+        "cost": 0.0005,
+        "privacy": false,
+        "fallback": "cloud",
+        "reason": "Balanced selection: score=0.769 at cloud"
+      },
+      {
+        "task_id": "T06_offline_simple",
+        "description": "离线简单分类任务",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T07_high_quality",
+        "description": "高质量科研分析（要求最强模型）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.9205665024630543,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.921 at fog"
+      },
+      {
+        "task_id": "T08_privacy_latency",
+        "description": "隐私+低延迟双约束（医疗实时监护）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T09_general",
+        "description": "通用文本处理（无特殊约束）",
+        "tier": "edge",
+        "resource": "laptop-local-ollama",
+        "confidence": 0.9485074626865673,
+        "latency_ms": 5.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.949 at edge"
+      },
+      {
+        "task_id": "T10_gpu_medium",
+        "description": "需GPU的中等任务（代码生成）",
+        "tier": "fog",
+        "resource": "lab-workstation-rtx4090",
+        "confidence": 0.9205665024630543,
+        "latency_ms": 15.0,
+        "cost": 0.0,
+        "privacy": false,
+        "fallback": "fog",
+        "reason": "Balanced selection: score=0.921 at fog"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "scenario": "算力不足上抛",
+      "task": "mig_01_heavy_compute",
+      "from": "edge",
+      "to": "cloud",
+      "success": true,
+      "reason": "Edge层GPU显存不足，任务上抛到Cloud"
+    },
+    {
+      "scenario": "隐私触发下推",
+      "task": "mig_02_privacy_trigger",
+      "from": "cloud",
+      "to": "edge",
+      "success": true,
+      "reason": "检测到PII数据，强制迁移到Edge层"
+    },
+    {
+      "scenario": "结果下发渲染",
+      "task": "mig_03_result_delivery",
+      "from": "cloud",
+      "to": "fog",
+      "success": true,
+      "reason": "Cloud推理完成，结果下发到Fog渲染"
+    }
+  ],
+  "failure_tests": [
+    {
+      "scenario": "所有资源可用",
+      "task": "T01_privacy_health",
+      "tier": "edge",
+      "resource": "laptop-local-ollama",
+      "confidence": 0.9485074626865673
+    },
+    {
+      "scenario": "Edge层宕机（隐私任务）",
+      "task": "T01_privacy_health",
+      "tier": "fog",
+      "resource": "lab-workstation-rtx4090",
+      "confidence": 0.9205665024630543
+    },
+    {
+      "scenario": "Fog层全部宕机+需GPU",
+      "task": "T03_complex_reasoning",
+      "tier": "cloud",
+      "resource": "",
+      "confidence": 0.0
+    },
+    {
+      "scenario": "Edge宕机+隐私敏感任务",
+      "task": "T08_privacy_latency",
+      "tier": "cloud",
+      "resource": "deepseek-api",
+      "confidence": 0.7692028985507247
+    }
+  ]
+}

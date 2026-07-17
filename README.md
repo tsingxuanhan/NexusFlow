@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![Version](https://img.shields.io/badge/Version-2.9-green.svg)]()
-[![Code Size](https://img.shields.io/badge/Code-442%20Python%20files%20%7C%2037%2B%20modules-orange.svg)]()
+[![Code Size](https://img.shields.io/badge/Code-144%20Python%20files%20%7C%2051%20modules-orange.svg)]()
 [![Benchmarks](https://img.shields.io/badge/Benchmarks-5%20Stages%20%7C%2080%20Steps%20E2E-red.svg)]()
 
 *Where cognitive diversity meets dynamic topology.*
@@ -35,12 +35,12 @@
 
 ## 核心特性
 
-- **CDoL 认知分工引擎**（1,960 行）：六种视角分解策略 + 三轮有损通信协议 + FusionJudge 虚假一致检测，将"信息不对称"从缺陷转化为认知资源
+- **CDoL 认知分工引擎**（2,058 行）：六种视角分解策略 + 三轮有损通信协议 + FusionJudge 虚假一致检测，将"信息不对称"从缺陷转化为认知资源
 - **自适应上下文管理器**（1,642 行）：解决清华 & OpenBMB 发现的"大窗口懒惰症"——上下文越大，Agent 越倾向浅层推理
 - **三层信息架构**（AgentInformationPolicy，511 行）：全局视野层 / CDoL 参与层 / 旁观记录层，为每个 Agent 分配角色化 ContextMask
 - **动态拓扑路由器**（869 行）：运行时重建 Agent 协作图，支持五种拓扑模式（Sequential / Parallel / Hybrid / Star / Dynamic）
 - **端边云三层调度器**（535 行）：隐私优先调度，云端 DeepSeek API + 本地 Ollama 兜底
-- **统一编排器**（NexusOrchestrator，478 行）：自动路由分类（simple / research / coding / cdol），任务完成后自动触发 Archivist 蒸馏归档
+- **统一编排器**（NexusOrchestrator，479 行）：自动路由分类（simple / research / coding / cdol），任务完成后自动触发 Archivist 蒸馏归档
 
 ---
 
@@ -286,10 +286,10 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 
 | 指标 | 数值 |
 |------|------|
-| 总文件数 | **1,040** |
-| Python 文件 | **442** |
+| 总文件数 | **444**（git tracked） |
+| Python 文件 | **144** |
 | 仓库大小 | **~14 MB** |
-| 核心模块 | **37+** |
+| 核心模块 | **51** |
 | Agent 角色 | 10 |
 | 内置工具 | 17 |
 | 记忆层级 | 4 层 |

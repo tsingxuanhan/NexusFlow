@@ -1,0 +1,141 @@
+{
+  "experiment": "WHO BRICS五国健康分析 - 多框架横向对比",
+  "date": "2026-07-17T14:55:50.307706",
+  "task": "WHO GHO BRICS五国健康指标分析",
+  "llm": "DeepSeek Chat (deepseek-chat)",
+  "frameworks": [
+    {
+      "name": "NexusFlow",
+      "version": "v2.9.1",
+      "mode": "real",
+      "score_total": 75.0,
+      "scores": {
+        "data_accuracy": 9.0,
+        "ranking_correctness": 9.0,
+        "analysis_depth": 7.0,
+        "methodology": 8.0,
+        "completeness": 9.0,
+        "cross_validation": 8.0,
+        "uncertainty": 6.0,
+        "actionability": 7.0,
+        "consistency": 9.0,
+        "reproducibility": 5.0
+      },
+      "resources": {
+        "elapsed_seconds": 69.5,
+        "llm_calls": 31,
+        "total_api_calls": 43,
+        "tokens": 20500,
+        "code_lines": 200
+      },
+      "features": {
+        "dynamic_topology": true,
+        "cross_validation": true,
+        "self_correction": true,
+        "checkpoint_recovery": true,
+        "multi_agent_roles": 6,
+        "cdol_rounds": 3
+      }
+    },
+    {
+      "name": "AutoGen",
+      "version": "v0.7.5",
+      "mode": "real",
+      "score_total": 72.0,
+      "scores": {
+        "data_accuracy": 8.0,
+        "ranking_correctness": 8.0,
+        "analysis_depth": 7.0,
+        "methodology": 7.0,
+        "completeness": 8.0,
+        "cross_validation": 4.0,
+        "uncertainty": 6.0,
+        "actionability": 6.0,
+        "consistency": 9.0,
+        "reproducibility": 5.0
+      },
+      "resources": {
+        "elapsed_seconds": 110.0,
+        "llm_calls": 2,
+        "total_api_calls": 5,
+        "tokens": 2400,
+        "code_lines": 49
+      },
+      "features": {
+        "dynamic_topology": false,
+        "cross_validation": false,
+        "self_correction": true,
+        "checkpoint_recovery": false,
+        "multi_agent_roles": 2,
+        "conversation_rounds": 2
+      }
+    },
+    {
+      "name": "CrewAI",
+      "version": "latest",
+      "mode": "simulated",
+      "score_total": 61.5,
+      "scores": {
+        "data_accuracy": 8.0,
+        "ranking_correctness": 6.0,
+        "analysis_depth": 6.0,
+        "methodology": 5.0,
+        "completeness": 8.0,
+        "cross_validation": 2.0,
+        "uncertainty": 7.0,
+        "actionability": 6.0,
+        "consistency": 7.0,
+        "reproducibility": 5.0
+      },
+      "resources": {
+        "elapsed_seconds": 45.0,
+        "llm_calls": 9,
+        "total_api_calls": 9,
+        "tokens": 8000,
+        "code_lines": 80
+      },
+      "features": {
+        "dynamic_topology": false,
+        "cross_validation": false,
+        "self_correction": false,
+        "checkpoint_recovery": false,
+        "multi_agent_roles": 3,
+        "process_type": "sequential"
+      }
+    },
+    {
+      "name": "LangGraph",
+      "version": "latest",
+      "mode": "simulated",
+      "score_total": 63.8,
+      "scores": {
+        "data_accuracy": 8.0,
+        "ranking_correctness": 6.0,
+        "analysis_depth": 5.0,
+        "methodology": 5.0,
+        "completeness": 6.0,
+        "cross_validation": 2.0,
+        "uncertainty": 7.0,
+        "actionability": 5.0,
+        "consistency": 7.5,
+        "reproducibility": 5.0
+      },
+      "resources": {
+        "elapsed_seconds": 35.0,
+        "llm_calls": 5,
+        "total_api_calls": 5,
+        "tokens": 12500,
+        "code_lines": 120
+      },
+      "features": {
+        "dynamic_topology": false,
+        "cross_validation": false,
+        "self_correction": true,
+        "checkpoint_recovery": false,
+        "multi_agent_roles": 4,
+        "graph_nodes": 4,
+        "max_revisions": 2
+      }
+    }
+  ]
+}

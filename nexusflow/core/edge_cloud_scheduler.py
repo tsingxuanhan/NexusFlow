@@ -23,7 +23,7 @@ Edge-Fog-Cloud Scheduler — 受TEN Agent架构启发
 import logging
 import time
 import uuid
-from typing import Any, Dict, List, Optional, Callable
+from typing import Any, Dict, List, Optional, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -57,6 +57,7 @@ class TierResource:
     cpu_cores: int = 4
     gpu_count: int = 0
     gpu_memory_gb: float = 0.0
+    gpu_architecture: str = ""   # GPU架构: "ampere" / "ada" / "blackwell" / ""（无GPU）
     ram_gb: float = 16.0
     storage_gb: float = 100.0
     
@@ -533,3 +534,102 @@ class EdgeCloudScheduler:
                 for tier, resources in self._tiers.items()
             },
         }
+
+
+# ============ Embedding 模型路由 ============
+
+class EmbeddingModelRouter:
+    """
+    GPU 感知的 Embedding 模型路由器
+
+    根据部署层资源的硬件规格自动选择最优 Nemotron 模型版本。
+    路由逻辑（二维）：
+    1. 查 TierResource.gpu_memory_gb → 可用模型集合
+    2. 查 TierResource.gpu_architecture → 排除不兼容量化格式
+
+    用法:
+        router = EmbeddingModelRouter()
+        model_name = router.select(resource)  # → "nemotron-1b-bf16"
+    """
+
+    MODEL_SPECS = {
+        "nemotron-8b-bf16": {
+            "vram_gb": 16.0,
+            "arch_required": None,     # 任何 GPU 架构都行
+            "quality": 0.95,
+            "description": "8B全精度，RTEB榜首",
+        },
+        "nemotron-1b-bf16": {
+            "vram_gb": 2.3,
+            "arch_required": None,
+            "quality": 0.85,
+            "description": "1B轻量，边缘首选",
+        },
+        "nemotron-1b-nvfp4": {
+            "vram_gb": 1.2,
+            "arch_required": "blackwell",  # 仅 Blackwell 有硬件加速
+            "quality": 0.93,
+            "description": "NVFP4量化，Blackwell专属",
+        },
+        "nemotron-api": {
+            "vram_gb": 0.0,
+            "arch_required": None,
+            "quality": 0.85,
+            "description": "API模式，无本地GPU",
+        },
+    }
+
+    def select(self, resource: TierResource) -> str:
+        """
+        给定资源规格，返回最优模型名
+
+        选择策略：
+        1. 筛选显存足够的模型
+        2. 筛选架构兼容的模型
+        3. 从候选中选精度最高的
+        4. 无候选则返回 API 模式
+        """
+        candidates = []
+
+        for name, spec in self.MODEL_SPECS.items():
+            if name == "nemotron-api":
+                continue  # API 作为兜底，不在主流程选
+
+            # 显存检查
+            if spec["vram_gb"] > resource.gpu_memory_gb:
+                continue
+
+            # 架构检查
+            if spec["arch_required"] and resource.gpu_architecture != spec["arch_required"]:
+                continue
+
+            candidates.append((name, spec["quality"]))
+
+        if not candidates:
+            logger.info(
+                f"[EmbeddingModelRouter] No local model fits "
+                f"(gpu_mem={resource.gpu_memory_gb}GB, arch={resource.gpu_architecture}), "
+                f"falling back to API"
+            )
+            return "nemotron-api"
+
+        # 选精度最高的
+        candidates.sort(key=lambda x: x[1], reverse=True)
+        selected = candidates[0][0]
+        logger.info(f"[EmbeddingModelRouter] Selected {selected} (quality={candidates[0][1]})")
+        return selected
+
+    def select_with_fallback(
+        self,
+        resource: TierResource,
+        preferred_quality: float = 0.0,
+    ) -> Tuple[str, float]:
+        """
+        选择模型并返回预估质量
+
+        Returns:
+            (model_name, estimated_quality)
+        """
+        model = self.select(resource)
+        quality = self.MODEL_SPECS[model]["quality"]
+        return model, quality

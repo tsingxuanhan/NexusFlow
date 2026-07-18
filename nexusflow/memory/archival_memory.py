@@ -289,6 +289,9 @@ class ArchivalMemory:
         # 双索引
         self._ngram_index = NGramTFIDFIndex()
         self._keyword_index = KeywordIndex()
+        
+        # Nemotron 语义索引（延迟启用）
+        self._nemotron_index = None  # Optional[NemotronIndexAdapter]
 
         # ID计数器
         self._id_counter = 0
@@ -325,6 +328,10 @@ class ArchivalMemory:
         self.entries[entry_id] = entry
         self._ngram_index.add(entry)
         self._keyword_index.add(entry)
+        
+        # 同步 Nemotron 索引（如果启用）
+        if self._nemotron_index is not None:
+            self._nemotron_index.add(entry_id, content)
 
         logger.debug(f"[ArchivalMemory] Stored entry '{entry_id}' ({domain}, {len(content)} chars)")
         self._auto_save()
@@ -344,6 +351,26 @@ class ArchivalMemory:
             ids.append(eid)
         return ids
 
+    def enable_nemotron(self, embedding_provider) -> None:
+        """
+        启用 Nemotron 语义索引
+        
+        Args:
+            embedding_provider: NemotronEmbeddingProvider 实例
+        
+        启用后，search() 将自动进行三路 RRF 融合检索
+        """
+        self._nemotron_index = _NemotronIndexAdapter(embedding_provider)
+        
+        # 对已有条目建立 Nemotron 索引
+        for entry in self.entries.values():
+            self._nemotron_index.add(entry.entry_id, entry.content)
+        
+        logger.info(
+            f"[ArchivalMemory] Nemotron index enabled, "
+            f"indexed {self._nemotron_index.count()} entries"
+        )
+
     def search(
         self,
         query: str,
@@ -352,14 +379,14 @@ class ArchivalMemory:
         rrf_k: int = 60,
     ) -> List[ArchivalEntry]:
         """
-        RRF融合检索 — 向量检索 + 关键词检索
+        RRF融合检索 — 向量检索 + 关键词检索 [+ Nemotron语义检索]
 
         RRF公式: score = Σ(1 / (k + rank_i))
-        两路检索结果融合，比单一检索更鲁棒
+        两路或三路检索结果融合，比单一检索更鲁棒
         """
         top_k = top_k or self.top_k
 
-        # 向量检索
+        # 向量检索（TF-IDF n-gram）
         ngram_results = self._ngram_index.search(query, top_k=top_k * 2)
         # 关键词检索
         keyword_results = self._keyword_index.search(query, top_k=top_k * 2)
@@ -372,6 +399,12 @@ class ArchivalMemory:
 
         for rank, (eid, _) in enumerate(keyword_results):
             rrf_scores[eid] = rrf_scores.get(eid, 0) + 1.0 / (rrf_k + rank + 1)
+
+        # 第三路：Nemotron 语义检索（如果启用）
+        if self._nemotron_index is not None:
+            nemotron_results = self._nemotron_index.search(query, top_k=top_k * 2)
+            for rank, (eid, _) in enumerate(nemotron_results):
+                rrf_scores[eid] = rrf_scores.get(eid, 0) + 1.0 / (rrf_k + rank + 1)
 
         # 排序
         sorted_ids = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
@@ -536,6 +569,8 @@ class ArchivalMemory:
             del self.entries[entry_id]
             self._ngram_index.remove(entry_id)
             self._keyword_index.remove(entry_id)
+            if self._nemotron_index is not None:
+                self._nemotron_index.remove(entry_id)
             self._auto_save()
             return True
         return False
@@ -603,3 +638,51 @@ class ArchivalMemory:
             logger.info(f"[ArchivalMemory] Loaded {len(self.entries)} entries from {self.persist_path}")
         except Exception as e:
             logger.warning(f"[ArchivalMemory] Failed to load: {e}")
+
+
+class _NemotronIndexAdapter:
+    """
+    Nemotron 语义索引适配器 — 实现 ArchivalIndex 同等接口
+
+    将 NemotronEmbeddingProvider 包装为 ArchivalMemory 可用的索引组件。
+    用于 ArchivalMemory 的三路 RRF 检索。
+    """
+
+    def __init__(self, embedding_provider):
+        self.embedding_provider = embedding_provider
+        self._vectors: Dict[str, List[float]] = {}
+        self._contents: Dict[str, str] = {}
+
+    def _cosine(self, a: List[float], b: List[float]) -> float:
+        if len(a) != len(b) or not a:
+            return 0.0
+        dot = sum(x * y for x, y in zip(a, b))
+        na = sum(x * x for x in a) ** 0.5
+        nb = sum(x * x for x in b) ** 0.5
+        if na == 0 or nb == 0:
+            return 0.0
+        return dot / (na * nb)
+
+    def add(self, entry_id: str, content: str) -> None:
+        vec = self.embedding_provider.embed_document(content)
+        self._vectors[entry_id] = vec
+        self._contents[entry_id] = content
+
+    def search(self, query: str, top_k: int = 5) -> List[Tuple[str, float]]:
+        if not self._vectors:
+            return []
+        query_vec = self.embedding_provider.embed_query(query)
+        scored = [
+            (eid, self._cosine(query_vec, vec))
+            for eid, vec in self._vectors.items()
+        ]
+        scored.sort(key=lambda x: x[1], reverse=True)
+        return scored[:top_k]
+
+    def remove(self, entry_id: str) -> bool:
+        self._vectors.pop(entry_id, None)
+        self._contents.pop(entry_id, None)
+        return True
+
+    def count(self) -> int:
+        return len(self._vectors)

@@ -7,8 +7,9 @@ SkillRetriever — 基于任务描述检索相关Skill Card
 import os
 import json
 import time
+import math
 import logging
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Tuple
 from dataclasses import dataclass, field
 
 logger = logging.getLogger("SkillRetriever")
@@ -172,7 +173,31 @@ class SkillRetriever:
         # 从InsightStore同步已有技能
         if self.insight_store:
             self._sync_from_insights()
+        
+        # Nemotron 语义检索（延迟启用）
+        self._nemotron_provider = None
+        self._skill_embeddings: Dict[str, List[float]] = {}  # skill_name -> embedding
     
+    def enable_semantic_search(self, embedding_provider) -> None:
+        """
+        启用语义检索
+        
+        Args:
+            embedding_provider: NemotronEmbeddingProvider 实例
+        
+        启用后，retrieve() 将融合规则匹配和语义匹配的结果
+        """
+        self._nemotron_provider = embedding_provider
+        # 预计算所有 Skill Card 的语义向量
+        for skill in self.graph.all_skills():
+            tags = ' '.join(skill.metadata.get('tags', []))
+            text = f"{skill.skill_id} {skill.applicable_scenario} {skill.task_description} {tags}"
+            self._skill_embeddings[skill.skill_id] = embedding_provider.embed_document(text)
+        logger.info(
+            f"[SkillRetriever] Semantic search enabled, "
+            f"embedded {len(self._skill_embeddings)} skills"
+        )
+
     def retrieve(self, task_description: str, top_k: int = 3) -> List[TaskSkillCard]:
         """检索与任务最相关的Skill Card
         
@@ -213,8 +238,42 @@ class SkillRetriever:
             final_score = relevance * decay
             scored.append((skill, final_score))
         
-        scored.sort(key=lambda x: -x[1])
+        # 4. 语义检索融合（如果启用）
+        if self._nemotron_provider and self._skill_embeddings:
+            query_vec = self._nemotron_provider.embed_query(task_description)
+            semantic_scores = {}
+            for sid, skill_vec in self._skill_embeddings.items():
+                dot = sum(a * b for a, b in zip(query_vec, skill_vec))
+                na = sum(a * a for a in query_vec) ** 0.5
+                nb = sum(b * b for b in skill_vec) ** 0.5
+                sim = dot / (na * nb) if na > 0 and nb > 0 else 0.0
+                semantic_scores[sid] = sim
+            
+            # RRF 融合规则匹配和语义匹配
+            rule_ranked = sorted(scored, key=lambda x: -x[1])
+            rule_id_to_skill = {s.skill_id: (s, sc) for s, sc in rule_ranked}
+            
+            sem_ranked = sorted(semantic_scores.items(), key=lambda x: -x[1])
+            
+            rrf_scores: Dict[str, float] = {}
+            k = 60
+            for rank, (skill, _) in enumerate(rule_ranked):
+                rrf_scores[skill.skill_id] = rrf_scores.get(skill.skill_id, 0) + 1.0 / (k + rank + 1)
+            for rank, (sid, _) in enumerate(sem_ranked):
+                rrf_scores[sid] = rrf_scores.get(sid, 0) + 1.0 / (k + rank + 1)
+            
+            fused_sorted = sorted(rrf_scores.items(), key=lambda x: -x[1])
+            result = []
+            for sid, _ in fused_sorted:
+                if sid in rule_id_to_skill:
+                    result.append(rule_id_to_skill[sid][0])
+                elif sid in self.graph.skills:
+                    result.append(self.graph.skills[sid])
+                if len(result) >= top_k:
+                    break
+            return result
         
+        scored.sort(key=lambda x: -x[1])
         return [s for s, _ in scored[:top_k]]
     
     def retrieve_as_prompt(self, task_description: str, top_k: int = 3) -> str:

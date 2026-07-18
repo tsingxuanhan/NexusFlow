@@ -63,6 +63,16 @@ class EmbeddingProvider(ABC):
     def embed_batch(self, texts: List[str]) -> List[List[float]]:
         """批量转换"""
         pass
+    
+    def embed_query(self, text: str) -> List[float]:
+        """编码查询文本。子类可覆写以添加 query 前缀（如 Nemotron 的 "query: "）。
+        默认实现回退到 embed()，向后兼容。"""
+        return self.embed(text)
+    
+    def embed_document(self, text: str) -> List[float]:
+        """编码文档文本。子类可覆写以添加 passage 前缀（如 Nemotron 的 "passage: "）。
+        默认实现回退到 embed()，向后兼容。"""
+        return self.embed(text)
 
 
 class SimpleEmbeddingProvider(EmbeddingProvider):
@@ -757,6 +767,19 @@ class VectorMemory:
         self.auto_maintain_interval = auto_maintain_interval
         self._add_count = 0
         
+        # BM25 混合检索（延迟启用，有数据时自动索引）
+        self._bm25: Optional[Any] = None  # Optional[BM25Retriever]
+        self._bm25_id_to_entry: Dict[int, MemoryEntry] = {}
+        
+        # 从已有向量存储重建 BM25 索引
+        if hasattr(self.vector_store, 'entries') and self.vector_store.entries:
+            self._bm25 = BM25Retriever()
+            for entry in self.vector_store.entries:
+                entry_key = id(entry)
+                self._bm25.index(str(entry_key), entry.content)
+                self._bm25_id_to_entry[entry_key] = entry
+            logger.info(f"[VectorMemory] Rebuilt BM25 index from {len(self._bm25_id_to_entry)} existing entries")
+        
         # 统计
         self._stats = {
             "total_adds": 0,
@@ -827,6 +850,13 @@ class VectorMemory:
         # 同步到向量存储
         self.vector_store.add([entry])
         
+        # 同步到 BM25 索引
+        if self._bm25 is None:
+            self._bm25 = BM25Retriever()
+        entry_key = id(entry)
+        self._bm25.index(str(entry_key), content)
+        self._bm25_id_to_entry[entry_key] = entry
+        
         self._stats["total_adds"] += 1
         self._add_count += 1
         
@@ -874,10 +904,36 @@ class VectorMemory:
             MemoryTier.L3_EPISODIC
         ]
         
-        # 向量检索
+        # === 向量检索 ===
         results = self.vector_store.search(query, top_k=top_k * 2)
         
-        # 过滤层级
+        # === BM25 + RRF 融合（如果 BM25 已启用） ===
+        if self._bm25 is not None and len(self._bm25_id_to_entry) > 0:
+            bm25_results = self._bm25.search(query, top_k=top_k * 2)
+            
+            # 将向量检索结果转为 (id_str, score) 元组
+            result_id_map = {}
+            vector_tuples = []
+            for r in results:
+                key = str(id(r.entry))
+                result_id_map[key] = r
+                vector_tuples.append((key, r.score))
+            
+            # RRF 融合
+            fused_ids = reciprocal_rank_fusion(vector_tuples, bm25_results)
+            
+            # 按融合排序重建 results
+            fused_results = []
+            for eid_str, _ in fused_ids:
+                if eid_str in result_id_map:
+                    fused_results.append(result_id_map[eid_str])
+                elif int(eid_str) in self._bm25_id_to_entry:
+                    # BM25 独有结果，构造 SearchResult
+                    entry = self._bm25_id_to_entry[int(eid_str)]
+                    fused_results.append(SearchResult(entry=entry, score=0.0, rank=len(fused_results)))
+            results = fused_results
+        
+        # === 过滤层级 ===
         filtered = []
         for result in results:
             tier = self._get_tier(result.entry.importance)
@@ -887,10 +943,8 @@ class VectorMemory:
             if len(filtered) >= top_k:
                 break
         
-        # 如果向量检索结果不够，从各层补充
+        # 如果检索结果不够，从各层补充
         if len(filtered) < top_k:
-            needed = top_k - len(filtered)
-            
             if MemoryTier.L1_HOT in include_tiers:
                 for entry in reversed(self.l1_hot):
                     if entry not in filtered:

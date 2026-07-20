@@ -58,7 +58,9 @@ def check_config():
     """检查配置"""
     try:
         from dotenv import load_dotenv
-        load_dotenv()
+        # 从项目根目录加载 .env（而非依赖 CWD）
+        dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
+        load_dotenv(dotenv_path)
     except ImportError:
         pass  # python-dotenv 可选
     

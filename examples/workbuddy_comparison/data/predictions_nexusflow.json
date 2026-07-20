@@ -1,0 +1,4338 @@
+{
+  "predictions_nf": {
+    "NGDP_RPCH": {
+      "USA": [
+        {
+          "year": 2021,
+          "pred_mid": 5.53,
+          "pred_lower": 3.43,
+          "pred_upper": 7.64,
+          "actual": 6.05,
+          "hit": 1,
+          "mape": 8.6
+        },
+        {
+          "year": 2022,
+          "pred_mid": 2.73,
+          "pred_lower": 0.2,
+          "pred_upper": 5.26,
+          "actual": 2.51,
+          "hit": 1,
+          "mape": 8.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 1.53,
+          "pred_lower": -1.21,
+          "pred_upper": 4.27,
+          "actual": 2.89,
+          "hit": 1,
+          "mape": 46.9
+        },
+        {
+          "year": 2024,
+          "pred_mid": 1.53,
+          "pred_lower": -1.21,
+          "pred_upper": 4.27,
+          "actual": 2.8,
+          "hit": 1,
+          "mape": 45.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 1.53,
+          "pred_lower": -1.21,
+          "pred_upper": 4.27,
+          "actual": 1.83,
+          "hit": 1,
+          "mape": 16.0
+        }
+      ],
+      "CHN": [
+        {
+          "year": 2021,
+          "pred_mid": 9.77,
+          "pred_lower": 7.32,
+          "pred_upper": 12.21,
+          "actual": 8.56,
+          "hit": 1,
+          "mape": 14.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 6.97,
+          "pred_lower": 4.63,
+          "pred_upper": 9.3,
+          "actual": 3.11,
+          "hit": 0,
+          "mape": 123.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5.77,
+          "pred_lower": 3.24,
+          "pred_upper": 8.29,
+          "actual": 5.38,
+          "hit": 1,
+          "mape": 7.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": 5.77,
+          "pred_lower": 3.24,
+          "pred_upper": 8.29,
+          "actual": 5.0,
+          "hit": 1,
+          "mape": 15.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 5.77,
+          "pred_lower": 3.24,
+          "pred_upper": 8.29,
+          "actual": 3.95,
+          "hit": 1,
+          "mape": 45.8
+        }
+      ],
+      "JPN": [
+        {
+          "year": 2021,
+          "pred_mid": 3.7,
+          "pred_lower": 1.42,
+          "pred_upper": 5.98,
+          "actual": 2.7,
+          "hit": 1,
+          "mape": 37.2
+        },
+        {
+          "year": 2022,
+          "pred_mid": 0.9,
+          "pred_lower": -1.84,
+          "pred_upper": 3.64,
+          "actual": 0.94,
+          "hit": 1,
+          "mape": 3.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": -0.3,
+          "pred_lower": -3.27,
+          "pred_upper": 2.67,
+          "actual": 1.49,
+          "hit": 1,
+          "mape": 120.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": -0.3,
+          "pred_lower": -3.27,
+          "pred_upper": 2.67,
+          "actual": 0.08,
+          "hit": 1,
+          "mape": 456.9
+        },
+        {
+          "year": 2025,
+          "pred_mid": -0.3,
+          "pred_lower": -3.27,
+          "pred_upper": 2.67,
+          "actual": 0.55,
+          "hit": 1,
+          "mape": 154.1
+        }
+      ],
+      "DEU": [
+        {
+          "year": 2021,
+          "pred_mid": 4.6,
+          "pred_lower": 1.87,
+          "pred_upper": 7.33,
+          "actual": 3.67,
+          "hit": 1,
+          "mape": 25.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 1.8,
+          "pred_lower": -1.47,
+          "pred_upper": 5.08,
+          "actual": 1.37,
+          "hit": 1,
+          "mape": 31.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 0.6,
+          "pred_lower": -2.95,
+          "pred_upper": 4.15,
+          "actual": -0.26,
+          "hit": 1,
+          "mape": 328.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 0.6,
+          "pred_lower": -2.95,
+          "pred_upper": 4.15,
+          "actual": -0.23,
+          "hit": 1,
+          "mape": 359.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 0.6,
+          "pred_lower": -2.95,
+          "pred_upper": 4.15,
+          "actual": -0.05,
+          "hit": 1,
+          "mape": 1304.4
+        }
+      ],
+      "GBR": [
+        {
+          "year": 2021,
+          "pred_mid": 5.64,
+          "pred_lower": 0.16,
+          "pred_upper": 11.12,
+          "actual": 8.58,
+          "hit": 1,
+          "mape": 34.2
+        },
+        {
+          "year": 2022,
+          "pred_mid": 1.32,
+          "pred_lower": -5.26,
+          "pred_upper": 7.89,
+          "actual": 4.84,
+          "hit": 1,
+          "mape": 72.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": -0.54,
+          "pred_lower": -7.66,
+          "pred_upper": 6.58,
+          "actual": 0.4,
+          "hit": 1,
+          "mape": 235.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": -0.54,
+          "pred_lower": -7.66,
+          "pred_upper": 6.58,
+          "actual": 1.1,
+          "hit": 1,
+          "mape": 148.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": -0.54,
+          "pred_lower": -7.66,
+          "pred_upper": 6.58,
+          "actual": 1.08,
+          "hit": 1,
+          "mape": 149.9
+        }
+      ],
+      "FRA": [
+        {
+          "year": 2021,
+          "pred_mid": 4.37,
+          "pred_lower": 0.19,
+          "pred_upper": 8.56,
+          "actual": 6.83,
+          "hit": 1,
+          "mape": 36.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 1.18,
+          "pred_lower": -3.84,
+          "pred_upper": 6.21,
+          "actual": 2.62,
+          "hit": 1,
+          "mape": 54.9
+        },
+        {
+          "year": 2023,
+          "pred_mid": -0.18,
+          "pred_lower": -5.62,
+          "pred_upper": 5.26,
+          "actual": 1.12,
+          "hit": 1,
+          "mape": 116.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": -0.18,
+          "pred_lower": -5.62,
+          "pred_upper": 5.26,
+          "actual": 1.07,
+          "hit": 1,
+          "mape": 117.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": -0.18,
+          "pred_lower": -5.62,
+          "pred_upper": 5.26,
+          "actual": 0.64,
+          "hit": 1,
+          "mape": 128.6
+        }
+      ],
+      "CAN": [
+        {
+          "year": 2021,
+          "pred_mid": 4.74,
+          "pred_lower": 1.42,
+          "pred_upper": 8.06,
+          "actual": 5.95,
+          "hit": 1,
+          "mape": 20.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 1.94,
+          "pred_lower": -2.05,
+          "pred_upper": 5.92,
+          "actual": 4.19,
+          "hit": 1,
+          "mape": 53.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 0.74,
+          "pred_lower": -3.58,
+          "pred_upper": 5.05,
+          "actual": 1.53,
+          "hit": 1,
+          "mape": 51.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 0.74,
+          "pred_lower": -3.58,
+          "pred_upper": 5.05,
+          "actual": 1.53,
+          "hit": 1,
+          "mape": 51.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 0.74,
+          "pred_lower": -3.58,
+          "pred_upper": 5.05,
+          "actual": 1.38,
+          "hit": 1,
+          "mape": 46.4
+        }
+      ],
+      "AUS": [
+        {
+          "year": 2021,
+          "pred_mid": 5.57,
+          "pred_lower": 3.57,
+          "pred_upper": 7.57,
+          "actual": 5.41,
+          "hit": 1,
+          "mape": 2.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 2.77,
+          "pred_lower": 0.37,
+          "pred_upper": 5.17,
+          "actual": 4.14,
+          "hit": 1,
+          "mape": 33.1
+        },
+        {
+          "year": 2023,
+          "pred_mid": 1.57,
+          "pred_lower": -1.03,
+          "pred_upper": 4.17,
+          "actual": 2.06,
+          "hit": 1,
+          "mape": 23.7
+        },
+        {
+          "year": 2024,
+          "pred_mid": 1.57,
+          "pred_lower": -1.03,
+          "pred_upper": 4.17,
+          "actual": 1.04,
+          "hit": 1,
+          "mape": 51.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 1.57,
+          "pred_lower": -1.03,
+          "pred_upper": 4.17,
+          "actual": 1.63,
+          "hit": 1,
+          "mape": 4.0
+        }
+      ],
+      "KOR": [
+        {
+          "year": 2021,
+          "pred_mid": 6.28,
+          "pred_lower": 4.56,
+          "pred_upper": 8.0,
+          "actual": 4.61,
+          "hit": 1,
+          "mape": 36.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.48,
+          "pred_lower": 1.42,
+          "pred_upper": 5.54,
+          "actual": 2.73,
+          "hit": 1,
+          "mape": 27.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2.28,
+          "pred_lower": 0.05,
+          "pred_upper": 4.51,
+          "actual": 1.4,
+          "hit": 1,
+          "mape": 62.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.28,
+          "pred_lower": 0.05,
+          "pred_upper": 4.51,
+          "actual": 2.02,
+          "hit": 1,
+          "mape": 12.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.28,
+          "pred_lower": 0.05,
+          "pred_upper": 4.51,
+          "actual": 1.03,
+          "hit": 1,
+          "mape": 121.9
+        }
+      ],
+      "IND": [
+        {
+          "year": 2021,
+          "pred_mid": 7.92,
+          "pred_lower": 2.27,
+          "pred_upper": 13.57,
+          "actual": 9.69,
+          "hit": 1,
+          "mape": 18.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5.12,
+          "pred_lower": -1.66,
+          "pred_upper": 11.9,
+          "actual": 7.61,
+          "hit": 1,
+          "mape": 32.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.92,
+          "pred_lower": -3.42,
+          "pred_upper": 11.26,
+          "actual": 9.19,
+          "hit": 1,
+          "mape": 57.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.92,
+          "pred_lower": -3.42,
+          "pred_upper": 11.26,
+          "actual": 6.46,
+          "hit": 1,
+          "mape": 39.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.92,
+          "pred_lower": -3.42,
+          "pred_upper": 11.26,
+          "actual": 6.2,
+          "hit": 1,
+          "mape": 36.8
+        }
+      ],
+      "BRA": [
+        {
+          "year": 2021,
+          "pred_mid": 3.56,
+          "pred_lower": 0.96,
+          "pred_upper": 6.15,
+          "actual": 4.76,
+          "hit": 1,
+          "mape": 25.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 0.76,
+          "pred_lower": -2.36,
+          "pred_upper": 3.87,
+          "actual": 3.02,
+          "hit": 1,
+          "mape": 75.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": -0.44,
+          "pred_lower": -3.82,
+          "pred_upper": 2.93,
+          "actual": 3.24,
+          "hit": 0,
+          "mape": 113.7
+        },
+        {
+          "year": 2024,
+          "pred_mid": -0.44,
+          "pred_lower": -3.82,
+          "pred_upper": 2.93,
+          "actual": 3.4,
+          "hit": 0,
+          "mape": 113.1
+        },
+        {
+          "year": 2025,
+          "pred_mid": -0.44,
+          "pred_lower": -3.82,
+          "pred_upper": 2.93,
+          "actual": 2.01,
+          "hit": 1,
+          "mape": 122.1
+        }
+      ],
+      "RUS": [
+        {
+          "year": 2021,
+          "pred_mid": 4.87,
+          "pred_lower": 2.68,
+          "pred_upper": 7.07,
+          "actual": 5.87,
+          "hit": 1,
+          "mape": 16.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 2.07,
+          "pred_lower": -0.56,
+          "pred_upper": 4.71,
+          "actual": -1.44,
+          "hit": 0,
+          "mape": 244.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 0.87,
+          "pred_lower": -1.98,
+          "pred_upper": 3.73,
+          "actual": 4.08,
+          "hit": 0,
+          "mape": 78.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 0.87,
+          "pred_lower": -1.98,
+          "pred_upper": 3.73,
+          "actual": 4.1,
+          "hit": 0,
+          "mape": 78.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 0.87,
+          "pred_lower": -1.98,
+          "pred_upper": 3.73,
+          "actual": 1.46,
+          "hit": 1,
+          "mape": 40.0
+        }
+      ],
+      "MEX": [
+        {
+          "year": 2021,
+          "pred_mid": 4.39,
+          "pred_lower": -0.04,
+          "pred_upper": 8.82,
+          "actual": 6.05,
+          "hit": 1,
+          "mape": 27.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 0.88,
+          "pred_lower": -4.44,
+          "pred_upper": 6.19,
+          "actual": 3.71,
+          "hit": 1,
+          "mape": 76.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": -0.63,
+          "pred_lower": -6.39,
+          "pred_upper": 5.13,
+          "actual": 3.29,
+          "hit": 1,
+          "mape": 119.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": -0.63,
+          "pred_lower": -6.39,
+          "pred_upper": 5.13,
+          "actual": 1.45,
+          "hit": 1,
+          "mape": 143.1
+        },
+        {
+          "year": 2025,
+          "pred_mid": -0.63,
+          "pred_lower": -6.39,
+          "pred_upper": 5.13,
+          "actual": -0.26,
+          "hit": 1,
+          "mape": 140.8
+        }
+      ],
+      "IDN": [
+        {
+          "year": 2021,
+          "pred_mid": 7.65,
+          "pred_lower": 4.45,
+          "pred_upper": 10.84,
+          "actual": 3.7,
+          "hit": 0,
+          "mape": 106.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 4.85,
+          "pred_lower": 1.01,
+          "pred_upper": 8.68,
+          "actual": 5.31,
+          "hit": 1,
+          "mape": 8.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.65,
+          "pred_lower": -0.51,
+          "pred_upper": 7.8,
+          "actual": 5.05,
+          "hit": 1,
+          "mape": 27.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.65,
+          "pred_lower": -0.51,
+          "pred_upper": 7.8,
+          "actual": 5.03,
+          "hit": 1,
+          "mape": 27.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.65,
+          "pred_lower": -0.51,
+          "pred_upper": 7.8,
+          "actual": 4.65,
+          "hit": 1,
+          "mape": 21.6
+        }
+      ],
+      "TUR": [
+        {
+          "year": 2021,
+          "pred_mid": 7.3,
+          "pred_lower": 4.76,
+          "pred_upper": 9.85,
+          "actual": 11.44,
+          "hit": 0,
+          "mape": 36.2
+        },
+        {
+          "year": 2022,
+          "pred_mid": 4.5,
+          "pred_lower": 1.45,
+          "pred_upper": 7.56,
+          "actual": 5.53,
+          "hit": 1,
+          "mape": 18.6
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.3,
+          "pred_lower": -0.01,
+          "pred_upper": 6.62,
+          "actual": 5.11,
+          "hit": 1,
+          "mape": 35.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.3,
+          "pred_lower": -0.01,
+          "pred_upper": 6.62,
+          "actual": 3.18,
+          "hit": 1,
+          "mape": 3.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.3,
+          "pred_lower": -0.01,
+          "pred_upper": 6.62,
+          "actual": 2.71,
+          "hit": 1,
+          "mape": 22.1
+        }
+      ],
+      "ZAF": [
+        {
+          "year": 2021,
+          "pred_mid": 3.49,
+          "pred_lower": 0.29,
+          "pred_upper": 6.7,
+          "actual": 4.96,
+          "hit": 1,
+          "mape": 29.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 0.69,
+          "pred_lower": -3.15,
+          "pred_upper": 4.54,
+          "actual": 1.91,
+          "hit": 1,
+          "mape": 63.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": -0.51,
+          "pred_lower": -4.67,
+          "pred_upper": 3.66,
+          "actual": 0.7,
+          "hit": 1,
+          "mape": 172.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": -0.51,
+          "pred_lower": -4.67,
+          "pred_upper": 3.66,
+          "actual": 0.58,
+          "hit": 1,
+          "mape": 187.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": -0.51,
+          "pred_lower": -4.67,
+          "pred_upper": 3.66,
+          "actual": 0.98,
+          "hit": 1,
+          "mape": 151.7
+        }
+      ],
+      "SAU": [
+        {
+          "year": 2021,
+          "pred_mid": 4.7,
+          "pred_lower": 2.14,
+          "pred_upper": 7.26,
+          "actual": 5.08,
+          "hit": 1,
+          "mape": 7.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 1.9,
+          "pred_lower": -1.17,
+          "pred_upper": 4.97,
+          "actual": 7.49,
+          "hit": 0,
+          "mape": 74.6
+        },
+        {
+          "year": 2023,
+          "pred_mid": 0.7,
+          "pred_lower": -2.62,
+          "pred_upper": 4.03,
+          "actual": -0.76,
+          "hit": 1,
+          "mape": 193.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 0.7,
+          "pred_lower": -2.62,
+          "pred_upper": 4.03,
+          "actual": 1.31,
+          "hit": 1,
+          "mape": 46.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 0.7,
+          "pred_lower": -2.62,
+          "pred_upper": 4.03,
+          "actual": 2.99,
+          "hit": 1,
+          "mape": 76.5
+        }
+      ],
+      "ARG": [
+        {
+          "year": 2021,
+          "pred_mid": 3.18,
+          "pred_lower": -1.38,
+          "pred_upper": 7.74,
+          "actual": 10.44,
+          "hit": 0,
+          "mape": 69.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": -0.97,
+          "pred_lower": -6.45,
+          "pred_upper": 4.5,
+          "actual": 5.27,
+          "hit": 0,
+          "mape": 118.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": -2.76,
+          "pred_lower": -8.68,
+          "pred_upper": 3.17,
+          "actual": -1.61,
+          "hit": 1,
+          "mape": 71.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": -2.76,
+          "pred_lower": -8.68,
+          "pred_upper": 3.17,
+          "actual": -1.72,
+          "hit": 1,
+          "mape": 60.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": -2.76,
+          "pred_lower": -8.68,
+          "pred_upper": 3.17,
+          "actual": 5.5,
+          "hit": 0,
+          "mape": 150.1
+        }
+      ],
+      "EGY": [
+        {
+          "year": 2021,
+          "pred_mid": 8.6,
+          "pred_lower": 6.45,
+          "pred_upper": 10.75,
+          "actual": 3.25,
+          "hit": 0,
+          "mape": 164.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5.8,
+          "pred_lower": 4.0,
+          "pred_upper": 7.6,
+          "actual": 6.65,
+          "hit": 1,
+          "mape": 12.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 4.6,
+          "pred_lower": 2.6,
+          "pred_upper": 6.6,
+          "actual": 3.76,
+          "hit": 1,
+          "mape": 22.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.6,
+          "pred_lower": 2.6,
+          "pred_upper": 6.6,
+          "actual": 2.4,
+          "hit": 0,
+          "mape": 91.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.6,
+          "pred_lower": 2.6,
+          "pred_upper": 6.6,
+          "actual": 3.76,
+          "hit": 1,
+          "mape": 22.3
+        }
+      ],
+      "NGA": [
+        {
+          "year": 2021,
+          "pred_mid": 4.31,
+          "pred_lower": 2.4,
+          "pred_upper": 6.22,
+          "actual": 3.65,
+          "hit": 1,
+          "mape": 18.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 1.51,
+          "pred_lower": -0.79,
+          "pred_upper": 3.8,
+          "actual": 3.25,
+          "hit": 1,
+          "mape": 53.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 0.31,
+          "pred_lower": -2.18,
+          "pred_upper": 2.79,
+          "actual": 2.86,
+          "hit": 0,
+          "mape": 89.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 0.31,
+          "pred_lower": -2.18,
+          "pred_upper": 2.79,
+          "actual": 3.43,
+          "hit": 0,
+          "mape": 91.1
+        },
+        {
+          "year": 2025,
+          "pred_mid": 0.31,
+          "pred_lower": -2.18,
+          "pred_upper": 2.79,
+          "actual": 3.04,
+          "hit": 0,
+          "mape": 90.0
+        }
+      ]
+    },
+    "NGDPDPC": {
+      "USA": [
+        {
+          "year": 2021,
+          "pred_mid": 63718.88,
+          "pred_lower": 56072.62,
+          "pred_upper": 71365.15,
+          "actual": 71231.56,
+          "hit": 1,
+          "mape": 10.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 65137.98,
+          "pred_lower": 57321.43,
+          "pred_upper": 72954.54,
+          "actual": 77801.4,
+          "hit": 0,
+          "mape": 16.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 66588.69,
+          "pred_lower": 58598.05,
+          "pred_upper": 74579.33,
+          "actual": 82253.91,
+          "hit": 0,
+          "mape": 19.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 68071.71,
+          "pred_lower": 59903.1,
+          "pred_upper": 76240.31,
+          "actual": 85812.18,
+          "hit": 0,
+          "mape": 20.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 69587.75,
+          "pred_lower": 61237.22,
+          "pred_upper": 77938.28,
+          "actual": 89105.2,
+          "hit": 0,
+          "mape": 21.9
+        }
+      ],
+      "CHN": [
+        {
+          "year": 2021,
+          "pred_mid": 10174.07,
+          "pred_lower": 8953.19,
+          "pred_upper": 11394.96,
+          "actual": 12877.53,
+          "hit": 0,
+          "mape": 21.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 10732.64,
+          "pred_lower": 9444.72,
+          "pred_upper": 12020.55,
+          "actual": 12968.17,
+          "hit": 0,
+          "mape": 17.2
+        },
+        {
+          "year": 2023,
+          "pred_mid": 11321.86,
+          "pred_lower": 9963.24,
+          "pred_upper": 12680.49,
+          "actual": 12960.73,
+          "hit": 0,
+          "mape": 12.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 11943.44,
+          "pred_lower": 10510.23,
+          "pred_upper": 13376.65,
+          "actual": 13312.7,
+          "hit": 1,
+          "mape": 10.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 12599.14,
+          "pred_lower": 11087.24,
+          "pred_upper": 14111.04,
+          "actual": 13687.27,
+          "hit": 1,
+          "mape": 7.9
+        }
+      ],
+      "JPN": [
+        {
+          "year": 2021,
+          "pred_mid": 38972.56,
+          "pred_lower": 34295.85,
+          "pred_upper": 43649.27,
+          "actual": 40155.19,
+          "hit": 1,
+          "mape": 2.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 38186.72,
+          "pred_lower": 33604.31,
+          "pred_upper": 42769.12,
+          "actual": 34080.08,
+          "hit": 1,
+          "mape": 12.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 37416.72,
+          "pred_lower": 32926.71,
+          "pred_upper": 41906.72,
+          "actual": 33845.48,
+          "hit": 1,
+          "mape": 10.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 36662.25,
+          "pred_lower": 32262.78,
+          "pred_upper": 41061.72,
+          "actual": 32498.15,
+          "hit": 1,
+          "mape": 12.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 35922.99,
+          "pred_lower": 31612.23,
+          "pred_upper": 40233.74,
+          "actual": 33955.71,
+          "hit": 1,
+          "mape": 5.8
+        }
+      ],
+      "DEU": [
+        {
+          "year": 2021,
+          "pred_mid": 46349.91,
+          "pred_lower": 40787.92,
+          "pred_upper": 51911.9,
+          "actual": 52300.61,
+          "hit": 0,
+          "mape": 11.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 46234.56,
+          "pred_lower": 40686.41,
+          "pred_upper": 51782.71,
+          "actual": 49725.34,
+          "hit": 1,
+          "mape": 7.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 46119.5,
+          "pred_lower": 40585.16,
+          "pred_upper": 51653.84,
+          "actual": 53565.04,
+          "hit": 0,
+          "mape": 13.9
+        },
+        {
+          "year": 2024,
+          "pred_mid": 46004.73,
+          "pred_lower": 40484.16,
+          "pred_upper": 51525.29,
+          "actual": 54989.76,
+          "hit": 0,
+          "mape": 16.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 45890.24,
+          "pred_lower": 40383.41,
+          "pred_upper": 51397.07,
+          "actual": 55911.04,
+          "hit": 0,
+          "mape": 17.9
+        }
+      ],
+      "GBR": [
+        {
+          "year": 2021,
+          "pred_mid": 41538.76,
+          "pred_lower": 36554.11,
+          "pred_upper": 46523.41,
+          "actual": 46731.48,
+          "hit": 0,
+          "mape": 11.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 41487.51,
+          "pred_lower": 36509.01,
+          "pred_upper": 46466.02,
+          "actual": 46233.79,
+          "hit": 1,
+          "mape": 10.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 41436.33,
+          "pred_lower": 36463.97,
+          "pred_upper": 46408.69,
+          "actual": 49213.4,
+          "hit": 0,
+          "mape": 15.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 41385.22,
+          "pred_lower": 36418.99,
+          "pred_upper": 46351.44,
+          "actual": 52648.19,
+          "hit": 0,
+          "mape": 21.4
+        },
+        {
+          "year": 2025,
+          "pred_mid": 41334.16,
+          "pred_lower": 36374.06,
+          "pred_upper": 46294.26,
+          "actual": 54949.06,
+          "hit": 0,
+          "mape": 24.8
+        }
+      ],
+      "FRA": [
+        {
+          "year": 2021,
+          "pred_mid": 38970.77,
+          "pred_lower": 34294.28,
+          "pred_upper": 43647.26,
+          "actual": 43848.35,
+          "hit": 0,
+          "mape": 11.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 38527.42,
+          "pred_lower": 33904.13,
+          "pred_upper": 43150.71,
+          "actual": 41096.68,
+          "hit": 1,
+          "mape": 6.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 38089.11,
+          "pred_lower": 33518.42,
+          "pred_upper": 42659.8,
+          "actual": 44792.02,
+          "hit": 0,
+          "mape": 15.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 37655.79,
+          "pred_lower": 33137.09,
+          "pred_upper": 42174.48,
+          "actual": 46203.68,
+          "hit": 0,
+          "mape": 18.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 37227.39,
+          "pred_lower": 32760.11,
+          "pred_upper": 41694.68,
+          "actual": 46792.41,
+          "hit": 0,
+          "mape": 20.4
+        }
+      ],
+      "CAN": [
+        {
+          "year": 2021,
+          "pred_mid": 44155.76,
+          "pred_lower": 38857.07,
+          "pred_upper": 49454.46,
+          "actual": 52912.18,
+          "hit": 0,
+          "mape": 16.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 43482.55,
+          "pred_lower": 38264.64,
+          "pred_upper": 48700.45,
+          "actual": 56358.07,
+          "hit": 0,
+          "mape": 22.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 42819.6,
+          "pred_lower": 37681.25,
+          "pred_upper": 47957.95,
+          "actual": 54376.27,
+          "hit": 0,
+          "mape": 21.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 42166.75,
+          "pred_lower": 37106.74,
+          "pred_upper": 47226.77,
+          "actual": 54473.19,
+          "hit": 0,
+          "mape": 22.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 41523.86,
+          "pred_lower": 36541.0,
+          "pred_upper": 46506.73,
+          "actual": 53558.06,
+          "hit": 0,
+          "mape": 22.5
+        }
+      ],
+      "AUS": [
+        {
+          "year": 2021,
+          "pred_mid": 53126.78,
+          "pred_lower": 46751.57,
+          "pred_upper": 59501.99,
+          "actual": 64251.28,
+          "hit": 0,
+          "mape": 17.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 51997.59,
+          "pred_lower": 45757.87,
+          "pred_upper": 58237.3,
+          "actual": 65574.13,
+          "hit": 0,
+          "mape": 20.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 50892.39,
+          "pred_lower": 44785.3,
+          "pred_upper": 56999.48,
+          "actual": 64652.15,
+          "hit": 0,
+          "mape": 21.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 49810.69,
+          "pred_lower": 43833.4,
+          "pred_upper": 55787.97,
+          "actual": 66247.96,
+          "hit": 0,
+          "mape": 24.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 48751.97,
+          "pred_lower": 42901.74,
+          "pred_upper": 54602.21,
+          "actual": 64547.1,
+          "hit": 0,
+          "mape": 24.5
+        }
+      ],
+      "KOR": [
+        {
+          "year": 2021,
+          "pred_mid": 34216.22,
+          "pred_lower": 30110.27,
+          "pred_upper": 38322.17,
+          "actual": 37518.47,
+          "hit": 1,
+          "mape": 8.8
+        },
+        {
+          "year": 2022,
+          "pred_mid": 35059.4,
+          "pred_lower": 30852.27,
+          "pred_upper": 39266.52,
+          "actual": 34822.4,
+          "hit": 1,
+          "mape": 0.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 35923.35,
+          "pred_lower": 31612.55,
+          "pred_upper": 40234.15,
+          "actual": 35563.05,
+          "hit": 1,
+          "mape": 1.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 36808.6,
+          "pred_lower": 32391.56,
+          "pred_upper": 41225.63,
+          "actual": 36128.99,
+          "hit": 1,
+          "mape": 1.9
+        },
+        {
+          "year": 2025,
+          "pred_mid": 37715.66,
+          "pred_lower": 33189.78,
+          "pred_upper": 42241.53,
+          "actual": 34641.74,
+          "hit": 1,
+          "mape": 8.9
+        }
+      ],
+      "IND": [
+        {
+          "year": 2021,
+          "pred_mid": 1977.52,
+          "pred_lower": 1740.22,
+          "pred_upper": 2214.82,
+          "actual": 2250.18,
+          "hit": 0,
+          "mape": 12.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 2034.14,
+          "pred_lower": 1790.04,
+          "pred_upper": 2278.24,
+          "actual": 2361.11,
+          "hit": 0,
+          "mape": 13.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2092.39,
+          "pred_lower": 1841.3,
+          "pred_upper": 2343.47,
+          "actual": 2546.84,
+          "hit": 0,
+          "mape": 17.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2152.3,
+          "pred_lower": 1894.03,
+          "pred_upper": 2410.58,
+          "actual": 2711.41,
+          "hit": 0,
+          "mape": 20.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2213.93,
+          "pred_lower": 1948.26,
+          "pred_upper": 2479.6,
+          "actual": 2878.45,
+          "hit": 0,
+          "mape": 23.1
+        }
+      ],
+      "BRA": [
+        {
+          "year": 2021,
+          "pred_mid": 8488.18,
+          "pred_lower": 7469.6,
+          "pred_upper": 9506.76,
+          "actual": 7951.55,
+          "hit": 1,
+          "mape": 6.7
+        },
+        {
+          "year": 2022,
+          "pred_mid": 8147.16,
+          "pred_lower": 7169.5,
+          "pred_upper": 9124.82,
+          "actual": 9256.48,
+          "hit": 0,
+          "mape": 12.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 7819.85,
+          "pred_lower": 6881.47,
+          "pred_upper": 8758.23,
+          "actual": 10350.44,
+          "hit": 0,
+          "mape": 24.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 7505.68,
+          "pred_lower": 6605.0,
+          "pred_upper": 8406.37,
+          "actual": 10214.03,
+          "hit": 0,
+          "mape": 26.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 7204.14,
+          "pred_lower": 6339.65,
+          "pred_upper": 8068.64,
+          "actual": 9964.1,
+          "hit": 0,
+          "mape": 27.7
+        }
+      ],
+      "RUS": [
+        {
+          "year": 2021,
+          "pred_mid": 10089.8,
+          "pred_lower": 8879.02,
+          "pred_upper": 11300.57,
+          "actual": 12423.26,
+          "hit": 0,
+          "mape": 18.8
+        },
+        {
+          "year": 2022,
+          "pred_mid": 9774.3,
+          "pred_lower": 8601.38,
+          "pred_upper": 10947.22,
+          "actual": 15646.3,
+          "hit": 0,
+          "mape": 37.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": 9468.67,
+          "pred_lower": 8332.43,
+          "pred_upper": 10604.91,
+          "actual": 14079.12,
+          "hit": 0,
+          "mape": 32.7
+        },
+        {
+          "year": 2024,
+          "pred_mid": 9172.6,
+          "pred_lower": 8071.89,
+          "pred_upper": 10273.31,
+          "actual": 14794.7,
+          "hit": 0,
+          "mape": 38.0
+        },
+        {
+          "year": 2025,
+          "pred_mid": 8885.78,
+          "pred_lower": 7819.49,
+          "pred_upper": 9952.07,
+          "actual": 14257.84,
+          "hit": 0,
+          "mape": 37.7
+        }
+      ],
+      "MEX": [
+        {
+          "year": 2021,
+          "pred_mid": 9402.39,
+          "pred_lower": 8274.1,
+          "pred_upper": 10530.68,
+          "actual": 10207.32,
+          "hit": 1,
+          "mape": 7.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 9304.12,
+          "pred_lower": 8187.62,
+          "pred_upper": 10420.61,
+          "actual": 11283.92,
+          "hit": 0,
+          "mape": 17.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": 9206.87,
+          "pred_lower": 8102.05,
+          "pred_upper": 10311.7,
+          "actual": 13678.99,
+          "hit": 0,
+          "mape": 32.7
+        },
+        {
+          "year": 2024,
+          "pred_mid": 9110.65,
+          "pred_lower": 8017.37,
+          "pred_upper": 10203.92,
+          "actual": 14006.66,
+          "hit": 0,
+          "mape": 35.0
+        },
+        {
+          "year": 2025,
+          "pred_mid": 9015.42,
+          "pred_lower": 7933.57,
+          "pred_upper": 10097.27,
+          "actual": 12691.55,
+          "hit": 0,
+          "mape": 29.0
+        }
+      ],
+      "IDN": [
+        {
+          "year": 2021,
+          "pred_mid": 3932.43,
+          "pred_lower": 3460.54,
+          "pred_upper": 4404.32,
+          "actual": 4351.3,
+          "hit": 1,
+          "mape": 9.6
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3955.23,
+          "pred_lower": 3480.6,
+          "pred_upper": 4429.86,
+          "actual": 4784.21,
+          "hit": 0,
+          "mape": 17.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3978.17,
+          "pred_lower": 3500.79,
+          "pred_upper": 4455.55,
+          "actual": 4919.94,
+          "hit": 0,
+          "mape": 19.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4001.24,
+          "pred_lower": 3521.09,
+          "pred_upper": 4481.38,
+          "actual": 4958.39,
+          "hit": 0,
+          "mape": 19.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4024.44,
+          "pred_lower": 3541.51,
+          "pred_upper": 4507.37,
+          "actual": 5026.54,
+          "hit": 0,
+          "mape": 19.9
+        }
+      ],
+      "TUR": [
+        {
+          "year": 2021,
+          "pred_mid": 9720.27,
+          "pred_lower": 8553.83,
+          "pred_upper": 10886.7,
+          "actual": 9600.97,
+          "hit": 1,
+          "mape": 1.2
+        },
+        {
+          "year": 2022,
+          "pred_mid": 9588.94,
+          "pred_lower": 8438.27,
+          "pred_upper": 10739.61,
+          "actual": 10658.98,
+          "hit": 1,
+          "mape": 10.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 9459.39,
+          "pred_lower": 8324.26,
+          "pred_upper": 10594.52,
+          "actual": 13244.05,
+          "hit": 0,
+          "mape": 28.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 9331.59,
+          "pred_lower": 8211.8,
+          "pred_upper": 10451.38,
+          "actual": 15463.29,
+          "hit": 0,
+          "mape": 39.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 9205.52,
+          "pred_lower": 8100.86,
+          "pred_upper": 10310.18,
+          "actual": 16708.9,
+          "hit": 0,
+          "mape": 44.9
+        }
+      ],
+      "ZAF": [
+        {
+          "year": 2021,
+          "pred_mid": 6102.18,
+          "pred_lower": 5369.91,
+          "pred_upper": 6834.44,
+          "actual": 6938.72,
+          "hit": 0,
+          "mape": 12.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5903.36,
+          "pred_lower": 5194.96,
+          "pred_upper": 6611.76,
+          "actual": 6629.42,
+          "hit": 0,
+          "mape": 11.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5711.02,
+          "pred_lower": 5025.7,
+          "pred_upper": 6396.34,
+          "actual": 6111.75,
+          "hit": 1,
+          "mape": 6.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 5524.95,
+          "pred_lower": 4861.96,
+          "pred_upper": 6187.94,
+          "actual": 6331.91,
+          "hit": 0,
+          "mape": 12.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 5344.94,
+          "pred_lower": 4703.55,
+          "pred_upper": 5986.33,
+          "actual": 6396.92,
+          "hit": 0,
+          "mape": 16.4
+        }
+      ],
+      "SAU": [
+        {
+          "year": 2021,
+          "pred_mid": 24548.92,
+          "pred_lower": 21603.05,
+          "pred_upper": 27494.79,
+          "actual": 28396.1,
+          "hit": 0,
+          "mape": 13.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 24340.21,
+          "pred_lower": 21419.39,
+          "pred_upper": 27261.04,
+          "actual": 34454.2,
+          "hit": 0,
+          "mape": 29.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 24133.27,
+          "pred_lower": 21237.28,
+          "pred_upper": 27029.27,
+          "actual": 31676.44,
+          "hit": 0,
+          "mape": 23.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 23928.1,
+          "pred_lower": 21056.73,
+          "pred_upper": 26799.47,
+          "actual": 30746.45,
+          "hit": 0,
+          "mape": 22.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 23724.66,
+          "pred_lower": 20877.7,
+          "pred_upper": 26571.62,
+          "actual": 30098.87,
+          "hit": 0,
+          "mape": 21.2
+        }
+      ],
+      "ARG": [
+        {
+          "year": 2021,
+          "pred_mid": 11402.21,
+          "pred_lower": 10033.94,
+          "pred_upper": 12770.48,
+          "actual": 10610.19,
+          "hit": 1,
+          "mape": 7.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 11283.95,
+          "pred_lower": 9929.88,
+          "pred_upper": 12638.02,
+          "actual": 13676.22,
+          "hit": 0,
+          "mape": 17.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": 11166.91,
+          "pred_lower": 9826.89,
+          "pred_upper": 12506.94,
+          "actual": 13835.97,
+          "hit": 0,
+          "mape": 19.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 11051.09,
+          "pred_lower": 9724.96,
+          "pred_upper": 12377.23,
+          "actual": 13415.31,
+          "hit": 0,
+          "mape": 17.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 10936.48,
+          "pred_lower": 9624.1,
+          "pred_upper": 12248.85,
+          "actual": 14362.25,
+          "hit": 0,
+          "mape": 23.9
+        }
+      ],
+      "EGY": [
+        {
+          "year": 2021,
+          "pred_mid": 3252.67,
+          "pred_lower": 2862.35,
+          "pred_upper": 3642.99,
+          "actual": 4145.94,
+          "hit": 0,
+          "mape": 21.5
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3269.09,
+          "pred_lower": 2876.8,
+          "pred_upper": 3661.38,
+          "actual": 4587.17,
+          "hit": 0,
+          "mape": 28.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3285.6,
+          "pred_lower": 2891.33,
+          "pred_upper": 3679.87,
+          "actual": 3743.61,
+          "hit": 0,
+          "mape": 12.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3302.19,
+          "pred_lower": 2905.93,
+          "pred_upper": 3698.45,
+          "actual": 3570.31,
+          "hit": 1,
+          "mape": 7.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3318.87,
+          "pred_lower": 2920.6,
+          "pred_upper": 3717.13,
+          "actual": 3173.52,
+          "hit": 1,
+          "mape": 4.6
+        }
+      ],
+      "NGA": [
+        {
+          "year": 2021,
+          "pred_mid": 2112.94,
+          "pred_lower": 1859.39,
+          "pred_upper": 2366.49,
+          "actual": 2086.43,
+          "hit": 1,
+          "mape": 1.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 2074.97,
+          "pred_lower": 1825.97,
+          "pred_upper": 2323.96,
+          "actual": 2198.27,
+          "hit": 1,
+          "mape": 5.6
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2037.68,
+          "pred_lower": 1793.15,
+          "pred_upper": 2282.2,
+          "actual": 1637.47,
+          "hit": 0,
+          "mape": 24.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2001.06,
+          "pred_lower": 1760.93,
+          "pred_upper": 2241.18,
+          "actual": 824.02,
+          "hit": 0,
+          "mape": 142.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 1965.09,
+          "pred_lower": 1729.28,
+          "pred_upper": 2200.9,
+          "actual": 806.84,
+          "hit": 0,
+          "mape": 143.6
+        }
+      ]
+    },
+    "PCPIPCH": {
+      "USA": [
+        {
+          "year": 2021,
+          "pred_mid": 1.78,
+          "pred_lower": 0.78,
+          "pred_upper": 2.78,
+          "actual": 4.68,
+          "hit": 0,
+          "mape": 61.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.78,
+          "pred_lower": 2.28,
+          "pred_upper": 5.28,
+          "actual": 7.99,
+          "hit": 0,
+          "mape": 52.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.28,
+          "pred_lower": 1.28,
+          "pred_upper": 5.28,
+          "actual": 4.13,
+          "hit": 1,
+          "mape": 20.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.95,
+          "hit": 1,
+          "mape": 32.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.99,
+          "hit": 1,
+          "mape": 33.1
+        }
+      ],
+      "CHN": [
+        {
+          "year": 2021,
+          "pred_mid": 2.21,
+          "pred_lower": 1.21,
+          "pred_upper": 3.21,
+          "actual": 0.92,
+          "hit": 0,
+          "mape": 141.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 4.21,
+          "pred_lower": 2.71,
+          "pred_upper": 5.71,
+          "actual": 1.98,
+          "hit": 0,
+          "mape": 113.2
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.71,
+          "pred_lower": 1.71,
+          "pred_upper": 5.71,
+          "actual": 0.23,
+          "hit": 0,
+          "mape": 1528.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.21,
+          "pred_lower": 0.21,
+          "pred_upper": 4.21,
+          "actual": 0.21,
+          "hit": 0,
+          "mape": 943.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.21,
+          "pred_lower": 0.21,
+          "pred_upper": 4.21,
+          "actual": -0.03,
+          "hit": 0,
+          "mape": 8609.2
+        }
+      ],
+      "JPN": [
+        {
+          "year": 2021,
+          "pred_mid": 1.5,
+          "pred_lower": 0.5,
+          "pred_upper": 2.5,
+          "actual": -0.23,
+          "hit": 0,
+          "mape": 738.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.0,
+          "pred_lower": 1.5,
+          "pred_upper": 4.5,
+          "actual": 2.5,
+          "hit": 1,
+          "mape": 20.2
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2.5,
+          "pred_lower": 0.5,
+          "pred_upper": 4.5,
+          "actual": 3.27,
+          "hit": 1,
+          "mape": 23.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.74,
+          "hit": 1,
+          "mape": 27.0
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.36,
+          "hit": 1,
+          "mape": 15.4
+        }
+      ],
+      "DEU": [
+        {
+          "year": 2021,
+          "pred_mid": 1.5,
+          "pred_lower": 0.5,
+          "pred_upper": 2.5,
+          "actual": 3.21,
+          "hit": 0,
+          "mape": 53.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.15,
+          "pred_lower": 1.65,
+          "pred_upper": 4.65,
+          "actual": 8.67,
+          "hit": 0,
+          "mape": 63.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2.65,
+          "pred_lower": 0.65,
+          "pred_upper": 4.65,
+          "actual": 6.03,
+          "hit": 0,
+          "mape": 56.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.49,
+          "hit": 1,
+          "mape": 19.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.09,
+          "hit": 1,
+          "mape": 4.1
+        }
+      ],
+      "GBR": [
+        {
+          "year": 2021,
+          "pred_mid": 1.69,
+          "pred_lower": 0.69,
+          "pred_upper": 2.69,
+          "actual": 2.59,
+          "hit": 1,
+          "mape": 34.6
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.69,
+          "pred_lower": 2.19,
+          "pred_upper": 5.19,
+          "actual": 9.07,
+          "hit": 0,
+          "mape": 59.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.19,
+          "pred_lower": 1.19,
+          "pred_upper": 5.19,
+          "actual": 7.3,
+          "hit": 0,
+          "mape": 56.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.53,
+          "hit": 1,
+          "mape": 20.9
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 3.12,
+          "hit": 1,
+          "mape": 36.0
+        }
+      ],
+      "FRA": [
+        {
+          "year": 2021,
+          "pred_mid": 1.5,
+          "pred_lower": 0.5,
+          "pred_upper": 2.5,
+          "actual": 2.07,
+          "hit": 1,
+          "mape": 27.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.08,
+          "pred_lower": 1.58,
+          "pred_upper": 4.58,
+          "actual": 5.9,
+          "hit": 0,
+          "mape": 47.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2.58,
+          "pred_lower": 0.58,
+          "pred_upper": 4.58,
+          "actual": 5.66,
+          "hit": 0,
+          "mape": 54.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.32,
+          "hit": 1,
+          "mape": 13.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 1.3,
+          "hit": 1,
+          "mape": 54.0
+        }
+      ],
+      "CAN": [
+        {
+          "year": 2021,
+          "pred_mid": 1.59,
+          "pred_lower": 0.59,
+          "pred_upper": 2.59,
+          "actual": 3.4,
+          "hit": 0,
+          "mape": 53.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.59,
+          "pred_lower": 2.09,
+          "pred_upper": 5.09,
+          "actual": 6.78,
+          "hit": 0,
+          "mape": 47.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.09,
+          "pred_lower": 1.09,
+          "pred_upper": 5.09,
+          "actual": 3.88,
+          "hit": 1,
+          "mape": 20.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.4,
+          "hit": 1,
+          "mape": 16.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 1.98,
+          "hit": 1,
+          "mape": 0.9
+        }
+      ],
+      "AUS": [
+        {
+          "year": 2021,
+          "pred_mid": 1.53,
+          "pred_lower": 0.53,
+          "pred_upper": 2.53,
+          "actual": 2.84,
+          "hit": 0,
+          "mape": 46.2
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.53,
+          "pred_lower": 2.03,
+          "pred_upper": 5.03,
+          "actual": 6.62,
+          "hit": 0,
+          "mape": 46.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.03,
+          "pred_lower": 1.03,
+          "pred_upper": 5.03,
+          "actual": 5.62,
+          "hit": 0,
+          "mape": 46.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 3.2,
+          "hit": 1,
+          "mape": 37.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.55,
+          "hit": 1,
+          "mape": 21.6
+        }
+      ],
+      "KOR": [
+        {
+          "year": 2021,
+          "pred_mid": 1.5,
+          "pred_lower": 0.5,
+          "pred_upper": 2.5,
+          "actual": 2.5,
+          "hit": 1,
+          "mape": 40.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.06,
+          "pred_lower": 1.56,
+          "pred_upper": 4.56,
+          "actual": 5.09,
+          "hit": 0,
+          "mape": 39.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2.56,
+          "pred_lower": 0.56,
+          "pred_upper": 4.56,
+          "actual": 3.6,
+          "hit": 1,
+          "mape": 28.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 2.32,
+          "hit": 1,
+          "mape": 13.9
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": 0.0,
+          "pred_upper": 4.0,
+          "actual": 1.84,
+          "hit": 1,
+          "mape": 8.8
+        }
+      ],
+      "IND": [
+        {
+          "year": 2021,
+          "pred_mid": 4.49,
+          "pred_lower": 3.39,
+          "pred_upper": 5.59,
+          "actual": 5.51,
+          "hit": 1,
+          "mape": 18.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 6.49,
+          "pred_lower": 4.99,
+          "pred_upper": 7.99,
+          "actual": 6.65,
+          "hit": 1,
+          "mape": 2.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5.99,
+          "pred_lower": 3.99,
+          "pred_upper": 7.99,
+          "actual": 5.36,
+          "hit": 1,
+          "mape": 11.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.49,
+          "pred_lower": 2.49,
+          "pred_upper": 6.49,
+          "actual": 4.67,
+          "hit": 1,
+          "mape": 3.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.49,
+          "pred_lower": 2.49,
+          "pred_upper": 6.49,
+          "actual": 4.24,
+          "hit": 1,
+          "mape": 6.0
+        }
+      ],
+      "BRA": [
+        {
+          "year": 2021,
+          "pred_mid": 4.56,
+          "pred_lower": 2.21,
+          "pred_upper": 6.91,
+          "actual": 8.3,
+          "hit": 0,
+          "mape": 45.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 6.56,
+          "pred_lower": 3.74,
+          "pred_upper": 9.37,
+          "actual": 9.28,
+          "hit": 1,
+          "mape": 29.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 6.06,
+          "pred_lower": 3.01,
+          "pred_upper": 9.11,
+          "actual": 4.59,
+          "hit": 1,
+          "mape": 31.9
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.56,
+          "pred_lower": 1.51,
+          "pred_upper": 7.61,
+          "actual": 4.37,
+          "hit": 1,
+          "mape": 4.4
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.56,
+          "pred_lower": 1.51,
+          "pred_upper": 7.61,
+          "actual": 5.31,
+          "hit": 1,
+          "mape": 14.1
+        }
+      ],
+      "RUS": [
+        {
+          "year": 2021,
+          "pred_mid": 4.29,
+          "pred_lower": 2.65,
+          "pred_upper": 5.93,
+          "actual": 6.69,
+          "hit": 0,
+          "mape": 35.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 6.29,
+          "pred_lower": 4.32,
+          "pred_upper": 8.26,
+          "actual": 13.75,
+          "hit": 0,
+          "mape": 54.2
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5.79,
+          "pred_lower": 3.66,
+          "pred_upper": 7.93,
+          "actual": 5.86,
+          "hit": 1,
+          "mape": 1.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.29,
+          "pred_lower": 2.16,
+          "pred_upper": 6.43,
+          "actual": 8.44,
+          "hit": 0,
+          "mape": 49.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.29,
+          "pred_lower": 2.16,
+          "pred_upper": 6.43,
+          "actual": 9.27,
+          "hit": 0,
+          "mape": 53.7
+        }
+      ],
+      "MEX": [
+        {
+          "year": 2021,
+          "pred_mid": 4.16,
+          "pred_lower": 2.86,
+          "pred_upper": 5.46,
+          "actual": 5.69,
+          "hit": 0,
+          "mape": 27.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 6.16,
+          "pred_lower": 4.6,
+          "pred_upper": 7.72,
+          "actual": 7.9,
+          "hit": 0,
+          "mape": 22.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5.66,
+          "pred_lower": 3.66,
+          "pred_upper": 7.66,
+          "actual": 5.53,
+          "hit": 1,
+          "mape": 2.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.16,
+          "pred_lower": 2.16,
+          "pred_upper": 6.16,
+          "actual": 4.72,
+          "hit": 1,
+          "mape": 12.0
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.16,
+          "pred_lower": 2.16,
+          "pred_upper": 6.16,
+          "actual": 3.54,
+          "hit": 1,
+          "mape": 17.5
+        }
+      ],
+      "IDN": [
+        {
+          "year": 2021,
+          "pred_mid": 3.1,
+          "pred_lower": 2.1,
+          "pred_upper": 4.1,
+          "actual": 1.56,
+          "hit": 0,
+          "mape": 98.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5.1,
+          "pred_lower": 3.6,
+          "pred_upper": 6.6,
+          "actual": 4.14,
+          "hit": 1,
+          "mape": 23.1
+        },
+        {
+          "year": 2023,
+          "pred_mid": 4.6,
+          "pred_lower": 2.6,
+          "pred_upper": 6.6,
+          "actual": 3.71,
+          "hit": 1,
+          "mape": 23.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.1,
+          "pred_lower": 1.1,
+          "pred_upper": 5.1,
+          "actual": 2.3,
+          "hit": 1,
+          "mape": 34.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.1,
+          "pred_lower": 1.1,
+          "pred_upper": 5.1,
+          "actual": 1.68,
+          "hit": 1,
+          "mape": 84.0
+        }
+      ],
+      "TUR": [
+        {
+          "year": 2021,
+          "pred_mid": 12.54,
+          "pred_lower": 9.15,
+          "pred_upper": 15.93,
+          "actual": 19.6,
+          "hit": 0,
+          "mape": 36.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 14.54,
+          "pred_lower": 10.47,
+          "pred_upper": 18.61,
+          "actual": 72.31,
+          "hit": 0,
+          "mape": 79.9
+        },
+        {
+          "year": 2023,
+          "pred_mid": 14.04,
+          "pred_lower": 9.63,
+          "pred_upper": 18.45,
+          "actual": 53.86,
+          "hit": 0,
+          "mape": 73.9
+        },
+        {
+          "year": 2024,
+          "pred_mid": 12.54,
+          "pred_lower": 8.13,
+          "pred_upper": 16.95,
+          "actual": 58.51,
+          "hit": 0,
+          "mape": 78.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 12.54,
+          "pred_lower": 8.13,
+          "pred_upper": 16.95,
+          "actual": 35.93,
+          "hit": 0,
+          "mape": 65.1
+        }
+      ],
+      "ZAF": [
+        {
+          "year": 2021,
+          "pred_mid": 4.72,
+          "pred_lower": 3.57,
+          "pred_upper": 5.88,
+          "actual": 4.55,
+          "hit": 1,
+          "mape": 3.7
+        },
+        {
+          "year": 2022,
+          "pred_mid": 6.72,
+          "pred_lower": 5.22,
+          "pred_upper": 8.22,
+          "actual": 6.86,
+          "hit": 1,
+          "mape": 2.1
+        },
+        {
+          "year": 2023,
+          "pred_mid": 6.22,
+          "pred_lower": 4.22,
+          "pred_upper": 8.22,
+          "actual": 5.9,
+          "hit": 1,
+          "mape": 5.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.72,
+          "pred_lower": 2.72,
+          "pred_upper": 6.72,
+          "actual": 4.43,
+          "hit": 1,
+          "mape": 6.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.72,
+          "pred_lower": 2.72,
+          "pred_upper": 6.72,
+          "actual": 3.79,
+          "hit": 1,
+          "mape": 24.5
+        }
+      ],
+      "SAU": [
+        {
+          "year": 2021,
+          "pred_mid": 1.5,
+          "pred_lower": -0.86,
+          "pred_upper": 3.86,
+          "actual": 3.06,
+          "hit": 1,
+          "mape": 51.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.01,
+          "pred_lower": 0.18,
+          "pred_upper": 5.83,
+          "actual": 2.47,
+          "hit": 1,
+          "mape": 21.6
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2.51,
+          "pred_lower": -0.55,
+          "pred_upper": 5.57,
+          "actual": 2.33,
+          "hit": 1,
+          "mape": 7.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.0,
+          "pred_lower": -1.06,
+          "pred_upper": 5.06,
+          "actual": 1.69,
+          "hit": 1,
+          "mape": 18.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.0,
+          "pred_lower": -1.06,
+          "pred_upper": 5.06,
+          "actual": 1.99,
+          "hit": 1,
+          "mape": 0.4
+        }
+      ],
+      "ARG": [
+        {
+          "year": 2021,
+          "pred_mid": 33.23,
+          "pred_lower": 8.82,
+          "pred_upper": 57.64,
+          "actual": 48.41,
+          "hit": 1,
+          "mape": 31.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 33.23,
+          "pred_lower": 8.82,
+          "pred_upper": 57.64,
+          "actual": 72.43,
+          "hit": 0,
+          "mape": 54.1
+        },
+        {
+          "year": 2023,
+          "pred_mid": 33.23,
+          "pred_lower": 8.82,
+          "pred_upper": 57.64,
+          "actual": 133.49,
+          "hit": 0,
+          "mape": 75.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 33.23,
+          "pred_lower": 8.82,
+          "pred_upper": 57.64,
+          "actual": 219.88,
+          "hit": 0,
+          "mape": 84.9
+        },
+        {
+          "year": 2025,
+          "pred_mid": 33.23,
+          "pred_lower": 8.82,
+          "pred_upper": 57.64,
+          "actual": 35.91,
+          "hit": 1,
+          "mape": 7.5
+        }
+      ],
+      "EGY": [
+        {
+          "year": 2021,
+          "pred_mid": 14.83,
+          "pred_lower": 7.46,
+          "pred_upper": 22.21,
+          "actual": 4.5,
+          "hit": 0,
+          "mape": 229.7
+        },
+        {
+          "year": 2022,
+          "pred_mid": 16.83,
+          "pred_lower": 7.98,
+          "pred_upper": 25.69,
+          "actual": 8.5,
+          "hit": 1,
+          "mape": 98.1
+        },
+        {
+          "year": 2023,
+          "pred_mid": 16.33,
+          "pred_lower": 6.75,
+          "pred_upper": 25.92,
+          "actual": 24.39,
+          "hit": 1,
+          "mape": 33.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 14.83,
+          "pred_lower": 5.25,
+          "pred_upper": 24.42,
+          "actual": 33.3,
+          "hit": 0,
+          "mape": 55.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 14.83,
+          "pred_lower": 5.25,
+          "pred_upper": 24.42,
+          "actual": 19.65,
+          "hit": 1,
+          "mape": 24.5
+        }
+      ],
+      "NGA": [
+        {
+          "year": 2021,
+          "pred_mid": 13.79,
+          "pred_lower": 11.56,
+          "pred_upper": 16.02,
+          "actual": 16.95,
+          "hit": 0,
+          "mape": 18.7
+        },
+        {
+          "year": 2022,
+          "pred_mid": 15.79,
+          "pred_lower": 13.11,
+          "pred_upper": 18.46,
+          "actual": 18.85,
+          "hit": 0,
+          "mape": 16.2
+        },
+        {
+          "year": 2023,
+          "pred_mid": 15.29,
+          "pred_lower": 12.39,
+          "pred_upper": 18.19,
+          "actual": 24.66,
+          "hit": 0,
+          "mape": 38.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 13.79,
+          "pred_lower": 10.89,
+          "pred_upper": 16.69,
+          "actual": 33.24,
+          "hit": 0,
+          "mape": 58.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 13.79,
+          "pred_lower": 10.89,
+          "pred_upper": 16.69,
+          "actual": 26.45,
+          "hit": 0,
+          "mape": 47.9
+        }
+      ]
+    },
+    "LUR": {
+      "USA": [
+        {
+          "year": 2021,
+          "pred_mid": 4.98,
+          "pred_lower": 3.54,
+          "pred_upper": 6.42,
+          "actual": 5.36,
+          "hit": 1,
+          "mape": 7.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 4.83,
+          "pred_lower": 3.39,
+          "pred_upper": 6.27,
+          "actual": 3.64,
+          "hit": 1,
+          "mape": 32.6
+        },
+        {
+          "year": 2023,
+          "pred_mid": 4.68,
+          "pred_lower": 3.24,
+          "pred_upper": 6.12,
+          "actual": 3.63,
+          "hit": 1,
+          "mape": 28.9
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.53,
+          "pred_lower": 3.09,
+          "pred_upper": 5.98,
+          "actual": 4.03,
+          "hit": 1,
+          "mape": 12.4
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.38,
+          "pred_lower": 2.94,
+          "pred_upper": 5.83,
+          "actual": 4.16,
+          "hit": 1,
+          "mape": 5.4
+        }
+      ],
+      "JPN": [
+        {
+          "year": 2021,
+          "pred_mid": 2.7,
+          "pred_lower": 1.9,
+          "pred_upper": 3.5,
+          "actual": 2.82,
+          "hit": 1,
+          "mape": 4.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 2.62,
+          "pred_lower": 1.82,
+          "pred_upper": 3.42,
+          "actual": 2.59,
+          "hit": 1,
+          "mape": 1.2
+        },
+        {
+          "year": 2023,
+          "pred_mid": 2.54,
+          "pred_lower": 1.74,
+          "pred_upper": 3.34,
+          "actual": 2.58,
+          "hit": 1,
+          "mape": 1.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 2.46,
+          "pred_lower": 1.66,
+          "pred_upper": 3.26,
+          "actual": 2.57,
+          "hit": 1,
+          "mape": 4.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 2.38,
+          "pred_lower": 1.58,
+          "pred_upper": 3.18,
+          "actual": 2.57,
+          "hit": 1,
+          "mape": 7.3
+        }
+      ],
+      "DEU": [
+        {
+          "year": 2021,
+          "pred_mid": 3.46,
+          "pred_lower": 2.66,
+          "pred_upper": 4.26,
+          "actual": 3.58,
+          "hit": 1,
+          "mape": 3.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.35,
+          "pred_lower": 2.55,
+          "pred_upper": 4.15,
+          "actual": 3.07,
+          "hit": 1,
+          "mape": 9.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.25,
+          "pred_lower": 2.45,
+          "pred_upper": 4.05,
+          "actual": 3.02,
+          "hit": 1,
+          "mape": 7.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.15,
+          "pred_lower": 2.35,
+          "pred_upper": 3.95,
+          "actual": 3.41,
+          "hit": 1,
+          "mape": 7.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.04,
+          "pred_lower": 2.24,
+          "pred_upper": 3.84,
+          "actual": 3.47,
+          "hit": 1,
+          "mape": 12.3
+        }
+      ],
+      "GBR": [
+        {
+          "year": 2021,
+          "pred_mid": 4.37,
+          "pred_lower": 3.57,
+          "pred_upper": 5.17,
+          "actual": 4.55,
+          "hit": 1,
+          "mape": 4.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 4.23,
+          "pred_lower": 3.43,
+          "pred_upper": 5.03,
+          "actual": 3.8,
+          "hit": 1,
+          "mape": 11.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 4.1,
+          "pred_lower": 3.3,
+          "pred_upper": 4.9,
+          "actual": 4.05,
+          "hit": 1,
+          "mape": 1.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.97,
+          "pred_lower": 3.17,
+          "pred_upper": 4.77,
+          "actual": 4.28,
+          "hit": 1,
+          "mape": 7.1
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.84,
+          "pred_lower": 3.04,
+          "pred_upper": 4.64,
+          "actual": 4.5,
+          "hit": 1,
+          "mape": 14.6
+        }
+      ],
+      "FRA": [
+        {
+          "year": 2021,
+          "pred_mid": 8.99,
+          "pred_lower": 8.19,
+          "pred_upper": 9.79,
+          "actual": 7.87,
+          "hit": 0,
+          "mape": 14.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 8.72,
+          "pred_lower": 7.92,
+          "pred_upper": 9.52,
+          "actual": 7.31,
+          "hit": 0,
+          "mape": 19.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 8.45,
+          "pred_lower": 7.65,
+          "pred_upper": 9.25,
+          "actual": 7.34,
+          "hit": 0,
+          "mape": 15.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 8.18,
+          "pred_lower": 7.38,
+          "pred_upper": 8.98,
+          "actual": 7.38,
+          "hit": 1,
+          "mape": 10.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 7.91,
+          "pred_lower": 7.11,
+          "pred_upper": 8.71,
+          "actual": 7.7,
+          "hit": 1,
+          "mape": 2.7
+        }
+      ],
+      "CAN": [
+        {
+          "year": 2021,
+          "pred_mid": 6.94,
+          "pred_lower": 5.62,
+          "pred_upper": 8.27,
+          "actual": 7.48,
+          "hit": 1,
+          "mape": 7.2
+        },
+        {
+          "year": 2022,
+          "pred_mid": 6.74,
+          "pred_lower": 5.41,
+          "pred_upper": 8.06,
+          "actual": 5.25,
+          "hit": 0,
+          "mape": 28.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 6.53,
+          "pred_lower": 5.21,
+          "pred_upper": 7.85,
+          "actual": 5.38,
+          "hit": 1,
+          "mape": 21.3
+        },
+        {
+          "year": 2024,
+          "pred_mid": 6.32,
+          "pred_lower": 5.0,
+          "pred_upper": 7.64,
+          "actual": 6.38,
+          "hit": 1,
+          "mape": 0.9
+        },
+        {
+          "year": 2025,
+          "pred_mid": 6.11,
+          "pred_lower": 4.79,
+          "pred_upper": 7.43,
+          "actual": 6.6,
+          "hit": 1,
+          "mape": 7.4
+        }
+      ],
+      "AUS": [
+        {
+          "year": 2021,
+          "pred_mid": 5.65,
+          "pred_lower": 4.85,
+          "pred_upper": 6.45,
+          "actual": 5.12,
+          "hit": 1,
+          "mape": 10.2
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5.48,
+          "pred_lower": 4.68,
+          "pred_upper": 6.28,
+          "actual": 3.71,
+          "hit": 0,
+          "mape": 47.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5.31,
+          "pred_lower": 4.51,
+          "pred_upper": 6.11,
+          "actual": 3.7,
+          "hit": 0,
+          "mape": 43.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": 5.14,
+          "pred_lower": 4.34,
+          "pred_upper": 5.94,
+          "actual": 4.03,
+          "hit": 0,
+          "mape": 27.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.97,
+          "pred_lower": 4.17,
+          "pred_upper": 5.77,
+          "actual": 4.33,
+          "hit": 1,
+          "mape": 14.9
+        }
+      ],
+      "KOR": [
+        {
+          "year": 2021,
+          "pred_mid": 3.79,
+          "pred_lower": 2.99,
+          "pred_upper": 4.59,
+          "actual": 3.67,
+          "hit": 1,
+          "mape": 3.0
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.67,
+          "pred_lower": 2.87,
+          "pred_upper": 4.47,
+          "actual": 2.88,
+          "hit": 1,
+          "mape": 27.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.56,
+          "pred_lower": 2.76,
+          "pred_upper": 4.36,
+          "actual": 2.71,
+          "hit": 0,
+          "mape": 31.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.45,
+          "pred_lower": 2.65,
+          "pred_upper": 4.25,
+          "actual": 2.8,
+          "hit": 1,
+          "mape": 23.0
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.33,
+          "pred_lower": 2.53,
+          "pred_upper": 4.13,
+          "actual": 3.0,
+          "hit": 1,
+          "mape": 11.1
+        }
+      ],
+      "BRA": [
+        {
+          "year": 2021,
+          "pred_mid": 12.53,
+          "pred_lower": 11.72,
+          "pred_upper": 13.33,
+          "actual": 13.2,
+          "hit": 1,
+          "mape": 5.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 12.15,
+          "pred_lower": 11.35,
+          "pred_upper": 12.95,
+          "actual": 9.25,
+          "hit": 0,
+          "mape": 31.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 11.77,
+          "pred_lower": 10.97,
+          "pred_upper": 12.57,
+          "actual": 7.97,
+          "hit": 0,
+          "mape": 47.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 11.4,
+          "pred_lower": 10.6,
+          "pred_upper": 12.2,
+          "actual": 6.92,
+          "hit": 0,
+          "mape": 64.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 11.02,
+          "pred_lower": 10.22,
+          "pred_upper": 11.82,
+          "actual": 7.15,
+          "hit": 0,
+          "mape": 54.1
+        }
+      ],
+      "RUS": [
+        {
+          "year": 2021,
+          "pred_mid": 5.18,
+          "pred_lower": 4.38,
+          "pred_upper": 5.98,
+          "actual": 4.83,
+          "hit": 1,
+          "mape": 7.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5.02,
+          "pred_lower": 4.22,
+          "pred_upper": 5.82,
+          "actual": 3.95,
+          "hit": 0,
+          "mape": 27.2
+        },
+        {
+          "year": 2023,
+          "pred_mid": 4.87,
+          "pred_lower": 4.07,
+          "pred_upper": 5.67,
+          "actual": 3.17,
+          "hit": 0,
+          "mape": 53.7
+        },
+        {
+          "year": 2024,
+          "pred_mid": 4.71,
+          "pred_lower": 3.91,
+          "pred_upper": 5.51,
+          "actual": 2.52,
+          "hit": 0,
+          "mape": 87.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 4.56,
+          "pred_lower": 3.76,
+          "pred_upper": 5.36,
+          "actual": 2.78,
+          "hit": 0,
+          "mape": 64.1
+        }
+      ],
+      "MEX": [
+        {
+          "year": 2021,
+          "pred_mid": 3.7,
+          "pred_lower": 2.9,
+          "pred_upper": 4.5,
+          "actual": 4.14,
+          "hit": 1,
+          "mape": 10.6
+        },
+        {
+          "year": 2022,
+          "pred_mid": 3.59,
+          "pred_lower": 2.79,
+          "pred_upper": 4.39,
+          "actual": 3.27,
+          "hit": 1,
+          "mape": 9.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 3.48,
+          "pred_lower": 2.68,
+          "pred_upper": 4.28,
+          "actual": 2.8,
+          "hit": 1,
+          "mape": 24.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 3.37,
+          "pred_lower": 2.57,
+          "pred_upper": 4.17,
+          "actual": 2.67,
+          "hit": 1,
+          "mape": 26.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 3.26,
+          "pred_lower": 2.46,
+          "pred_upper": 4.06,
+          "actual": 3.85,
+          "hit": 1,
+          "mape": 15.3
+        }
+      ],
+      "IDN": [
+        {
+          "year": 2021,
+          "pred_mid": 5.72,
+          "pred_lower": 4.92,
+          "pred_upper": 6.52,
+          "actual": 6.49,
+          "hit": 1,
+          "mape": 11.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5.55,
+          "pred_lower": 4.75,
+          "pred_upper": 6.35,
+          "actual": 5.86,
+          "hit": 1,
+          "mape": 5.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5.38,
+          "pred_lower": 4.58,
+          "pred_upper": 6.18,
+          "actual": 5.32,
+          "hit": 1,
+          "mape": 1.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 5.21,
+          "pred_lower": 4.41,
+          "pred_upper": 6.01,
+          "actual": 4.91,
+          "hit": 1,
+          "mape": 6.0
+        },
+        {
+          "year": 2025,
+          "pred_mid": 5.03,
+          "pred_lower": 4.23,
+          "pred_upper": 5.83,
+          "actual": 5.0,
+          "hit": 1,
+          "mape": 0.7
+        }
+      ],
+      "TUR": [
+        {
+          "year": 2021,
+          "pred_mid": 11.9,
+          "pred_lower": 10.79,
+          "pred_upper": 13.01,
+          "actual": 12.0,
+          "hit": 1,
+          "mape": 0.8
+        },
+        {
+          "year": 2022,
+          "pred_mid": 11.54,
+          "pred_lower": 10.43,
+          "pred_upper": 12.65,
+          "actual": 10.4,
+          "hit": 0,
+          "mape": 11.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 11.19,
+          "pred_lower": 10.08,
+          "pred_upper": 12.29,
+          "actual": 9.4,
+          "hit": 0,
+          "mape": 19.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 10.83,
+          "pred_lower": 9.72,
+          "pred_upper": 11.94,
+          "actual": 8.7,
+          "hit": 0,
+          "mape": 24.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 10.47,
+          "pred_lower": 9.36,
+          "pred_upper": 11.58,
+          "actual": 9.36,
+          "hit": 0,
+          "mape": 11.9
+        }
+      ],
+      "ZAF": [
+        {
+          "year": 2021,
+          "pred_mid": 27.84,
+          "pred_lower": 26.99,
+          "pred_upper": 28.68,
+          "actual": 34.3,
+          "hit": 0,
+          "mape": 18.8
+        },
+        {
+          "year": 2022,
+          "pred_mid": 27.0,
+          "pred_lower": 26.16,
+          "pred_upper": 27.84,
+          "actual": 33.5,
+          "hit": 0,
+          "mape": 19.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 26.16,
+          "pred_lower": 25.32,
+          "pred_upper": 27.01,
+          "actual": 33.1,
+          "hit": 0,
+          "mape": 21.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 25.33,
+          "pred_lower": 24.49,
+          "pred_upper": 26.17,
+          "actual": 32.8,
+          "hit": 0,
+          "mape": 22.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 24.49,
+          "pred_lower": 23.65,
+          "pred_upper": 25.34,
+          "actual": 32.78,
+          "hit": 0,
+          "mape": 25.3
+        }
+      ],
+      "SAU": [
+        {
+          "year": 2021,
+          "pred_mid": 6.16,
+          "pred_lower": 5.36,
+          "pred_upper": 6.96,
+          "actual": 6.12,
+          "hit": 1,
+          "mape": 0.6
+        },
+        {
+          "year": 2022,
+          "pred_mid": 5.98,
+          "pred_lower": 5.18,
+          "pred_upper": 6.78,
+          "actual": 4.88,
+          "hit": 0,
+          "mape": 22.6
+        },
+        {
+          "year": 2023,
+          "pred_mid": 5.79,
+          "pred_lower": 4.99,
+          "pred_upper": 6.59,
+          "actual": 4.0,
+          "hit": 0,
+          "mape": 44.8
+        },
+        {
+          "year": 2024,
+          "pred_mid": 5.61,
+          "pred_lower": 4.81,
+          "pred_upper": 6.41,
+          "actual": 3.5,
+          "hit": 0,
+          "mape": 60.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 5.42,
+          "pred_lower": 4.62,
+          "pred_upper": 6.22,
+          "actual": null,
+          "hit": null,
+          "mape": null
+        }
+      ],
+      "ARG": [
+        {
+          "year": 2021,
+          "pred_mid": 9.48,
+          "pred_lower": 8.44,
+          "pred_upper": 10.52,
+          "actual": 8.75,
+          "hit": 1,
+          "mape": 8.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 9.19,
+          "pred_lower": 8.15,
+          "pred_upper": 10.24,
+          "actual": 6.83,
+          "hit": 0,
+          "mape": 34.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 8.91,
+          "pred_lower": 7.87,
+          "pred_upper": 9.95,
+          "actual": 6.12,
+          "hit": 0,
+          "mape": 45.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": 8.63,
+          "pred_lower": 7.58,
+          "pred_upper": 9.67,
+          "actual": 7.15,
+          "hit": 0,
+          "mape": 20.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 8.34,
+          "pred_lower": 7.3,
+          "pred_upper": 9.38,
+          "actual": 6.3,
+          "hit": 0,
+          "mape": 32.4
+        }
+      ],
+      "EGY": [
+        {
+          "year": 2021,
+          "pred_mid": 10.56,
+          "pred_lower": 8.93,
+          "pred_upper": 12.18,
+          "actual": 7.29,
+          "hit": 0,
+          "mape": 44.8
+        },
+        {
+          "year": 2022,
+          "pred_mid": 10.24,
+          "pred_lower": 8.62,
+          "pred_upper": 11.87,
+          "actual": 7.32,
+          "hit": 0,
+          "mape": 39.9
+        },
+        {
+          "year": 2023,
+          "pred_mid": 9.92,
+          "pred_lower": 8.3,
+          "pred_upper": 11.55,
+          "actual": 7.18,
+          "hit": 0,
+          "mape": 38.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 9.61,
+          "pred_lower": 7.98,
+          "pred_upper": 11.23,
+          "actual": 7.38,
+          "hit": 0,
+          "mape": 30.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 9.29,
+          "pred_lower": 7.67,
+          "pred_upper": 10.92,
+          "actual": 7.67,
+          "hit": 0,
+          "mape": 21.2
+        }
+      ]
+    },
+    "GGXWDN_NGDP": {
+      "USA": [
+        {
+          "year": 2021,
+          "pred_mid": 88.03,
+          "pred_lower": 73.03,
+          "pred_upper": 103.03,
+          "actual": 95.51,
+          "hit": 1,
+          "mape": 7.8
+        },
+        {
+          "year": 2022,
+          "pred_mid": 93.03,
+          "pred_lower": 78.03,
+          "pred_upper": 108.03,
+          "actual": 91.63,
+          "hit": 1,
+          "mape": 1.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": 93.03,
+          "pred_lower": 78.03,
+          "pred_upper": 108.03,
+          "actual": 93.96,
+          "hit": 1,
+          "mape": 1.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 93.03,
+          "pred_lower": 78.03,
+          "pred_upper": 108.03,
+          "actual": 96.54,
+          "hit": 1,
+          "mape": 3.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 93.03,
+          "pred_lower": 78.03,
+          "pred_upper": 108.03,
+          "actual": 98.04,
+          "hit": 1,
+          "mape": 5.1
+        }
+      ],
+      "JPN": [
+        {
+          "year": 2021,
+          "pred_mid": 157.46,
+          "pred_lower": 142.46,
+          "pred_upper": 172.46,
+          "actual": 156.03,
+          "hit": 1,
+          "mape": 0.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 162.46,
+          "pred_lower": 147.46,
+          "pred_upper": 177.46,
+          "actual": 149.52,
+          "hit": 1,
+          "mape": 8.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 162.46,
+          "pred_lower": 147.46,
+          "pred_upper": 177.46,
+          "actual": 136.04,
+          "hit": 0,
+          "mape": 19.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 162.46,
+          "pred_lower": 147.46,
+          "pred_upper": 177.46,
+          "actual": 134.61,
+          "hit": 0,
+          "mape": 20.7
+        },
+        {
+          "year": 2025,
+          "pred_mid": 162.46,
+          "pred_lower": 147.46,
+          "pred_upper": 177.46,
+          "actual": 134.21,
+          "hit": 0,
+          "mape": 21.0
+        }
+      ],
+      "DEU": [
+        {
+          "year": 2021,
+          "pred_mid": 49.16,
+          "pred_lower": 34.16,
+          "pred_upper": 64.16,
+          "actual": 46.27,
+          "hit": 1,
+          "mape": 6.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 54.16,
+          "pred_lower": 39.16,
+          "pred_upper": 69.16,
+          "actual": 46.28,
+          "hit": 1,
+          "mape": 17.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 54.16,
+          "pred_lower": 39.16,
+          "pred_upper": 69.16,
+          "actual": 46.24,
+          "hit": 1,
+          "mape": 17.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 54.16,
+          "pred_lower": 39.16,
+          "pred_upper": 69.16,
+          "actual": 47.71,
+          "hit": 1,
+          "mape": 13.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 54.16,
+          "pred_lower": 39.16,
+          "pred_upper": 69.16,
+          "actual": 49.57,
+          "hit": 1,
+          "mape": 9.3
+        }
+      ],
+      "GBR": [
+        {
+          "year": 2021,
+          "pred_mid": 85.3,
+          "pred_lower": 70.3,
+          "pred_upper": 100.3,
+          "actual": 91.65,
+          "hit": 1,
+          "mape": 6.9
+        },
+        {
+          "year": 2022,
+          "pred_mid": 90.3,
+          "pred_lower": 75.3,
+          "pred_upper": 105.3,
+          "actual": 89.81,
+          "hit": 1,
+          "mape": 0.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": 90.3,
+          "pred_lower": 75.3,
+          "pred_upper": 105.3,
+          "actual": 91.78,
+          "hit": 1,
+          "mape": 1.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 90.3,
+          "pred_lower": 75.3,
+          "pred_upper": 105.3,
+          "actual": 93.68,
+          "hit": 1,
+          "mape": 3.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 90.3,
+          "pred_lower": 75.3,
+          "pred_upper": 105.3,
+          "actual": 95.05,
+          "hit": 1,
+          "mape": 5.0
+        }
+      ],
+      "FRA": [
+        {
+          "year": 2021,
+          "pred_mid": 96.87,
+          "pred_lower": 81.87,
+          "pred_upper": 111.87,
+          "actual": 100.53,
+          "hit": 1,
+          "mape": 3.6
+        },
+        {
+          "year": 2022,
+          "pred_mid": 101.87,
+          "pred_lower": 86.87,
+          "pred_upper": 116.87,
+          "actual": 101.08,
+          "hit": 1,
+          "mape": 0.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 101.87,
+          "pred_lower": 86.87,
+          "pred_upper": 116.87,
+          "actual": 101.63,
+          "hit": 1,
+          "mape": 0.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": 101.87,
+          "pred_lower": 86.87,
+          "pred_upper": 116.87,
+          "actual": 105.0,
+          "hit": 1,
+          "mape": 3.0
+        },
+        {
+          "year": 2025,
+          "pred_mid": 101.87,
+          "pred_lower": 86.87,
+          "pred_upper": 116.87,
+          "actual": 108.2,
+          "hit": 1,
+          "mape": 5.8
+        }
+      ],
+      "CAN": [
+        {
+          "year": 2021,
+          "pred_mid": 18.48,
+          "pred_lower": 3.48,
+          "pred_upper": 33.48,
+          "actual": 14.17,
+          "hit": 1,
+          "mape": 30.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 23.48,
+          "pred_lower": 8.48,
+          "pred_upper": 38.48,
+          "actual": 13.62,
+          "hit": 1,
+          "mape": 72.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 23.48,
+          "pred_lower": 8.48,
+          "pred_upper": 38.48,
+          "actual": 14.44,
+          "hit": 1,
+          "mape": 62.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 23.48,
+          "pred_lower": 8.48,
+          "pred_upper": 38.48,
+          "actual": 11.87,
+          "hit": 1,
+          "mape": 97.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 23.48,
+          "pred_lower": 8.48,
+          "pred_upper": 38.48,
+          "actual": 12.53,
+          "hit": 1,
+          "mape": 87.4
+        }
+      ],
+      "AUS": [
+        {
+          "year": 2021,
+          "pred_mid": 31.95,
+          "pred_lower": 16.95,
+          "pred_upper": 46.95,
+          "actual": 35.61,
+          "hit": 1,
+          "mape": 10.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 36.95,
+          "pred_lower": 21.95,
+          "pred_upper": 51.95,
+          "actual": 31.48,
+          "hit": 1,
+          "mape": 17.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 36.95,
+          "pred_lower": 21.95,
+          "pred_upper": 51.95,
+          "actual": 29.48,
+          "hit": 1,
+          "mape": 25.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 36.95,
+          "pred_lower": 21.95,
+          "pred_upper": 51.95,
+          "actual": 30.08,
+          "hit": 1,
+          "mape": 22.8
+        },
+        {
+          "year": 2025,
+          "pred_mid": 36.95,
+          "pred_lower": 21.95,
+          "pred_upper": 51.95,
+          "actual": 31.82,
+          "hit": 1,
+          "mape": 16.1
+        }
+      ],
+      "BRA": [
+        {
+          "year": 2021,
+          "pred_mid": 58.27,
+          "pred_lower": 43.27,
+          "pred_upper": 73.27,
+          "actual": 55.11,
+          "hit": 1,
+          "mape": 5.7
+        },
+        {
+          "year": 2022,
+          "pred_mid": 63.27,
+          "pred_lower": 48.27,
+          "pred_upper": 78.27,
+          "actual": 56.13,
+          "hit": 1,
+          "mape": 12.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 63.27,
+          "pred_lower": 48.27,
+          "pred_upper": 78.27,
+          "actual": 60.43,
+          "hit": 1,
+          "mape": 4.7
+        },
+        {
+          "year": 2024,
+          "pred_mid": 63.27,
+          "pred_lower": 48.27,
+          "pred_upper": 78.27,
+          "actual": 61.48,
+          "hit": 1,
+          "mape": 2.9
+        },
+        {
+          "year": 2025,
+          "pred_mid": 63.27,
+          "pred_lower": 48.27,
+          "pred_upper": 78.27,
+          "actual": 65.8,
+          "hit": 1,
+          "mape": 3.9
+        }
+      ],
+      "MEX": [
+        {
+          "year": 2021,
+          "pred_mid": 50.76,
+          "pred_lower": 35.76,
+          "pred_upper": 65.76,
+          "actual": 49.1,
+          "hit": 1,
+          "mape": 3.4
+        },
+        {
+          "year": 2022,
+          "pred_mid": 55.76,
+          "pred_lower": 40.76,
+          "pred_upper": 70.76,
+          "actual": 47.65,
+          "hit": 1,
+          "mape": 17.0
+        },
+        {
+          "year": 2023,
+          "pred_mid": 55.76,
+          "pred_lower": 40.76,
+          "pred_upper": 70.76,
+          "actual": 46.67,
+          "hit": 1,
+          "mape": 19.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": 55.76,
+          "pred_lower": 40.76,
+          "pred_upper": 70.76,
+          "actual": 51.38,
+          "hit": 1,
+          "mape": 8.5
+        },
+        {
+          "year": 2025,
+          "pred_mid": 55.76,
+          "pred_lower": 40.76,
+          "pred_upper": 70.76,
+          "actual": 53.62,
+          "hit": 1,
+          "mape": 4.0
+        }
+      ],
+      "IDN": [
+        {
+          "year": 2021,
+          "pred_mid": 32.71,
+          "pred_lower": 17.71,
+          "pred_upper": 47.71,
+          "actual": 37.85,
+          "hit": 1,
+          "mape": 13.6
+        },
+        {
+          "year": 2022,
+          "pred_mid": 37.71,
+          "pred_lower": 22.71,
+          "pred_upper": 52.71,
+          "actual": 37.29,
+          "hit": 1,
+          "mape": 1.1
+        },
+        {
+          "year": 2023,
+          "pred_mid": 37.71,
+          "pred_lower": 22.71,
+          "pred_upper": 52.71,
+          "actual": 36.93,
+          "hit": 1,
+          "mape": 2.1
+        },
+        {
+          "year": 2024,
+          "pred_mid": 37.71,
+          "pred_lower": 22.71,
+          "pred_upper": 52.71,
+          "actual": 37.67,
+          "hit": 1,
+          "mape": 0.1
+        },
+        {
+          "year": 2025,
+          "pred_mid": 37.71,
+          "pred_lower": 22.71,
+          "pred_upper": 52.71,
+          "actual": 38.63,
+          "hit": 1,
+          "mape": 2.4
+        }
+      ],
+      "TUR": [
+        {
+          "year": 2021,
+          "pred_mid": 30.34,
+          "pred_lower": 15.34,
+          "pred_upper": 45.34,
+          "actual": 34.04,
+          "hit": 1,
+          "mape": 10.8
+        },
+        {
+          "year": 2022,
+          "pred_mid": 35.34,
+          "pred_lower": 20.34,
+          "pred_upper": 50.34,
+          "actual": 23.5,
+          "hit": 1,
+          "mape": 50.4
+        },
+        {
+          "year": 2023,
+          "pred_mid": 35.34,
+          "pred_lower": 20.34,
+          "pred_upper": 50.34,
+          "actual": 22.15,
+          "hit": 1,
+          "mape": 59.6
+        },
+        {
+          "year": 2024,
+          "pred_mid": 35.34,
+          "pred_lower": 20.34,
+          "pred_upper": 50.34,
+          "actual": 20.01,
+          "hit": 0,
+          "mape": 76.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 35.34,
+          "pred_lower": 20.34,
+          "pred_upper": 50.34,
+          "actual": 22.47,
+          "hit": 1,
+          "mape": 57.3
+        }
+      ],
+      "ZAF": [
+        {
+          "year": 2021,
+          "pred_mid": 54.04,
+          "pred_lower": 39.04,
+          "pred_upper": 69.04,
+          "actual": 62.93,
+          "hit": 1,
+          "mape": 14.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 59.04,
+          "pred_lower": 44.04,
+          "pred_upper": 74.04,
+          "actual": 66.15,
+          "hit": 1,
+          "mape": 10.8
+        },
+        {
+          "year": 2023,
+          "pred_mid": 59.04,
+          "pred_lower": 44.04,
+          "pred_upper": 74.04,
+          "actual": 68.97,
+          "hit": 1,
+          "mape": 14.4
+        },
+        {
+          "year": 2024,
+          "pred_mid": 59.04,
+          "pred_lower": 44.04,
+          "pred_upper": 74.04,
+          "actual": 73.38,
+          "hit": 1,
+          "mape": 19.6
+        },
+        {
+          "year": 2025,
+          "pred_mid": 59.04,
+          "pred_lower": 44.04,
+          "pred_upper": 74.04,
+          "actual": 77.47,
+          "hit": 0,
+          "mape": 23.8
+        }
+      ],
+      "SAU": [
+        {
+          "year": 2021,
+          "pred_mid": 4.17,
+          "pred_lower": -13.86,
+          "pred_upper": 22.19,
+          "actual": 16.86,
+          "hit": 1,
+          "mape": 75.3
+        },
+        {
+          "year": 2022,
+          "pred_mid": 9.17,
+          "pred_lower": -8.86,
+          "pred_upper": 27.19,
+          "actual": 12.68,
+          "hit": 1,
+          "mape": 27.7
+        },
+        {
+          "year": 2023,
+          "pred_mid": 9.17,
+          "pred_lower": -8.86,
+          "pred_upper": 27.19,
+          "actual": 15.34,
+          "hit": 1,
+          "mape": 40.2
+        },
+        {
+          "year": 2024,
+          "pred_mid": 9.17,
+          "pred_lower": -8.86,
+          "pred_upper": 27.19,
+          "actual": 19.23,
+          "hit": 1,
+          "mape": 52.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 9.17,
+          "pred_lower": -8.86,
+          "pred_upper": 27.19,
+          "actual": 24.19,
+          "hit": 1,
+          "mape": 62.1
+        }
+      ],
+      "EGY": [
+        {
+          "year": 2021,
+          "pred_mid": 85.82,
+          "pred_lower": 70.82,
+          "pred_upper": 100.82,
+          "actual": 85.22,
+          "hit": 1,
+          "mape": 0.7
+        },
+        {
+          "year": 2022,
+          "pred_mid": 90.82,
+          "pred_lower": 75.82,
+          "pred_upper": 105.82,
+          "actual": 83.85,
+          "hit": 1,
+          "mape": 8.3
+        },
+        {
+          "year": 2023,
+          "pred_mid": 90.82,
+          "pred_lower": 75.82,
+          "pred_upper": 105.82,
+          "actual": 91.25,
+          "hit": 1,
+          "mape": 0.5
+        },
+        {
+          "year": 2024,
+          "pred_mid": 90.82,
+          "pred_lower": 75.82,
+          "pred_upper": 105.82,
+          "actual": 86.25,
+          "hit": 1,
+          "mape": 5.3
+        },
+        {
+          "year": 2025,
+          "pred_mid": 90.82,
+          "pred_lower": 75.82,
+          "pred_upper": 105.82,
+          "actual": 81.91,
+          "hit": 1,
+          "mape": 10.9
+        }
+      ],
+      "NGA": [
+        {
+          "year": 2021,
+          "pred_mid": 23.84,
+          "pred_lower": 8.84,
+          "pred_upper": 38.84,
+          "actual": 35.66,
+          "hit": 1,
+          "mape": 33.1
+        },
+        {
+          "year": 2022,
+          "pred_mid": 28.84,
+          "pred_lower": 13.84,
+          "pred_upper": 43.84,
+          "actual": 39.8,
+          "hit": 1,
+          "mape": 27.5
+        },
+        {
+          "year": 2023,
+          "pred_mid": 28.84,
+          "pred_lower": 13.84,
+          "pred_upper": 43.84,
+          "actual": 48.11,
+          "hit": 0,
+          "mape": 40.0
+        },
+        {
+          "year": 2024,
+          "pred_mid": 28.84,
+          "pred_lower": 13.84,
+          "pred_upper": 43.84,
+          "actual": 52.59,
+          "hit": 0,
+          "mape": 45.2
+        },
+        {
+          "year": 2025,
+          "pred_mid": 28.84,
+          "pred_lower": 13.84,
+          "pred_upper": 43.84,
+          "actual": 52.27,
+          "hit": 0,
+          "mape": 44.8
+        }
+      ]
+    }
+  }
+}

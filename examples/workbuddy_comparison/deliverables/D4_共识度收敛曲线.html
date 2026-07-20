@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D4: NexusFlow共识度收敛曲线</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f9; margin: 0; padding: 24px; color: #333; }
+.container { max-width: 800px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+h1 { font-size: 18px; font-weight: 500; margin: 0 0 4px; }
+.subtitle { font-size: 13px; color: #888; margin-bottom: 24px; }
+.chart-wrap { position: relative; width: 100%; height: 360px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 12px 0; font-size: 12px; color: #666; }
+.legend-item { display: flex; align-items: center; gap: 4px; }
+.legend-sq { width: 12px; height: 12px; border-radius: 2px; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50; }
+table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 12px; }
+th, td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #eee; }
+th { background: #f5f5f5; font-weight: 500; color: #555; }
+.note { font-size: 12px; color: #999; margin-top: 16px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>D4: NexusFlow共识度收敛曲线</h1>
+<p class="subtitle">10Agent协作模式下，全局共识度随迭代轮次的变化（3轮收敛至0.85）</p>
+<div class="chart-wrap">
+<canvas id="chart" role="img" aria-label="共识度收敛曲线">共识度从0.45收敛至0.85</canvas>
+</div>
+<div class="legend">
+<span class="legend-item"><span class="legend-sq" style="background:#185FA5"></span>全局共识度</span>
+<span class="legend-item"><span class="legend-sq" style="background:#0F6E56"></span>子任务1 转折点</span>
+<span class="legend-item"><span class="legend-sq" style="background:#BA7517"></span>子任务2 排名</span>
+<span class="legend-item"><span class="legend-sq" style="background:#534AB7"></span>子任务3 相关性</span>
+<span class="legend-item"><span class="legend-sq" style="background:#993C1D"></span>子任务4 预测</span>
+<span class="legend-item"><span class="legend-sq" style="background:#A32D2D;border-radius:50%"></span>阈值 0.70</span>
+</div>
+<table>
+<tr><th>轮次</th><th>全局共识度</th><th>子任务1</th><th>子任务2</th><th>子任务3</th><th>子任务4</th><th>关键事件</th></tr>
+<tr><td>初始化</td><td><b>0.45</b></td><td>—</td><td>—</td><td>—</td><td>—</td><td>任务分解</td></tr>
+<tr><td>轮次1</td><td><b>0.587</b></td><td>0.75</td><td>0.60</td><td>0.70</td><td>0.30</td><td>Miner发现V型反弹</td></tr>
+<tr><td>轮次2</td><td><b>0.83</b></td><td>0.82</td><td>0.85</td><td>0.88</td><td>0.76</td><td>Reviewer纠错+Artisan补充</td></tr>
+<tr><td>轮次3</td><td><b>0.85</b></td><td>0.85</td><td>0.88</td><td>0.90</td><td>0.80</td><td>收敛确认</td></tr>
+</table>
+<p class="note">共识度从0.45经3轮迭代收敛至0.85，超过0.7阈值。轮次2提升最大（+0.24），得益于Reviewer 2次纠错和Artisan 3次领域知识补充。错误修正率100%（7/7）。</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+new Chart(document.getElementById('chart'), {
+type: 'line',
+data: {
+labels: ['初始化','轮次1','轮次2','轮次3'],
+datasets: [
+{label:'全局共识度',data:[0.45,0.587,0.83,0.85],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.1)',borderWidth:2.5,fill:true,tension:0.3,pointRadius:6,pointBackgroundColor:'#185FA5',pointBorderColor:'#fff',pointBorderWidth:2},
+{label:'子任务1',data:[null,0.75,0.82,0.85],borderColor:'#0F6E56',borderWidth:1.5,borderDash:[4,3],fill:false,tension:0.3,pointRadius:4,pointBackgroundColor:'#0F6E56'},
+{label:'子任务2',data:[null,0.60,0.85,0.88],borderColor:'#BA7517',borderWidth:1.5,borderDash:[4,3],fill:false,tension:0.3,pointRadius:4,pointBackgroundColor:'#BA7517'},
+{label:'子任务3',data:[null,0.70,0.88,0.90],borderColor:'#534AB7',borderWidth:1.5,borderDash:[4,3],fill:false,tension:0.3,pointRadius:4,pointBackgroundColor:'#534AB7'},
+{label:'子任务4',data:[null,0.30,0.76,0.80],borderColor:'#993C1D',borderWidth:1.5,borderDash:[4,3],fill:false,tension:0.3,pointRadius:4,pointBackgroundColor:'#993C1D'}
+]
+},
+options: {
+responsive:true,maintainAspectRatio:false,
+plugins:{legend:{display:false}},
+scales:{
+y:{min:0,max:1.0,ticks:{stepSize:0.2,font:{size:11},color:'#888'},grid:{color:'rgba(0,0,0,0.06)'},title:{display:true,text:'共识度',font:{size:12},color:'#666'}},
+x:{ticks:{font:{size:11},color:'#888'},grid:{display:false},title:{display:true,text:'迭代轮次',font:{size:12},color:'#666'}}
+}
+}
+});
+</script>
+</body>
+</html>

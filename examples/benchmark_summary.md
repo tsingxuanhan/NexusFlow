@@ -11,7 +11,7 @@
 |------|------|---------|---------|---------|
 | Stage-1 | 单Agent vs 6角色CDoL | 子Agent模拟 | NOAA/WHO真实API | 部分（子Agent内部黑箱）|
 | Stage-2 | 6角色 vs 10角色CDoL | 子Agent模拟 | NOAA/WHO真实API | 部分（有交互日志）|
-| Stage-3 | 完整NexusFlow系统 | **真实代码管线** | NOAA/WHO真实CLI | **全链路可审计** |
+| Stage-3 | 完整NexusFlow系统 | **真实代码管线** | WHO真实CLI | **全链路可审计** |
 
 ---
 

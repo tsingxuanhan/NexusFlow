@@ -45,4 +45,4 @@ Issues = "https://github.com/tsingxuanhan/NexusFlow/issues"
 py-modules = ["run"]
 
 [tool.setuptools.packages.find]
-include = ["nexusflow*", "agents*", "codeact*", "config*", "server*", "tools*", "gateway*", "evaluation*", "iteration*"]
+include = ["nexusflow*", "server*", "tools*", "evaluation*"]

@@ -1,0 +1,563 @@
+{
+  "rule_only": {
+    "top3_hit_rate": 0.7,
+    "hits": 14,
+    "total": 20
+  },
+  "rule_plus_semantic": {
+    "top3_hit_rate": 0.8,
+    "hits": 16,
+    "total": 20
+  },
+  "improvement": {
+    "absolute": 0.1,
+    "relative": 14.29
+  },
+  "per_task_rule": [
+    {
+      "task": "帮我找关于纳米材料改性混凝土的相关文献",
+      "expected": [
+        "skill_1",
+        "skill_3",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_11",
+        "skill_1"
+      ],
+      "hit": true
+    },
+    {
+      "task": "分析混凝土抗压强度测试数据并生成统计报告",
+      "expected": [
+        "skill_2",
+        "skill_4",
+        "skill_10"
+      ],
+      "retrieved": [
+        "skill_15",
+        "skill_10",
+        "skill_9"
+      ],
+      "hit": true
+    },
+    {
+      "task": "设计一个UHPC超高性能混凝土的配合比实验方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_5",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "用Python编写混凝土强度预测的机器学习模型",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [],
+      "hit": false
+    },
+    {
+      "task": "查找海洋环境混凝土耐久性设计规范",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_5",
+        "skill_3"
+      ],
+      "hit": false
+    },
+    {
+      "task": "梳理碳纳米管增强水泥基复合材料的研究进展",
+      "expected": [
+        "skill_1",
+        "skill_3"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_5",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "对3D打印混凝土的流变数据进行回归分析",
+      "expected": [
+        "skill_2",
+        "skill_4"
+      ],
+      "retrieved": [
+        "skill_15",
+        "skill_10",
+        "skill_9"
+      ],
+      "hit": false
+    },
+    {
+      "task": "规划自修复混凝土的野外暴露实验方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_5",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "实现混凝土裂缝检测的CNN深度学习代码",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_12",
+        "skill_6",
+        "skill_4"
+      ],
+      "hit": true
+    },
+    {
+      "task": "查询大体积混凝土温度控制的技术标准",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [
+        "skill_14",
+        "skill_8",
+        "skill_7"
+      ],
+      "hit": true
+    },
+    {
+      "task": "总结粉煤灰混凝土强度发展规律的研究综述",
+      "expected": [
+        "skill_1",
+        "skill_3"
+      ],
+      "retrieved": [
+        "skill_14",
+        "skill_8",
+        "skill_7"
+      ],
+      "hit": false
+    },
+    {
+      "task": "处理声发射监测数据并计算b值",
+      "expected": [
+        "skill_2",
+        "skill_4",
+        "skill_10"
+      ],
+      "retrieved": [
+        "skill_15",
+        "skill_10",
+        "skill_9"
+      ],
+      "hit": true
+    },
+    {
+      "task": "设计FRP约束混凝土柱的轴压试验方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_5",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "开发混凝土寿命预测的数值模拟程序",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_12",
+        "skill_6",
+        "skill_4"
+      ],
+      "hit": true
+    },
+    {
+      "task": "查找再生骨料混凝土的工程应用案例",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [],
+      "hit": false
+    },
+    {
+      "task": "检索地质聚合物混凝土的制备工艺参数",
+      "expected": [
+        "skill_1",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_11",
+        "skill_1"
+      ],
+      "hit": true
+    },
+    {
+      "task": "分析海水海砂混凝土的成本效益数据",
+      "expected": [
+        "skill_2",
+        "skill_10"
+      ],
+      "retrieved": [
+        "skill_15",
+        "skill_10",
+        "skill_9"
+      ],
+      "hit": true
+    },
+    {
+      "task": "规划硅烷浸渍混凝土的现场施工方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_5",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "编写混凝土碳化深度计算的Python脚本",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [],
+      "hit": false
+    },
+    {
+      "task": "搜索磷酸镁水泥快速修补材料的最新研究",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [
+        "skill_11",
+        "skill_1"
+      ],
+      "hit": true
+    }
+  ],
+  "per_task_semantic": [
+    {
+      "task": "帮我找关于纳米材料改性混凝土的相关文献",
+      "expected": [
+        "skill_1",
+        "skill_3",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_11",
+        "skill_1",
+        "skill_7"
+      ],
+      "hit": true
+    },
+    {
+      "task": "分析混凝土抗压强度测试数据并生成统计报告",
+      "expected": [
+        "skill_2",
+        "skill_4",
+        "skill_10"
+      ],
+      "retrieved": [
+        "skill_10",
+        "skill_15",
+        "skill_2"
+      ],
+      "hit": true
+    },
+    {
+      "task": "设计一个UHPC超高性能混凝土的配合比实验方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_3",
+        "skill_5"
+      ],
+      "hit": true
+    },
+    {
+      "task": "用Python编写混凝土强度预测的机器学习模型",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_4",
+        "skill_6",
+        "skill_2"
+      ],
+      "hit": true
+    },
+    {
+      "task": "查找海洋环境混凝土耐久性设计规范",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [
+        "skill_5",
+        "skill_13",
+        "skill_3"
+      ],
+      "hit": false
+    },
+    {
+      "task": "梳理碳纳米管增强水泥基复合材料的研究进展",
+      "expected": [
+        "skill_1",
+        "skill_3"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_3",
+        "skill_5"
+      ],
+      "hit": true
+    },
+    {
+      "task": "对3D打印混凝土的流变数据进行回归分析",
+      "expected": [
+        "skill_2",
+        "skill_4"
+      ],
+      "retrieved": [
+        "skill_9",
+        "skill_10",
+        "skill_15"
+      ],
+      "hit": false
+    },
+    {
+      "task": "规划自修复混凝土的野外暴露实验方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_5",
+        "skill_13",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "实现混凝土裂缝检测的CNN深度学习代码",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_6",
+        "skill_12",
+        "skill_4"
+      ],
+      "hit": true
+    },
+    {
+      "task": "查询大体积混凝土温度控制的技术标准",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [
+        "skill_14",
+        "skill_7",
+        "skill_8"
+      ],
+      "hit": true
+    },
+    {
+      "task": "总结粉煤灰混凝土强度发展规律的研究综述",
+      "expected": [
+        "skill_1",
+        "skill_3"
+      ],
+      "retrieved": [
+        "skill_7",
+        "skill_14",
+        "skill_8"
+      ],
+      "hit": false
+    },
+    {
+      "task": "处理声发射监测数据并计算b值",
+      "expected": [
+        "skill_2",
+        "skill_4",
+        "skill_10"
+      ],
+      "retrieved": [
+        "skill_9",
+        "skill_2",
+        "skill_15"
+      ],
+      "hit": true
+    },
+    {
+      "task": "设计FRP约束混凝土柱的轴压试验方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_13",
+        "skill_5",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "开发混凝土寿命预测的数值模拟程序",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_12",
+        "skill_4",
+        "skill_6"
+      ],
+      "hit": true
+    },
+    {
+      "task": "查找再生骨料混凝土的工程应用案例",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [
+        "skill_14",
+        "skill_10",
+        "skill_12"
+      ],
+      "hit": false
+    },
+    {
+      "task": "检索地质聚合物混凝土的制备工艺参数",
+      "expected": [
+        "skill_1",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_1",
+        "skill_11",
+        "skill_12"
+      ],
+      "hit": true
+    },
+    {
+      "task": "分析海水海砂混凝土的成本效益数据",
+      "expected": [
+        "skill_2",
+        "skill_10"
+      ],
+      "retrieved": [
+        "skill_10",
+        "skill_15",
+        "skill_9"
+      ],
+      "hit": true
+    },
+    {
+      "task": "规划硅烷浸渍混凝土的现场施工方案",
+      "expected": [
+        "skill_3",
+        "skill_5"
+      ],
+      "retrieved": [
+        "skill_5",
+        "skill_13",
+        "skill_3"
+      ],
+      "hit": true
+    },
+    {
+      "task": "编写混凝土碳化深度计算的Python脚本",
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ],
+      "retrieved": [
+        "skill_4",
+        "skill_6",
+        "skill_9"
+      ],
+      "hit": true
+    },
+    {
+      "task": "搜索磷酸镁水泥快速修补材料的最新研究",
+      "expected": [
+        "skill_1",
+        "skill_7"
+      ],
+      "retrieved": [
+        "skill_11",
+        "skill_1",
+        "skill_8"
+      ],
+      "hit": true
+    }
+  ],
+  "differential_tasks": [
+    {
+      "task": "用Python编写混凝土强度预测的机器学习模型",
+      "rule_hit": false,
+      "semantic_hit": true,
+      "rule_retrieved": [],
+      "semantic_retrieved": [
+        "skill_4",
+        "skill_6",
+        "skill_2"
+      ],
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ]
+    },
+    {
+      "task": "编写混凝土碳化深度计算的Python脚本",
+      "rule_hit": false,
+      "semantic_hit": true,
+      "rule_retrieved": [],
+      "semantic_retrieved": [
+        "skill_4",
+        "skill_6",
+        "skill_9"
+      ],
+      "expected": [
+        "skill_4",
+        "skill_6"
+      ]
+    }
+  ]
+}

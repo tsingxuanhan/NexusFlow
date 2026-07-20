@@ -1,0 +1,203 @@
+{
+  "num_queries": 15,
+  "tfidf_only": {
+    "avg_score": 4.667,
+    "std_score": 0.577,
+    "score_distribution": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 1,
+      "5": 2
+    },
+    "scores": [
+      5,
+      5,
+      4
+    ]
+  },
+  "nemotron_rrf": {
+    "avg_score": 4.667,
+    "std_score": 0.577,
+    "score_distribution": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 1,
+      "5": 2
+    },
+    "scores": [
+      5,
+      5,
+      4
+    ]
+  },
+  "improvement": {
+    "avg_score_diff": 0.0,
+    "improved_count": 0,
+    "decreased_count": 0,
+    "unchanged_count": 15,
+    "improvement_rate": 0.0
+  },
+  "per_query": [
+    {
+      "query": "纳米SiO2对混凝土有什么影响",
+      "relevant_doc_id": "doc_1",
+      "tfidf_retrieved": [
+        "doc_1",
+        "doc_9",
+        "doc_6"
+      ],
+      "nemotron_retrieved": [
+        "doc_1",
+        "doc_9",
+        "doc_6"
+      ],
+      "tfidf_answer": "根据参考文档，纳米SiO2对混凝土的影响主要包括：\n1. 填充微孔隙，提高密实度，显著增强抗渗性和抗冻性；\n2. 促进水泥水化反应，改善混凝土的微观结构。",
+      "nemotron_answer": "根据参考文档，纳米SiO2对混凝土的影响主要包括：\n1. 填充微孔隙，提高密实度，显著增强抗渗性和抗冻性；\n2. 促进水泥水化反应，改善微观结构。",
+      "tfidf_score": 5,
+      "nemotron_score": 5,
+      "tfidf_comment": "回答准确覆盖了参考答案中关于填充微孔隙、提升密实度及抗渗抗冻性、促进水化等所有关键信息，表述专业且简明。",
+      "nemotron_comment": "回答完全正确，准确覆盖了填充微孔隙、提高密实度、增强抗渗抗冻性及促进水化等关键信息，表述专业。",
+      "score_diff": 0
+    },
+    {
+      "query": "nano silica concrete mechanical properties",
+      "relevant_doc_id": "doc_3",
+      "tfidf_retrieved": [
+        "doc_3",
+        "doc_12",
+        "doc_22"
+      ],
+      "nemotron_retrieved": [
+        "doc_3",
+        "doc_1",
+        "doc_5"
+      ],
+      "tfidf_answer": "根据文档doc_3，在高性能混凝土中掺入纳米二氧化硅（nano-SiO2）可显著改善其力学性能。按水泥重量添加2-3%的nano-SiO2，能使抗压强度提高15-20%，抗折强度提高10-15%。其增强机制在于纳米颗粒可作为C-S-H凝胶形成的成核位点，并有效填充纳米级孔隙。",
+      "nemotron_answer": "根据文档doc_3，在高性能混凝土中掺入2-3%（按水泥重量计）的纳米SiO2可显著改善其力学性能：抗压强度提高15-20%，抗弯强度提高10-15%。其增强机理在于纳米颗粒可作为C-S-H凝胶形成的成核位点，并有效填充纳米级孔隙。",
+      "tfidf_score": 5,
+      "nemotron_score": 5,
+      "tfidf_comment": "回答准确覆盖了掺量、强度提升数据及增强机制等关键信息，与标准答案完全一致，表述专业。",
+      "nemotron_comment": "回答准确覆盖了关键数据与增强机理，表述专业，与参考答案完全一致。",
+      "score_diff": 0
+    },
+    {
+      "query": "SSC水泥的快硬特性",
+      "relevant_doc_id": "doc_2",
+      "tfidf_retrieved": [
+        "doc_2",
+        "doc_20",
+        "doc_6"
+      ],
+      "nemotron_retrieved": [
+        "doc_2",
+        "doc_20",
+        "doc_25"
+      ],
+      "tfidf_answer": "SSC水泥具有显著的快硬特性。实验数据显示，其在1天龄期即可达到28天强度的40%以上，3天可达70%。这种快硬特性使其特别适用于抢修工程和冬季施工。",
+      "nemotron_answer": "SSC水泥（硫铝酸盐水泥）具有显著的快硬特性。实验数据显示，其在1天龄期即可达到28天强度的40%以上，3天可达70%。这种快硬特性使其特别适用于抢修工程和冬季施工。",
+      "tfidf_score": 4,
+      "nemotron_score": 4,
+      "tfidf_comment": "回答准确覆盖了快硬特性的核心数据与应用场景，但遗漏了标准答案中“微膨胀特性”这一重要补充信息。",
+      "nemotron_comment": "回答基本正确且表述专业，但遗漏了参考答案中“微膨胀特性及减少收缩裂缝”这一重要信息。",
+      "score_diff": 0
+    },
+    {
+      "query": "粉煤灰对混凝土长期强度的影响",
+      "relevant_doc_id": "doc_4",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "矿渣微粉如何改善耐久性",
+      "relevant_doc_id": "doc_5",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "碳纳米管增强水泥的效果",
+      "relevant_doc_id": "doc_6",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "deep learning crack detection concrete",
+      "relevant_doc_id": "doc_7",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "再生骨料混凝土的改性方法",
+      "relevant_doc_id": "doc_8",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "纳米二氧化钛自清洁混凝土",
+      "relevant_doc_id": "doc_9",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "地质聚合物强度优化",
+      "relevant_doc_id": "doc_10",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "UHPC配合比设计",
+      "relevant_doc_id": "doc_11",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "bacteria self-healing concrete cracks",
+      "relevant_doc_id": "doc_12",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "3D打印混凝土的流变参数",
+      "relevant_doc_id": "doc_13",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "氯离子在海洋混凝土中的传输",
+      "relevant_doc_id": "doc_14",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    },
+    {
+      "query": "ECC高延性水泥基复合材料",
+      "relevant_doc_id": "doc_15",
+      "error": "429 Client Error: Too Many Requests for url: https://integrate.api.nvidia.com/v1/chat/completions",
+      "tfidf_score": 0,
+      "nemotron_score": 0,
+      "score_diff": 0
+    }
+  ]
+}

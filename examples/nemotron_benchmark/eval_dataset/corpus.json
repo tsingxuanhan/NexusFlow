@@ -1,0 +1,127 @@
+[
+  {
+    "id": "doc_1",
+    "content": "纳米SiO2对混凝土耐久性的影响研究。本文研究了纳米二氧化硅（SiO2）颗粒掺入混凝土后对混凝土耐久性能的影响。实验结果表明，纳米SiO2能够有效填充混凝土中的微孔隙，提高混凝土的密实度，从而显著增强混凝土的抗渗性和抗冻性。同时，纳米SiO2的加入还能促进水泥水化反应，改善混凝土的微观结构。",
+    "metadata": {"domain": "材料科学", "language": "zh"}
+  },
+  {
+    "id": "doc_2",
+    "content": "SSC水泥的早期强度特性研究。本文研究了硫铝酸盐水泥（SSC）在早期强度发展方面的特性。实验数据显示，SSC水泥在1天龄期即可达到28天强度的40%以上，3天可达70%。这种快硬特性使其特别适用于抢修工程和冬季施工。同时，SSC水泥还具有微膨胀特性，能有效减少收缩裂缝。",
+    "metadata": {"domain": "土木工程", "language": "zh"}
+  },
+  {
+    "id": "doc_3",
+    "content": "The effect of nano-SiO2 on the mechanical properties of high-performance concrete. This study investigates the incorporation of nano-silica particles into high-performance concrete mixes. Results show that adding 2-3% nano-SiO2 by weight of cement significantly improves compressive strength by 15-20% and flexural strength by 10-15%. The nano-particles act as nucleation sites for C-S-H gel formation and fill nanoscale pores.",
+    "metadata": {"domain": "materials_science", "language": "en"}
+  },
+  {
+    "id": "doc_4",
+    "content": "混凝土中掺加粉煤灰对长期强度发展的影响。粉煤灰作为混凝土掺合料已被广泛研究。本文重点研究了大掺量粉煤灰（30%-60%）对混凝土28天至1年强度发展的影响。结果表明，虽然早期强度有所降低，但90天后粉煤灰混凝土的强度增长率明显高于普通混凝土，1年龄期时强度可接近甚至超过普通混凝土。",
+    "metadata": {"domain": "土木工程", "language": "zh"}
+  },
+  {
+    "id": "doc_5",
+    "content": "矿渣微粉对混凝土耐久性能的改善作用。本文系统研究了矿渣微粉掺量对混凝土氯离子渗透性、碳化速率和干燥收缩的影响。实验结果表明，掺入40%-60%矿渣微粉可将氯离子扩散系数降低50%以上，显著提高混凝土的护筋性能。矿渣微粉的二次水化反应消耗了Ca(OH)2，细化了孔结构。",
+    "metadata": {"domain": "材料科学", "language": "zh"}
+  },
+  {
+    "id": "doc_6",
+    "content": "碳纳米管增强水泥基复合材料的力学性能。本文研究了多壁碳纳米管（MWCNTs）对水泥基复合材料力学性能的增强效果。通过表面改性处理提高了碳纳米管在水泥基体中的分散性。结果表明，掺入0.1%-0.3%的MWCNTs可使抗折强度提高20%-35%，抗压强度提高10%-15%。碳纳米管的桥接效应和拔出耗能机制是主要的增强机理。",
+    "metadata": {"domain": "纳米材料", "language": "zh"}
+  },
+  {
+    "id": "doc_7",
+    "content": "Deep learning approaches for concrete crack detection and quantification. This paper reviews recent advances in applying deep learning techniques for automated concrete crack detection. Convolutional neural networks (CNNs) including U-Net, DeepLabV3+, and transformer-based models have achieved over 95% detection accuracy on benchmark datasets. Transfer learning from ImageNet pre-trained models significantly reduces the amount of labeled data required.",
+    "metadata": {"domain": "computer_vision", "language": "en"}
+  },
+  {
+    "id": "doc_8",
+    "content": "再生骨料混凝土的力学性能与耐久性研究综述。本文综述了近年来再生骨料混凝土（RAC）的研究进展。再生骨料表面附着的老化砂浆导致RAC的力学性能和耐久性普遍低于天然骨料混凝土。通过减小水胶比、添加矿物掺合料和表面强化处理等方法可有效改善RAC性能。碳化处理再生骨料是一种有前景的改性方法。",
+    "metadata": {"domain": "土木工程", "language": "zh"}
+  },
+  {
+    "id": "doc_9",
+    "content": "纳米TiO2自清洁混凝土的制备与性能评价。本文研究了纳米二氧化钛（TiO2）掺入混凝土后赋予其自清洁和光催化降解性能的效果。在紫外线照射下，纳米TiO2能降解混凝土表面的有机污染物，同时赋予表面超亲水性，使污染物易被雨水冲刷。实验表明，掺入3%-5%纳米TiO2的混凝土在12小时紫外照射后对罗丹明B的降解率达85%以上。",
+    "metadata": {"domain": "功能材料", "language": "zh"}
+  },
+  {
+    "id": "doc_10",
+    "content": "地质聚合物混凝土的制备工艺与性能优化。地质聚合物是一种以硅铝酸盐为前驱体的新型胶凝材料。本文研究了偏高岭土和粉煤灰基地质聚合物混凝土的制备参数优化。结果表明，碱激发剂浓度和硅铝比是影响地质聚合物强度的关键因素。最优条件下，28天抗压强度可达60MPa以上，且具有优异的耐酸腐蚀性能。",
+    "metadata": {"domain": "新型建材", "language": "zh"}
+  },
+  {
+    "id": "doc_11",
+    "content": "超高性能混凝土（UHPC）的配合比设计与性能研究。本文研究了超高性能混凝土的配合比设计方法，采用紧密堆积理论优化颗粒级配。实验结果表明，最优配合比的UHPC 28天抗压强度达150MPa以上，抗折强度达25MPa以上。钢纤维的加入显著提高了UHPC的韧性和抗冲击性能。热养护可进一步激发活性粉末的强度贡献。",
+    "metadata": {"domain": "高性能混凝土", "language": "zh"}
+  },
+  {
+    "id": "doc_12",
+    "content": "Self-healing concrete using encapsulated bacteria: A review. This review covers the development of bacteria-based self-healing concrete. Bacillus species are encapsulated in expanded clay or silica gel capsules and added to concrete mixes. When cracks form and water ingress occurs, the bacteria activate and produce calcium carbonate to seal cracks up to 0.8mm wide. Healing efficiency reaches 80-95% recovery of mechanical properties.",
+    "metadata": {"domain": "smart_materials", "language": "en"}
+  },
+  {
+    "id": "doc_13",
+    "content": "3D打印混凝土的可打印性与力学性能研究。本文研究了3D打印混凝土的流变性能要求与力学性能发展。可打印性要求混凝土具有良好的挤出性和建造性，需满足屈服应力30-60Pa、塑性粘度200-500Pa·s的流变参数范围。层间粘结强度是影响3D打印混凝土力学性能的关键因素，通过控制打印间隔时间可优化层间结合。",
+    "metadata": {"domain": "先进制造", "language": "zh"}
+  },
+  {
+    "id": "doc_14",
+    "content": "海洋环境下混凝土结构的氯离子传输与寿命预测。本文研究了海洋环境混凝土中氯离子的传输机理，考虑了扩散、毛细吸附和电迁移的耦合效应。基于Fick第二定律和修正的扩散系数模型，建立了考虑温湿度变化的氯离子传输预测模型。算例分析表明，保护层厚度50mm的混凝土在海洋浪溅区的服役寿命约为45年。",
+    "metadata": {"domain": "结构耐久性", "language": "zh"}
+  },
+  {
+    "id": "doc_15",
+    "content": "ECC engineered cementitious composites with high ductility and crack control. This study develops engineered cementitious composites (ECC) with strain capacity exceeding 3%. Unlike conventional concrete, ECC exhibits strain-hardening behavior with multiple fine cracks (crack width < 100μm) under tension. Polyvinyl alcohol (PVA) fibers at 2% volume fraction provide the bridging stress needed for saturated multiple cracking. Applications include bridge deck overlays and pipe repairs.",
+    "metadata": {"domain": "fiber_reinforced_concrete", "language": "en"}
+  },
+  {
+    "id": "doc_16",
+    "content": "大体积混凝土温度裂缝控制技术研究。本文研究了水化热引起的大体积混凝土温度裂缝控制技术。通过有限元模拟分析了不同浇筑温度、保温措施和冷却水管布置对混凝土内部温度场的影响。研究结果表明，控制浇筑温度不超过25°C、埋设冷却水管间距不超过1.0m、内表温差不超过25°C可有效防止温度裂缝的产生。",
+    "metadata": {"domain": "施工技术", "language": "zh"}
+  },
+  {
+    "id": "doc_17",
+    "content": "硅烷浸渍对混凝土防水性能的影响。本文研究了硅烷类防水剂对混凝土表面防水性能的改善效果。硅烷浸渍处理后，混凝土吸水率可降低70%-90%，且不影响表面透气性。有机硅分子与混凝土中羟基发生化学键合，形成疏水层。实验表明，异丁基三乙氧基硅烷的浸渍深度可达3-7mm，有效防护期可达10年以上。",
+    "metadata": {"domain": "防水材料", "language": "zh"}
+  },
+  {
+    "id": "doc_18",
+    "content": "橡胶混凝土的力学性能与隔声性能研究。本文研究了废旧轮胎橡胶颗粒部分替代细骨料后对混凝土力学性能和隔声性能的影响。掺入10%-20%橡胶颗粒的混凝土，抗压强度降低15%-30%，但韧性显著提高，隔声量增加3-5dB。橡胶混凝土的冲击韧性是普通混凝土的2-3倍，适用于道路隔声屏障和防撞护栏。",
+    "metadata": {"domain": "环保建材", "language": "zh"}
+  },
+  {
+    "id": "doc_19",
+    "content": "Machine learning prediction of concrete compressive strength based on mix design parameters. This study applies multiple machine learning models including Random Forest, XGBoost, and Neural Networks to predict concrete compressive strength from mix proportions and curing conditions. The XGBoost model achieves R²=0.95 on the test set, outperforming traditional regression models. Feature importance analysis reveals water-cement ratio, cement content, and age as the most influential parameters.",
+    "metadata": {"domain": "machine_learning", "language": "en"}
+  },
+  {
+    "id": "doc_20",
+    "content": "磷酸镁水泥基快速修补材料的性能研究。本文研究了磷酸镁水泥（MPC）作为快速修补材料的性能特点。MPC凝结时间可在10-30分钟内调节，1小时抗压强度可达20MPa以上，4小时可达40MPa。MPC与旧混凝土的界面粘结强度高，干缩率仅为普通硅酸盐水泥的1/5-1/3。通过调整M/P比和缓凝剂掺量可优化施工性能与早期强度的平衡。",
+    "metadata": {"domain": "特种水泥", "language": "zh"}
+  },
+  {
+    "id": "doc_21",
+    "content": "纤维增强聚合物（FRP）约束混凝土柱的轴压性能。本文综述了FRP约束混凝土柱在轴心受压下的力学行为。FRP约束使核心混凝土处于三向受压状态，显著提高了混凝土的强度和延性。约束效率取决于FRP类型（CFRP/GFRP/AFRP）、缠绕层数和截面形状。圆形截面的约束效率远高于矩形截面。提出了基于大量试验数据的应力-应变模型。",
+    "metadata": {"domain": "结构加固", "language": "zh"}
+  },
+  {
+    "id": "doc_22",
+    "content": "Carbonation of concrete in urban environments: Field exposure and modeling. This paper presents a 10-year field exposure study on concrete carbonation in urban environments. Carbonation depth follows a square-root-of-time relationship modified by environmental factors. Concrete with w/c=0.65 carbonated to 15mm depth after 10 years, while w/c=0.45 concrete showed only 6mm depth. Relative humidity cycles between 50-80% accelerate carbonation compared to constant conditions.",
+    "metadata": {"domain": "durability", "language": "en"}
+  },
+  {
+    "id": "doc_23",
+    "content": "膨胀混凝土在钢管混凝土组合结构中的应用。本文研究了膨胀混凝土在钢管混凝土柱中的应用，通过膨胀剂掺量补偿混凝土收缩，确保核心混凝土与钢管壁之间的紧密接触。实验表明，掺入8%-12%膨胀剂的膨胀混凝土在约束状态下产生的自应力为0.3-0.8MPa，有效消除了收缩间隙。膨胀混凝土钢管柱的轴压承载力较普通混凝土提高5%-10%。",
+    "metadata": {"domain": "组合结构", "language": "zh"}
+  },
+  {
+    "id": "doc_24",
+    "content": "基于声发射技术的混凝土损伤过程监测。本文利用声发射（AE）技术实时监测混凝土受压和受弯过程中的损伤演化。AE参数（事件数、能量、幅度分布）可有效表征混凝土从微裂纹萌生到宏观破坏的全过程。基于AE b值的裂纹尺度分析方法能够区分微裂纹扩展和宏观裂缝形成阶段，为结构健康监测提供了可靠的评估手段。",
+    "metadata": {"domain": "无损检测", "language": "zh"}
+  },
+  {
+    "id": "doc_25",
+    "content": "海水海砂混凝土的性能与工程应用前景。本文研究了直接使用海水和海砂拌制混凝土的可行性。海水海砂混凝土的早期强度高于淡水河砂混凝土，但后期强度增长率较低。氯离子引起的钢筋锈蚀是主要耐久性风险，采用FRP筋或不锈钢筋可有效解决该问题。经济性分析表明，在沿海偏远地区使用海水海砂混凝土可降低成本30%以上。",
+    "metadata": {"domain": "海洋工程", "language": "zh"}
+  }
+]

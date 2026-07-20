@@ -1,0 +1,12 @@
+[
+  {"query": "SiO2", "relevant_doc_id": "doc_1", "note": "纯术语匹配，极易召回doc_3，但doc_1更直接"},
+  {"query": "SSC", "relevant_doc_id": "doc_2", "note": "缩写歧义，可能匹配其他SSC缩写"},
+  {"query": "MWCNTs 0.1%", "relevant_doc_id": "doc_6", "note": "精确数值+缩写"},
+  {"query": "w/c=0.65", "relevant_doc_id": "doc_22", "note": "精确参数匹配"},
+  {"query": "R²=0.95", "relevant_doc_id": "doc_19", "note": "统计指标精确匹配"},
+  {"query": "150MPa", "relevant_doc_id": "doc_11", "note": "数值精确匹配"},
+  {"query": "0.8mm", "relevant_doc_id": "doc_12", "note": "数值精确匹配"},
+  {"query": "Ca(OH)2", "relevant_doc_id": "doc_5", "note": "化学式精确匹配"},
+  {"query": "PVA 2%", "relevant_doc_id": "doc_15", "note": "缩写+数值"},
+  {"query": "b值", "relevant_doc_id": "doc_24", "note": "短术语，可能多义"}
+]

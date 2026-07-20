@@ -1,0 +1,22 @@
+[
+  {"task": "帮我找关于纳米材料改性混凝土的相关文献", "expected_skill_ids": ["skill_1", "skill_3", "skill_6"], "scenario": "文献综述/学术检索"},
+  {"task": "分析混凝土抗压强度测试数据并生成统计报告", "expected_skill_ids": ["skill_2", "skill_4", "skill_10"], "scenario": "数据分析/实验处理"},
+  {"task": "设计一个UHPC超高性能混凝土的配合比实验方案", "expected_skill_ids": ["skill_3", "skill_5"], "scenario": "实验设计/方案规划"},
+  {"task": "用Python编写混凝土强度预测的机器学习模型", "expected_skill_ids": ["skill_4", "skill_6"], "scenario": "代码开发/工程实现"},
+  {"task": "查找海洋环境混凝土耐久性设计规范", "expected_skill_ids": ["skill_1", "skill_7"], "scenario": "信息检索/知识查询"},
+  {"task": "梳理碳纳米管增强水泥基复合材料的研究进展", "expected_skill_ids": ["skill_1", "skill_3"], "scenario": "文献综述/学术检索"},
+  {"task": "对3D打印混凝土的流变数据进行回归分析", "expected_skill_ids": ["skill_2", "skill_4"], "scenario": "数据分析/实验处理"},
+  {"task": "规划自修复混凝土的野外暴露实验方案", "expected_skill_ids": ["skill_3", "skill_5"], "scenario": "实验设计/方案规划"},
+  {"task": "实现混凝土裂缝检测的CNN深度学习代码", "expected_skill_ids": ["skill_4", "skill_6"], "scenario": "代码开发/工程实现"},
+  {"task": "查询大体积混凝土温度控制的技术标准", "expected_skill_ids": ["skill_1", "skill_7"], "scenario": "信息检索/知识查询"},
+  {"task": "总结粉煤灰混凝土强度发展规律的研究综述", "expected_skill_ids": ["skill_1", "skill_3"], "scenario": "文献综述/学术检索"},
+  {"task": "处理声发射监测数据并计算b值", "expected_skill_ids": ["skill_2", "skill_4", "skill_10"], "scenario": "数据分析/实验处理"},
+  {"task": "设计FRP约束混凝土柱的轴压试验方案", "expected_skill_ids": ["skill_3", "skill_5"], "scenario": "实验设计/方案规划"},
+  {"task": "开发混凝土寿命预测的数值模拟程序", "expected_skill_ids": ["skill_4", "skill_6"], "scenario": "代码开发/工程实现"},
+  {"task": "查找再生骨料混凝土的工程应用案例", "expected_skill_ids": ["skill_1", "skill_7"], "scenario": "信息检索/知识查询"},
+  {"task": "检索地质聚合物混凝土的制备工艺参数", "expected_skill_ids": ["skill_1", "skill_6"], "scenario": "信息检索/知识查询"},
+  {"task": "分析海水海砂混凝土的成本效益数据", "expected_skill_ids": ["skill_2", "skill_10"], "scenario": "数据分析/实验处理"},
+  {"task": "规划硅烷浸渍混凝土的现场施工方案", "expected_skill_ids": ["skill_3", "skill_5"], "scenario": "实验设计/方案规划"},
+  {"task": "编写混凝土碳化深度计算的Python脚本", "expected_skill_ids": ["skill_4", "skill_6"], "scenario": "代码开发/工程实现"},
+  {"task": "搜索磷酸镁水泥快速修补材料的最新研究", "expected_skill_ids": ["skill_1", "skill_7"], "scenario": "信息检索/知识查询"}
+]

@@ -1,0 +1,46 @@
+{
+  "TF-IDF (local)": {
+    "p50_ms": 0.047,
+    "p95_ms": 0.102,
+    "p99_ms": 0.119,
+    "mean_ms": 0.054,
+    "min_ms": 0.026,
+    "max_ms": 0.123
+  },
+  "BM25 (local)": {
+    "p50_ms": 0.002,
+    "p95_ms": 0.126,
+    "p99_ms": 0.214,
+    "mean_ms": 0.028,
+    "min_ms": 0.002,
+    "max_ms": 0.236
+  },
+  "Nemotron NIM (single)": {
+    "p50_ms": 683.054,
+    "p95_ms": 1027.51,
+    "p99_ms": 1272.784,
+    "mean_ms": 739.841,
+    "min_ms": 638.416,
+    "max_ms": 1334.103
+  },
+  "Nemotron NIM (batch)": {
+    "batch_size": 5,
+    "batch_count": 3,
+    "avg_batch_latency_ms": 975.157,
+    "avg_throughput_qps": 5.13,
+    "p50_batch_latency_ms": 963.494,
+    "p95_batch_latency_ms": 1000.774
+  },
+  "E2E: TF-IDF (local)": {
+    "p50_ms": 0.051,
+    "mean_ms": 0.059
+  },
+  "E2E: BM25 (local)": {
+    "p50_ms": 0.002,
+    "mean_ms": 0.02
+  },
+  "E2E: Nemotron (NIM)": {
+    "p50_ms": 666.317,
+    "mean_ms": 671.225
+  }
+}

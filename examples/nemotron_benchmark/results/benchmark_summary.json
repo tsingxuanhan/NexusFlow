@@ -1,0 +1,24 @@
+{
+  "env_info": {
+    "nexusflow_version": "2.9.0",
+    "model_name": "nvidia/nemotron-3-embed-1b",
+    "seed": 42,
+    "corpus_size": 25,
+    "qa_size": 51,
+    "adversarial_size": 10,
+    "skill_task_size": 20
+  },
+  "elapsed": {
+    "e1": 368.81065344810486,
+    "e2": 43.03018045425415,
+    "e3": 41.58652877807617,
+    "e4": 1322.0798370838165
+  },
+  "experiments_run": [
+    "e1",
+    "e2",
+    "e3",
+    "e4"
+  ],
+  "timestamp": "2026-07-20T12:28:44.180287"
+}

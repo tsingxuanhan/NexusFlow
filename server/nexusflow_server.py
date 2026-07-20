@@ -42,10 +42,20 @@ import os
 import re
 import traceback
 import sys
+from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Callable, Awaitable
 from dataclasses import dataclass, field, asdict
 from enum import Enum
+
+# Load .env from project root (supports direct execution without run.py)
+try:
+    from dotenv import load_dotenv
+    _env_path = Path(__file__).resolve().parent.parent / ".env"
+    if _env_path.exists():
+        load_dotenv(_env_path)
+except ImportError:
+    pass
 
 import aiohttp
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
@@ -121,11 +131,11 @@ async def web_search(query: str, max_results: int = 5) -> str:
     return "\n".join(results)
 
 # ============================================================================
-# Add agent4science_nexus to path for imports
+# Add project root to path for imports
 # ============================================================================
-AGENT4SCIENCE_NEXUS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "agent4science_nexus")
-if AGENT4SCIENCE_NEXUS_PATH not in sys.path:
-    sys.path.insert(0, AGENT4SCIENCE_NEXUS_PATH)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 # ============================================================================
 # Import Real Core Engine Modules from agent4science_nexus
@@ -1741,7 +1751,7 @@ class NexusFlowEngine:
             if injection_type == "requirement_change":
                 # 需求变更：让 Strategist 重新评估任务
                 new_content = injection.get("content", "")
-                await events.log(f"📝 处理需求变更: {new_content[:60]}...")
+                await self.events.log(f"📝 处理需求变更: {new_content[:60]}...")
                 
                 # 更新任务描述，将新需求追加
                 task.description = f"{task.description}\n\n[追加需求] {new_content}"
@@ -1762,7 +1772,7 @@ class NexusFlowEngine:
                     {"role": "user", "content": reeval_prompt}
                 ], temperature=0.3)
                 
-                await events.emit("requirement_change_processed", {
+                await self.events.emit("requirement_change_processed", {
                     "step": step_num,
                     "new_content": new_content,
                     "adjustment": str(resp.get("content", ""))[:500],
@@ -1776,7 +1786,7 @@ class NexusFlowEngine:
                 fault_type = fault.get("type", "")
                 target = fault.get("target", "")
                 
-                await events.log(f"💥 处理故障注入: {fault_type} → {target}")
+                await self.events.log(f"💥 处理故障注入: {fault_type} → {target}")
                 
                 if fault_type == "node_failure":
                     # 节点失效处理：尝试自动恢复
@@ -1791,7 +1801,7 @@ class NexusFlowEngine:
                         }
                         task.recovery_attempts.append(recovery)
                         
-                        await events.emit("recovery_attempt", {
+                        await self.events.emit("recovery_attempt", {
                             "task_id": task.id,
                             "agent_id": target,
                             "step": step_num,
@@ -1804,25 +1814,25 @@ class NexusFlowEngine:
                             recovery["status"] = "success"
                             recovery["recovered_at"] = datetime.now().isoformat()
                             task.disabled_agents.discard(target)
-                            await events.log(f"🔧 {target} 已自动恢复")
-                            await events.emit("recovery_success", {
+                            await self.events.log(f"🔧 {target} 已自动恢复")
+                            await self.events.emit("recovery_success", {
                                 "task_id": task.id,
                                 "agent_id": target,
                             })
                         except Exception as e:
                             recovery["status"] = "failed"
                             recovery["error"] = str(e)
-                            await events.log(f"⚠️ {target} 恢复失败: {e}")
+                            await self.events.log(f"⚠️ {target} 恢复失败: {e}")
                 
                 elif fault_type == "latency_inject":
                     # 延迟注入：模拟响应延迟
-                    await events.log(f"⏱️ 延迟注入: 模拟 {target} 响应延迟")
+                    await self.events.log(f"⏱️ 延迟注入: 模拟 {target} 响应延迟")
                     await asyncio.sleep(0.5)  # 模拟延迟
                 
                 elif fault_type == "data_corruption":
                     # 数据损坏：标记需要重新获取数据
-                    await events.log(f"🗑️ 数据损坏: {target} 数据需要重新获取")
-                    await events.emit("data_corruption", {
+                    await self.events.log(f"🗑️ 数据损坏: {target} 数据需要重新获取")
+                    await self.events.emit("data_corruption", {
                         "task_id": task.id,
                         "target": target,
                         "step": step_num,
@@ -1830,9 +1840,9 @@ class NexusFlowEngine:
                 
                 elif fault_type == "topology_disrupt":
                     # 拓扑扰动：强制切换拓扑
-                    await events.log(f"🔀 拓扑扰动: 强制切换拓扑结构")
+                    await self.events.log(f"🔀 拓扑扰动: 强制切换拓扑结构")
                     task.topology = "mesh"  # 强制切换到网状拓扑
-                    await events.emit("topology_change", {
+                    await self.events.emit("topology_change", {
                         "topology": "mesh",
                         "config": TOPOLOGY_CONFIGS.get("mesh", {}),
                         "step": step_num,
@@ -1856,11 +1866,11 @@ class NexusFlowEngine:
         
         backup = backup_agents.get(agent_id)
         if backup:
-            await events.log(f"🔄 使用备用Agent: {agent_id} → {backup}")
+            await self.events.log(f"🔄 使用备用Agent: {agent_id} → {backup}")
             # 在实际执行中，这里会切换到备用Agent
         else:
             # 重试原Agent
-            await events.log(f"🔄 重试Agent: {agent_id}")
+            await self.events.log(f"🔄 重试Agent: {agent_id}")
     
     async def _execute_cdol_step(self, task: TaskExecution, step_num: int,
                                   participants: List[str], topology: str,

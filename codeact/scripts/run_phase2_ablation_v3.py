@@ -17,7 +17,12 @@ async def main():
     from codeact_sdk import CodeActSDK
     sdk = CodeActSDK()
 
-    api_key = "sk-e7bdbfd58dc847468d613411cee35951"
+    api_key = os.environ.get("DEEPSEEK_API_KEY", "")
+    if not api_key:
+        raise RuntimeError(
+            "DEEPSEEK_API_KEY environment variable is not set. "
+            "Export it before running this script."
+        )
     work_dir = NEXUSFLOW_DIR
     script_path = os.path.join(work_dir, "examples", "demo_phase2_ablation_v3.py")
 

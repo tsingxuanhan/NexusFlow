@@ -601,7 +601,7 @@ def run_server(host: str = "localhost", port: int = 8080):
     print(f"[INFO] Materials Science MCP Server starting...", file=sys.stderr)
     print(f"[INFO] Tools available: {len(server.tools)}", file=sys.stderr)
     print(f"[INFO] List tools: tools/list", file=sys.stderr)
-    print(f"[INFO] Call tool: tools/call {{'name': 'search_literature', 'arguments': {{'query': 'cement'}}}", file=sys.stderr)
+    print(f"[INFO] Call tool: tools/call {{'name': 'search_literature', 'arguments': {{'query': 'cement'}}}}", file=sys.stderr)
     
     # For stdio-based communication
     for line in sys.stdin:

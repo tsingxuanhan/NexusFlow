@@ -10,10 +10,13 @@ from bench_utils import (
 )
 from e4_e2e_task_quality import generate_answer, evaluate_answer
 
-NIM_API_KEY = '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'
-LLM_API_KEY = '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'
+# API keys must be provided via environment variables (never hardcode secrets).
+NIM_API_KEY = os.environ.get('NIM_API_KEY', '')
+LLM_API_KEY = os.environ.get('LLM_API_KEY', '') or NIM_API_KEY
 
 def main():
+    if not NIM_API_KEY:
+        raise SystemExit("ERROR: NIM_API_KEY environment variable is not set.")
     # Load existing results
     existing_path = os.path.join(RESULTS_DIR, "e4_e2e_task_quality.json")
     with open(existing_path, 'r') as f:

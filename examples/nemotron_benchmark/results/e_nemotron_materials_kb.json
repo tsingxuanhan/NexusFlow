@@ -1,0 +1,1230 @@
+{
+  "version": "e_nemotron_materials_kb",
+  "corpus": "materials-kb (论文库)",
+  "corpus_stats": {
+    "files": 12,
+    "docs": 102,
+    "chars": 221780
+  },
+  "num_queries": 15,
+  "methods": {
+    "TF-IDF": {
+      "aggregate": {
+        "recall@5": 0.8667,
+        "mrr": 0.5967
+      },
+      "per_query": [
+        {
+          "query": "AGI深度文献调研覆盖了哪些关键方向",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk5",
+            "materials-kb/知识库_v2/全量索引.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料科学前沿论文2024-2026有哪些重要发现",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0"
+          ]
+        },
+        {
+          "query": "认知架构开源项目有哪些代表性工作",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": true,
+          "rr": 0.2,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk8",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk6",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk3",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk4"
+          ]
+        },
+        {
+          "query": "AGI进化路径的调研报告核心结论",
+          "relevant": "materials-kb/reports/AGI进化",
+          "hit": true,
+          "rr": 0.25,
+          "top5": [
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk5",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料知识库的索引结构如何组织",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk10",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk10",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3"
+          ]
+        },
+        {
+          "query": "知识库全量索引包含哪些材料类别",
+          "relevant": "materials-kb/知识库_v2/全量索引",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk3"
+          ]
+        },
+        {
+          "query": "fine-tune数据集的QA提取方法是什么",
+          "relevant": "materials-kb/fine-tune/qa-extraction",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/README_EN.md",
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2"
+          ]
+        },
+        {
+          "query": "SFT数据格式的具体规范",
+          "relevant": "materials-kb/fine-tune/sft-dataset",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk1",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk5"
+          ]
+        },
+        {
+          "query": "AGI深度索引的关键技术领域",
+          "relevant": "materials-kb/知识库_v2/AGI深度索引",
+          "hit": true,
+          "rr": 0.25,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/知识库_v2/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "前沿补充索引新增了哪些研究方向",
+          "relevant": "materials-kb/知识库_v2/前沿补充",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "材料科学中的机器学习应用有哪些进展",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk1",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk4"
+          ]
+        },
+        {
+          "query": "认知智能与AGI的关联性分析",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk21",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk8"
+          ]
+        },
+        {
+          "query": "知识库v2相比v1有哪些改进",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk6",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk6",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22"
+          ]
+        },
+        {
+          "query": "AGI领域中语言模型Scaling Law的研究现状",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.25,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk14",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk14",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22"
+          ]
+        },
+        {
+          "query": "材料信息学中高通量筛选方法综述",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk8",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk8"
+          ]
+        }
+      ]
+    },
+    "BM25": {
+      "aggregate": {
+        "recall@5": 0.7333,
+        "mrr": 0.5778
+      },
+      "per_query": [
+        {
+          "query": "AGI深度文献调研覆盖了哪些关键方向",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料科学前沿论文2024-2026有哪些重要发现",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk14",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk14"
+          ]
+        },
+        {
+          "query": "认知架构开源项目有哪些代表性工作",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk2",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk5",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk3"
+          ]
+        },
+        {
+          "query": "AGI进化路径的调研报告核心结论",
+          "relevant": "materials-kb/reports/AGI进化",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料知识库的索引结构如何组织",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk10",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk10",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk2",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk9",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk9"
+          ]
+        },
+        {
+          "query": "知识库全量索引包含哪些材料类别",
+          "relevant": "materials-kb/知识库_v2/全量索引",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk2",
+            "materials-kb/fine-tune/qa-extraction.md"
+          ]
+        },
+        {
+          "query": "fine-tune数据集的QA提取方法是什么",
+          "relevant": "materials-kb/fine-tune/qa-extraction",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/README_EN.md",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk13",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk13"
+          ]
+        },
+        {
+          "query": "SFT数据格式的具体规范",
+          "relevant": "materials-kb/fine-tune/sft-dataset",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk5",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk17",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk17"
+          ]
+        },
+        {
+          "query": "AGI深度索引的关键技术领域",
+          "relevant": "materials-kb/知识库_v2/AGI深度索引",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk6",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk6",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk2"
+          ]
+        },
+        {
+          "query": "前沿补充索引新增了哪些研究方向",
+          "relevant": "materials-kb/知识库_v2/前沿补充",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料科学中的机器学习应用有哪些进展",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk4",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk4",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk8",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk8",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk13"
+          ]
+        },
+        {
+          "query": "认知智能与AGI的关联性分析",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk18",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk18"
+          ]
+        },
+        {
+          "query": "知识库v2相比v1有哪些改进",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk9",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk9"
+          ]
+        },
+        {
+          "query": "AGI领域中语言模型Scaling Law的研究现状",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk14",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk14",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk16",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk16",
+            "materials-kb/知识库_v2/README.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料信息学中高通量筛选方法综述",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk8",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk8",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk11",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk11"
+          ]
+        }
+      ]
+    },
+    "Nemotron Semantic": {
+      "aggregate": {
+        "recall@5": 0.9333,
+        "mrr": 0.6444
+      },
+      "per_query": [
+        {
+          "query": "AGI深度文献调研覆盖了哪些关键方向",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22"
+          ]
+        },
+        {
+          "query": "材料科学前沿论文2024-2026有哪些重要发现",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk5",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk5",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk14"
+          ]
+        },
+        {
+          "query": "认知架构开源项目有哪些代表性工作",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk1",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk2"
+          ]
+        },
+        {
+          "query": "AGI进化路径的调研报告核心结论",
+          "relevant": "materials-kb/reports/AGI进化",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21"
+          ]
+        },
+        {
+          "query": "材料知识库的索引结构如何组织",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 0.25,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/README_EN.md",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/README.md#chunk2"
+          ]
+        },
+        {
+          "query": "知识库全量索引包含哪些材料类别",
+          "relevant": "materials-kb/知识库_v2/全量索引",
+          "hit": true,
+          "rr": 0.25,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/README_EN.md"
+          ]
+        },
+        {
+          "query": "fine-tune数据集的QA提取方法是什么",
+          "relevant": "materials-kb/fine-tune/qa-extraction",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk15",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk15"
+          ]
+        },
+        {
+          "query": "SFT数据格式的具体规范",
+          "relevant": "materials-kb/fine-tune/sft-dataset",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/README.md#chunk2",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk19"
+          ]
+        },
+        {
+          "query": "AGI深度索引的关键技术领域",
+          "relevant": "materials-kb/知识库_v2/AGI深度索引",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22"
+          ]
+        },
+        {
+          "query": "前沿补充索引新增了哪些研究方向",
+          "relevant": "materials-kb/知识库_v2/前沿补充",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk8"
+          ]
+        },
+        {
+          "query": "材料科学中的机器学习应用有哪些进展",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk5",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk5",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk4",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk4",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk6"
+          ]
+        },
+        {
+          "query": "认知智能与AGI的关联性分析",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk21",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22"
+          ]
+        },
+        {
+          "query": "知识库v2相比v1有哪些改进",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/知识库_v2/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "AGI领域中语言模型Scaling Law的研究现状",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/知识库_v2/全量索引.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料信息学中高通量筛选方法综述",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk2",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk5",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk5",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk1"
+          ]
+        }
+      ]
+    },
+    "RRF(TF-IDF+Nemotron)": {
+      "aggregate": {
+        "recall@5": 0.9333,
+        "mrr": 0.6911
+      },
+      "per_query": [
+        {
+          "query": "AGI深度文献调研覆盖了哪些关键方向",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料科学前沿论文2024-2026有哪些重要发现",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2"
+          ]
+        },
+        {
+          "query": "认知架构开源项目有哪些代表性工作",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk8",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk6",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk1"
+          ]
+        },
+        {
+          "query": "AGI进化路径的调研报告核心结论",
+          "relevant": "materials-kb/reports/AGI进化",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料知识库的索引结构如何组织",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "知识库全量索引包含哪些材料类别",
+          "relevant": "materials-kb/知识库_v2/全量索引",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk0"
+          ]
+        },
+        {
+          "query": "fine-tune数据集的QA提取方法是什么",
+          "relevant": "materials-kb/fine-tune/qa-extraction",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk5",
+            "materials-kb/README_EN.md"
+          ]
+        },
+        {
+          "query": "SFT数据格式的具体规范",
+          "relevant": "materials-kb/fine-tune/sft-dataset",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk1",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk1"
+          ]
+        },
+        {
+          "query": "AGI深度索引的关键技术领域",
+          "relevant": "materials-kb/知识库_v2/AGI深度索引",
+          "hit": true,
+          "rr": 0.2,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22"
+          ]
+        },
+        {
+          "query": "前沿补充索引新增了哪些研究方向",
+          "relevant": "materials-kb/知识库_v2/前沿补充",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk14"
+          ]
+        },
+        {
+          "query": "材料科学中的机器学习应用有哪些进展",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk4",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk4",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk2",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3"
+          ]
+        },
+        {
+          "query": "认知智能与AGI的关联性分析",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk21",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "知识库v2相比v1有哪些改进",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk6",
+            "materials-kb/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "AGI领域中语言模型Scaling Law的研究现状",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料信息学中高通量筛选方法综述",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2"
+          ]
+        }
+      ]
+    },
+    "RRF(BM25+Nemotron)": {
+      "aggregate": {
+        "recall@5": 0.9333,
+        "mrr": 0.5744
+      },
+      "per_query": [
+        {
+          "query": "AGI深度文献调研覆盖了哪些关键方向",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/知识库_v2/全量索引.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料科学前沿论文2024-2026有哪些重要发现",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk5",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk14"
+          ]
+        },
+        {
+          "query": "认知架构开源项目有哪些代表性工作",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk2",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk1"
+          ]
+        },
+        {
+          "query": "AGI进化路径的调研报告核心结论",
+          "relevant": "materials-kb/reports/AGI进化",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "材料知识库的索引结构如何组织",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk10",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk10",
+            "materials-kb/README_EN.md"
+          ]
+        },
+        {
+          "query": "知识库全量索引包含哪些材料类别",
+          "relevant": "materials-kb/知识库_v2/全量索引",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/fine-tune/qa-extraction.md"
+          ]
+        },
+        {
+          "query": "fine-tune数据集的QA提取方法是什么",
+          "relevant": "materials-kb/fine-tune/qa-extraction",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk13",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk13"
+          ]
+        },
+        {
+          "query": "SFT数据格式的具体规范",
+          "relevant": "materials-kb/fine-tune/sft-dataset",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk1",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk5"
+          ]
+        },
+        {
+          "query": "AGI深度索引的关键技术领域",
+          "relevant": "materials-kb/知识库_v2/AGI深度索引",
+          "hit": true,
+          "rr": 0.2,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk6",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0"
+          ]
+        },
+        {
+          "query": "前沿补充索引新增了哪些研究方向",
+          "relevant": "materials-kb/知识库_v2/前沿补充",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "材料科学中的机器学习应用有哪些进展",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk4",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk4",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk5",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk5",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk8"
+          ]
+        },
+        {
+          "query": "认知智能与AGI的关联性分析",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk21",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0"
+          ]
+        },
+        {
+          "query": "知识库v2相比v1有哪些改进",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "AGI领域中语言模型Scaling Law的研究现状",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.25,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk14",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk14"
+          ]
+        },
+        {
+          "query": "材料信息学中高通量筛选方法综述",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.3333333333333333,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk8",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2"
+          ]
+        }
+      ]
+    },
+    "RRF(TF-IDF+BM25+Nemotron)": {
+      "aggregate": {
+        "recall@5": 0.9333,
+        "mrr": 0.71
+      },
+      "per_query": [
+        {
+          "query": "AGI深度文献调研覆盖了哪些关键方向",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0"
+          ]
+        },
+        {
+          "query": "材料科学前沿论文2024-2026有哪些重要发现",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk3"
+          ]
+        },
+        {
+          "query": "认知架构开源项目有哪些代表性工作",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk3",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk2"
+          ]
+        },
+        {
+          "query": "AGI进化路径的调研报告核心结论",
+          "relevant": "materials-kb/reports/AGI进化",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+            "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk5"
+          ]
+        },
+        {
+          "query": "材料知识库的索引结构如何组织",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk10",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk10",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk1"
+          ]
+        },
+        {
+          "query": "知识库全量索引包含哪些材料类别",
+          "relevant": "materials-kb/知识库_v2/全量索引",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/fine-tune/qa-extraction.md"
+          ]
+        },
+        {
+          "query": "fine-tune数据集的QA提取方法是什么",
+          "relevant": "materials-kb/fine-tune/qa-extraction",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/README_EN.md",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk13"
+          ]
+        },
+        {
+          "query": "SFT数据格式的具体规范",
+          "relevant": "materials-kb/fine-tune/sft-dataset",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/fine-tune/sft-dataset-format.md",
+            "materials-kb/README.md#chunk1",
+            "materials-kb/fine-tune/qa-extraction.md",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk1",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk5"
+          ]
+        },
+        {
+          "query": "AGI深度索引的关键技术领域",
+          "relevant": "materials-kb/知识库_v2/AGI深度索引",
+          "hit": true,
+          "rr": 0.2,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk22"
+          ]
+        },
+        {
+          "query": "前沿补充索引新增了哪些研究方向",
+          "relevant": "materials-kb/知识库_v2/前沿补充",
+          "hit": true,
+          "rr": 0.25,
+          "top5": [
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1"
+          ]
+        },
+        {
+          "query": "材料科学中的机器学习应用有哪些进展",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk4",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk4",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk13",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk13"
+          ]
+        },
+        {
+          "query": "认知智能与AGI的关联性分析",
+          "relevant": "materials-kb/reports/认知架构",
+          "hit": false,
+          "rr": 0.0,
+          "top5": [
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21",
+            "materials-kb/知识库_v2/AGI深度索引.md#chunk21",
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+            "materials-kb/reports/AGI进化路径调研报告.md#chunk8"
+          ]
+        },
+        {
+          "query": "知识库v2相比v1有哪些改进",
+          "relevant": "materials-kb/知识库_v2/",
+          "hit": true,
+          "rr": 1.0,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/README.md#chunk1",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/README.md#chunk0",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk6"
+          ]
+        },
+        {
+          "query": "AGI领域中语言模型Scaling Law的研究现状",
+          "relevant": "materials-kb/reports/AGI",
+          "hit": true,
+          "rr": 0.2,
+          "top5": [
+            "materials-kb/知识库_v2/README.md#chunk0",
+            "materials-kb/知识库_v2/全量索引.md#chunk0",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk14",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk14",
+            "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22"
+          ]
+        },
+        {
+          "query": "材料信息学中高通量筛选方法综述",
+          "relevant": "materials-kb/reports/材料科学",
+          "hit": true,
+          "rr": 0.5,
+          "top5": [
+            "materials-kb/README.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk1",
+            "materials-kb/知识库_v2/前沿补充索引.md#chunk1",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk8",
+            "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3"
+          ]
+        }
+      ]
+    }
+  }
+}

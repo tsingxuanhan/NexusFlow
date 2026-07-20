@@ -1,0 +1,283 @@
+{
+  "version": "e3_v3_local",
+  "num_tasks": 15,
+  "aggregate": {
+    "top3_hit_rate": 0.2667,
+    "top5_hit_rate": 0.4667
+  },
+  "per_task": [
+    {
+      "task": "了解NexusFlow的Agent调度机制",
+      "keywords": [
+        "orchestrator",
+        "调度",
+        "agent"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/core/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/cognition/task_tree.py#chunk1",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/edge_cloud_scheduling_experiment.py#chunk0",
+        "NexusFlow/docs/方案二_自适应上下文管理器.md#chunk1"
+      ]
+    },
+    {
+      "task": "查看NexusFlow的记忆系统设计",
+      "keywords": [
+        "memory",
+        "vector",
+        "archival"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/memory/",
+      "top3_hit": true,
+      "top5_hit": true,
+      "top5": [
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk3",
+        "xuanshu-knowledge-base/supplements/AGI_Agent_Framework_2025-2026_report.md#chunk2",
+        "NexusFlow/nexusflow/memory/__init__.py",
+        "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5"
+      ]
+    },
+    {
+      "task": "了解NexusFlow的认知分工架构",
+      "keywords": [
+        "cognitive",
+        "division",
+        "engine"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/core/",
+      "top3_hit": false,
+      "top5_hit": true,
+      "top5": [
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/server/nexusflow_server.py#chunk15",
+        "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk0",
+        "NexusFlow/server/nexusflow_server_ascii.py#chunk15"
+      ]
+    },
+    {
+      "task": "查看NexusFlow的协议定义",
+      "keywords": [
+        "protocol",
+        "message",
+        "nexus"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/protocol/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/server/nexusflow_server.py#chunk15",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk3",
+        "NexusFlow/server/nexusflow_server_ascii.py#chunk15",
+        "NexusFlow/examples/demo_phase2_ablation_v3.py#chunk0"
+      ]
+    },
+    {
+      "task": "了解NexusFlow的Agent角色定义",
+      "keywords": [
+        "agent",
+        "miner",
+        "artisan",
+        "assayer"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/agents/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/demo/cdol_comparison_demo.py#chunk0",
+        "NexusFlow/server/nexusflow_server.py#chunk15",
+        "NexusFlow/server/nexusflow_server_ascii.py#chunk15"
+      ]
+    },
+    {
+      "task": "查看NexusFlow的边缘云调度",
+      "keywords": [
+        "edge",
+        "cloud",
+        "scheduler"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/core/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/nexusflow/cognition/task_tree.py#chunk1",
+        "NexusFlow/examples/demo_edge_cloud.py#chunk0"
+      ]
+    },
+    {
+      "task": "了解NexusFlow的技能检索系统",
+      "keywords": [
+        "skill",
+        "retriever",
+        "match"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/core/",
+      "top3_hit": true,
+      "top5_hit": true,
+      "top5": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/memory/__init__.py",
+        "xuanshu-knowledge-base/evolution/设计方案.md#chunk7"
+      ]
+    },
+    {
+      "task": "查看agent4science的README文档",
+      "keywords": [
+        "science",
+        "agent",
+        "discovery"
+      ],
+      "relevant_prefix": "agent4science/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "mat-scripts/ai/gen_doc.py",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk7",
+        "materials-ai-kit/scripts/ai/gen_doc.py",
+        "qiu/agent4science.md#chunk1",
+        "xuanshu-ui-gallery/original/js/config.json"
+      ]
+    },
+    {
+      "task": "了解材料知识库的内容分类",
+      "keywords": [
+        "材料",
+        "知识库",
+        "knowledge"
+      ],
+      "relevant_prefix": "materials-kb/",
+      "top3_hit": false,
+      "top5_hit": true,
+      "top5": [
+        "NexusFlow/nexusflow/cognition/continuous_learning.py#chunk1",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/tests/test_dynamic_router.py#chunk2",
+        "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk8",
+        "xuanshu-knowledge-base/README.md"
+      ]
+    },
+    {
+      "task": "查看UI画廊的设计组件",
+      "keywords": [
+        "ui",
+        "gallery",
+        "component",
+        "设计"
+      ],
+      "relevant_prefix": "xuanshu-ui-gallery/",
+      "top3_hit": true,
+      "top5_hit": true,
+      "top5": [
+        "xuanshu-ui-gallery/README.md",
+        "xuanshu-ui-gallery/original/js/config.json",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "materials-ai-kit/README.md#chunk1",
+        "NexusFlow/tools/od_design_tool.py#chunk3"
+      ]
+    },
+    {
+      "task": "了解NexusFlow的Nemotron集成方案",
+      "keywords": [
+        "nemotron",
+        "embedding",
+        "provider"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/memory/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/docs/Nemotron3_Integration_Analysis.md#chunk0",
+        "NexusFlow/server/nexusflow_server.py#chunk15",
+        "NexusFlow/docs/Nemotron3_Integration_Analysis.md#chunk1",
+        "NexusFlow/server/nexusflow_server_ascii.py#chunk15"
+      ]
+    },
+    {
+      "task": "查看NexusFlow的配置文件",
+      "keywords": [
+        "config",
+        "yaml",
+        "配置"
+      ],
+      "relevant_prefix": "NexusFlow/config/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "NexusFlow/requirements.txt",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "xuanshu-ui-gallery/original/js/config.json",
+        "NexusFlow/tools/od_design_tool.py#chunk5",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ]
+    },
+    {
+      "task": "了解材料AI工具包的功能",
+      "keywords": [
+        "materials",
+        "ai",
+        "kit",
+        "工具"
+      ],
+      "relevant_prefix": "materials-ai-kit/",
+      "top3_hit": false,
+      "top5_hit": true,
+      "top5": [
+        "agent4science/README.md#chunk1",
+        "NexusFlow/evaluation/__init__.py",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "agent4science/evaluation/__init__.py",
+        "materials-ai-kit/requirements.txt"
+      ]
+    },
+    {
+      "task": "查看玄枢知识库的文档组织",
+      "keywords": [
+        "知识",
+        "文档",
+        "xuanshu"
+      ],
+      "relevant_prefix": "xuanshu-knowledge-base/",
+      "top3_hit": true,
+      "top5_hit": true,
+      "top5": [
+        "xuanshu-ui-gallery/original/js/config.json",
+        "xuanshu-knowledge-base/README.md",
+        "NexusFlow/docs/hub.html#chunk1",
+        "qiu/快速开始.md#chunk1",
+        "NexusFlow/examples/demo/hub.html#chunk1"
+      ]
+    },
+    {
+      "task": "了解NexusFlow的动态路由算法",
+      "keywords": [
+        "router",
+        "dynamic",
+        "route"
+      ],
+      "relevant_prefix": "NexusFlow/nexusflow/core/",
+      "top3_hit": false,
+      "top5_hit": false,
+      "top5": [
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/server/nexusflow_server.py#chunk15",
+        "NexusFlow/examples/demo_phase2_ablation.py#chunk7",
+        "NexusFlow/server/nexusflow_server_ascii.py#chunk15"
+      ]
+    }
+  ]
+}

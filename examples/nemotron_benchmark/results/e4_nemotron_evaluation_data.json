@@ -1,0 +1,484 @@
+{
+  "queries": [
+    {
+      "query": "AGI深度文献调研覆盖了哪些关键方向",
+      "relevant_prefix": "materials-kb/reports/AGI",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+          "content": "### 关键依赖关系\n1. A→C→D: AGI理论定义世界模型需求，世界模型支撑自我改进\n2. B→H→I: 认知科学启发持续学习，持续学习支撑元学习\n3. E↔A: 涌现理论解释AGI能力跃迁，AGI理论指导涌现研究\n4. F↔G: 因果推理需要符号表示，符号表示应编码因果结构\n5. K↔L: 意识理论与对齐问题深度交织——自我意识是对齐的前提\n6. J↔C: 具身grounding丰富世界模型，世界模型支撑grounding\n### xuanshu-agents框架v4.3的定位\n框架当前在地图上的位置：**地基层→上层建筑的过渡区**\n- ✅ 已有: A(架构设计), E(缩放直觉), G(知识表示-思想结晶)\n- 🔄 建设中: C(世界模型-隐式), D(自我改进-Agent互审), H(持续学习-记忆系统)\n- ⬜ 待发展: F(因果推理), I(元学习), J(Grounding), K(元认知), L(系统性对齐)\n\n---\n\n> 本文献清单共计143篇（#383-#525），覆盖12个AGI核心方向。\n> 每篇均标注了架构映射字段，可直接指导xuanshu-agents框架的模块化设计。\n"
+        },
+        {
+          "id": "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+          "content": "### 关键依赖关系\n1. A→C→D: AGI理论定义世界模型需求，世界模型支撑自我改进\n2. B→H→I: 认知科学启发持续学习，持续学习支撑元学习\n3. E↔A: 涌现理论解释AGI能力跃迁，AGI理论指导涌现研究\n4. F↔G: 因果推理需要符号表示，符号表示应编码因果结构\n5. K↔L: 意识理论与对齐问题深度交织——自我意识是对齐的前提\n6. J↔C: 具身grounding丰富世界模型，世界模型支撑grounding\n### xuanshu-agents框架v4.3的定位\n框架当前在地图上的位置：**地基层→上层建筑的过渡区**\n- ✅ 已有: A(架构设计), E(缩放直觉), G(知识表示-思想结晶)\n- 🔄 建设中: C(世界模型-隐式), D(自我改进-Agent互审), H(持续学习-记忆系统)\n- ⬜ 待发展: F(因果推理), I(元学习), J(Grounding), K(元认知), L(系统性对齐)\n\n---\n\n> 本文献清单共计143篇（#383-#525），覆盖12个AGI核心方向。\n> 每篇均标注了架构映射字段，可直接指导xuanshu-agents框架的模块化设计。\n"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+          "content": "# AGI深度文献补充清单## xuanshu-agents框架知识体系扩展 | 编号 #383 ~ #525\n\n> 编制说明：本文献清单为xuanshu-agents框架v4.3（思想结晶+抽象层级+置信过滤）补充支撑AGI探索的深层知识体系。共12个方向（A-L），每篇含架构映射字段，标注该论文对框架的启发或可映射模块。\n>\n> 编号从#383开始，接续已有知识库（#1-#382）。\n\n---\n## 方向A：AGI理论与通用智能架构（15篇）\n### #383\n- **标题**: A Path Towards Autonomous Machine Intelligence\n- **作者**: Yann LeCun\n- **年份**: 2022\n- **来源**: OpenReview preprint\n- **链接**: https://openreview.net/forum?id=BZ5a1r-kVsf\n- **摘要**: LeCun提出完整的自主机器智能路线图，核心是JEPA架构，包含配置器、感知器、世界模型、成本函数、行动器和注意力模块六大组件。主张智能不是技能集合而是解决新任务的能力。\n- **架构映射**: 【地基】直接对应xuanshu-agents的世界模型模块设计。LeCun的\"系统1+系统2\"双路径与框架的快思考/慢思考调度机制高度吻合。JEPA的六模块架构可作为框架顶层设计的参考蓝图。\n### #384\n- **标题**: A Generalist Agent (Gato)\n- **作者**: Scott Reed, Konrad Żołna, Emilio Parisotto et al. (DeepMind)\n- **年份**: 2022\n- **来源**: Transactions on Machine Learning Research\n-"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+          "content": "# AGI深度文献补充清单## xuanshu-agents框架知识体系扩展 | 编号 #383 ~ #525\n\n> 编制说明：本文献清单为xuanshu-agents框架v4.3（思想结晶+抽象层级+置信过滤）补充支撑AGI探索的深层知识体系。共12个方向（A-L），每篇含架构映射字段，标注该论文对框架的启发或可映射模块。\n>\n> 编号从#383开始，接续已有知识库（#1-#382）。\n\n---\n## 方向A：AGI理论与通用智能架构（15篇）\n### #383\n- **标题**: A Path Towards Autonomous Machine Intelligence\n- **作者**: Yann LeCun\n- **年份**: 2022\n- **来源**: OpenReview preprint\n- **链接**: https://openreview.net/forum?id=BZ5a1r-kVsf\n- **摘要**: LeCun提出完整的自主机器智能路线图，核心是JEPA架构，包含配置器、感知器、世界模型、成本函数、行动器和注意力模块六大组件。主张智能不是技能集合而是解决新任务的能力。\n- **架构映射**: 【地基】直接对应xuanshu-agents的世界模型模块设计。LeCun的\"系统1+系统2\"双路径与框架的快思考/慢思考调度机制高度吻合。JEPA的六模块架构可作为框架顶层设计的参考蓝图。\n### #384\n- **标题**: A Generalist Agent (Gato)\n- **作者**: Scott Reed, Konrad Żołna, Emilio Parisotto et al. (DeepMind)\n- **年份**: 2022\n- **来源**: Transactions on Machine Learning Research\n-"
+        },
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk0",
+          "content": "# 全量论文统一索引 v2\n\n> 524篇（去重后） | 30个分类 | 2026-06-13\n\n---\n## 索引说明\n\n本索引整合三个阶段的论文收集：\n- **基础库** (#1-#272)：ML/DL基础 + 材料科学ML，1986-2023\n- **前沿补充** (#273-#382)：14个应用方向，2024-2025\n- **AGI深度** (#383-#525，去重后#383-#524)：12个理论纵深方向\n\n**去重说明**：#392与#437重复（均为Kaplan 2020 Scaling Laws），保留#392，#437移除。\n\n---\n## 快速导航\n\n| 板块 | 分类数 | 论文数 | 索引文件 |\n|------|--------|--------|----------|\n| 基础与算法 | 3 | ~65 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 模型与工具 | 7 | ~139 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 材料科学 | 8 | ~107 | [材料科学索引](../workspace/knowledge_bases/KB0_全量论文索引.md) + [前沿补充](./前沿补充索引.md) |\n| AGI理论 | 12 | 142 | [AGI深度索引](./AGI深度索引.md) |\n| 跨领域应用 | 8 | ~43 | [前沿补充索引](./前沿补充索引.md) |\n\n---\n## 新增论文概览 (#273-#524)\n### 前沿补充 (#273-#382) — 110篇\n\n| 分类 | 数量 | 代表论文 |\n|------|------|----------|\n| AI-"
+        }
+      ]
+    },
+    {
+      "query": "材料科学前沿论文2024-2026有哪些重要发现",
+      "relevant_prefix": "materials-kb/reports/材料科学",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+          "content": "#### #295 | 2024 | ⭐⭐⭐\n- **标题**: LLM4Mat-Bench: Benchmarking Large Language Models for Materials Science\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 系统评估多种LLM在材料科学任务上的表现，建立标准化评估基准\n- **关键词**: LLM4Mat-Bench; Benchmark; Evaluation\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料LLM评估的基准工作\n#### #296 | 2024 | ⭐⭐⭐\n- **标题**: Mining Materials Science Literature with LLMs\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 利用LLM从海量材料科学文献中自动提取材料-性能关系\n- **关键词**: Literature Mining; NLP; Knowledge Extraction\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料文献知识挖掘的实用方法\n#### #297 | 2024 | ⭐⭐⭐\n- **标题**: Eunomia: An AI Agent for Materials Science Knowledge Management\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 面向材料科学的知识管理AI Agent，集成文献检索、知识图谱与问答\n- **关键词**: Eunomia; Knowledge Ma"
+        },
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+          "content": "#### #295 | 2024 | ⭐⭐⭐\n- **标题**: LLM4Mat-Bench: Benchmarking Large Language Models for Materials Science\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 系统评估多种LLM在材料科学任务上的表现，建立标准化评估基准\n- **关键词**: LLM4Mat-Bench; Benchmark; Evaluation\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料LLM评估的基准工作\n#### #296 | 2024 | ⭐⭐⭐\n- **标题**: Mining Materials Science Literature with LLMs\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 利用LLM从海量材料科学文献中自动提取材料-性能关系\n- **关键词**: Literature Mining; NLP; Knowledge Extraction\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料文献知识挖掘的实用方法\n#### #297 | 2024 | ⭐⭐⭐\n- **标题**: Eunomia: An AI Agent for Materials Science Knowledge Management\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 面向材料科学的知识管理AI Agent，集成文献检索、知识图谱与问答\n- **关键词**: Eunomia; Knowledge Ma"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+          "content": "# 材料科学ML知识库补充调研报告 (2024-2026前沿论文)\n## 调研概览\n\n- **调研时间**: 2026年6月\n- **覆盖方向**: 13个方向 + 特定课题组补充\n- **论文总数**: 110篇\n- **编号范围**: #273 ~ #382\n- **已有知识库**: 272篇 (1986-2023, 11个分类)\n- **新增分类**: AI-Agent-for-Science, Foundation-Models-for-Materials, LLM-Materials-Science, AI-Drug-Discovery, AI-Energy-Battery, AI-Physics-Simulation, RAG-Knowledge, Multimodal-AI-VL, Embodied-AI-Robotics, AI-Climate-Sustainability, Agentic-AI-Reasoning\n\n---\n## 论文详细列表\n\n### AI-Agent-for-Science\n#### #273 | 2024 | ⭐⭐⭐\n- **标题**: The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery\n- **作者**: Sakana AI et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 提出AI Scientist系统，实现从假设生成、实验设计、论文撰写的全自动科研闭环\n- **关键词**: AI Scientist; Automated Research; LLM Agent\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 为材料科学自主实验和论文生成提供范式参考\n#### #274 | 2024 | "
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk0",
+          "content": "# 材料科学ML知识库补充调研报告 (2024-2026前沿论文)\n## 调研概览\n\n- **调研时间**: 2026年6月\n- **覆盖方向**: 13个方向 + 特定课题组补充\n- **论文总数**: 110篇\n- **编号范围**: #273 ~ #382\n- **已有知识库**: 272篇 (1986-2023, 11个分类)\n- **新增分类**: AI-Agent-for-Science, Foundation-Models-for-Materials, LLM-Materials-Science, AI-Drug-Discovery, AI-Energy-Battery, AI-Physics-Simulation, RAG-Knowledge, Multimodal-AI-VL, Embodied-AI-Robotics, AI-Climate-Sustainability, Agentic-AI-Reasoning\n\n---\n## 论文详细列表\n\n### AI-Agent-for-Science\n#### #273 | 2024 | ⭐⭐⭐\n- **标题**: The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery\n- **作者**: Sakana AI et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 提出AI Scientist系统，实现从假设生成、实验设计、论文撰写的全自动科研闭环\n- **关键词**: AI Scientist; Automated Research; LLM Agent\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 为材料科学自主实验和论文生成提供范式参考\n#### #274 | 2024 | "
+        },
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk5",
+          "content": "#### #312 | 2024 | ⭐⭐⭐\n- **标题**: ML-Driven Iterative Mix Design for Sustainable Concrete\n- **作者**: Various et al.\n- **期刊/会议**: J. Building Engineering 2024\n- **核心贡献**: ML驱动的迭代式配合比设计方法，实现可持续混凝土的多目标优化\n- **关键词**: Iterative Design; Sustainable; ML\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可持续混凝土的智能化配比设计\n#### #313 | 2025 | ⭐⭐⭐\n- **标题**: Explainable AI for Supplementary Cementitious Materials\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2025\n- **核心贡献**: 可解释AI方法揭示辅助胶凝材料的组成-性能关系\n- **关键词**: Explainable AI; SCM; Interpretability\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可解释AI在胶凝材料机理揭示中的应用\n#### #314 | 2024 | ⭐⭐⭐\n- **标题**: Industrial-Scale Cement Clinker Phase Prediction via ML\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 利用两年工业数据集训练ML模型预测水泥熟料矿物相，MAPE低至1.24%\n- **关键词**: Clinker; Phase Prediction; Industrial Data\n- "
+        }
+      ]
+    },
+    {
+      "query": "认知架构开源项目有哪些代表性工作",
+      "relevant_prefix": "materials-kb/reports/认知架构",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+          "content": "# xuanshu-agents v4.3 → v5.0 AGI进化路径深度调研报告\n\n> **框架现状**: 4 Agent角色(矿工/试金/铸师/匠人) + 向量记忆(NGramTFIDF+RRF) + SlotMemory + A2A能力发现 + P2P通信 + 思想结晶 + 冲突检测\n>\n> **硬约束**: RAM 3.8GB无swap | VRAM 16GB\n>\n> **调研目标**: 补齐6个缺失维度 — G2认知架构 / G5因果推理 / G8元学习 / G10具身Grounding / G11元认知 / G12系统性对齐\n\n---\n## 目录\n\n1. [方向A: G2 认知架构](#1-g2-认知架构)\n2. [方向B: G5 因果推理](#2-g5-因果推理)\n3. [方向C: G8 元学习与持续学习](#3-g8-元学习与持续学习)\n4. [方向D: G11 元认知与自我监控](#4-g11-元认知与自我监控)\n5. [方向E: G10 具身Grounding](#5-g10-具身grounding)\n6. [方向F: G12 系统性对齐](#6-g12-系统性对齐)\n7. [集成优先级总览](#7-集成优先级总览)\n8. [跨方向集成架构图](#8-跨方向集成架构图)\n9. [渐进式集成路线图](#9-渐进式集成路线图)\n\n---\n## 1. G2 认知架构\n### 1.1 开源项目清单\n\n| 项目 | 来源/安装 | 许可证 | 语言 | 核心能力 | 轻量级 | RAM估算 |\n|------|----------|--------|------|----------|--------|---------|\n| **pyactup** | `pip install pyactup` (20KB) | MIT | Python | ACT-R子集实"
+        },
+        {
+          "id": "materials-kb/reports/AGI进化路径调研报告.md#chunk8",
+          "content": "### 8.2 核心交互流\n\n```\n1. 认知飞轮主循环:\n\n   矿工(采集) → pyactup认知调度 → 试金石(验证)\n     ↓                                    ↓\n   认知架构(G2)                      DoWhy因果验证(G5)\n     ↓                                    ↓\n     └──→ 冲突? → Reflexion反思(G11) ←──┘\n                    ↓\n              ExpeL提取经验(G8/EWC保护)\n                    ↓\n              铸师(结晶) → MetaAgent工具化(G8)\n                    ↓\n              匠人(执行) → Agent S3 GUI操作(G10)\n                    ↓\n              Vibe Check监控(G11) → Constitutional AI对齐检查(G12)\n                    ↓\n              成功 → 技能库存储(G10) → 反馈循环\n              失败 → 回到反思循环\n```\n### 8.3 六维度协同而非孤立叠加\n\n| 协同关系 | 说明 |\n|----------|------|\n| G2 × G5 | 认知架构提供推理框架，因果推理提供验证手段 → 矿工Agent的采集质量提升 |\n| G5 × G11 | 因果验证失败触发元认知反思 → 试金石Agent的验证能力持续提升 |\n| G8 × G2 | 元学习优化认知架构参数(pyactup效用方程) → 认知调度越来越精准 "
+        },
+        {
+          "id": "materials-kb/reports/AGI进化路径调研报告.md#chunk6",
+          "content": "### P0 立即集成（零/极低RAM压力，1-3天/项）\n\n| # | 方向 | 方案 | RAM增量 | 集成时间 | 与现有架构对接点 |\n|---|------|------|---------|----------|----------------|\n| 1 | G2认知架构 | pyactup | +30MB | 1天 | 声明性记忆→NGramTFIDFProvider; 程序性记忆→SlotMemory |\n| 2 | G5因果推理 | DoWhy | +80MB | 2天 | 试金石Agent因果验证器; 增强冲突检测 |\n| 3 | G5因果推理 | CausalPlan | +80MB | 3天 | 因果图约束A2A任务规划 |\n| 4 | G8元学习 | EWC (ewc.pytorch) | +30MB | 1天 | 保护NGramTFIDF权重不被覆盖 |\n| 5 | G11元认知 | Reflexion | +40MB | 2天 | 增强冲突检测→反思循环; 存入SlotMemory |\n| 6 | G11元认知 | Vibe Check MCP | +20MB | 1天 | P2P通道增加置信度header |\n| 7 | G12对齐 | Constitutional AI逻辑 | +30MB | 2天 | 试金石Agent增加原则检查步骤 |\n| 8 | G12对齐 | ArGen Policy-as-Code | +80MB | 3天 | A2A通信增加策略约束 |\n\n**P0总计RAM增量: ~400MB** (3.8GB→4.2GB，需配合内存优化或升级到8GB)\n### P1 短期集成（1-2周/项，RAM 100-200MB）\n\n| # | 方向 | 方案 | RAM增量 | 集成时间 |\n|---|------|------|-"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+          "content": "# LLM Agent 开源认知架构项目调研报告（2024-2026）\n\n> 聚焦\"真正能跑的代码\"而非纯理论，按5大方向系统梳理\n\n---\n## 一、LLM-Native Cognitive Architectures\n### 1. Letta (原 MemGPT)\n- **GitHub**: https://github.com/letta-ai/letta\n- **Stars**: ~22,400 (letta) + ~30K (原始 cpacker/MemGPT)\n- **最近更新**: 2026-03-31 (v0.16.7)\n- **核心能力**: OS式虚拟上下文管理——将LLM上下文窗口视为RAM，外部存储视为硬盘，Agent自主决定信息在三级存储间的调度\n- **技术栈**: Python, Apache 2.0, pip install letta-client; 支持pgvector/SQLite/Pinecone\n- **RAM/VRAM**: 服务端2-4GB RAM；本地嵌入模型额外需~2GB\n- **集成路径**: **独立服务** — Letta是完整的Agent运行时，不是可插拔的记忆层。集成方式是将xuanshu-agents的Agent注册为Letta Agent类型，通过Letta Server API交互\n- **集成难度**: 4/5 — 需要接受Letta的Agent运行时范式，记忆系统与现有n-gram TF-IDF存在架构冲突\n### 2. Agent Zero\n- **GitHub**: https://github.com/agent0ai/agent-zero\n- **Stars**: ~13-15K\n- **最近更新**: 持续活跃 (2026)\n- **核心能力**: 全Prompt驱动的自主Agent框架——OS"
+        },
+        {
+          "id": "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+          "content": "# xuanshu-agents v4.3 → v5.0 AGI进化路径深度调研报告\n\n> **框架现状**: 4 Agent角色(矿工/试金/铸师/匠人) + 向量记忆(NGramTFIDF+RRF) + SlotMemory + A2A能力发现 + P2P通信 + 思想结晶 + 冲突检测\n>\n> **硬约束**: RAM 3.8GB无swap | VRAM 16GB\n>\n> **调研目标**: 补齐6个缺失维度 — G2认知架构 / G5因果推理 / G8元学习 / G10具身Grounding / G11元认知 / G12系统性对齐\n\n---\n## 目录\n\n1. [方向A: G2 认知架构](#1-g2-认知架构)\n2. [方向B: G5 因果推理](#2-g5-因果推理)\n3. [方向C: G8 元学习与持续学习](#3-g8-元学习与持续学习)\n4. [方向D: G11 元认知与自我监控](#4-g11-元认知与自我监控)\n5. [方向E: G10 具身Grounding](#5-g10-具身grounding)\n6. [方向F: G12 系统性对齐](#6-g12-系统性对齐)\n7. [集成优先级总览](#7-集成优先级总览)\n8. [跨方向集成架构图](#8-跨方向集成架构图)\n9. [渐进式集成路线图](#9-渐进式集成路线图)\n\n---\n## 1. G2 认知架构\n### 1.1 开源项目清单\n\n| 项目 | 来源/安装 | 许可证 | 语言 | 核心能力 | 轻量级 | RAM估算 |\n|------|----------|--------|------|----------|--------|---------|\n| **pyactup** | `pip install pyactup` (20KB) | MIT | Python | ACT-R子集实"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk1",
+          "content": "### #388\n- **标题**: Cognitive Architectures: A 40-Year Survey\n- **作者**: Iuliia Kotseruba, John K. Tsotsos\n- **年份**: 2023\n- **来源**: Artificial Intelligence Review\n- **链接**: https://link.springer.com/article/10.1007/s10462-023-10499-3\n- **摘要**: 回顾过去40年84个认知架构的发展，从SOAR、ACT-R到现代混合架构。分类为符号型、神经型和混合型。讨论陈述性学习、情景记忆、计算性能等核心问题。\n- **架构映射**: 【地基】xuanshu-agents的决策循环机制可参照ACT-R的产生式系统和Soar的目标层级结构。情景记忆缺失是认知架构的共同短板，框架的向量记忆模块正是对此的回应。\n### #389\n- **标题**: ACT-R: A Cognitive Architecture for Modeling Cognition\n- **作者**: Frank Ritter, John Anderson et al.\n- **年份**: 2019 (更新版)\n- **来源**: Wiley Cognitive Science\n- **链接**: https://onlinelibrary.wiley.com/doi/abs/10.1111/cogs.12778\n- **摘要**: ACT-R的完整技术描述：中央产生式系统、视觉/运动模块、声明性记忆、目标栈。产生式规则匹配缓冲区模式，基于效用冲突解析。视觉模块模拟背侧/腹侧双流。\n- **架构映射**: ACT-R的缓冲区→框架的Agent上下文窗口。产生式规则→框架的Guardrail"
+        }
+      ]
+    },
+    {
+      "query": "AGI进化路径的调研报告核心结论",
+      "relevant_prefix": "materials-kb/reports/AGI进化",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk5",
+          "content": "### Phase 3: 自进化管道 (4-8周)\n- **DSPy + GEPA** → 建立系统提示/技能描述的自动优化管道\n- **Hermes Self-Evolution** → 建立SKILL.md的持续进化机制\n- **Free-MAD** → 铸师方案生成的多视角论证增强\n\n---\n\n*报告生成时间: 2026年*\n*搜索覆盖: 5方向 × 3轮 = 15轮搜索*\n"
+        },
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/reports/认知架构开源项目调研_2024-2026.md#chunk0",
+          "content": "# LLM Agent 开源认知架构项目调研报告（2024-2026）\n\n> 聚焦\"真正能跑的代码\"而非纯理论，按5大方向系统梳理\n\n---\n## 一、LLM-Native Cognitive Architectures\n### 1. Letta (原 MemGPT)\n- **GitHub**: https://github.com/letta-ai/letta\n- **Stars**: ~22,400 (letta) + ~30K (原始 cpacker/MemGPT)\n- **最近更新**: 2026-03-31 (v0.16.7)\n- **核心能力**: OS式虚拟上下文管理——将LLM上下文窗口视为RAM，外部存储视为硬盘，Agent自主决定信息在三级存储间的调度\n- **技术栈**: Python, Apache 2.0, pip install letta-client; 支持pgvector/SQLite/Pinecone\n- **RAM/VRAM**: 服务端2-4GB RAM；本地嵌入模型额外需~2GB\n- **集成路径**: **独立服务** — Letta是完整的Agent运行时，不是可插拔的记忆层。集成方式是将xuanshu-agents的Agent注册为Letta Agent类型，通过Letta Server API交互\n- **集成难度**: 4/5 — 需要接受Letta的Agent运行时范式，记忆系统与现有n-gram TF-IDF存在架构冲突\n### 2. Agent Zero\n- **GitHub**: https://github.com/agent0ai/agent-zero\n- **Stars**: ~13-15K\n- **最近更新**: 持续活跃 (2026)\n- **核心能力**: 全Prompt驱动的自主Agent框架——OS"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+          "content": "# xuanshu-agents v4.3 → v5.0 AGI进化路径深度调研报告\n\n> **框架现状**: 4 Agent角色(矿工/试金/铸师/匠人) + 向量记忆(NGramTFIDF+RRF) + SlotMemory + A2A能力发现 + P2P通信 + 思想结晶 + 冲突检测\n>\n> **硬约束**: RAM 3.8GB无swap | VRAM 16GB\n>\n> **调研目标**: 补齐6个缺失维度 — G2认知架构 / G5因果推理 / G8元学习 / G10具身Grounding / G11元认知 / G12系统性对齐\n\n---\n## 目录\n\n1. [方向A: G2 认知架构](#1-g2-认知架构)\n2. [方向B: G5 因果推理](#2-g5-因果推理)\n3. [方向C: G8 元学习与持续学习](#3-g8-元学习与持续学习)\n4. [方向D: G11 元认知与自我监控](#4-g11-元认知与自我监控)\n5. [方向E: G10 具身Grounding](#5-g10-具身grounding)\n6. [方向F: G12 系统性对齐](#6-g12-系统性对齐)\n7. [集成优先级总览](#7-集成优先级总览)\n8. [跨方向集成架构图](#8-跨方向集成架构图)\n9. [渐进式集成路线图](#9-渐进式集成路线图)\n\n---\n## 1. G2 认知架构\n### 1.1 开源项目清单\n\n| 项目 | 来源/安装 | 许可证 | 语言 | 核心能力 | 轻量级 | RAM估算 |\n|------|----------|--------|------|----------|--------|---------|\n| **pyactup** | `pip install pyactup` (20KB) | MIT | Python | ACT-R子集实"
+        },
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk1",
+          "content": "## AGI认知地图\n\n```\n    ┌─────────────────────────────────────────┐\n    │     KB-G12: AI对齐与价值哲学            │ ← 全局约束\n    │     (安全/伦理/治理/宪法)                │\n    └───────────────┬─────────────────────────┘\n                    │ 约束\n    ┌───────────────▼─────────────────────────┐\n    │     KB-G11: 意识与机器意识理论          │ ← 元认知层\n    │     (IIT/GWT/自我模型/注意力图式)        │\n    └───────────────┬─────────────────────────┘\n                    │ 元认知\n    ┌───────────────▼─────────────────────────┐\n    │     上层建筑 (Advanced Capabilities)     │\n    │                                         │\n    │  G9:自我改进 ←→ G8:元学习 ←→ G7:持续学习 │\n    │       │              │             │     │\n    │       ▼              ▼             ▼     │\n    │  G5:因果推理 ←→ G6:NeSy ←→ G10:具身     │\n    └───────────────┬─────────────────────────┘"
+        },
+        {
+          "id": "materials-kb/知识库_v2/AGI深度索引.md#chunk22",
+          "content": "### 关键依赖关系\n1. A→C→D: AGI理论定义世界模型需求，世界模型支撑自我改进\n2. B→H→I: 认知科学启发持续学习，持续学习支撑元学习\n3. E↔A: 涌现理论解释AGI能力跃迁，AGI理论指导涌现研究\n4. F↔G: 因果推理需要符号表示，符号表示应编码因果结构\n5. K↔L: 意识理论与对齐问题深度交织——自我意识是对齐的前提\n6. J↔C: 具身grounding丰富世界模型，世界模型支撑grounding\n### xuanshu-agents框架v4.3的定位\n框架当前在地图上的位置：**地基层→上层建筑的过渡区**\n- ✅ 已有: A(架构设计), E(缩放直觉), G(知识表示-思想结晶)\n- 🔄 建设中: C(世界模型-隐式), D(自我改进-Agent互审), H(持续学习-记忆系统)\n- ⬜ 待发展: F(因果推理), I(元学习), J(Grounding), K(元认知), L(系统性对齐)\n\n---\n\n> 本文献清单共计143篇（#383-#525），覆盖12个AGI核心方向。\n> 每篇均标注了架构映射字段，可直接指导xuanshu-agents框架的模块化设计。\n"
+        }
+      ]
+    },
+    {
+      "query": "材料知识库的索引结构如何组织",
+      "relevant_prefix": "materials-kb/知识库_v2/",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk0",
+          "content": "# 全量论文统一索引 v2\n\n> 524篇（去重后） | 30个分类 | 2026-06-13\n\n---\n## 索引说明\n\n本索引整合三个阶段的论文收集：\n- **基础库** (#1-#272)：ML/DL基础 + 材料科学ML，1986-2023\n- **前沿补充** (#273-#382)：14个应用方向，2024-2025\n- **AGI深度** (#383-#525，去重后#383-#524)：12个理论纵深方向\n\n**去重说明**：#392与#437重复（均为Kaplan 2020 Scaling Laws），保留#392，#437移除。\n\n---\n## 快速导航\n\n| 板块 | 分类数 | 论文数 | 索引文件 |\n|------|--------|--------|----------|\n| 基础与算法 | 3 | ~65 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 模型与工具 | 7 | ~139 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 材料科学 | 8 | ~107 | [材料科学索引](../workspace/knowledge_bases/KB0_全量论文索引.md) + [前沿补充](./前沿补充索引.md) |\n| AGI理论 | 12 | 142 | [AGI深度索引](./AGI深度索引.md) |\n| 跨领域应用 | 8 | ~43 | [前沿补充索引](./前沿补充索引.md) |\n\n---\n## 新增论文概览 (#273-#524)\n### 前沿补充 (#273-#382) — 110篇\n\n| 分类 | 数量 | 代表论文 |\n|------|------|----------|\n| AI-"
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk10",
+          "content": "#### #354 | 2025 | ⭐⭐⭐⭐\n- **标题**: On the Vulnerability of RAG in Knowledge-Intensive Domains\n- **作者**: Xian, Wang et al.\n- **期刊/会议**: ICML 2025\n- **核心贡献**: 揭示RAG在医疗/金融等知识密集领域的安全漏洞，提出检测防御方法\n- **关键词**: RAG Security; Poisoning Attack; Defense\n- **难度**: ⭐⭐⭐⭐\n- **材料科学关联**: RAG系统安全性研究，对材料知识库安全有参考价值\n#### #355 | 2024 | ⭐⭐⭐\n- **标题**: RAG for Scientific Literature: Materials Science Case Study\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 将RAG应用于材料科学文献检索与知识问答，构建领域专用知识增强系统\n- **关键词**: RAG; Materials Literature; Knowledge System\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料科学RAG系统的实践案例\n#### #356 | 2025 | ⭐⭐⭐⭐\n- **标题**: Knowledge Graph Poisoning Attacks on KG-RAG Systems\n- **作者**: Zhao et al.\n- **期刊/会议**: arXiv 2025\n- **核心贡献**: 首次系统研究知识图谱RAG系统的投毒攻击，提出三元组扰动攻击方法\n- **关键词**: KG-RAG; Poisoning; K"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        },
+        {
+          "id": "materials-kb/README_EN.md",
+          "content": "# 📚 Materials Science ML Knowledge Base\n\n> 237 papers · 11 categories · ~9000 lines · For materials science students with zero ML background\n\n## Why This Exists\n\nChinese-language materials science ML knowledge is scarce. Materials undergraduates face two barriers:\n1. **Can't read papers** — dense ML terminology, hard to cross the language+domain gap\n2. **Can't run code** — environment setup, data formats, hyperparameters are all pitfalls\n\nThis KB bridges the gap with structured, Chinese-language knowledge for materials+ML.\n\n## Coverage\n\n| KB | Files | Lines | Content |\n|----|-------|-------|---------|\n| KB0 Global Index | 1 | 2855 | ~200 papers, 11 categories |\n| KB1 Materials ML Core | 8 | ~2448 | DB→descriptors→property prediction→HTS→GNN |\n| KB2 Theory & Basics | 3 | ~887 | ML basics / "
+        },
+        {
+          "id": "materials-kb/README.md#chunk0",
+          "content": "> ## ⚠️ 已归档 (Archived)\n> \n> **本仓库已归档，不再维护。**\n> \n> 请使用最新版知识库：**[xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base)**\n> \n> - 📊 524篇论文（本仓库237篇的2.2倍）\n> - 📁 30个分类（本仓库11个的2.7倍）\n> - 🧠 含AGI认知地图、认知架构调研、前沿补充\n> \n> 本仓库保留作为历史参考。\n\n---\n# 📚 Materials Science ML Knowledge Base\n\n> 237 papers · 11 categories · ~9,000 lines of structured knowledge · Built for materials science students starting ML from zero\n\n[![Papers](https://img.shields.io/badge/Papers-237-blue)]()\n[![Categories](https://img.shields.io/badge/Categories-11-green)]()\n[![Accuracy](https://img.shields.io/badge/Accuracy-99%25-brightgreen)]()\n[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)\n\n---\n## ✨ Why This Exists\n\nChinese-language materials science ML knowledge is extremely scarce. If you're a"
+        }
+      ]
+    },
+    {
+      "query": "知识库全量索引包含哪些材料类别",
+      "relevant_prefix": "materials-kb/知识库_v2/全量索引",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk0",
+          "content": "# 全量论文统一索引 v2\n\n> 524篇（去重后） | 30个分类 | 2026-06-13\n\n---\n## 索引说明\n\n本索引整合三个阶段的论文收集：\n- **基础库** (#1-#272)：ML/DL基础 + 材料科学ML，1986-2023\n- **前沿补充** (#273-#382)：14个应用方向，2024-2025\n- **AGI深度** (#383-#525，去重后#383-#524)：12个理论纵深方向\n\n**去重说明**：#392与#437重复（均为Kaplan 2020 Scaling Laws），保留#392，#437移除。\n\n---\n## 快速导航\n\n| 板块 | 分类数 | 论文数 | 索引文件 |\n|------|--------|--------|----------|\n| 基础与算法 | 3 | ~65 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 模型与工具 | 7 | ~139 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 材料科学 | 8 | ~107 | [材料科学索引](../workspace/knowledge_bases/KB0_全量论文索引.md) + [前沿补充](./前沿补充索引.md) |\n| AGI理论 | 12 | 142 | [AGI深度索引](./AGI深度索引.md) |\n| 跨领域应用 | 8 | ~43 | [前沿补充索引](./前沿补充索引.md) |\n\n---\n## 新增论文概览 (#273-#524)\n### 前沿补充 (#273-#382) — 110篇\n\n| 分类 | 数量 | 代表论文 |\n|------|------|----------|\n| AI-"
+        },
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        },
+        {
+          "id": "materials-kb/README.md#chunk0",
+          "content": "> ## ⚠️ 已归档 (Archived)\n> \n> **本仓库已归档，不再维护。**\n> \n> 请使用最新版知识库：**[xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base)**\n> \n> - 📊 524篇论文（本仓库237篇的2.2倍）\n> - 📁 30个分类（本仓库11个的2.7倍）\n> - 🧠 含AGI认知地图、认知架构调研、前沿补充\n> \n> 本仓库保留作为历史参考。\n\n---\n# 📚 Materials Science ML Knowledge Base\n\n> 237 papers · 11 categories · ~9,000 lines of structured knowledge · Built for materials science students starting ML from zero\n\n[![Papers](https://img.shields.io/badge/Papers-237-blue)]()\n[![Categories](https://img.shields.io/badge/Categories-11-green)]()\n[![Accuracy](https://img.shields.io/badge/Accuracy-99%25-brightgreen)]()\n[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)\n\n---\n## ✨ Why This Exists\n\nChinese-language materials science ML knowledge is extremely scarce. If you're a"
+        },
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk0",
+          "content": "# 铉枢·知识库 v2\n\n> 525篇论文 | 30个分类 | 支撑AGI探索的完整知识体系\n\n---\n## 知识库概览\n\n| 维度 | 数值 |\n|------|------|\n| **论文总数** | 525篇 |\n| **时间跨度** | 1972-2026（54年） |\n| **分类体系** | 30个分类（4大板块） |\n| **核心定位** | 支撑xuanshu-agents框架v4.3向通用AGI探索 |\n\n---\n## 四大板块\n### 板块一：基础与算法（Foundations）\n**定位**：ML/DL的数学与算法基础\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-F1 | ML基础算法 | ~25 |\n| KB-F2 | DL与优化 | ~25 |\n| KB-F3 | 贝叶斯方法 | ~15 |\n### 板块二：模型与工具（Models & Tools）\n**定位**：神经网络架构与应用工具\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-M1 | CNN与视觉 | ~30 |\n| KB-M2 | RNN与序列 | ~20 |\n| KB-M3 | 生成模型 | ~18 |\n| KB-M4 | 图神经网络 | ~21 |\n| KB-M5 | NLP与大语言模型 | ~20 |\n| KB-M6 | 强化学习 | ~15 |\n| KB-M7 | 工具与框架 | ~15 |\n### 板块三：材料科学应用（Materials Science）\n**定位**：AI在材料科学中的垂直应用\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-A1 | 材料数据库 | ~8 |\n| KB-A2 | 材料描述符 | ~10 |\n|"
+        }
+      ]
+    },
+    {
+      "query": "fine-tune数据集的QA提取方法是什么",
+      "relevant_prefix": "materials-kb/fine-tune/qa-extraction",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/fine-tune/qa-extraction.md",
+          "content": "# 从KB提取QA对的方法\n\n## 原理\n\n知识库中每条论文/概念条目都可以转化为一个或多个QA对，用于SFT微调数据集构建。\n\n## 提取策略\n\n### 1. 概念类QA\n```\nKB条目: \"梯度下降（Gradient Descent）是一种迭代优化算法...\"\nQA: Q=\"什么是梯度下降？\" A=\"梯度下降（Gradient Descent）是...\"\n```\n\n### 2. 论文类QA\n```\nKB条目: \"CGCNN使用晶体图卷积网络预测材料性质...\"\nQA1: Q=\"CGCNN是什么？\" A=\"CGCNN（Crystal Graph Convolutional Neural Network）...\"\nQA2: Q=\"CGCNN的核心创新是什么？\" A=\"CGCNN的核心创新是...\"\n```\n\n### 3. 对比类QA\n```\nQA: Q=\"CGCNN和MEGNet有什么区别？\"\nA: \"CGCNN基于晶体图卷积，MEGNet引入全局状态向量...\"\n```\n\n## 批量提取流程\n\n```python\nimport re\n\ndef extract_qa_from_kb(kb_file):\n    qa_pairs = []\n    with open(kb_file, 'r', encoding='utf-8') as f:\n        content = f.read()\n\n    # 按 ### 分割条目\n    entries = content.split('\\n### ')\n    for entry in entries[1:]:  # 跳过文件头\n        title = entry.split('\\n')[0].strip()\n        body = '\\n'.join(entry.split('\\n')[1:])\n\n    "
+        },
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        },
+        {
+          "id": "materials-kb/README_EN.md",
+          "content": "# 📚 Materials Science ML Knowledge Base\n\n> 237 papers · 11 categories · ~9000 lines · For materials science students with zero ML background\n\n## Why This Exists\n\nChinese-language materials science ML knowledge is scarce. Materials undergraduates face two barriers:\n1. **Can't read papers** — dense ML terminology, hard to cross the language+domain gap\n2. **Can't run code** — environment setup, data formats, hyperparameters are all pitfalls\n\nThis KB bridges the gap with structured, Chinese-language knowledge for materials+ML.\n\n## Coverage\n\n| KB | Files | Lines | Content |\n|----|-------|-------|---------|\n| KB0 Global Index | 1 | 2855 | ~200 papers, 11 categories |\n| KB1 Materials ML Core | 8 | ~2448 | DB→descriptors→property prediction→HTS→GNN |\n| KB2 Theory & Basics | 3 | ~887 | ML basics / "
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/fine-tune/qa-extraction.md",
+          "content": "# 从KB提取QA对的方法\n\n## 原理\n\n知识库中每条论文/概念条目都可以转化为一个或多个QA对，用于SFT微调数据集构建。\n\n## 提取策略\n\n### 1. 概念类QA\n```\nKB条目: \"梯度下降（Gradient Descent）是一种迭代优化算法...\"\nQA: Q=\"什么是梯度下降？\" A=\"梯度下降（Gradient Descent）是...\"\n```\n\n### 2. 论文类QA\n```\nKB条目: \"CGCNN使用晶体图卷积网络预测材料性质...\"\nQA1: Q=\"CGCNN是什么？\" A=\"CGCNN（Crystal Graph Convolutional Neural Network）...\"\nQA2: Q=\"CGCNN的核心创新是什么？\" A=\"CGCNN的核心创新是...\"\n```\n\n### 3. 对比类QA\n```\nQA: Q=\"CGCNN和MEGNet有什么区别？\"\nA: \"CGCNN基于晶体图卷积，MEGNet引入全局状态向量...\"\n```\n\n## 批量提取流程\n\n```python\nimport re\n\ndef extract_qa_from_kb(kb_file):\n    qa_pairs = []\n    with open(kb_file, 'r', encoding='utf-8') as f:\n        content = f.read()\n\n    # 按 ### 分割条目\n    entries = content.split('\\n### ')\n    for entry in entries[1:]:  # 跳过文件头\n        title = entry.split('\\n')[0].strip()\n        body = '\\n'.join(entry.split('\\n')[1:])\n\n    "
+        },
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        },
+        {
+          "id": "materials-kb/fine-tune/sft-dataset-format.md",
+          "content": "# SFT数据集格式\n\n## Alpaca格式\n\n```json\n{\n  \"instruction\": \"请介绍钙钛矿结构\",\n  \"input\": \"\",\n  \"output\": \"钙钛矿（Perovskite）是一种具有ABX₃化学式的晶体结构...\"\n}\n```\n\n字段：\n- `instruction`(必填): 指令/问题\n- `input`(可选): 附加上下文\n- `output`(必填): 期望回答\n\n## ShareGPT格式\n\n```json\n{\n  \"conversations\": [\n    {\"from\": \"human\", \"value\": \"什么是固溶体？\"},\n    {\"from\": \"gpt\", \"value\": \"固溶体（Solid Solution）是...\"},\n    {\"from\": \"human\", \"value\": \"和化合物有什么区别？\"},\n    {\"from\": \"gpt\", \"value\": \"区别在于...\"}\n  ]\n}\n```\n\n## 质量检查\n\n- [ ] output > 50字符\n- [ ] 无重复instruction\n- [ ] 无HTML标签\n- [ ] 术语拼写正确\n- [ ] 中英混排一致\n"
+        }
+      ]
+    },
+    {
+      "query": "SFT数据格式的具体规范",
+      "relevant_prefix": "materials-kb/fine-tune/sft-dataset",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/fine-tune/sft-dataset-format.md",
+          "content": "# SFT数据集格式\n\n## Alpaca格式\n\n```json\n{\n  \"instruction\": \"请介绍钙钛矿结构\",\n  \"input\": \"\",\n  \"output\": \"钙钛矿（Perovskite）是一种具有ABX₃化学式的晶体结构...\"\n}\n```\n\n字段：\n- `instruction`(必填): 指令/问题\n- `input`(可选): 附加上下文\n- `output`(必填): 期望回答\n\n## ShareGPT格式\n\n```json\n{\n  \"conversations\": [\n    {\"from\": \"human\", \"value\": \"什么是固溶体？\"},\n    {\"from\": \"gpt\", \"value\": \"固溶体（Solid Solution）是...\"},\n    {\"from\": \"human\", \"value\": \"和化合物有什么区别？\"},\n    {\"from\": \"gpt\", \"value\": \"区别在于...\"}\n  ]\n}\n```\n\n## 质量检查\n\n- [ ] output > 50字符\n- [ ] 无重复instruction\n- [ ] 无HTML标签\n- [ ] 术语拼写正确\n- [ ] 中英混排一致\n"
+        },
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        },
+        {
+          "id": "materials-kb/fine-tune/qa-extraction.md",
+          "content": "# 从KB提取QA对的方法\n\n## 原理\n\n知识库中每条论文/概念条目都可以转化为一个或多个QA对，用于SFT微调数据集构建。\n\n## 提取策略\n\n### 1. 概念类QA\n```\nKB条目: \"梯度下降（Gradient Descent）是一种迭代优化算法...\"\nQA: Q=\"什么是梯度下降？\" A=\"梯度下降（Gradient Descent）是...\"\n```\n\n### 2. 论文类QA\n```\nKB条目: \"CGCNN使用晶体图卷积网络预测材料性质...\"\nQA1: Q=\"CGCNN是什么？\" A=\"CGCNN（Crystal Graph Convolutional Neural Network）...\"\nQA2: Q=\"CGCNN的核心创新是什么？\" A=\"CGCNN的核心创新是...\"\n```\n\n### 3. 对比类QA\n```\nQA: Q=\"CGCNN和MEGNet有什么区别？\"\nA: \"CGCNN基于晶体图卷积，MEGNet引入全局状态向量...\"\n```\n\n## 批量提取流程\n\n```python\nimport re\n\ndef extract_qa_from_kb(kb_file):\n    qa_pairs = []\n    with open(kb_file, 'r', encoding='utf-8') as f:\n        content = f.read()\n\n    # 按 ### 分割条目\n    entries = content.split('\\n### ')\n    for entry in entries[1:]:  # 跳过文件头\n        title = entry.split('\\n')[0].strip()\n        body = '\\n'.join(entry.split('\\n')[1:])\n\n    "
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/fine-tune/sft-dataset-format.md",
+          "content": "# SFT数据集格式\n\n## Alpaca格式\n\n```json\n{\n  \"instruction\": \"请介绍钙钛矿结构\",\n  \"input\": \"\",\n  \"output\": \"钙钛矿（Perovskite）是一种具有ABX₃化学式的晶体结构...\"\n}\n```\n\n字段：\n- `instruction`(必填): 指令/问题\n- `input`(可选): 附加上下文\n- `output`(必填): 期望回答\n\n## ShareGPT格式\n\n```json\n{\n  \"conversations\": [\n    {\"from\": \"human\", \"value\": \"什么是固溶体？\"},\n    {\"from\": \"gpt\", \"value\": \"固溶体（Solid Solution）是...\"},\n    {\"from\": \"human\", \"value\": \"和化合物有什么区别？\"},\n    {\"from\": \"gpt\", \"value\": \"区别在于...\"}\n  ]\n}\n```\n\n## 质量检查\n\n- [ ] output > 50字符\n- [ ] 无重复instruction\n- [ ] 无HTML标签\n- [ ] 术语拼写正确\n- [ ] 中英混排一致\n"
+        },
+        {
+          "id": "materials-kb/fine-tune/qa-extraction.md",
+          "content": "# 从KB提取QA对的方法\n\n## 原理\n\n知识库中每条论文/概念条目都可以转化为一个或多个QA对，用于SFT微调数据集构建。\n\n## 提取策略\n\n### 1. 概念类QA\n```\nKB条目: \"梯度下降（Gradient Descent）是一种迭代优化算法...\"\nQA: Q=\"什么是梯度下降？\" A=\"梯度下降（Gradient Descent）是...\"\n```\n\n### 2. 论文类QA\n```\nKB条目: \"CGCNN使用晶体图卷积网络预测材料性质...\"\nQA1: Q=\"CGCNN是什么？\" A=\"CGCNN（Crystal Graph Convolutional Neural Network）...\"\nQA2: Q=\"CGCNN的核心创新是什么？\" A=\"CGCNN的核心创新是...\"\n```\n\n### 3. 对比类QA\n```\nQA: Q=\"CGCNN和MEGNet有什么区别？\"\nA: \"CGCNN基于晶体图卷积，MEGNet引入全局状态向量...\"\n```\n\n## 批量提取流程\n\n```python\nimport re\n\ndef extract_qa_from_kb(kb_file):\n    qa_pairs = []\n    with open(kb_file, 'r', encoding='utf-8') as f:\n        content = f.read()\n\n    # 按 ### 分割条目\n    entries = content.split('\\n### ')\n    for entry in entries[1:]:  # 跳过文件头\n        title = entry.split('\\n')[0].strip()\n        body = '\\n'.join(entry.split('\\n')[1:])\n\n    "
+        },
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        }
+      ]
+    },
+    {
+      "query": "AGI深度索引的关键技术领域",
+      "relevant_prefix": "materials-kb/知识库_v2/AGI深度索引",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk0",
+          "content": "# 全量论文统一索引 v2\n\n> 524篇（去重后） | 30个分类 | 2026-06-13\n\n---\n## 索引说明\n\n本索引整合三个阶段的论文收集：\n- **基础库** (#1-#272)：ML/DL基础 + 材料科学ML，1986-2023\n- **前沿补充** (#273-#382)：14个应用方向，2024-2025\n- **AGI深度** (#383-#525，去重后#383-#524)：12个理论纵深方向\n\n**去重说明**：#392与#437重复（均为Kaplan 2020 Scaling Laws），保留#392，#437移除。\n\n---\n## 快速导航\n\n| 板块 | 分类数 | 论文数 | 索引文件 |\n|------|--------|--------|----------|\n| 基础与算法 | 3 | ~65 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 模型与工具 | 7 | ~139 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 材料科学 | 8 | ~107 | [材料科学索引](../workspace/knowledge_bases/KB0_全量论文索引.md) + [前沿补充](./前沿补充索引.md) |\n| AGI理论 | 12 | 142 | [AGI深度索引](./AGI深度索引.md) |\n| 跨领域应用 | 8 | ~43 | [前沿补充索引](./前沿补充索引.md) |\n\n---\n## 新增论文概览 (#273-#524)\n### 前沿补充 (#273-#382) — 110篇\n\n| 分类 | 数量 | 代表论文 |\n|------|------|----------|\n| AI-"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+          "content": "### 关键依赖关系\n1. A→C→D: AGI理论定义世界模型需求，世界模型支撑自我改进\n2. B→H→I: 认知科学启发持续学习，持续学习支撑元学习\n3. E↔A: 涌现理论解释AGI能力跃迁，AGI理论指导涌现研究\n4. F↔G: 因果推理需要符号表示，符号表示应编码因果结构\n5. K↔L: 意识理论与对齐问题深度交织——自我意识是对齐的前提\n6. J↔C: 具身grounding丰富世界模型，世界模型支撑grounding\n### xuanshu-agents框架v4.3的定位\n框架当前在地图上的位置：**地基层→上层建筑的过渡区**\n- ✅ 已有: A(架构设计), E(缩放直觉), G(知识表示-思想结晶)\n- 🔄 建设中: C(世界模型-隐式), D(自我改进-Agent互审), H(持续学习-记忆系统)\n- ⬜ 待发展: F(因果推理), I(元学习), J(Grounding), K(元认知), L(系统性对齐)\n\n---\n\n> 本文献清单共计143篇（#383-#525），覆盖12个AGI核心方向。\n> 每篇均标注了架构映射字段，可直接指导xuanshu-agents框架的模块化设计。\n"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk0",
+          "content": "# 全量论文统一索引 v2\n\n> 524篇（去重后） | 30个分类 | 2026-06-13\n\n---\n## 索引说明\n\n本索引整合三个阶段的论文收集：\n- **基础库** (#1-#272)：ML/DL基础 + 材料科学ML，1986-2023\n- **前沿补充** (#273-#382)：14个应用方向，2024-2025\n- **AGI深度** (#383-#525，去重后#383-#524)：12个理论纵深方向\n\n**去重说明**：#392与#437重复（均为Kaplan 2020 Scaling Laws），保留#392，#437移除。\n\n---\n## 快速导航\n\n| 板块 | 分类数 | 论文数 | 索引文件 |\n|------|--------|--------|----------|\n| 基础与算法 | 3 | ~65 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 模型与工具 | 7 | ~139 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 材料科学 | 8 | ~107 | [材料科学索引](../workspace/knowledge_bases/KB0_全量论文索引.md) + [前沿补充](./前沿补充索引.md) |\n| AGI理论 | 12 | 142 | [AGI深度索引](./AGI深度索引.md) |\n| 跨领域应用 | 8 | ~43 | [前沿补充索引](./前沿补充索引.md) |\n\n---\n## 新增论文概览 (#273-#524)\n### 前沿补充 (#273-#382) — 110篇\n\n| 分类 | 数量 | 代表论文 |\n|------|------|----------|\n| AI-"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk0",
+          "content": "# AGI深度文献补充清单## xuanshu-agents框架知识体系扩展 | 编号 #383 ~ #525\n\n> 编制说明：本文献清单为xuanshu-agents框架v4.3（思想结晶+抽象层级+置信过滤）补充支撑AGI探索的深层知识体系。共12个方向（A-L），每篇含架构映射字段，标注该论文对框架的启发或可映射模块。\n>\n> 编号从#383开始，接续已有知识库（#1-#382）。\n\n---\n## 方向A：AGI理论与通用智能架构（15篇）\n### #383\n- **标题**: A Path Towards Autonomous Machine Intelligence\n- **作者**: Yann LeCun\n- **年份**: 2022\n- **来源**: OpenReview preprint\n- **链接**: https://openreview.net/forum?id=BZ5a1r-kVsf\n- **摘要**: LeCun提出完整的自主机器智能路线图，核心是JEPA架构，包含配置器、感知器、世界模型、成本函数、行动器和注意力模块六大组件。主张智能不是技能集合而是解决新任务的能力。\n- **架构映射**: 【地基】直接对应xuanshu-agents的世界模型模块设计。LeCun的\"系统1+系统2\"双路径与框架的快思考/慢思考调度机制高度吻合。JEPA的六模块架构可作为框架顶层设计的参考蓝图。\n### #384\n- **标题**: A Generalist Agent (Gato)\n- **作者**: Scott Reed, Konrad Żołna, Emilio Parisotto et al. (DeepMind)\n- **年份**: 2022\n- **来源**: Transactions on Machine Learning Research\n-"
+        },
+        {
+          "id": "materials-kb/知识库_v2/AGI深度索引.md#chunk0",
+          "content": "# AGI深度文献补充清单## xuanshu-agents框架知识体系扩展 | 编号 #383 ~ #525\n\n> 编制说明：本文献清单为xuanshu-agents框架v4.3（思想结晶+抽象层级+置信过滤）补充支撑AGI探索的深层知识体系。共12个方向（A-L），每篇含架构映射字段，标注该论文对框架的启发或可映射模块。\n>\n> 编号从#383开始，接续已有知识库（#1-#382）。\n\n---\n## 方向A：AGI理论与通用智能架构（15篇）\n### #383\n- **标题**: A Path Towards Autonomous Machine Intelligence\n- **作者**: Yann LeCun\n- **年份**: 2022\n- **来源**: OpenReview preprint\n- **链接**: https://openreview.net/forum?id=BZ5a1r-kVsf\n- **摘要**: LeCun提出完整的自主机器智能路线图，核心是JEPA架构，包含配置器、感知器、世界模型、成本函数、行动器和注意力模块六大组件。主张智能不是技能集合而是解决新任务的能力。\n- **架构映射**: 【地基】直接对应xuanshu-agents的世界模型模块设计。LeCun的\"系统1+系统2\"双路径与框架的快思考/慢思考调度机制高度吻合。JEPA的六模块架构可作为框架顶层设计的参考蓝图。\n### #384\n- **标题**: A Generalist Agent (Gato)\n- **作者**: Scott Reed, Konrad Żołna, Emilio Parisotto et al. (DeepMind)\n- **年份**: 2022\n- **来源**: Transactions on Machine Learning Research\n-"
+        }
+      ]
+    },
+    {
+      "query": "前沿补充索引新增了哪些研究方向",
+      "relevant_prefix": "materials-kb/知识库_v2/前沿补充",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk0",
+          "content": "# 全量论文统一索引 v2\n\n> 524篇（去重后） | 30个分类 | 2026-06-13\n\n---\n## 索引说明\n\n本索引整合三个阶段的论文收集：\n- **基础库** (#1-#272)：ML/DL基础 + 材料科学ML，1986-2023\n- **前沿补充** (#273-#382)：14个应用方向，2024-2025\n- **AGI深度** (#383-#525，去重后#383-#524)：12个理论纵深方向\n\n**去重说明**：#392与#437重复（均为Kaplan 2020 Scaling Laws），保留#392，#437移除。\n\n---\n## 快速导航\n\n| 板块 | 分类数 | 论文数 | 索引文件 |\n|------|--------|--------|----------|\n| 基础与算法 | 3 | ~65 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 模型与工具 | 7 | ~139 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 材料科学 | 8 | ~107 | [材料科学索引](../workspace/knowledge_bases/KB0_全量论文索引.md) + [前沿补充](./前沿补充索引.md) |\n| AGI理论 | 12 | 142 | [AGI深度索引](./AGI深度索引.md) |\n| 跨领域应用 | 8 | ~43 | [前沿补充索引](./前沿补充索引.md) |\n\n---\n## 新增论文概览 (#273-#524)\n### 前沿补充 (#273-#382) — 110篇\n\n| 分类 | 数量 | 代表论文 |\n|------|------|----------|\n| AI-"
+        },
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk1",
+          "content": "## AGI认知地图\n\n```\n    ┌─────────────────────────────────────────┐\n    │     KB-G12: AI对齐与价值哲学            │ ← 全局约束\n    │     (安全/伦理/治理/宪法)                │\n    └───────────────┬─────────────────────────┘\n                    │ 约束\n    ┌───────────────▼─────────────────────────┐\n    │     KB-G11: 意识与机器意识理论          │ ← 元认知层\n    │     (IIT/GWT/自我模型/注意力图式)        │\n    └───────────────┬─────────────────────────┘\n                    │ 元认知\n    ┌───────────────▼─────────────────────────┐\n    │     上层建筑 (Advanced Capabilities)     │\n    │                                         │\n    │  G9:自我改进 ←→ G8:元学习 ←→ G7:持续学习 │\n    │       │              │             │     │\n    │       ▼              ▼             ▼     │\n    │  G5:因果推理 ←→ G6:NeSy ←→ G10:具身     │\n    └───────────────┬─────────────────────────┘"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk0",
+          "content": "# 全量论文统一索引 v2\n\n> 524篇（去重后） | 30个分类 | 2026-06-13\n\n---\n## 索引说明\n\n本索引整合三个阶段的论文收集：\n- **基础库** (#1-#272)：ML/DL基础 + 材料科学ML，1986-2023\n- **前沿补充** (#273-#382)：14个应用方向，2024-2025\n- **AGI深度** (#383-#525，去重后#383-#524)：12个理论纵深方向\n\n**去重说明**：#392与#437重复（均为Kaplan 2020 Scaling Laws），保留#392，#437移除。\n\n---\n## 快速导航\n\n| 板块 | 分类数 | 论文数 | 索引文件 |\n|------|--------|--------|----------|\n| 基础与算法 | 3 | ~65 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 模型与工具 | 7 | ~139 | [基础库索引](../workspace/knowledge_bases/KB0_全量论文索引.md) |\n| 材料科学 | 8 | ~107 | [材料科学索引](../workspace/knowledge_bases/KB0_全量论文索引.md) + [前沿补充](./前沿补充索引.md) |\n| AGI理论 | 12 | 142 | [AGI深度索引](./AGI深度索引.md) |\n| 跨领域应用 | 8 | ~43 | [前沿补充索引](./前沿补充索引.md) |\n\n---\n## 新增论文概览 (#273-#524)\n### 前沿补充 (#273-#382) — 110篇\n\n| 分类 | 数量 | 代表论文 |\n|------|------|----------|\n| AI-"
+        },
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk0",
+          "content": "# 材料科学ML知识库补充调研报告 (2024-2026前沿论文)\n## 调研概览\n\n- **调研时间**: 2026年6月\n- **覆盖方向**: 13个方向 + 特定课题组补充\n- **论文总数**: 110篇\n- **编号范围**: #273 ~ #382\n- **已有知识库**: 272篇 (1986-2023, 11个分类)\n- **新增分类**: AI-Agent-for-Science, Foundation-Models-for-Materials, LLM-Materials-Science, AI-Drug-Discovery, AI-Energy-Battery, AI-Physics-Simulation, RAG-Knowledge, Multimodal-AI-VL, Embodied-AI-Robotics, AI-Climate-Sustainability, Agentic-AI-Reasoning\n\n---\n## 论文详细列表\n\n### AI-Agent-for-Science\n#### #273 | 2024 | ⭐⭐⭐\n- **标题**: The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery\n- **作者**: Sakana AI et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 提出AI Scientist系统，实现从假设生成、实验设计、论文撰写的全自动科研闭环\n- **关键词**: AI Scientist; Automated Research; LLM Agent\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 为材料科学自主实验和论文生成提供范式参考\n#### #274 | 2024 | "
+        }
+      ]
+    },
+    {
+      "query": "材料科学中的机器学习应用有哪些进展",
+      "relevant_prefix": "materials-kb/reports/材料科学",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+          "content": "#### #295 | 2024 | ⭐⭐⭐\n- **标题**: LLM4Mat-Bench: Benchmarking Large Language Models for Materials Science\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 系统评估多种LLM在材料科学任务上的表现，建立标准化评估基准\n- **关键词**: LLM4Mat-Bench; Benchmark; Evaluation\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料LLM评估的基准工作\n#### #296 | 2024 | ⭐⭐⭐\n- **标题**: Mining Materials Science Literature with LLMs\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 利用LLM从海量材料科学文献中自动提取材料-性能关系\n- **关键词**: Literature Mining; NLP; Knowledge Extraction\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料文献知识挖掘的实用方法\n#### #297 | 2024 | ⭐⭐⭐\n- **标题**: Eunomia: An AI Agent for Materials Science Knowledge Management\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 面向材料科学的知识管理AI Agent，集成文献检索、知识图谱与问答\n- **关键词**: Eunomia; Knowledge Ma"
+        },
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+          "content": "#### #295 | 2024 | ⭐⭐⭐\n- **标题**: LLM4Mat-Bench: Benchmarking Large Language Models for Materials Science\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 系统评估多种LLM在材料科学任务上的表现，建立标准化评估基准\n- **关键词**: LLM4Mat-Bench; Benchmark; Evaluation\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料LLM评估的基准工作\n#### #296 | 2024 | ⭐⭐⭐\n- **标题**: Mining Materials Science Literature with LLMs\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 利用LLM从海量材料科学文献中自动提取材料-性能关系\n- **关键词**: Literature Mining; NLP; Knowledge Extraction\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料文献知识挖掘的实用方法\n#### #297 | 2024 | ⭐⭐⭐\n- **标题**: Eunomia: An AI Agent for Materials Science Knowledge Management\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 面向材料科学的知识管理AI Agent，集成文献检索、知识图谱与问答\n- **关键词**: Eunomia; Knowledge Ma"
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk1",
+          "content": "#### #279 | 2024 | ⭐⭐\n- **标题**: AI Agents for Automated Biomedical Research\n- **作者**: Various et al.\n- **期刊/会议**: Cell 2024\n- **核心贡献**: 综述AI Agent在生物医学研究中的应用，覆盖文献挖掘、实验设计与数据分析\n- **关键词**: AI Agents; Biomedical; Automation\n- **难度**: ⭐⭐\n- **材料科学关联**: Agent自动化科研的思路可迁移至材料科学\n#### #280 | 2025 | ⭐⭐⭐⭐\n- **标题**: AtomAgents: Multi-Agent AI for Atomistic Materials Science\n- **作者**: Various et al.\n- **期刊/会议**: PNAS 2025\n- **核心贡献**: 面向原子尺度材料科学的多Agent系统，集成DFT计算、文献分析与假设生成\n- **关键词**: AtomAgents; Atomistic Simulation; Multi-Agent\n- **难度**: ⭐⭐⭐⭐\n- **材料科学关联**: 直接面向材料科学的Agent系统，覆盖原子模拟全流程\n#### #281 | 2024 | ⭐⭐⭐\n- **标题**: A Mobile Robotic Chemist Outperforms Human Researchers\n- **作者**: Cooper group, Liverpool et al.\n- **期刊/会议**: Nature 2024\n- **核心贡献**: 移动机器人化学家在自主高通量光催化剂筛选中表现超越人类研究员\n- **关键词**: Mobile Robot; High-"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk5",
+          "content": "#### #312 | 2024 | ⭐⭐⭐\n- **标题**: ML-Driven Iterative Mix Design for Sustainable Concrete\n- **作者**: Various et al.\n- **期刊/会议**: J. Building Engineering 2024\n- **核心贡献**: ML驱动的迭代式配合比设计方法，实现可持续混凝土的多目标优化\n- **关键词**: Iterative Design; Sustainable; ML\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可持续混凝土的智能化配比设计\n#### #313 | 2025 | ⭐⭐⭐\n- **标题**: Explainable AI for Supplementary Cementitious Materials\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2025\n- **核心贡献**: 可解释AI方法揭示辅助胶凝材料的组成-性能关系\n- **关键词**: Explainable AI; SCM; Interpretability\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可解释AI在胶凝材料机理揭示中的应用\n#### #314 | 2024 | ⭐⭐⭐\n- **标题**: Industrial-Scale Cement Clinker Phase Prediction via ML\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 利用两年工业数据集训练ML模型预测水泥熟料矿物相，MAPE低至1.24%\n- **关键词**: Clinker; Phase Prediction; Industrial Data\n- "
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk5",
+          "content": "#### #312 | 2024 | ⭐⭐⭐\n- **标题**: ML-Driven Iterative Mix Design for Sustainable Concrete\n- **作者**: Various et al.\n- **期刊/会议**: J. Building Engineering 2024\n- **核心贡献**: ML驱动的迭代式配合比设计方法，实现可持续混凝土的多目标优化\n- **关键词**: Iterative Design; Sustainable; ML\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可持续混凝土的智能化配比设计\n#### #313 | 2025 | ⭐⭐⭐\n- **标题**: Explainable AI for Supplementary Cementitious Materials\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2025\n- **核心贡献**: 可解释AI方法揭示辅助胶凝材料的组成-性能关系\n- **关键词**: Explainable AI; SCM; Interpretability\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可解释AI在胶凝材料机理揭示中的应用\n#### #314 | 2024 | ⭐⭐⭐\n- **标题**: Industrial-Scale Cement Clinker Phase Prediction via ML\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 利用两年工业数据集训练ML模型预测水泥熟料矿物相，MAPE低至1.24%\n- **关键词**: Clinker; Phase Prediction; Industrial Data\n- "
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk4",
+          "content": "#### #303 | 2024 | ⭐⭐⭐⭐\n- **标题**: LLM-Based Descriptor Discovery for Perovskite Properties\n- **作者**: Various et al.\n- **期刊/会议**: J. Chem. Theory Comput. 2024\n- **核心贡献**: 利用LLM自动发现钙钛矿材料描述符，加速性能筛选\n- **关键词**: Descriptor Discovery; Perovskite; LLM\n- **难度**: ⭐⭐⭐⭐\n- **材料科学关联**: LLM辅助材料描述符发现\n\n### ML-Cement-SCM\n#### #304 | 2024 | ⭐⭐\n- **标题**: ML Prediction of Geopolymer Concrete Strength\n- **作者**: Various et al.\n- **期刊/会议**: Structural Concrete 2024\n- **核心贡献**: 系统对比多种ML方法预测地质聚合物混凝土抗压强度的效果\n- **关键词**: Geopolymer; Strength Prediction; ML Comparison\n- **难度**: ⭐⭐\n- **材料科学关联**: 地质聚合物力学性能ML预测\n#### #305 | 2024 | ⭐⭐⭐\n- **标题**: Eco-Friendly Concrete Optimization via DNN+SHAP\n- **作者**: Various et al.\n- **期刊/会议**: Results in Engineering 2024\n- **核心贡献**: 深度学习+SHAP可解释方法优化环保混凝土配合比设计\n- **关键词**: DNN; SHAP; Eco-Con"
+        }
+      ]
+    },
+    {
+      "query": "认知智能与AGI的关联性分析",
+      "relevant_prefix": "materials-kb/reports/认知架构",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21",
+          "content": "## AGI认知地图：方向间关联图\n\n```\n                    ┌─────────────────────────────────┐\n                    │     L: AI对齐与价值哲学          │ ← 全局约束层\n                    │  (安全/伦理/治理/宪法)            │\n                    └───────────────┬─────────────────┘\n                                    │ 约束\n                    ┌───────────────▼─────────────────┐\n                    │     K: 意识与机器意识理论        │ ← 元认知层\n                    │  (IIT/GWT/自我模型/注意力图式)    │\n                    └───────────────┬─────────────────┘\n                                    │ 元认知\n        ┌───────────────────────────▼──────────────────────────┐\n        │           上 层 建 筑 (Advanced Capabilities)         │\n        ├──────────────────────────────────────────────────────┤\n        │                                                      │\n "
+        },
+        {
+          "id": "materials-kb/知识库_v2/AGI深度索引.md#chunk21",
+          "content": "## AGI认知地图：方向间关联图\n\n```\n                    ┌─────────────────────────────────┐\n                    │     L: AI对齐与价值哲学          │ ← 全局约束层\n                    │  (安全/伦理/治理/宪法)            │\n                    └───────────────┬─────────────────┘\n                                    │ 约束\n                    ┌───────────────▼─────────────────┐\n                    │     K: 意识与机器意识理论        │ ← 元认知层\n                    │  (IIT/GWT/自我模型/注意力图式)    │\n                    └───────────────┬─────────────────┘\n                                    │ 元认知\n        ┌───────────────────────────▼──────────────────────────┐\n        │           上 层 建 筑 (Advanced Capabilities)         │\n        ├──────────────────────────────────────────────────────┤\n        │                                                      │\n "
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk21",
+          "content": "## AGI认知地图：方向间关联图\n\n```\n                    ┌─────────────────────────────────┐\n                    │     L: AI对齐与价值哲学          │ ← 全局约束层\n                    │  (安全/伦理/治理/宪法)            │\n                    └───────────────┬─────────────────┘\n                                    │ 约束\n                    ┌───────────────▼─────────────────┐\n                    │     K: 意识与机器意识理论        │ ← 元认知层\n                    │  (IIT/GWT/自我模型/注意力图式)    │\n                    └───────────────┬─────────────────┘\n                                    │ 元认知\n        ┌───────────────────────────▼──────────────────────────┐\n        │           上 层 建 筑 (Advanced Capabilities)         │\n        ├──────────────────────────────────────────────────────┤\n        │                                                      │\n "
+        },
+        {
+          "id": "materials-kb/知识库_v2/AGI深度索引.md#chunk21",
+          "content": "## AGI认知地图：方向间关联图\n\n```\n                    ┌─────────────────────────────────┐\n                    │     L: AI对齐与价值哲学          │ ← 全局约束层\n                    │  (安全/伦理/治理/宪法)            │\n                    └───────────────┬─────────────────┘\n                                    │ 约束\n                    ┌───────────────▼─────────────────┐\n                    │     K: 意识与机器意识理论        │ ← 元认知层\n                    │  (IIT/GWT/自我模型/注意力图式)    │\n                    └───────────────┬─────────────────┘\n                                    │ 元认知\n        ┌───────────────────────────▼──────────────────────────┐\n        │           上 层 建 筑 (Advanced Capabilities)         │\n        ├──────────────────────────────────────────────────────┤\n        │                                                      │\n "
+        },
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk1",
+          "content": "## AGI认知地图\n\n```\n    ┌─────────────────────────────────────────┐\n    │     KB-G12: AI对齐与价值哲学            │ ← 全局约束\n    │     (安全/伦理/治理/宪法)                │\n    └───────────────┬─────────────────────────┘\n                    │ 约束\n    ┌───────────────▼─────────────────────────┐\n    │     KB-G11: 意识与机器意识理论          │ ← 元认知层\n    │     (IIT/GWT/自我模型/注意力图式)        │\n    └───────────────┬─────────────────────────┘\n                    │ 元认知\n    ┌───────────────▼─────────────────────────┐\n    │     上层建筑 (Advanced Capabilities)     │\n    │                                         │\n    │  G9:自我改进 ←→ G8:元学习 ←→ G7:持续学习 │\n    │       │              │             │     │\n    │       ▼              ▼             ▼     │\n    │  G5:因果推理 ←→ G6:NeSy ←→ G10:具身     │\n    └───────────────┬─────────────────────────┘"
+        }
+      ]
+    },
+    {
+      "query": "知识库v2相比v1有哪些改进",
+      "relevant_prefix": "materials-kb/知识库_v2/",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk1",
+          "content": "## AGI认知地图\n\n```\n    ┌─────────────────────────────────────────┐\n    │     KB-G12: AI对齐与价值哲学            │ ← 全局约束\n    │     (安全/伦理/治理/宪法)                │\n    └───────────────┬─────────────────────────┘\n                    │ 约束\n    ┌───────────────▼─────────────────────────┐\n    │     KB-G11: 意识与机器意识理论          │ ← 元认知层\n    │     (IIT/GWT/自我模型/注意力图式)        │\n    └───────────────┬─────────────────────────┘\n                    │ 元认知\n    ┌───────────────▼─────────────────────────┐\n    │     上层建筑 (Advanced Capabilities)     │\n    │                                         │\n    │  G9:自我改进 ←→ G8:元学习 ←→ G7:持续学习 │\n    │       │              │             │     │\n    │       ▼              ▼             ▼     │\n    │  G5:因果推理 ←→ G6:NeSy ←→ G10:具身     │\n    └───────────────┬─────────────────────────┘"
+        },
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk0",
+          "content": "# 铉枢·知识库 v2\n\n> 525篇论文 | 30个分类 | 支撑AGI探索的完整知识体系\n\n---\n## 知识库概览\n\n| 维度 | 数值 |\n|------|------|\n| **论文总数** | 525篇 |\n| **时间跨度** | 1972-2026（54年） |\n| **分类体系** | 30个分类（4大板块） |\n| **核心定位** | 支撑xuanshu-agents框架v4.3向通用AGI探索 |\n\n---\n## 四大板块\n### 板块一：基础与算法（Foundations）\n**定位**：ML/DL的数学与算法基础\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-F1 | ML基础算法 | ~25 |\n| KB-F2 | DL与优化 | ~25 |\n| KB-F3 | 贝叶斯方法 | ~15 |\n### 板块二：模型与工具（Models & Tools）\n**定位**：神经网络架构与应用工具\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-M1 | CNN与视觉 | ~30 |\n| KB-M2 | RNN与序列 | ~20 |\n| KB-M3 | 生成模型 | ~18 |\n| KB-M4 | 图神经网络 | ~21 |\n| KB-M5 | NLP与大语言模型 | ~20 |\n| KB-M6 | 强化学习 | ~15 |\n| KB-M7 | 工具与框架 | ~15 |\n### 板块三：材料科学应用（Materials Science）\n**定位**：AI在材料科学中的垂直应用\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-A1 | 材料数据库 | ~8 |\n| KB-A2 | 材料描述符 | ~10 |\n|"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk6",
+          "content": "### #419\n- **标题**: The World Model Hypothesis: Internal Representations for Generalization\n- **作者**: (综合理论工作)\n- **年份**: 2024\n- **来源**: 综合性理论论文\n- **摘要**: 论证世界模型是通用化的必要条件。Agent必须能模拟行动的后果，即使这些行动没有在训练数据中出现过。世界模型使Agent具备反事实推理能力。\n- **架构映射**: 框架的思想结晶就是世界模型的压缩版本。Agent的\"想象\"能力→在思想结晶空间中进行反事实推演。\n### #420\n- **标题**: Navigation with World Models (Bar et al. 2025)\n- **作者**: Amir Bar et al.\n- **年份**: 2025\n- **来源**: Meta AI / arXiv\n- **摘要**: 使用V-JEPA世界模型进行真实世界导航。在潜在空间中预测未来视觉观察，支持路径规划和避障。展示世界模型在具身AI中的实际应用。\n- **架构映射**: 证明世界模型不仅是理论概念，而是可以实际部署的。框架的Agent在\"知识空间\"中的导航可类比于此。\n### #421\n- **标题**: Implicit World Models in Large Language Models\n- **作者**: Kenneth Li, Serena Gong et al.\n- **年份**: 2024\n- **来源**: ICLR 2024\n- **链接**: https://arxiv.org/abs/2310.11808\n- **摘要**: 研究LLM是否学到了隐式世界模型。发现模型在隐藏状态中创建了隐式离散状态表示(IDSRs)，在特定层"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk0",
+          "content": "# 铉枢·知识库 v2\n\n> 525篇论文 | 30个分类 | 支撑AGI探索的完整知识体系\n\n---\n## 知识库概览\n\n| 维度 | 数值 |\n|------|------|\n| **论文总数** | 525篇 |\n| **时间跨度** | 1972-2026（54年） |\n| **分类体系** | 30个分类（4大板块） |\n| **核心定位** | 支撑xuanshu-agents框架v4.3向通用AGI探索 |\n\n---\n## 四大板块\n### 板块一：基础与算法（Foundations）\n**定位**：ML/DL的数学与算法基础\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-F1 | ML基础算法 | ~25 |\n| KB-F2 | DL与优化 | ~25 |\n| KB-F3 | 贝叶斯方法 | ~15 |\n### 板块二：模型与工具（Models & Tools）\n**定位**：神经网络架构与应用工具\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-M1 | CNN与视觉 | ~30 |\n| KB-M2 | RNN与序列 | ~20 |\n| KB-M3 | 生成模型 | ~18 |\n| KB-M4 | 图神经网络 | ~21 |\n| KB-M5 | NLP与大语言模型 | ~20 |\n| KB-M6 | 强化学习 | ~15 |\n| KB-M7 | 工具与框架 | ~15 |\n### 板块三：材料科学应用（Materials Science）\n**定位**：AI在材料科学中的垂直应用\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-A1 | 材料数据库 | ~8 |\n| KB-A2 | 材料描述符 | ~10 |\n|"
+        },
+        {
+          "id": "materials-kb/README.md#chunk0",
+          "content": "> ## ⚠️ 已归档 (Archived)\n> \n> **本仓库已归档，不再维护。**\n> \n> 请使用最新版知识库：**[xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base)**\n> \n> - 📊 524篇论文（本仓库237篇的2.2倍）\n> - 📁 30个分类（本仓库11个的2.7倍）\n> - 🧠 含AGI认知地图、认知架构调研、前沿补充\n> \n> 本仓库保留作为历史参考。\n\n---\n# 📚 Materials Science ML Knowledge Base\n\n> 237 papers · 11 categories · ~9,000 lines of structured knowledge · Built for materials science students starting ML from zero\n\n[![Papers](https://img.shields.io/badge/Papers-237-blue)]()\n[![Categories](https://img.shields.io/badge/Categories-11-green)]()\n[![Accuracy](https://img.shields.io/badge/Accuracy-99%25-brightgreen)]()\n[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)\n\n---\n## ✨ Why This Exists\n\nChinese-language materials science ML knowledge is extremely scarce. If you're a"
+        },
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        }
+      ]
+    },
+    {
+      "query": "AGI领域中语言模型Scaling Law的研究现状",
+      "relevant_prefix": "materials-kb/reports/AGI",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/全量索引.md#chunk1",
+          "content": "## 年份分布\n\n| 年代 | 基础库 | 前沿补充 | AGI深度 | 合计 |\n|------|--------|----------|---------|------|\n| 1972-1999 | ~10 | 0 | ~3 | ~13 |\n| 2000-2014 | ~30 | 0 | ~5 | ~35 |\n| 2015-2019 | ~60 | 0 | ~15 | ~75 |\n| 2020-2022 | ~80 | 0 | ~45 | ~125 |\n| 2023 | ~42 | 2 | ~10 | ~54 |\n| 2024 | ~50 | 61 | ~45 | ~156 |\n| 2025 | 0 | 43 | ~20 | ~63 |\n| 2026 | 0 | 4 | 0 | ~4 |\n\n---\n## 难度分布\n\n| 难度 | 基础库 | 前沿补充 | AGI深度 |\n|------|--------|----------|---------|\n| ⭐⭐ | ~40% | ~30% | ~15% |\n| ⭐⭐⭐ | ~35% | ~45% | ~40% |\n| ⭐⭐⭐⭐ | ~20% | ~20% | ~35% |\n| ⭐⭐⭐⭐⭐ | ~5% | ~5% | ~10% |\n\n---\n## 详细论文索引\n### 基础库 (#1-#272)\n详见：[KB0_全量论文索引.md](../workspace/knowledge_bases/KB0_全量论文索引.md)\n### 前沿补充 (#273-#382)\n详见：[前沿补充索引.md](./前沿补充索引.md)\n### AGI深度 (#383-#524)\n详见：[AGI深度索引.md](./AGI深度索引.md)\n\n---\n\n*最后更新：2026-06-13*\n"
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk14",
+          "content": "### TOP 10 高影响力论文\n\n| 序号 | 标题 | 期刊 | 年份 |\n|------|------|------|------|\n| #284 | MatterGen: A Generative Model for Materials Design | Nature 2025 | 2025 |\n| #285 | MatterSim: A Scalable Foundation Model for Materia... | arXiv 2024 | 2024 |\n| #289 | MACE: Higher Order Equivariant Graph Neural Networ... | NeurIPS 2022/2024 | 2022 |\n| #316 | GNoME: Scaling Deep Learning for Materials Discove... | Nature 2023 | 2023 |\n| #319 | SymmCD: Symmetry-Aware Crystal Diffusion | ICLR 2025 | 2025 |\n| #320 | WyckoffDiff: Wyckoff Position-Based Crystal Genera... | ICML 2025 | 2025 |\n| #321 | SGEquiDiff: Space Group Equivariant Diffusion for ... | NeurIPS 2025 | 2025 |\n| #330 | Accurate Structure Prediction of Biomolecular Inte... | Nature 2024 | 2024 |\n| #333 | RFdiffusion: De Novo Protein Design with Diffu"
+        },
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk14",
+          "content": "### TOP 10 高影响力论文\n\n| 序号 | 标题 | 期刊 | 年份 |\n|------|------|------|------|\n| #284 | MatterGen: A Generative Model for Materials Design | Nature 2025 | 2025 |\n| #285 | MatterSim: A Scalable Foundation Model for Materia... | arXiv 2024 | 2024 |\n| #289 | MACE: Higher Order Equivariant Graph Neural Networ... | NeurIPS 2022/2024 | 2022 |\n| #316 | GNoME: Scaling Deep Learning for Materials Discove... | Nature 2023 | 2023 |\n| #319 | SymmCD: Symmetry-Aware Crystal Diffusion | ICLR 2025 | 2025 |\n| #320 | WyckoffDiff: Wyckoff Position-Based Crystal Genera... | ICML 2025 | 2025 |\n| #321 | SGEquiDiff: Space Group Equivariant Diffusion for ... | NeurIPS 2025 | 2025 |\n| #330 | Accurate Structure Prediction of Biomolecular Inte... | Nature 2024 | 2024 |\n| #333 | RFdiffusion: De Novo Protein Design with Diffu"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/reports/AGI进化路径调研报告.md#chunk0",
+          "content": "# xuanshu-agents v4.3 → v5.0 AGI进化路径深度调研报告\n\n> **框架现状**: 4 Agent角色(矿工/试金/铸师/匠人) + 向量记忆(NGramTFIDF+RRF) + SlotMemory + A2A能力发现 + P2P通信 + 思想结晶 + 冲突检测\n>\n> **硬约束**: RAM 3.8GB无swap | VRAM 16GB\n>\n> **调研目标**: 补齐6个缺失维度 — G2认知架构 / G5因果推理 / G8元学习 / G10具身Grounding / G11元认知 / G12系统性对齐\n\n---\n## 目录\n\n1. [方向A: G2 认知架构](#1-g2-认知架构)\n2. [方向B: G5 因果推理](#2-g5-因果推理)\n3. [方向C: G8 元学习与持续学习](#3-g8-元学习与持续学习)\n4. [方向D: G11 元认知与自我监控](#4-g11-元认知与自我监控)\n5. [方向E: G10 具身Grounding](#5-g10-具身grounding)\n6. [方向F: G12 系统性对齐](#6-g12-系统性对齐)\n7. [集成优先级总览](#7-集成优先级总览)\n8. [跨方向集成架构图](#8-跨方向集成架构图)\n9. [渐进式集成路线图](#9-渐进式集成路线图)\n\n---\n## 1. G2 认知架构\n### 1.1 开源项目清单\n\n| 项目 | 来源/安装 | 许可证 | 语言 | 核心能力 | 轻量级 | RAM估算 |\n|------|----------|--------|------|----------|--------|---------|\n| **pyactup** | `pip install pyactup` (20KB) | MIT | Python | ACT-R子集实"
+        },
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk1",
+          "content": "## AGI认知地图\n\n```\n    ┌─────────────────────────────────────────┐\n    │     KB-G12: AI对齐与价值哲学            │ ← 全局约束\n    │     (安全/伦理/治理/宪法)                │\n    └───────────────┬─────────────────────────┘\n                    │ 约束\n    ┌───────────────▼─────────────────────────┐\n    │     KB-G11: 意识与机器意识理论          │ ← 元认知层\n    │     (IIT/GWT/自我模型/注意力图式)        │\n    └───────────────┬─────────────────────────┘\n                    │ 元认知\n    ┌───────────────▼─────────────────────────┐\n    │     上层建筑 (Advanced Capabilities)     │\n    │                                         │\n    │  G9:自我改进 ←→ G8:元学习 ←→ G7:持续学习 │\n    │       │              │             │     │\n    │       ▼              ▼             ▼     │\n    │  G5:因果推理 ←→ G6:NeSy ←→ G10:具身     │\n    └───────────────┬─────────────────────────┘"
+        },
+        {
+          "id": "materials-kb/reports/AGI深度文献补充_A-L.md#chunk22",
+          "content": "### 关键依赖关系\n1. A→C→D: AGI理论定义世界模型需求，世界模型支撑自我改进\n2. B→H→I: 认知科学启发持续学习，持续学习支撑元学习\n3. E↔A: 涌现理论解释AGI能力跃迁，AGI理论指导涌现研究\n4. F↔G: 因果推理需要符号表示，符号表示应编码因果结构\n5. K↔L: 意识理论与对齐问题深度交织——自我意识是对齐的前提\n6. J↔C: 具身grounding丰富世界模型，世界模型支撑grounding\n### xuanshu-agents框架v4.3的定位\n框架当前在地图上的位置：**地基层→上层建筑的过渡区**\n- ✅ 已有: A(架构设计), E(缩放直觉), G(知识表示-思想结晶)\n- 🔄 建设中: C(世界模型-隐式), D(自我改进-Agent互审), H(持续学习-记忆系统)\n- ⬜ 待发展: F(因果推理), I(元学习), J(Grounding), K(元认知), L(系统性对齐)\n\n---\n\n> 本文献清单共计143篇（#383-#525），覆盖12个AGI核心方向。\n> 每篇均标注了架构映射字段，可直接指导xuanshu-agents框架的模块化设计。\n"
+        }
+      ]
+    },
+    {
+      "query": "材料信息学中高通量筛选方法综述",
+      "relevant_prefix": "materials-kb/reports/材料科学",
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk3",
+          "content": "#### #295 | 2024 | ⭐⭐⭐\n- **标题**: LLM4Mat-Bench: Benchmarking Large Language Models for Materials Science\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 系统评估多种LLM在材料科学任务上的表现，建立标准化评估基准\n- **关键词**: LLM4Mat-Bench; Benchmark; Evaluation\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料LLM评估的基准工作\n#### #296 | 2024 | ⭐⭐⭐\n- **标题**: Mining Materials Science Literature with LLMs\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 利用LLM从海量材料科学文献中自动提取材料-性能关系\n- **关键词**: Literature Mining; NLP; Knowledge Extraction\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料文献知识挖掘的实用方法\n#### #297 | 2024 | ⭐⭐⭐\n- **标题**: Eunomia: An AI Agent for Materials Science Knowledge Management\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 面向材料科学的知识管理AI Agent，集成文献检索、知识图谱与问答\n- **关键词**: Eunomia; Knowledge Ma"
+        },
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk3",
+          "content": "#### #295 | 2024 | ⭐⭐⭐\n- **标题**: LLM4Mat-Bench: Benchmarking Large Language Models for Materials Science\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 系统评估多种LLM在材料科学任务上的表现，建立标准化评估基准\n- **关键词**: LLM4Mat-Bench; Benchmark; Evaluation\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料LLM评估的基准工作\n#### #296 | 2024 | ⭐⭐⭐\n- **标题**: Mining Materials Science Literature with LLMs\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 利用LLM从海量材料科学文献中自动提取材料-性能关系\n- **关键词**: Literature Mining; NLP; Knowledge Extraction\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 材料文献知识挖掘的实用方法\n#### #297 | 2024 | ⭐⭐⭐\n- **标题**: Eunomia: An AI Agent for Materials Science Knowledge Management\n- **作者**: Various et al.\n- **期刊/会议**: Digital Discovery 2024\n- **核心贡献**: 面向材料科学的知识管理AI Agent，集成文献检索、知识图谱与问答\n- **关键词**: Eunomia; Knowledge Ma"
+        },
+        {
+          "id": "materials-kb/README.md#chunk1",
+          "content": "## 🗂️ Structure\n\n```\nmaterials-kb/\n├── KB0_全量论文索引/          # Global index — quick lookup\n│   └── KB0_全量论文索引.md      (2,855 lines, 200+ papers)\n├── KB1_材料ML核心/             # Materials science ML methodology\n│   ├── 01_材料数据库.md          (Materials Project / AFLOW / OQMD)\n│   ├── 02_材料表示与描述符.md     (Composition / structure / electronic descriptors)\n│   ├── 03_性质预测.md            (Band gap / modulus / stability prediction)\n│   ├── 04_高通量筛选与逆向设计.md\n│   ├── 05_特定材料系统.md         (Perovskites / batteries / catalysis)\n│   ├── 06_综述论文.md\n│   ├── 07_新兴方向.md\n│   └── 08_图神经网络.md          (CGCNN / ALIGNN / MEGNet)\n├── KB2_理论与基础/             # ML theoretical foundations\n│   ├── 01_ML基础.md\n│   ├── 02_DL优化.md\n│   └── 03_贝叶斯方法.md\n├── KB3_模型与工具/             # Specific model architectures & tools\n│   ├── 01_C"
+        }
+      ],
+      "nemotron_top3_docs": [
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk2",
+          "content": "#### #287 | 2024 | ⭐⭐⭐⭐\n- **标题**: EquiformerV2: Improved Equivariant Transformer for Materials\n- **作者**: MIT et al.\n- **期刊/会议**: ICLR 2024\n- **核心贡献**: 改进的等变Transformer架构，在OC20-Dense和Materials Project基准上达到SOTA\n- **关键词**: EquiformerV2; Equivariant; Crystal Property\n- **难度**: ⭐⭐⭐⭐\n- **材料科学关联**: 材料性质预测的高精度模型架构\n#### #288 | 2024 | ⭐⭐⭐\n- **标题**: OMat24: Open Materials Dataset and Foundation Models\n- **作者**: Meta FAIR et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 开放材料数据集(2700万结构)及配套基础模型，推动材料ML的开源生态\n- **关键词**: OMat24; Open Dataset; Foundation Model\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 提供最大规模开放材料数据集\n#### #289 | 2022 | ⭐⭐⭐⭐⭐\n- **标题**: MACE: Higher Order Equivariant Graph Neural Networks for Materials\n- **作者**: Batatia et al.\n- **期刊/会议**: NeurIPS 2022/2024\n- **核心贡献**: 高阶等变GNN消息传递框架，在分子动力学和材料性质预测上达到极高精度\n- **关键词**:"
+        },
+        {
+          "id": "materials-kb/知识库_v2/前沿补充索引.md#chunk2",
+          "content": "#### #287 | 2024 | ⭐⭐⭐⭐\n- **标题**: EquiformerV2: Improved Equivariant Transformer for Materials\n- **作者**: MIT et al.\n- **期刊/会议**: ICLR 2024\n- **核心贡献**: 改进的等变Transformer架构，在OC20-Dense和Materials Project基准上达到SOTA\n- **关键词**: EquiformerV2; Equivariant; Crystal Property\n- **难度**: ⭐⭐⭐⭐\n- **材料科学关联**: 材料性质预测的高精度模型架构\n#### #288 | 2024 | ⭐⭐⭐\n- **标题**: OMat24: Open Materials Dataset and Foundation Models\n- **作者**: Meta FAIR et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 开放材料数据集(2700万结构)及配套基础模型，推动材料ML的开源生态\n- **关键词**: OMat24; Open Dataset; Foundation Model\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 提供最大规模开放材料数据集\n#### #289 | 2022 | ⭐⭐⭐⭐⭐\n- **标题**: MACE: Higher Order Equivariant Graph Neural Networks for Materials\n- **作者**: Batatia et al.\n- **期刊/会议**: NeurIPS 2022/2024\n- **核心贡献**: 高阶等变GNN消息传递框架，在分子动力学和材料性质预测上达到极高精度\n- **关键词**:"
+        },
+        {
+          "id": "materials-kb/reports/材料科学前沿论文调研_2024-2026.md#chunk5",
+          "content": "#### #312 | 2024 | ⭐⭐⭐\n- **标题**: ML-Driven Iterative Mix Design for Sustainable Concrete\n- **作者**: Various et al.\n- **期刊/会议**: J. Building Engineering 2024\n- **核心贡献**: ML驱动的迭代式配合比设计方法，实现可持续混凝土的多目标优化\n- **关键词**: Iterative Design; Sustainable; ML\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可持续混凝土的智能化配比设计\n#### #313 | 2025 | ⭐⭐⭐\n- **标题**: Explainable AI for Supplementary Cementitious Materials\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2025\n- **核心贡献**: 可解释AI方法揭示辅助胶凝材料的组成-性能关系\n- **关键词**: Explainable AI; SCM; Interpretability\n- **难度**: ⭐⭐⭐\n- **材料科学关联**: 可解释AI在胶凝材料机理揭示中的应用\n#### #314 | 2024 | ⭐⭐⭐\n- **标题**: Industrial-Scale Cement Clinker Phase Prediction via ML\n- **作者**: Various et al.\n- **期刊/会议**: arXiv 2024\n- **核心贡献**: 利用两年工业数据集训练ML模型预测水泥熟料矿物相，MAPE低至1.24%\n- **关键词**: Clinker; Phase Prediction; Industrial Data\n- "
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,976 @@
+{
+  "version": "e4_v3_local",
+  "corpus_stats": {
+    "total_docs": 1548,
+    "total_chars": 3511062
+  },
+  "num_queries": 23,
+  "per_query": [
+    {
+      "query": "NexusOrchestrator如何协调多个Agent协同工作",
+      "relevant_doc_id": "NexusFlow/nexusflow/core/nexus_orchestrator.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_orchestrator(\n    agents: Optional[Dict[str, Any]] = None,\n    llm_chat: Optional[Callable] = None,\n    config: Optional[Dict[str, Any]] = None,\n) -> NexusOrchestrator:\n    \"\"\"创建NexusOrchestrator的工厂函数\n    \n    Args:\n        agents: 预构建的Agent字典\n        llm_chat: LLM调用函数\n        config: 额外配置\n        \n    Returns:\n        NexusOrchestrator实例\n    \"\"\"\n    return NexusOrchestrator(\n        agents=agents,\n        llm_chat=llm_chat,\n        config=config,\n    )\n"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_orchestrator(\n    agents: Optional[Dict[str, Any]] = None,\n    llm_chat: Optional[Callable] = None,\n    config: Optional[Dict[str, Any]] = None,\n) -> NexusOrchestrator:\n    \"\"\"创建NexusOrchestrator的工厂函数\n    \n    Args:\n        agents: 预构建的Agent字典\n        llm_chat: LLM调用函数\n        config: 额外配置\n        \n    Returns:\n        NexusOrchestrator实例\n    \"\"\"\n    return NexusOrchestrator(\n        agents=agents,\n        llm_chat=llm_chat,\n        config=config,\n    )\n"
+        }
+      ]
+    },
+    {
+      "query": "CognitiveDivisionEngine认知分工引擎的设计原理",
+      "relevant_doc_id": "NexusFlow/nexusflow/core/cognitive_division_engine.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk12",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk7",
+        "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk16"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk12",
+          "content": "# ============================================================================# CognitiveDivisionEngine — 编排入口"
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk7",
+          "content": "# ============================================================# 执行引擎"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk16",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_cdol_engine(\n    agents: Optional[Dict[str, Any]] = None,\n    memory_pool: Optional[Any] = None,\n    llm_chat: Optional[Callable] = None,\n    insight_store: Optional[Any] = None,\n) -> CognitiveDivisionEngine:\n    \"\"\"创建认知分工引擎的工厂函数\n    \n    Args:\n        agents: agent_id -> agent对象 的映射\n        memory_pool: GlobalMemoryPool实例\n        llm_chat: LLM调用函数\n        insight_store: InsightStore实例（可选，用于跨执行经验积累）\n    \"\"\"\n    return CognitiveDivisionEngine(\n        agents=agents,\n        memory_pool=memory_pool,\n        llm_chat=llm_chat,\n        insight_store=insight_store,\n    )\n"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk16",
+        "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk12",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk7"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk16",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_cdol_engine(\n    agents: Optional[Dict[str, Any]] = None,\n    memory_pool: Optional[Any] = None,\n    llm_chat: Optional[Callable] = None,\n    insight_store: Optional[Any] = None,\n) -> CognitiveDivisionEngine:\n    \"\"\"创建认知分工引擎的工厂函数\n    \n    Args:\n        agents: agent_id -> agent对象 的映射\n        memory_pool: GlobalMemoryPool实例\n        llm_chat: LLM调用函数\n        insight_store: InsightStore实例（可选，用于跨执行经验积累）\n    \"\"\"\n    return CognitiveDivisionEngine(\n        agents=agents,\n        memory_pool=memory_pool,\n        llm_chat=llm_chat,\n        insight_store=insight_store,\n    )\n"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/cognitive_division_engine.py#chunk12",
+          "content": "# ============================================================================# CognitiveDivisionEngine — 编排入口"
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk7",
+          "content": "# ============================================================# 执行引擎"
+        }
+      ]
+    },
+    {
+      "query": "DynamicRouter动态路由如何选择合适的Agent",
+      "relevant_doc_id": "NexusFlow/nexusflow/core/dynamic_router.py",
+      "tfidf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        }
+      ]
+    },
+    {
+      "query": "AdaptiveContextManager如何管理token上下文",
+      "relevant_doc_id": "NexusFlow/nexusflow/core/adaptive_context_manager.py",
+      "tfidf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk13",
+        "NexusFlow/nexusflow/core/goal_verifier.py#chunk2"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk13",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_context_manager(\n    backing_store: Optional[Any] = None,\n    initial_window: int = 8192,\n    sync_interval: int = 10,\n    llm_chat: Optional[Callable] = None,\n    information_policy: Optional[Any] = None,\n) -> AdaptiveContextManager:\n    \"\"\"创建自适应上下文管理器的工厂函数\n    \n    Args:\n        backing_store: 持久化后端\n        initial_window: 初始窗口大小\n        sync_interval: 同步间隔\n        llm_chat: LLM调用函数\n        information_policy: AgentInformationPolicy实例（可选）\n    \"\"\"\n    global_memory = GlobalMemoryPool(backing_store=backing_store)\n    return AdaptiveContextManager(\n        global_memory=global_memory,\n        initial_window=initial_win"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/goal_verifier.py#chunk2",
+          "content": "## 目标停止条件\n{self._goal_condition}\n## 目标上下文\n{self._goal_context or '（无额外上下文）'}\n## 对话历史\n{dialogue_text}\n{output_section}\n## 验证要求\n\n请严格审查对话历史，判断目标条件是否真正满足。\n"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk13"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk13",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_context_manager(\n    backing_store: Optional[Any] = None,\n    initial_window: int = 8192,\n    sync_interval: int = 10,\n    llm_chat: Optional[Callable] = None,\n    information_policy: Optional[Any] = None,\n) -> AdaptiveContextManager:\n    \"\"\"创建自适应上下文管理器的工厂函数\n    \n    Args:\n        backing_store: 持久化后端\n        initial_window: 初始窗口大小\n        sync_interval: 同步间隔\n        llm_chat: LLM调用函数\n        information_policy: AgentInformationPolicy实例（可选）\n    \"\"\"\n    global_memory = GlobalMemoryPool(backing_store=backing_store)\n    return AdaptiveContextManager(\n        global_memory=global_memory,\n        initial_window=initial_win"
+        }
+      ]
+    },
+    {
+      "query": "EdgeCloudScheduler边缘云调度器如何决策",
+      "relevant_doc_id": "NexusFlow/nexusflow/core/edge_cloud_scheduler.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/cognition/task_tree.py#chunk1",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/nexusflow/core/edge_cloud_scheduler.py#chunk1"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/cognition/task_tree.py#chunk1",
+          "content": "# ============================================================================# 任务调度器 — 决定执行顺序和Agent分配"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/edge_cloud_scheduler.py#chunk1",
+          "content": "# ============ 端-边-云调度器 ============\n\nclass EdgeCloudScheduler:\n    \"\"\"\n    端-边-云三级调度器\n    \n    职责:\n    - 管理三层资源池\n    - 根据任务特征和调度策略选择执行层\n    - 支持层间任务迁移\n    - 隐私合规保障\n    \n    用法:\n        scheduler = EdgeCloudScheduler(policy=SchedulingPolicy.BALANCED)\n        \n        # 注册资源\n        scheduler.register_tier(TierResource(\n            tier=DeployTier.EDGE,\n            name=\"local-rtx3080\",\n            gpu_count=1, gpu_memory_gb=16.0,\n            supported_models=[\"qwen-7b\", \"deepseek-v4-flash\"],\n            latency_to_user_ms=5,\n        ))\n        \n        # 调度\n        decision = scheduler.schedule(task_requirements={\n            \"needs_gpu\": True,\n            \"privacy_level\": 2,\n            \"context_window\": 8192,\n            \"latency_budget_ms\": 5000,\n        })\n    \"\"\"\n    \n    def __init__"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/nexusflow/core/edge_cloud_scheduler.py#chunk1",
+        "NexusFlow/nexusflow/cognition/task_tree.py#chunk1"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/edge_cloud_scheduler.py#chunk1",
+          "content": "# ============ 端-边-云调度器 ============\n\nclass EdgeCloudScheduler:\n    \"\"\"\n    端-边-云三级调度器\n    \n    职责:\n    - 管理三层资源池\n    - 根据任务特征和调度策略选择执行层\n    - 支持层间任务迁移\n    - 隐私合规保障\n    \n    用法:\n        scheduler = EdgeCloudScheduler(policy=SchedulingPolicy.BALANCED)\n        \n        # 注册资源\n        scheduler.register_tier(TierResource(\n            tier=DeployTier.EDGE,\n            name=\"local-rtx3080\",\n            gpu_count=1, gpu_memory_gb=16.0,\n            supported_models=[\"qwen-7b\", \"deepseek-v4-flash\"],\n            latency_to_user_ms=5,\n        ))\n        \n        # 调度\n        decision = scheduler.schedule(task_requirements={\n            \"needs_gpu\": True,\n            \"privacy_level\": 2,\n            \"context_window\": 8192,\n            \"latency_budget_ms\": 5000,\n        })\n    \"\"\"\n    \n    def __init__"
+        },
+        {
+          "id": "NexusFlow/nexusflow/cognition/task_tree.py#chunk1",
+          "content": "# ============================================================================# 任务调度器 — 决定执行顺序和Agent分配"
+        }
+      ]
+    },
+    {
+      "query": "GoalVerifier如何验证任务目标达成",
+      "relevant_doc_id": "NexusFlow/nexusflow/core/goal_verifier.py",
+      "tfidf_top3": [
+        "NexusFlow/examples/demo_full_system.py#chunk9",
+        "NexusFlow/examples/demo_phase2_ablation_v2.py#chunk7",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/demo_full_system.py#chunk9",
+          "content": "# ============================================================# 9. HTML 报告生成"
+        },
+        {
+          "id": "NexusFlow/examples/demo_phase2_ablation_v2.py#chunk7",
+          "content": "# ============================================================# 7. HTML 报告生成"
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/demo_full_system.py#chunk9",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/demo_phase2_ablation_v2.py#chunk7"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/demo_full_system.py#chunk9",
+          "content": "# ============================================================# 9. HTML 报告生成"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/demo_phase2_ablation_v2.py#chunk7",
+          "content": "# ============================================================# 7. HTML 报告生成"
+        }
+      ]
+    },
+    {
+      "query": "SkillRetriever技能检索器如何匹配用户技能",
+      "relevant_doc_id": "NexusFlow/nexusflow/core/skill_retriever.py",
+      "tfidf_top3": [
+        "NexusFlow/tests/test_skill_integration.py#chunk0",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/tests/test_skill_integration.py#chunk0",
+          "content": "\"\"\"技能蒸馏集成测试\"\"\"\nimport sys\nimport time\nsys.path.insert(0, '/tmp/agent4science_nexus')\n"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/tests/test_skill_integration.py#chunk0",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/tests/test_skill_integration.py#chunk0",
+          "content": "\"\"\"技能蒸馏集成测试\"\"\"\nimport sys\nimport time\nsys.path.insert(0, '/tmp/agent4science_nexus')\n"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        }
+      ]
+    },
+    {
+      "query": "Miner Agent的数据挖掘职责",
+      "relevant_doc_id": "NexusFlow/nexusflow/agents/miner.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+        "NexusFlow/examples/stage3_full_system/data/who/agent_interactions.json",
+        "NexusFlow/server/nexusflow_server.py#chunk20"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        },
+        {
+          "id": "NexusFlow/examples/stage3_full_system/data/who/agent_interactions.json",
+          "content": "[\n  {\n    \"agent\": \"strategist\",\n    \"tier\": \"cloud\",\n    \"time\": 37.10870099067688,\n    \"prompt_len\": 4891\n  },\n  {\n    \"agent\": \"researcher\",\n    \"tier\": \"cloud\",\n    \"time\": 48.13502621650696,\n    \"prompt_len\": 4915\n  },\n  {\n    \"agent\": \"coder\",\n    \"tier\": \"edge\",\n    \"time\": 52.96490931510925,\n    \"prompt_len\": 4866\n  },\n  {\n    \"agent\": \"analyst\",\n    \"tier\": \"edge\",\n    \"time\": 59.11812162399292,\n    \"prompt_len\": 4835\n  },\n  {\n    \"agent\": \"observer\",\n    \"tier\": \"terminal\",\n    \"time\": 67.23189210891724,\n    \"prompt_len\": 4839\n  },\n  {\n    \"agent\": \"coordinator\",\n    \"tier\": \"cloud\",\n    \"time\": 75.11605477333069,\n    \"prompt_len\": 4786\n  },\n  {\n    \"agent\": \"strategist\",\n    \"tier\": \"cloud\",\n    \"time\": 85.40717697143555,\n    \"prompt_len\": 5234\n  },\n  {\n    \"agent\": \"researcher\""
+        },
+        {
+          "id": "NexusFlow/server/nexusflow_server.py#chunk20",
+          "content": "# ============================================================================# Dynamic Cloud Agent Management APIs (v3.4)"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/stage3_full_system/data/who/agent_interactions.json"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/examples/stage3_full_system/data/who/agent_interactions.json",
+          "content": "[\n  {\n    \"agent\": \"strategist\",\n    \"tier\": \"cloud\",\n    \"time\": 37.10870099067688,\n    \"prompt_len\": 4891\n  },\n  {\n    \"agent\": \"researcher\",\n    \"tier\": \"cloud\",\n    \"time\": 48.13502621650696,\n    \"prompt_len\": 4915\n  },\n  {\n    \"agent\": \"coder\",\n    \"tier\": \"edge\",\n    \"time\": 52.96490931510925,\n    \"prompt_len\": 4866\n  },\n  {\n    \"agent\": \"analyst\",\n    \"tier\": \"edge\",\n    \"time\": 59.11812162399292,\n    \"prompt_len\": 4835\n  },\n  {\n    \"agent\": \"observer\",\n    \"tier\": \"terminal\",\n    \"time\": 67.23189210891724,\n    \"prompt_len\": 4839\n  },\n  {\n    \"agent\": \"coordinator\",\n    \"tier\": \"cloud\",\n    \"time\": 75.11605477333069,\n    \"prompt_len\": 4786\n  },\n  {\n    \"agent\": \"strategist\",\n    \"tier\": \"cloud\",\n    \"time\": 85.40717697143555,\n    \"prompt_len\": 5234\n  },\n  {\n    \"agent\": \"researcher\""
+        }
+      ]
+    },
+    {
+      "query": "Artisan Agent在NexusFlow中的角色",
+      "relevant_doc_id": "NexusFlow/nexusflow/agents/artisan.py",
+      "tfidf_top3": [
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        }
+      ]
+    },
+    {
+      "query": "Assayer Agent质量检测机制",
+      "relevant_doc_id": "NexusFlow/nexusflow/agents/assayer.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk9",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+        "NexusFlow/examples/stage3_full_system/data/who/agent_interactions.json"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk9",
+          "content": "# ============================================================================# LazinessDetector — 懒惰检测器"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        },
+        {
+          "id": "NexusFlow/examples/stage3_full_system/data/who/agent_interactions.json",
+          "content": "[\n  {\n    \"agent\": \"strategist\",\n    \"tier\": \"cloud\",\n    \"time\": 37.10870099067688,\n    \"prompt_len\": 4891\n  },\n  {\n    \"agent\": \"researcher\",\n    \"tier\": \"cloud\",\n    \"time\": 48.13502621650696,\n    \"prompt_len\": 4915\n  },\n  {\n    \"agent\": \"coder\",\n    \"tier\": \"edge\",\n    \"time\": 52.96490931510925,\n    \"prompt_len\": 4866\n  },\n  {\n    \"agent\": \"analyst\",\n    \"tier\": \"edge\",\n    \"time\": 59.11812162399292,\n    \"prompt_len\": 4835\n  },\n  {\n    \"agent\": \"observer\",\n    \"tier\": \"terminal\",\n    \"time\": 67.23189210891724,\n    \"prompt_len\": 4839\n  },\n  {\n    \"agent\": \"coordinator\",\n    \"tier\": \"cloud\",\n    \"time\": 75.11605477333069,\n    \"prompt_len\": 4786\n  },\n  {\n    \"agent\": \"strategist\",\n    \"tier\": \"cloud\",\n    \"time\": 85.40717697143555,\n    \"prompt_len\": 5234\n  },\n  {\n    \"agent\": \"researcher\""
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk9",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk9",
+          "content": "# ============================================================================# LazinessDetector — 懒惰检测器"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        }
+      ]
+    },
+    {
+      "query": "Sentinel Agent安全监控功能",
+      "relevant_doc_id": "NexusFlow/nexusflow/agents/sentinel.py",
+      "tfidf_top3": [
+        "NexusFlow/evaluation/__init__.py",
+        "agent4science/evaluation/__init__.py",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/evaluation/__init__.py",
+          "content": "\"\"\"\nNexusFlow CDoL 评估模块\n提供100步超长程任务评估所需的指标计算、质量评分、衰减分析等功能\n\"\"\"\n\n__version__ = \"1.0.0\"\n"
+        },
+        {
+          "id": "agent4science/evaluation/__init__.py",
+          "content": "\"\"\"\nNexusFlow CDoL 评估模块\n提供100步超长程任务评估所需的指标计算、质量评分、衰减分析等功能\n\"\"\"\n\n__version__ = \"1.0.0\"\n"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/evaluation/__init__.py",
+        "agent4science/evaluation/__init__.py",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/evaluation/__init__.py",
+          "content": "\"\"\"\nNexusFlow CDoL 评估模块\n提供100步超长程任务评估所需的指标计算、质量评分、衰减分析等功能\n\"\"\"\n\n__version__ = \"1.0.0\"\n"
+        },
+        {
+          "id": "agent4science/evaluation/__init__.py",
+          "content": "\"\"\"\nNexusFlow CDoL 评估模块\n提供100步超长程任务评估所需的指标计算、质量评分、衰减分析等功能\n\"\"\"\n\n__version__ = \"1.0.0\"\n"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        }
+      ]
+    },
+    {
+      "query": "VectorMemory向量记忆存储与检索机制",
+      "relevant_doc_id": "NexusFlow/nexusflow/memory/vector_memory.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/memory/vector_memory.py#chunk4",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk3"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/memory/vector_memory.py#chunk4",
+          "content": "# 全局实例\n_vector_memory_instance: Optional[VectorMemory] = None\n\n\ndef get_vector_memory() -> VectorMemory:\n    \"\"\"获取全局向量记忆实例\n    \n    默认使用 NGramTFIDFProvider + PersistentVectorStore\n    \"\"\"\n    global _vector_memory_instance\n    if _vector_memory_instance is None:\n        # 默认使用语义 n-gram 嵌入 + 持久化存储\n        provider = NGramTFIDFProvider()\n        store = PersistentVectorStore(provider)\n        _vector_memory_instance = VectorMemory(\n            embedding_provider=provider,\n            vector_store=store\n        )\n    return _vector_memory_instance\n"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk3",
+          "content": "# ============================================================================# GlobalMemoryPool — 全局记忆池"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/nexusflow/memory/vector_memory.py#chunk4",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/memory/vector_memory.py#chunk4",
+          "content": "# 全局实例\n_vector_memory_instance: Optional[VectorMemory] = None\n\n\ndef get_vector_memory() -> VectorMemory:\n    \"\"\"获取全局向量记忆实例\n    \n    默认使用 NGramTFIDFProvider + PersistentVectorStore\n    \"\"\"\n    global _vector_memory_instance\n    if _vector_memory_instance is None:\n        # 默认使用语义 n-gram 嵌入 + 持久化存储\n        provider = NGramTFIDFProvider()\n        store = PersistentVectorStore(provider)\n        _vector_memory_instance = VectorMemory(\n            embedding_provider=provider,\n            vector_store=store\n        )\n    return _vector_memory_instance\n"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk7",
+          "content": "# ============================================================================# RetrievalHeadAgent — 检索头Agent"
+        }
+      ]
+    },
+    {
+      "query": "ArchivalMemory归档记忆如何管理长期知识",
+      "relevant_doc_id": "NexusFlow/nexusflow/memory/archival_memory.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk3",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk3",
+          "content": "# ============================================================================# GlobalMemoryPool — 全局记忆池"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+        "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk3"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v2_full_repos.py#chunk6",
+          "content": "# ===================== E1: QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    \"\"\"覆盖全部仓库的 QA 数据集\"\"\"\n    return [\n        # --- NexusFlow 核心架构 ---\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n  "
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/adaptive_context_manager.py#chunk3",
+          "content": "# ============================================================================# GlobalMemoryPool — 全局记忆池"
+        }
+      ]
+    },
+    {
+      "query": "NemotronEmbeddingProvider嵌入向量提供者",
+      "relevant_doc_id": "NexusFlow/nexusflow/memory/nemotron_provider.py",
+      "tfidf_top3": [
+        "NexusFlow/nexusflow/memory/vector_memory.py#chunk0",
+        "NexusFlow/nexusflow/memory/nemotron_provider.py#chunk0",
+        "NexusFlow/nexusflow/memory/vector_memory.py#chunk4"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/memory/vector_memory.py#chunk0",
+          "content": "# -*- coding: utf-8 -*-\n\"\"\"\n铉枢·炉守 向量记忆集成\nXuanHub Vector Memory Integration\n参考: RankSquire L1/L2/L3架构 + Mem0 Token优化实践 + MemPalace混合检索\n\"\"\"\n\nimport logging\nimport json\nimport time\nfrom typing import Any, Dict, List, Optional, Tuple, Callable\nfrom dataclasses import dataclass, field\nfrom enum import Enum\nfrom abc import ABC, abstractmethod\n\nlogger = logging.getLogger(\"VectorMemory\")\n\n\nclass MemoryTier(Enum):\n    \"\"\"记忆层级\"\"\"\n    L1_HOT = \"l1_hot\"       # 热状态，当前任务上下文 (<1ms延迟)\n    L2_SEMANTIC = \"l2_semantic\"  # 语义存储，向量检索 (20ms延迟)\n    L3_EPISODIC = \"l3_episodic\"  # 情景日志，长期历史\n\n\n@dataclass\nclass MemoryEntry:\n    \"\"\"记忆条目\"\"\"\n    content: str\n    role: str = \"user\"\n    importance: float = 1.0\n    timestamp: str = field(default_factory=lambda: time.time())\n    embedding: Optional[List[float]] = None\n   "
+        },
+        {
+          "id": "NexusFlow/nexusflow/memory/nemotron_provider.py#chunk0",
+          "content": "# -*- coding: utf-8 -*-\n\"\"\"\nNemotron-3 Embed 神经语义嵌入提供者\n\n三种接入方式：\n- local: 本地 SentenceTransformers 推理（默认）\n- nim: NVIDIA NIM API (https://integrate.api.nvidia.com/v1/embeddings)\n- openrouter: OpenRouter API (nvidia/nemotron-3-embed-1b:free)\n\n用法:\n    # 本地推理\n    provider = NemotronEmbeddingProvider(mode=\"local\")\n\n    # NIM API\n    provider = NemotronEmbeddingProvider(\n        mode=\"nim\",\n        api_key=\"nvapi-xxx\",\n        model_name=\"nvidia/nemotron-3-embed-1b\",\n    )\n\n    # OpenRouter（免费）\n    provider = NemotronEmbeddingProvider(\n        mode=\"openrouter\",\n        api_key=\"sk-or-v1-xxx\",\n        model_name=\"nvidia/nemotron-3-embed-1b:free\",\n    )\n\n    vec = provider.embed_query(\"纳米SiO2对混凝土的影响\")\n    doc_vec = provider.embed_document(\"SSC水泥的早期强度特性...\")\n\"\"\"\n\nimport logging\nfrom typing import Li"
+        },
+        {
+          "id": "NexusFlow/nexusflow/memory/vector_memory.py#chunk4",
+          "content": "# 全局实例\n_vector_memory_instance: Optional[VectorMemory] = None\n\n\ndef get_vector_memory() -> VectorMemory:\n    \"\"\"获取全局向量记忆实例\n    \n    默认使用 NGramTFIDFProvider + PersistentVectorStore\n    \"\"\"\n    global _vector_memory_instance\n    if _vector_memory_instance is None:\n        # 默认使用语义 n-gram 嵌入 + 持久化存储\n        provider = NGramTFIDFProvider()\n        store = PersistentVectorStore(provider)\n        _vector_memory_instance = VectorMemory(\n            embedding_provider=provider,\n            vector_store=store\n        )\n    return _vector_memory_instance\n"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/nexusflow/memory/vector_memory.py#chunk0",
+        "NexusFlow/nexusflow/memory/nemotron_provider.py#chunk0",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/nexusflow/memory/vector_memory.py#chunk0",
+          "content": "# -*- coding: utf-8 -*-\n\"\"\"\n铉枢·炉守 向量记忆集成\nXuanHub Vector Memory Integration\n参考: RankSquire L1/L2/L3架构 + Mem0 Token优化实践 + MemPalace混合检索\n\"\"\"\n\nimport logging\nimport json\nimport time\nfrom typing import Any, Dict, List, Optional, Tuple, Callable\nfrom dataclasses import dataclass, field\nfrom enum import Enum\nfrom abc import ABC, abstractmethod\n\nlogger = logging.getLogger(\"VectorMemory\")\n\n\nclass MemoryTier(Enum):\n    \"\"\"记忆层级\"\"\"\n    L1_HOT = \"l1_hot\"       # 热状态，当前任务上下文 (<1ms延迟)\n    L2_SEMANTIC = \"l2_semantic\"  # 语义存储，向量检索 (20ms延迟)\n    L3_EPISODIC = \"l3_episodic\"  # 情景日志，长期历史\n\n\n@dataclass\nclass MemoryEntry:\n    \"\"\"记忆条目\"\"\"\n    content: str\n    role: str = \"user\"\n    importance: float = 1.0\n    timestamp: str = field(default_factory=lambda: time.time())\n    embedding: Optional[List[float]] = None\n   "
+        },
+        {
+          "id": "NexusFlow/nexusflow/memory/nemotron_provider.py#chunk0",
+          "content": "# -*- coding: utf-8 -*-\n\"\"\"\nNemotron-3 Embed 神经语义嵌入提供者\n\n三种接入方式：\n- local: 本地 SentenceTransformers 推理（默认）\n- nim: NVIDIA NIM API (https://integrate.api.nvidia.com/v1/embeddings)\n- openrouter: OpenRouter API (nvidia/nemotron-3-embed-1b:free)\n\n用法:\n    # 本地推理\n    provider = NemotronEmbeddingProvider(mode=\"local\")\n\n    # NIM API\n    provider = NemotronEmbeddingProvider(\n        mode=\"nim\",\n        api_key=\"nvapi-xxx\",\n        model_name=\"nvidia/nemotron-3-embed-1b\",\n    )\n\n    # OpenRouter（免费）\n    provider = NemotronEmbeddingProvider(\n        mode=\"openrouter\",\n        api_key=\"sk-or-v1-xxx\",\n        model_name=\"nvidia/nemotron-3-embed-1b:free\",\n    )\n\n    vec = provider.embed_query(\"纳米SiO2对混凝土的影响\")\n    doc_vec = provider.embed_document(\"SSC水泥的早期强度特性...\")\n\"\"\"\n\nimport logging\nfrom typing import Li"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        }
+      ]
+    },
+    {
+      "query": "NexusProtocol消息协议规范定义",
+      "relevant_doc_id": "NexusFlow/nexusflow/protocol/nexus_protocol.py",
+      "tfidf_top3": [
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/protocol/__init__.py"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/protocol/__init__.py",
+          "content": "\"\"\"NexusFlow 协议层\"\"\"\nfrom .a2a_protocol import A2AProtocol, A2ANetwork\nfrom .a2a_gateway import A2AGateway\nfrom .mcp_client import MCPClient\nfrom .mcp_client_v2 import MCPClientV2\nfrom .mcp_server import XuanshuMCPServer\n"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/protocol/__init__.py"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/protocol/__init__.py",
+          "content": "\"\"\"NexusFlow 协议层\"\"\"\nfrom .a2a_protocol import A2AProtocol, A2ANetwork\nfrom .a2a_gateway import A2AGateway\nfrom .mcp_client import MCPClient\nfrom .mcp_client_v2 import MCPClientV2\nfrom .mcp_server import XuanshuMCPServer\n"
+        }
+      ]
+    },
+    {
+      "query": "NexusFlow的配置文件config.yaml包含哪些配置项",
+      "relevant_doc_id": "NexusFlow/config/config.yaml",
+      "tfidf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2",
+        "NexusFlow/nexusflow/agents/circuit_breaker.py#chunk1"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_orchestrator(\n    agents: Optional[Dict[str, Any]] = None,\n    llm_chat: Optional[Callable] = None,\n    config: Optional[Dict[str, Any]] = None,\n) -> NexusOrchestrator:\n    \"\"\"创建NexusOrchestrator的工厂函数\n    \n    Args:\n        agents: 预构建的Agent字典\n        llm_chat: LLM调用函数\n        config: 额外配置\n        \n    Returns:\n        NexusOrchestrator实例\n    \"\"\"\n    return NexusOrchestrator(\n        agents=agents,\n        llm_chat=llm_chat,\n        config=config,\n    )\n"
+        },
+        {
+          "id": "NexusFlow/nexusflow/agents/circuit_breaker.py#chunk1",
+          "content": "# 便捷函数\ndef get_circuit_breaker(\n    name: str,\n    config: Optional[CircuitBreakerConfig] = None\n) -> CircuitBreaker:\n    \"\"\"获取全局熔断器\"\"\"\n    registry = CircuitBreakerRegistry()\n    return registry.register(name, config)\n"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2",
+        "NexusFlow/config/config.yaml#chunk0"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/nexusflow/core/nexus_orchestrator.py#chunk2",
+          "content": "# ============================================================================# 便捷函数# ============================================================================\n\ndef create_orchestrator(\n    agents: Optional[Dict[str, Any]] = None,\n    llm_chat: Optional[Callable] = None,\n    config: Optional[Dict[str, Any]] = None,\n) -> NexusOrchestrator:\n    \"\"\"创建NexusOrchestrator的工厂函数\n    \n    Args:\n        agents: 预构建的Agent字典\n        llm_chat: LLM调用函数\n        config: 额外配置\n        \n    Returns:\n        NexusOrchestrator实例\n    \"\"\"\n    return NexusOrchestrator(\n        agents=agents,\n        llm_chat=llm_chat,\n        config=config,\n    )\n"
+        },
+        {
+          "id": "NexusFlow/config/config.yaml#chunk0",
+          "content": "# -*- coding: utf-8 -*-# ============================================================# NexusFlow 配置文件# 复制此文件为 config.yaml 并根据需要修改# 敏感信息（API Key等）请在 .env 中配置# ============================================================\n# ============================================================# 模型配置# ============================================================\nmodels:\n  pro:\n    name: \"deepseek-v4-pro\"\n    temperature: 1.0\n    top_p: 1.0\n    max_tokens: 4096\n    frequency_penalty: 0\n    presence_penalty: 0\n  flash:\n    name: \"deepseek-v4-flash\"\n    temperature: 1.0\n    top_p: 1.0\n    max_tokens: 2048\n    frequency_penalty: 0\n    presence_penalty: 0\n# ============================================================# API 配置# ============================================================\napi:\n  timeout: 120\n  m"
+        }
+      ]
+    },
+    {
+      "query": "NexusFlow的pyproject.toml项目依赖管理",
+      "relevant_doc_id": "NexusFlow/pyproject.toml",
+      "tfidf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/tools/od_design_tool.py#chunk1"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        },
+        {
+          "id": "NexusFlow/tools/od_design_tool.py#chunk1",
+          "content": "# ============ MCP工具定义 ============\n\nOD_MCP_TOOLS = {\n    \"od_list_projects\": {\n        \"description\": \"列出所有Open Design项目\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": []\n        },\n        \"requires_daemon\": True,\n    },\n    \"od_get_project\": {\n        \"description\": \"获取Open Design项目详情及制品文件\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"project_id\": {\n                    \"type\": \"string\",\n                    \"description\": \"项目ID\"\n                }\n            },\n            \"required\": [\"project_id\"]\n        },\n        \"requires_daemon\": True,\n    },\n    \"od_create_project\": {\n        \"description\": \"创建新的Open Design项目\",\n        \"parameters\": {\n            \"type\": \"object\","
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/docs/NexusFlow技术文档v2.9.md#chunk26"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        },
+        {
+          "id": "NexusFlow/docs/NexusFlow技术文档v2.9.md#chunk26",
+          "content": "### v2.9.1 - 2026-07-17\n- **端边云调度实证**（§9、§10、examples/edge_cloud_scheduling/）：EdgeCloudScheduler三层调度实证实验完成——50次调度决策（5策略×10任务）+3次层间迁移+4次容错Fallback验证，三层分流结果符合设计预期\n- **Dashboard v4.0截图**（附录A）：新增5张Dashboard截图，覆盖概览页、CDoL通信页、信息架构页、核心模块页、任务执行实况页\n- **赛题对齐状态更新**（§9）：端边云调度、可观测性两项由⚠️升级为✅\n### v2.9 - 2026-07-16\n- **CDoL动态终止机制**（§4.1.4a）：FusionJudge判定converge/backtrack时提前退出循环，不再固定跑满max_rounds轮。CDoLResult新增communication_rounds/terminated_early/total_revision_rounds字段，向后兼容v2.8\n- **Phase 2 Ablation实验**（§7.3.8）：三组实验验证框架设计决策——轮次ablation（v3方差控制数据验证2-3轮最优平台期，5次运行+few-shot锚定，核心实验）、路由ablation（探索性实验：数据方向与预期相反，坦诚讨论任务复杂度局限性）、拓扑切换成本（探索性实验：拓扑选择对质量影响极小）\n- **LLM 5维质量评分器**（examples/llm_quality_scorer.py）：替代hardcoded公式，5维评分（完整性/深度/一致性/创新性/可操作性），temperature=0.1保证评分一致性。v3加入few-shot锚定+5次运行方差控制+固定seed=42\n- §7.4 核心实验发现扩展至九项（新"
+        }
+      ]
+    },
+    {
+      "query": "agent4science项目的科学发现工作流设计",
+      "relevant_doc_id": "agent4science/",
+      "tfidf_top3": [
+        "NexusFlow/tools/od_design_tool.py#chunk1",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "materials-ai-kit/README.md#chunk1"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/tools/od_design_tool.py#chunk1",
+          "content": "# ============ MCP工具定义 ============\n\nOD_MCP_TOOLS = {\n    \"od_list_projects\": {\n        \"description\": \"列出所有Open Design项目\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": []\n        },\n        \"requires_daemon\": True,\n    },\n    \"od_get_project\": {\n        \"description\": \"获取Open Design项目详情及制品文件\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"project_id\": {\n                    \"type\": \"string\",\n                    \"description\": \"项目ID\"\n                }\n            },\n            \"required\": [\"project_id\"]\n        },\n        \"requires_daemon\": True,\n    },\n    \"od_create_project\": {\n        \"description\": \"创建新的Open Design项目\",\n        \"parameters\": {\n            \"type\": \"object\","
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "materials-ai-kit/README.md#chunk1",
+          "content": "## 🔗 关联项目\n\n| 项目 | 说明 | 最近更新 |\n|------|------|---------|\n| [NexusFlow](https://github.com/tsingxuanhan/NexusFlow) | 群体智能引擎（CDoL 认知分工，10-Agent） | 2026-07-14 |\n| [agent4science](https://github.com/tsingxuanhan/agent4science) | 学术工具集 & 知识库入口 | 2026-07-15 |\n| [xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base) | 知识库 v2（524 篇论文 / 30 分类） | 2026-06-15 |\n| [xuanshu-ui-gallery](https://github.com/tsingxuanhan/xuanshu-ui-gallery) | UI 风格库（6 种 CSS 主题） | 2026-06-14 |\n| [qiu](https://github.com/tsingxuanhan/qiu) | 秋 · 项目指南文档 | 2026-06-13 |\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, CDoL+端边云)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包（本仓库）\n├── 🧰 agent4science             ← 学术工具集 & 评"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/tools/od_design_tool.py#chunk1",
+        "xuanshu-knowledge-base/README.md"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/tools/od_design_tool.py#chunk1",
+          "content": "# ============ MCP工具定义 ============\n\nOD_MCP_TOOLS = {\n    \"od_list_projects\": {\n        \"description\": \"列出所有Open Design项目\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {},\n            \"required\": []\n        },\n        \"requires_daemon\": True,\n    },\n    \"od_get_project\": {\n        \"description\": \"获取Open Design项目详情及制品文件\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"project_id\": {\n                    \"type\": \"string\",\n                    \"description\": \"项目ID\"\n                }\n            },\n            \"required\": [\"project_id\"]\n        },\n        \"requires_daemon\": True,\n    },\n    \"od_create_project\": {\n        \"description\": \"创建新的Open Design项目\",\n        \"parameters\": {\n            \"type\": \"object\","
+        },
+        {
+          "id": "xuanshu-knowledge-base/README.md",
+          "content": "# 铉枢知识库 v2\n\n> 524篇论文 · 30分类 · 4大板块 · AGI认知地图\n\n## 知识库架构\n\n```\nxuanshu-knowledge-base/\n├── index/          ← 知识库索引（入口）\n│   ├── README.md           # 知识库总览\n│   ├── 全量索引.md          # 524篇统一索引\n│   ├── 前沿补充索引.md      # #273-#382 前沿补充\n│   └── AGI深度索引.md       # #383-#524 AGI理论纵深\n├── papers/         ← 论文清单\n│   └── ML知识库论文清单.md  # 524篇完整列表\n├── supplements/    ← 调研报告\n│   ├── AGI深度文献补充_A-L.md       # 142篇AGI深度文献\n│   ├── 2024-2026前沿论文调研.md     # 110篇材料科学ML前沿\n│   ├── 认知架构开源项目调研_2024-2026.md  # 24个开源项目\n│   ├── xuanshu-agents_AGI进化路径调研报告.md  # 30+项目\n│   ├── AGI_Agent_Framework_2025-2026_report.md  # 框架全景\n│   └── AGI_Agent_Framework_2025-2026_evidence.md  # 证据文件\n├── evolution/      ← 版本进化设计\n│   ├── 设计方案.md              # v5.0 AGI进化方案\n│   └── v4.3_设计方案.md         # v4.3 Thought-Retriever\n```\n\n## 板块分布\n\n| 板块"
+        }
+      ]
+    },
+    {
+      "query": "agent4science中Agent如何协作完成科学研究任务",
+      "relevant_doc_id": "agent4science/",
+      "tfidf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "NexusFlow/examples/README.md#chunk1"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        },
+        {
+          "id": "NexusFlow/examples/README.md#chunk1",
+          "content": "### 横向对比（WHO简单查询任务）\n\n| 框架 | 得分 | 耗时 | API调用 | Tokens | 模式 |\n|------|:----:|:----:|:-------:|:------:|:----:|\n| AutoGen | 90.0 | 131.1s | 5 | 2,426 | real |\n| NexusFlow | 84.5 | 89.8s | 7 | 18,799 | real (CDoL) |\n\n> 注: 横向对比是简单查询任务，NexusFlow的核心优势在复杂任务（Stage-4/5）。\n"
+        }
+      ],
+      "rrf_top3": [
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+        "qiu/README.md"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "NexusFlow/examples/stage5_eighty_steps/run_real_benchmark.py#chunk5",
+          "content": "# ============================================================# NexusFlow 80步任务定义"
+        },
+        {
+          "id": "qiu/README.md",
+          "content": "# 秋 · 铉枢开源项目指南\n\n> 一份面向所有人的项目说明书。即使你不懂编程，也能读懂。\n\n## 三个仓库\n\n铉枢的开源项目分为三个仓库，各有分工：\n\n| 仓库 | 定位 | 可见性 | 适合谁 |\n|------|------|--------|--------|\n| [**xuan-hub**](xuan-hub.md) | 核心框架，完整AI工作站 | 私有 | 想看完整实现 |\n| [**agent4science**](agent4science.md) | Agent框架，多智能体协作 | 公开 | 想构建AI Agent团队 |\n| [**materials-ai-kit**](materials-ai-kit.md) | 建材AI工具包 | 公开 | 材料科学研究者 |\n\n## 能用来做什么？\n\n### 构建个人AI工作站\n让AI帮你：\n- 搜索文献、整理资料\n- 验证信息、交叉核对\n- 生成代码、脚本\n- 解释专业概念\n\n### 自建知识库\n- 把你的文档、笔记喂给AI\n- AI用语义理解搜索（不是关键词匹配）\n- 越用越聪明，记住你的偏好\n\n### 材料科学研究\n- 预测材料性能（强度、耐久性）\n- 优化配方设计\n- 文献挖掘和分析\n\n## 技术栈\n\n- **语言**: Python 3.9+\n- **AI模型**: DeepSeek API / MiMo API（国内可用）\n- **向量检索**: 自研NGram TF-IDF（不依赖HuggingFace，国内直接用）\n- **UI**: 液态玻璃风格控制面板\n\n## 阅读顺序\n\n1. 先看 [快速开始](快速开始.md) — 5分钟了解整体\n2. 再挑你感兴趣的仓库深入：\n   - 想搞Agent协作 → agent4science\n   - 做材料研究 → materials-ai-kit\n  "
+        }
+      ]
+    },
+    {
+      "query": "materials-kb材料知识库包含哪些内容",
+      "relevant_doc_id": "materials-kb/",
+      "tfidf_top3": [
+        "materials-kb/知识库_v2/README.md#chunk0",
+        "xuanshu-knowledge-base/index/README.md#chunk0",
+        "materials-ai-kit/requirements.txt"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk0",
+          "content": "# 铉枢·知识库 v2\n\n> 525篇论文 | 30个分类 | 支撑AGI探索的完整知识体系\n\n---\n## 知识库概览\n\n| 维度 | 数值 |\n|------|------|\n| **论文总数** | 525篇 |\n| **时间跨度** | 1972-2026（54年） |\n| **分类体系** | 30个分类（4大板块） |\n| **核心定位** | 支撑xuanshu-agents框架v4.3向通用AGI探索 |\n\n---\n## 四大板块\n### 板块一：基础与算法（Foundations）\n**定位**：ML/DL的数学与算法基础\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-F1 | ML基础算法 | ~25 |\n| KB-F2 | DL与优化 | ~25 |\n| KB-F3 | 贝叶斯方法 | ~15 |\n### 板块二：模型与工具（Models & Tools）\n**定位**：神经网络架构与应用工具\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-M1 | CNN与视觉 | ~30 |\n| KB-M2 | RNN与序列 | ~20 |\n| KB-M3 | 生成模型 | ~18 |\n| KB-M4 | 图神经网络 | ~21 |\n| KB-M5 | NLP与大语言模型 | ~20 |\n| KB-M6 | 强化学习 | ~15 |\n| KB-M7 | 工具与框架 | ~15 |\n### 板块三：材料科学应用（Materials Science）\n**定位**：AI在材料科学中的垂直应用\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-A1 | 材料数据库 | ~8 |\n| KB-A2 | 材料描述符 | ~10 |\n|"
+        },
+        {
+          "id": "xuanshu-knowledge-base/index/README.md#chunk0",
+          "content": "# 铉枢·知识库 v2\n\n> 525篇论文 | 30个分类 | 支撑AGI探索的完整知识体系\n\n---\n## 知识库概览\n\n| 维度 | 数值 |\n|------|------|\n| **论文总数** | 525篇 |\n| **时间跨度** | 1972-2026（54年） |\n| **分类体系** | 30个分类（4大板块） |\n| **核心定位** | 支撑xuanshu-agents框架v4.3向通用AGI探索 |\n\n---\n## 四大板块\n### 板块一：基础与算法（Foundations）\n**定位**：ML/DL的数学与算法基础\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-F1 | ML基础算法 | ~25 |\n| KB-F2 | DL与优化 | ~25 |\n| KB-F3 | 贝叶斯方法 | ~15 |\n### 板块二：模型与工具（Models & Tools）\n**定位**：神经网络架构与应用工具\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-M1 | CNN与视觉 | ~30 |\n| KB-M2 | RNN与序列 | ~20 |\n| KB-M3 | 生成模型 | ~18 |\n| KB-M4 | 图神经网络 | ~21 |\n| KB-M5 | NLP与大语言模型 | ~20 |\n| KB-M6 | 强化学习 | ~15 |\n| KB-M7 | 工具与框架 | ~15 |\n### 板块三：材料科学应用（Materials Science）\n**定位**：AI在材料科学中的垂直应用\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-A1 | 材料数据库 | ~8 |\n| KB-A2 | 材料描述符 | ~10 |\n|"
+        },
+        {
+          "id": "materials-ai-kit/requirements.txt",
+          "content": "# Materials-AI-Kit Dependencies\nnumpy>=1.21.0\npandas>=1.3.0\nscikit-learn>=1.0.0\ntorch>=1.9.0\nrequests>=2.26.0\n"
+        }
+      ],
+      "rrf_top3": [
+        "materials-kb/知识库_v2/README.md#chunk0",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+        "xuanshu-knowledge-base/index/README.md#chunk0"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "materials-kb/知识库_v2/README.md#chunk0",
+          "content": "# 铉枢·知识库 v2\n\n> 525篇论文 | 30个分类 | 支撑AGI探索的完整知识体系\n\n---\n## 知识库概览\n\n| 维度 | 数值 |\n|------|------|\n| **论文总数** | 525篇 |\n| **时间跨度** | 1972-2026（54年） |\n| **分类体系** | 30个分类（4大板块） |\n| **核心定位** | 支撑xuanshu-agents框架v4.3向通用AGI探索 |\n\n---\n## 四大板块\n### 板块一：基础与算法（Foundations）\n**定位**：ML/DL的数学与算法基础\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-F1 | ML基础算法 | ~25 |\n| KB-F2 | DL与优化 | ~25 |\n| KB-F3 | 贝叶斯方法 | ~15 |\n### 板块二：模型与工具（Models & Tools）\n**定位**：神经网络架构与应用工具\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-M1 | CNN与视觉 | ~30 |\n| KB-M2 | RNN与序列 | ~20 |\n| KB-M3 | 生成模型 | ~18 |\n| KB-M4 | 图神经网络 | ~21 |\n| KB-M5 | NLP与大语言模型 | ~20 |\n| KB-M6 | 强化学习 | ~15 |\n| KB-M7 | 工具与框架 | ~15 |\n### 板块三：材料科学应用（Materials Science）\n**定位**：AI在材料科学中的垂直应用\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-A1 | 材料数据库 | ~8 |\n| KB-A2 | 材料描述符 | ~10 |\n|"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        },
+        {
+          "id": "xuanshu-knowledge-base/index/README.md#chunk0",
+          "content": "# 铉枢·知识库 v2\n\n> 525篇论文 | 30个分类 | 支撑AGI探索的完整知识体系\n\n---\n## 知识库概览\n\n| 维度 | 数值 |\n|------|------|\n| **论文总数** | 525篇 |\n| **时间跨度** | 1972-2026（54年） |\n| **分类体系** | 30个分类（4大板块） |\n| **核心定位** | 支撑xuanshu-agents框架v4.3向通用AGI探索 |\n\n---\n## 四大板块\n### 板块一：基础与算法（Foundations）\n**定位**：ML/DL的数学与算法基础\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-F1 | ML基础算法 | ~25 |\n| KB-F2 | DL与优化 | ~25 |\n| KB-F3 | 贝叶斯方法 | ~15 |\n### 板块二：模型与工具（Models & Tools）\n**定位**：神经网络架构与应用工具\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-M1 | CNN与视觉 | ~30 |\n| KB-M2 | RNN与序列 | ~20 |\n| KB-M3 | 生成模型 | ~18 |\n| KB-M4 | 图神经网络 | ~21 |\n| KB-M5 | NLP与大语言模型 | ~20 |\n| KB-M6 | 强化学习 | ~15 |\n| KB-M7 | 工具与框架 | ~15 |\n### 板块三：材料科学应用（Materials Science）\n**定位**：AI在材料科学中的垂直应用\n| 编号 | 分类 | 论文数 |\n|------|------|--------|\n| KB-A1 | 材料数据库 | ~8 |\n| KB-A2 | 材料描述符 | ~10 |\n|"
+        }
+      ]
+    },
+    {
+      "query": "materials-ai-kit材料AI工具包的功能模块",
+      "relevant_doc_id": "materials-ai-kit/",
+      "tfidf_top3": [
+        "materials-ai-kit/requirements.txt",
+        "materials-ai-kit/models/__init__.py",
+        "agent4science/README.md#chunk1"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-ai-kit/requirements.txt",
+          "content": "# Materials-AI-Kit Dependencies\nnumpy>=1.21.0\npandas>=1.3.0\nscikit-learn>=1.0.0\ntorch>=1.9.0\nrequests>=2.26.0\n"
+        },
+        {
+          "id": "materials-ai-kit/models/__init__.py",
+          "content": "# -*- coding: utf-8 -*-\n\"\"\"\nMaterials-AI-Kit Models\n=======================\nAI-Powered Materials Science Prediction & Optimization\n\nModules:\n- PropertyPredictor: CNN-based material strength prediction\n- CompositionOptimizer: Inverse design for mix proportion optimization\n\"\"\"\n\nfrom models.property_predictor import PropertyPredictor\nfrom models.composition_optimizer import CompositionOptimizer\n\n__all__ = ['PropertyPredictor', 'CompositionOptimizer']\n__version__ = '4.1.0'\n"
+        },
+        {
+          "id": "agent4science/README.md#chunk1",
+          "content": "## 📁 项目结构\n\n```\nagent4science/\n├── evaluation/           ← 评估引擎\n│   ├── metrics.py        # 10 维度指标定义\n│   ├── quality_scorer.py # 评分器\n│   ├── task_scenarios.py # 100 步任务场景\n│   └── ...\n├── examples/             ← 示例脚本\n│   └── demo_lit_review.py\n├── reports/              ← 实验报告\n│   ├── cdol_real_experiment_report.md\n│   └── horizontal_comparison_summary.md\n├── config/               ← 配置文件\n└── requirements.txt\n```\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, 10-Agent, CDoL)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包 (v4.2)\n├── 🧰 agent4science             ← 学术工具集（本仓库）\n├── 🎨 xuanshu-ui-gallery        ← UI风格库 (6种CSS主题)\n└── 📖 qiu                       ← 项目指南\n```\n\n| 仓库 | 定位 | 最近更新 |\n|------|------|---------"
+        }
+      ],
+      "rrf_top3": [
+        "agent4science/README.md#chunk1",
+        "materials-ai-kit/requirements.txt",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "agent4science/README.md#chunk1",
+          "content": "## 📁 项目结构\n\n```\nagent4science/\n├── evaluation/           ← 评估引擎\n│   ├── metrics.py        # 10 维度指标定义\n│   ├── quality_scorer.py # 评分器\n│   ├── task_scenarios.py # 100 步任务场景\n│   └── ...\n├── examples/             ← 示例脚本\n│   └── demo_lit_review.py\n├── reports/              ← 实验报告\n│   ├── cdol_real_experiment_report.md\n│   └── horizontal_comparison_summary.md\n├── config/               ← 配置文件\n└── requirements.txt\n```\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, 10-Agent, CDoL)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包 (v4.2)\n├── 🧰 agent4science             ← 学术工具集（本仓库）\n├── 🎨 xuanshu-ui-gallery        ← UI风格库 (6种CSS主题)\n└── 📖 qiu                       ← 项目指南\n```\n\n| 仓库 | 定位 | 最近更新 |\n|------|------|---------"
+        },
+        {
+          "id": "materials-ai-kit/requirements.txt",
+          "content": "# Materials-AI-Kit Dependencies\nnumpy>=1.21.0\npandas>=1.3.0\nscikit-learn>=1.0.0\ntorch>=1.9.0\nrequests>=2.26.0\n"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        }
+      ]
+    },
+    {
+      "query": "xuanshu-knowledge-base知识库的组织结构",
+      "relevant_doc_id": "xuanshu-knowledge-base/",
+      "tfidf_top3": [
+        "materials-ai-kit/README.md#chunk1",
+        "agent4science/README.md#chunk1",
+        "xuanshu-knowledge-base/README.md"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-ai-kit/README.md#chunk1",
+          "content": "## 🔗 关联项目\n\n| 项目 | 说明 | 最近更新 |\n|------|------|---------|\n| [NexusFlow](https://github.com/tsingxuanhan/NexusFlow) | 群体智能引擎（CDoL 认知分工，10-Agent） | 2026-07-14 |\n| [agent4science](https://github.com/tsingxuanhan/agent4science) | 学术工具集 & 知识库入口 | 2026-07-15 |\n| [xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base) | 知识库 v2（524 篇论文 / 30 分类） | 2026-06-15 |\n| [xuanshu-ui-gallery](https://github.com/tsingxuanhan/xuanshu-ui-gallery) | UI 风格库（6 种 CSS 主题） | 2026-06-14 |\n| [qiu](https://github.com/tsingxuanhan/qiu) | 秋 · 项目指南文档 | 2026-06-13 |\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, CDoL+端边云)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包（本仓库）\n├── 🧰 agent4science             ← 学术工具集 & 评"
+        },
+        {
+          "id": "agent4science/README.md#chunk1",
+          "content": "## 📁 项目结构\n\n```\nagent4science/\n├── evaluation/           ← 评估引擎\n│   ├── metrics.py        # 10 维度指标定义\n│   ├── quality_scorer.py # 评分器\n│   ├── task_scenarios.py # 100 步任务场景\n│   └── ...\n├── examples/             ← 示例脚本\n│   └── demo_lit_review.py\n├── reports/              ← 实验报告\n│   ├── cdol_real_experiment_report.md\n│   └── horizontal_comparison_summary.md\n├── config/               ← 配置文件\n└── requirements.txt\n```\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, 10-Agent, CDoL)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包 (v4.2)\n├── 🧰 agent4science             ← 学术工具集（本仓库）\n├── 🎨 xuanshu-ui-gallery        ← UI风格库 (6种CSS主题)\n└── 📖 qiu                       ← 项目指南\n```\n\n| 仓库 | 定位 | 最近更新 |\n|------|------|---------"
+        },
+        {
+          "id": "xuanshu-knowledge-base/README.md",
+          "content": "# 铉枢知识库 v2\n\n> 524篇论文 · 30分类 · 4大板块 · AGI认知地图\n\n## 知识库架构\n\n```\nxuanshu-knowledge-base/\n├── index/          ← 知识库索引（入口）\n│   ├── README.md           # 知识库总览\n│   ├── 全量索引.md          # 524篇统一索引\n│   ├── 前沿补充索引.md      # #273-#382 前沿补充\n│   └── AGI深度索引.md       # #383-#524 AGI理论纵深\n├── papers/         ← 论文清单\n│   └── ML知识库论文清单.md  # 524篇完整列表\n├── supplements/    ← 调研报告\n│   ├── AGI深度文献补充_A-L.md       # 142篇AGI深度文献\n│   ├── 2024-2026前沿论文调研.md     # 110篇材料科学ML前沿\n│   ├── 认知架构开源项目调研_2024-2026.md  # 24个开源项目\n│   ├── xuanshu-agents_AGI进化路径调研报告.md  # 30+项目\n│   ├── AGI_Agent_Framework_2025-2026_report.md  # 框架全景\n│   └── AGI_Agent_Framework_2025-2026_evidence.md  # 证据文件\n├── evolution/      ← 版本进化设计\n│   ├── 设计方案.md              # v5.0 AGI进化方案\n│   └── v4.3_设计方案.md         # v4.3 Thought-Retriever\n```\n\n## 板块分布\n\n| 板块"
+        }
+      ],
+      "rrf_top3": [
+        "materials-ai-kit/README.md#chunk1",
+        "agent4science/README.md#chunk1",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "materials-ai-kit/README.md#chunk1",
+          "content": "## 🔗 关联项目\n\n| 项目 | 说明 | 最近更新 |\n|------|------|---------|\n| [NexusFlow](https://github.com/tsingxuanhan/NexusFlow) | 群体智能引擎（CDoL 认知分工，10-Agent） | 2026-07-14 |\n| [agent4science](https://github.com/tsingxuanhan/agent4science) | 学术工具集 & 知识库入口 | 2026-07-15 |\n| [xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base) | 知识库 v2（524 篇论文 / 30 分类） | 2026-06-15 |\n| [xuanshu-ui-gallery](https://github.com/tsingxuanhan/xuanshu-ui-gallery) | UI 风格库（6 种 CSS 主题） | 2026-06-14 |\n| [qiu](https://github.com/tsingxuanhan/qiu) | 秋 · 项目指南文档 | 2026-06-13 |\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, CDoL+端边云)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包（本仓库）\n├── 🧰 agent4science             ← 学术工具集 & 评"
+        },
+        {
+          "id": "agent4science/README.md#chunk1",
+          "content": "## 📁 项目结构\n\n```\nagent4science/\n├── evaluation/           ← 评估引擎\n│   ├── metrics.py        # 10 维度指标定义\n│   ├── quality_scorer.py # 评分器\n│   ├── task_scenarios.py # 100 步任务场景\n│   └── ...\n├── examples/             ← 示例脚本\n│   └── demo_lit_review.py\n├── reports/              ← 实验报告\n│   ├── cdol_real_experiment_report.md\n│   └── horizontal_comparison_summary.md\n├── config/               ← 配置文件\n└── requirements.txt\n```\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, 10-Agent, CDoL)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包 (v4.2)\n├── 🧰 agent4science             ← 学术工具集（本仓库）\n├── 🎨 xuanshu-ui-gallery        ← UI风格库 (6种CSS主题)\n└── 📖 qiu                       ← 项目指南\n```\n\n| 仓库 | 定位 | 最近更新 |\n|------|------|---------"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        }
+      ]
+    },
+    {
+      "query": "xuanshu-ui-gallery界面设计画廊的组件",
+      "relevant_doc_id": "xuanshu-ui-gallery/",
+      "tfidf_top3": [
+        "materials-ai-kit/README.md#chunk1",
+        "xuanshu-ui-gallery/README.md",
+        "agent4science/README.md#chunk1"
+      ],
+      "tfidf_top3_docs": [
+        {
+          "id": "materials-ai-kit/README.md#chunk1",
+          "content": "## 🔗 关联项目\n\n| 项目 | 说明 | 最近更新 |\n|------|------|---------|\n| [NexusFlow](https://github.com/tsingxuanhan/NexusFlow) | 群体智能引擎（CDoL 认知分工，10-Agent） | 2026-07-14 |\n| [agent4science](https://github.com/tsingxuanhan/agent4science) | 学术工具集 & 知识库入口 | 2026-07-15 |\n| [xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base) | 知识库 v2（524 篇论文 / 30 分类） | 2026-06-15 |\n| [xuanshu-ui-gallery](https://github.com/tsingxuanhan/xuanshu-ui-gallery) | UI 风格库（6 种 CSS 主题） | 2026-06-14 |\n| [qiu](https://github.com/tsingxuanhan/qiu) | 秋 · 项目指南文档 | 2026-06-13 |\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, CDoL+端边云)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包（本仓库）\n├── 🧰 agent4science             ← 学术工具集 & 评"
+        },
+        {
+          "id": "xuanshu-ui-gallery/README.md",
+          "content": "# 铉枢 · 风格库\n\n**XuanShu UI Gallery** — 6 种 Control Panel 主题风格，每种含独立 CSS + 可交互 Demo。\n\n---\n\n## 📖 风格总览\n\n| 风格 | 预览 | CSS | 核心特征 |\n|------|------|-----|----------|\n| 🖌️ 水墨国风 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/ink-wash/demo-inline.html) | 20.7KB | 宣纸纹理 · 朱砂点缀 · 墨晕背景 · 光扫动效 · 印章水印 |\n| 🔮 玻璃拟态 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/glassmorphism/demo-inline.html) | 19.8KB | backdrop-filter 毛玻璃 · 悬浮层次 · 渐变底色 |\n| 🫧 新拟态 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/neumorphism/demo-inline.html) | 21KB | 同色系双阴影 · 凹凸触感 · 内外交织 |\n| 🟨 粗野主义 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/neo-brutalism/demo-inline.html) | 16.9KB | 高饱和色块 · 硬阴影偏移 · 粗黑描边 |\n| ⬜ 瑞士极简 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gal"
+        },
+        {
+          "id": "agent4science/README.md#chunk1",
+          "content": "## 📁 项目结构\n\n```\nagent4science/\n├── evaluation/           ← 评估引擎\n│   ├── metrics.py        # 10 维度指标定义\n│   ├── quality_scorer.py # 评分器\n│   ├── task_scenarios.py # 100 步任务场景\n│   └── ...\n├── examples/             ← 示例脚本\n│   └── demo_lit_review.py\n├── reports/              ← 实验报告\n│   ├── cdol_real_experiment_report.md\n│   └── horizontal_comparison_summary.md\n├── config/               ← 配置文件\n└── requirements.txt\n```\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, 10-Agent, CDoL)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包 (v4.2)\n├── 🧰 agent4science             ← 学术工具集（本仓库）\n├── 🎨 xuanshu-ui-gallery        ← UI风格库 (6种CSS主题)\n└── 📖 qiu                       ← 项目指南\n```\n\n| 仓库 | 定位 | 最近更新 |\n|------|------|---------"
+        }
+      ],
+      "rrf_top3": [
+        "materials-ai-kit/README.md#chunk1",
+        "xuanshu-ui-gallery/README.md",
+        "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4"
+      ],
+      "rrf_top3_docs": [
+        {
+          "id": "materials-ai-kit/README.md#chunk1",
+          "content": "## 🔗 关联项目\n\n| 项目 | 说明 | 最近更新 |\n|------|------|---------|\n| [NexusFlow](https://github.com/tsingxuanhan/NexusFlow) | 群体智能引擎（CDoL 认知分工，10-Agent） | 2026-07-14 |\n| [agent4science](https://github.com/tsingxuanhan/agent4science) | 学术工具集 & 知识库入口 | 2026-07-15 |\n| [xuanshu-knowledge-base](https://github.com/tsingxuanhan/xuanshu-knowledge-base) | 知识库 v2（524 篇论文 / 30 分类） | 2026-06-15 |\n| [xuanshu-ui-gallery](https://github.com/tsingxuanhan/xuanshu-ui-gallery) | UI 风格库（6 种 CSS 主题） | 2026-06-14 |\n| [qiu](https://github.com/tsingxuanhan/qiu) | 秋 · 项目指南文档 | 2026-06-13 |\n\n---\n## 🌐 生态导航\n\n```\n🏛️ XuanHub 开源生态\n├── 🔬 NexusFlow                 ← 核心 AGI 框架 (v2.8, CDoL+端边云)\n├── 📚 xuanshu-knowledge-base    ← 知识库 (524篇 / 30分类)\n├── 🧪 materials-ai-kit          ← 材料AI工具包（本仓库）\n├── 🧰 agent4science             ← 学术工具集 & 评"
+        },
+        {
+          "id": "xuanshu-ui-gallery/README.md",
+          "content": "# 铉枢 · 风格库\n\n**XuanShu UI Gallery** — 6 种 Control Panel 主题风格，每种含独立 CSS + 可交互 Demo。\n\n---\n\n## 📖 风格总览\n\n| 风格 | 预览 | CSS | 核心特征 |\n|------|------|-----|----------|\n| 🖌️ 水墨国风 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/ink-wash/demo-inline.html) | 20.7KB | 宣纸纹理 · 朱砂点缀 · 墨晕背景 · 光扫动效 · 印章水印 |\n| 🔮 玻璃拟态 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/glassmorphism/demo-inline.html) | 19.8KB | backdrop-filter 毛玻璃 · 悬浮层次 · 渐变底色 |\n| 🫧 新拟态 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/neumorphism/demo-inline.html) | 21KB | 同色系双阴影 · 凹凸触感 · 内外交织 |\n| 🟨 粗野主义 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gallery/styles/neo-brutalism/demo-inline.html) | 16.9KB | 高饱和色块 · 硬阴影偏移 · 粗黑描边 |\n| ⬜ 瑞士极简 | [Demo](https://tsingxuanhan.github.io/xuanshu-ui-gal"
+        },
+        {
+          "id": "NexusFlow/examples/nemotron_benchmark/e_all_v3_local.py#chunk4",
+          "content": "# ===================== QA 数据集 =====================\n\ndef build_e1_qa_dataset() -> List[Dict]:\n    return [\n        # NexusFlow 核心架构\n        {\"query\": \"NexusOrchestrator如何协调多个Agent协同工作\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/nexus_orchestrator.py\"},\n        {\"query\": \"CognitiveDivisionEngine认知分工引擎的设计原理\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/cognitive_division_engine.py\"},\n        {\"query\": \"DynamicRouter动态路由如何选择合适的Agent\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/dynamic_router.py\"},\n        {\"query\": \"AdaptiveContextManager如何管理token上下文\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/adaptive_context_manager.py\"},\n        {\"query\": \"EdgeCloudScheduler边缘云调度器如何决策\", \"relevant_doc_id\": \"NexusFlow/nexusflow/core/edge_cloud_scheduler.py\"},\n        {\"query\": \"GoalVerifier如何验证任务目标"
+        }
+      ]
+    }
+  ]
+}

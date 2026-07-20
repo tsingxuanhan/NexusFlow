@@ -101,11 +101,11 @@
 
 四阶段递进 Benchmark，覆盖单步优化到 50 步端到端全流程：
 
-### Stage-1：NOAA 精度翻倍 & WHO 排名纠错
+### Stage-1：NOAA 质量闭环 & WHO 排名纠错
 
 | 指标 | 单 Agent | NexusFlow (CDoL) | 提升 |
 |------|:--------:|:----------------:|:----:|
-| NOAA 综合 MAPE | 18.87% | **9.37%** | **-50%** |
+| NOAA 综合 MAPE（三物理量同口径） | 9.31% | **9.37%** | **持平，5城中3城多Agent更优** |
 | WHO 健康指数排名 | 错误（俄罗斯 #1） | **正确（中国 #1）** | 排名纠错 |
 | 质量指标 | 归一化失真导致错误结论 | Planner 设计合理权重后结论正确 | 系统性偏差消除 |
 
@@ -245,7 +245,7 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 
 | 阶段 | 实验 | 核心发现 | 目录 |
 |------|------|----------|------|
-| Stage 1 | 单Agent vs 6角色CDoL | NOAA MAPE 18.87%→9.37%，WHO 排名纠错 | [`examples/stage1_single_vs_6roles/`](examples/stage1_single_vs_6roles/) |
+| Stage 1 | 单Agent vs 6角色CDoL | NOAA 质量闭环（北京TMAX +17.78→+3.64 校正），WHO 排名纠错 | [`examples/stage1_single_vs_6roles/`](examples/stage1_single_vs_6roles/) |
 | Stage 2 | 6角色 vs 10角色CDoL | 评分 85→90，API调用 -53%，Reviewer 0 次被驳回 | [`examples/stage2_6roles_vs_10roles/`](examples/stage2_6roles_vs_10roles/) |
 | Stage 3 | 完整系统真实管线 | 质量门禁触发率 100%，ContextMask 真实裁剪 | [`examples/stage3_full_system/`](examples/stage3_full_system/) |
 | Stage 4 | 50步端到端全流程 | 14模块100%覆盖，9次拓扑切换，共识度 0.1→0.95 | [`examples/stage4_fifty_steps/`](examples/stage4_fifty_steps/) |

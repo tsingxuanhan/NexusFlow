@@ -246,6 +246,38 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 
 **诚实评估**：在单一预测任务上，SA 用 1/9 的 Token 达到相当精度。NexusFlow 的价值体现在：(1) 端云协同架构可行性验证通过；(2) 结构化分析质量更高（表格化排名、传导路径、领先-滞后关系）；(3) 交叉验证确保逻辑自洽。**多 Agent 优势在复杂分析，非简单预测。**
 
+### Stage-6b：L3 高复杂度认知任务 Benchmark——9 类认知能力对比
+
+> ⚡ **实验设计**：基于 Stage-5 的 80 步任务框架，设计 9 类高复杂度认知任务（模式挖掘、因果推断、异常检测、多期预测等），使用相同 LLM（DeepSeek）在 SA 与 NF 10Agent 模式下对比，8 维专家评分。
+
+| 任务 | 类型 | SA | NF | Δ | 胜者 |
+|:----:|------|:--:|:--:|:--:|:----:|
+| T1 | 模式挖掘 | **7.15** | 6.15 | -1.00 | SA |
+| T2 | 跨国相关性 | 5.45 | **5.55** | +0.10 | NF |
+| T3 | 因果链分析 | 4.45 | **5.00** | +0.55 | NF |
+| T4 | 多期预测 | 3.15 | **3.40** | +0.25 | NF |
+| T5 | 异常检测 | **6.15** | 5.20 | -0.95 | SA |
+| T6 | 反事实推理 | **5.30** | 4.70 | -0.60 | SA |
+| T7 | 交叉辩论 | **5.35** | 4.80 | -0.55 | SA |
+| T8 | 风险评估 | 6.40 | **7.25** | +0.85 | NF |
+| T9 | 政策建议 | 4.95 | **6.15** | +1.20 | NF |
+| **均值** | — | **5.37** | **5.36** | -0.02 | ≈ |
+
+**NF 胜 5 局**（T2/T3/T4/T8/T9），**SA 胜 4 局**（T1/T5/T6/T7）。总分几乎持平（差 -0.02）。
+
+**维度级关键发现**：
+
+| 维度 | SA均分 | NF均分 | 差值 | 优势方 |
+|:----:|:------:|:------:|:----:|:------:|
+| D5 辩论质量 | 5.90 | **7.00** | **+1.10** | **NF** |
+| D4 一致性 | 6.20 | **6.50** | +0.30 | NF |
+| D6 政策建议 | **4.10** | 2.70 | -1.40 | SA |
+| D7 场景推演 | **4.20** | 3.50 | -0.70 | SA |
+
+> 核心结论：NF 以 ~8.4× 资源消耗换取了基本持平的总体表现。NF 核心价值在于**辩论质量**（D5 +1.10，验证 CDoL 多视角交叉辩论机制）和**一致性**（D4 +0.30）。SA 优势在直觉型/模式匹配型任务（T1/T5），NF 优势在高风险决策场景（T8 风险评估 +0.85、T9 政策建议 +1.20）。
+
+> 实验代码：[`examples/stage6_L3_cognitive_tasks/run_L3_benchmark.py`](examples/stage6_L3_cognitive_tasks/run_L3_benchmark.py) | 完整报告：[`examples/stage6_L3_cognitive_tasks/stage6_L3_report.md`](examples/stage6_L3_cognitive_tasks/stage6_L3_report.md)
+
 ---
 
 ### 横向对比：NexusFlow vs AutoGen
@@ -307,6 +339,7 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 | Stage 4 | 50步端到端全流程 | 14模块100%覆盖，9次拓扑切换，共识度 0.1→0.95 | [`examples/stage4_fifty_steps/`](examples/stage4_fifty_steps/) |
 | Stage 5 | 80步SA vs NF真实Benchmark | 质量+2.6%，耗时-14.9%，Token-6.2%，≥9分步数3.25倍 | [`examples/stage5_eighty_steps/`](examples/stage5_eighty_steps/) |
 | Stage 6 | WorkBuddy SA vs 10Agent | 加权总分+23.4%（8.28 vs 6.71），GDP命中率+20pp，端云协同实机零错误 | [`examples/workbuddy_comparison/`](examples/workbuddy_comparison/) |
+| Stage 6b | L3 9类认知任务 Benchmark | SA 5.37 vs NF 5.36 持平，NF 辩论质量+1.10，高风险决策 T8/T9 显著领先 | [`examples/stage6_L3_cognitive_tasks/`](examples/stage6_L3_cognitive_tasks/) |
 | 横向对比 | NexusFlow vs AutoGen | 交叉验证能力领先 100% | [`examples/horizontal_comparison/`](examples/horizontal_comparison/) |
 | Phase 2 | CDoL 轮次 Ablation（2/3/4轮） | 2-3轮最优平台期（0.715/0.699），4轮未超越平台期，验证 Nyquist 采样下界 | [`examples/demo_phase2_ablation_v3.py`](examples/demo_phase2_ablation_v3.py) |
 

@@ -19,7 +19,6 @@ Phase 3 - 评估与决策:
   T7 交叉辩论 (All Agents)                  8轮  → 简化为3轮精选
   T8 风险评估 (assayer+artisan)             5轮
   T9 政策建议 (planner+coordinator)         6轮
-  T10 元分析 (coordinator)                 12轮 → 简化为4轮精选
 
 评价维度 (8):
   D1 预测准确性(25%) D2 因果有效性(15%) D3 异常检出率(15%)
@@ -396,15 +395,6 @@ TASKS = {
         "rounds": 6,
         "description": "综合所有15个指标在20个国家41年的数据趋势，识别3个最重要的全球经济结构性变化，为每个变化提出具体的政策建议（需可操作、有针对性、考虑约束条件）。",
         "data_func": lambda: {"all_data_summary": get_data_summary_text()},
-    },
-    "T10": {
-        "name": "元分析",
-        "phase": "评估与决策",
-        "l3_agents": ["Coordinator"],
-        "nexus_agents": ["coordinator"],
-        "rounds": 4,  # 简化：原设计12轮→精选4轮
-        "description": "对比单Agent模式与NexusFlow多Agent模式在T1-T9上的表现差异。分析多Agent协作的优势和劣势场景，计算综合效能提升比。",
-        "data_func": lambda: {"note": "此任务在其他任务完成后执行，需要所有任务结果"},
     },
 }
 
@@ -799,7 +789,7 @@ def run_experiment():
         except:
             pass
 
-    task_order = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10"]
+    task_order = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9"]
 
     for task_id in task_order:
         task = TASKS[task_id]
@@ -854,36 +844,10 @@ def run_experiment():
         else:
             print(f"\n[跳过] 评估 {task_id} 已完成")
 
-    # T10 元分析 — 使用所有任务结果
-    print(f"\n{'#'*60}")
-    print(f"# T10: 元分析 — 综合对比")
-    print(f"{'#'*60}")
-
-    # T10需要汇总所有结果
-    all_summary = _build_meta_analysis_summary(results)
-    meta_result = _run_meta_analysis(all_summary)
-    results["meta_analysis"] = meta_result
     _save_results(results)
 
     return results
 
-
-def _build_meta_analysis_summary(results: Dict) -> str:
-    """构建元分析汇总"""
-    lines = ["# NexusFlow vs 单Agent 对比汇总\n"]
-    for tid in ["T1","T2","T3","T4","T5","T6","T7","T8","T9"]:
-        if tid in results.get("evaluation", {}):
-            ev = results["evaluation"][tid]
-            task = TASKS[tid]
-            lines.append(f"## {tid} {task['name']}")
-            lines.append(f"- 单Agent加权分: {ev['single_weighted']}")
-            lines.append(f"- NexusFlow加权分: {ev['nexusflow_weighted']}")
-            lines.append(f"- 提升: {ev['nexusflow_weighted'] - ev['single_weighted']:+.2f}")
-            if isinstance(ev.get('single_scores'), dict):
-                lines.append(f"- 单Agent评分: {json.dumps(ev['single_scores'], ensure_ascii=False)[:200]}")
-            if isinstance(ev.get('nexusflow_scores'), dict):
-                lines.append(f"- NexusFlow评分: {json.dumps(ev['nexusflow_scores'], ensure_ascii=False)[:200]}")
-            lines.append("")
 
     # API调用统计
     single_calls = sum(results.get("single", {}).get(t, {}).get("api_calls", 0)
@@ -896,24 +860,6 @@ def _build_meta_analysis_summary(results: Dict) -> str:
     lines.append(f"- 倍数: {nexus_calls/max(1,single_calls):.1f}x")
 
     return "\n".join(lines)
-
-
-def _run_meta_analysis(summary: str) -> Dict:
-    """运行T10元分析"""
-    prompt = f"""{summary}
-
-请作为NexusFlow协调者完成元分析：
-1. 对比单Agent和NexusFlow在每个任务上的表现
-2. 分析NexusFlow多Agent协作的优势场景和劣势场景
-3. 计算综合效能提升比
-4. 给出关于多Agent系统设计改进的建议
-5. 总结NexusFlow的认知分工理论是否得到验证
-
-输出格式：完整Markdown报告（3000字以上）"""
-
-    result = llm_call(prompt, system=AGENT_PROMPTS['coordinator'],
-                      max_tokens=4096, temperature=0.3, tag="meta-analysis")
-    return {"result": result, "summary": summary}
 
 
 def _save_results(results: Dict):
@@ -1009,13 +955,6 @@ def generate_report(results: Dict) -> str:
         report.append(f"```\n{s_result[:1000]}\n```\n")
         report.append(f"#### NexusFlow结果摘要")
         report.append(f"```\n{n_result[:1000]}\n```\n")
-
-    # 元分析
-    report.append("## 3. 元分析 (T10)\n")
-    meta = results.get("meta_analysis", {})
-    if meta.get("result"):
-        report.append(meta["result"][:5000])
-    report.append("")
 
     # 资源消耗
     report.append("## 4. 资源消耗\n")

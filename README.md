@@ -6,9 +6,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![Version](https://img.shields.io/badge/Version-2.9-green.svg)]()
-[![Code Size](https://img.shields.io/badge/Code-144%20Python%20files%20%7C%2051%20modules-orange.svg)]()
-[![Benchmarks](https://img.shields.io/badge/Benchmarks-5%20Stages%20%7C%2080%20Steps%20E2E-red.svg)]()
+[![Version](https://img.shields.io/badge/Version-3.0-green.svg)]()
+[![Code Size](https://img.shields.io/badge/Code-167%20Python%20files%20%7C%20524%20total-orange.svg)]()
+[![Benchmarks](https://img.shields.io/badge/Benchmarks-6%20Stages%20%7C%20WorkBuddy%20E2E-red.svg)]()
 
 *Where cognitive diversity meets dynamic topology.*
 
@@ -26,7 +26,7 @@
 |--------|------|----------|
 | 🔬 因果验证 | [Joel Niklaus (Hugging Face)](https://x.com/joelniklaus) — 冻结 DeepSeek-V4-Pro 权重，仅优化外层 Harness | 法律 Agent 基准 **3.5% → 80.1%**，追平 Claude Sonnet 4.6，成本仅 1/7 |
 | 📊 生产实证 | [Braintrust](https://www.braintrust.dev/) — 1,781 条真实 Agent 轨迹 | 框架对成功率的影响力是模型的 **7.6 倍**（5.3% vs 0.7%） |
-| ✅ 自身验证 | NexusFlow 五阶段递进 Benchmark（含 80 步真实对比） | 质量门禁触发率 100%，80 步 SA vs NF 全量验证，NF 质量 +2.6%、耗时 -14.9%、Token -6.2% |
+| ✅ 自身验证 | NexusFlow 六阶段递进 Benchmark（含 80 步真实对比 + WorkBuddy 宏观实验） | 质量门禁触发率 100%，80 步 SA vs NF 全量验证，WorkBuddy 加权总分 +23.4%，端云协同实机零错误 |
 
 > *"Benchmark 测到的永远不是裸模型，而是'模型+Harness'的组合能力。最大的性能改进往往来自简单的自动化步骤，而非消耗大量 Token 去修改提示词。"*
 > — Joel Niklaus, Hugging Face
@@ -99,7 +99,7 @@
 
 ## 实验验证
 
-四阶段递进 Benchmark，覆盖单步优化到 50 步端到端全流程：
+六阶段递进 Benchmark，覆盖单步优化到真实宏观经济数据全量对比：
 
 ### Stage-1：NOAA 质量闭环 & WHO 排名纠错
 
@@ -190,6 +190,62 @@
 
 NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000 Token 产出质量高 **9.4%**——证明 CDoL 的认知分工不是"堆 Token 换质量"，而是通过结构化协作提升单位 Token 的信息密度。
 
+### Stage-6：WorkBuddy 宏观经济对比实验——单Agent vs NexusFlow 10Agent
+
+> ⚡ **数据来源**：DBnomics IMF WEO 2025.4 真实宏观经济数据（20国 × 15指标 × 41年，12,300 数据点）。实验由 WorkBuddy 独立执行，含模拟推演（D1-D6）与真实LLM实机（D7）两组。
+
+#### D1-D6：六维评分与预测回测
+
+| 维度 | 权重 | 单Agent | NexusFlow | 差异 |
+|:----:|:----:|:---:|:---:|:---:|
+| D1 信息完整性 | 15% | 8.0 | **9.5** | +1.5 |
+| D2 分析深度 | 20% | 6.5 | **8.5** | +2.0 |
+| D3 洞察质量 | 20% | 7.0 | **8.5** | +1.5 |
+| D4 预测精度 | 20% | 5.5 | **7.5** | +2.0 |
+| D5 协作效率 | 15% | — | **8.0** | — |
+| D6 可复现性 | 10% | 7.0 | **7.5** | +0.5 |
+| **加权总分** | | **6.71** | **8.28** | **+23.4%** |
+
+**L2 预测回测**（2021-2025 对照真值）：
+
+| 指标 | 单Agent命中率 | NexusFlow命中率 | 改进 |
+|:----:|:---:|:---:|:---:|
+| GDP增速 | 63.0% | **83.0%** | **+20.0pp** |
+| 通胀率 | 31.0% | **56.0%** | **+25.0pp** |
+| 净债务/GDP | 85.3% | **89.3%** | +4.0pp |
+| 人均GDP | **36.0%** | 27.0% | -9.0pp |
+| 失业率 | **64.3%** | 56.0% | -8.3pp |
+| **总体** | 54.0% | **61.0%** | **+7.0pp** |
+
+> 核心发现：NexusFlow 通过"发现-验证-应用"闭环（Miner 发现 V 型反弹模式 → Assayer 验证 → Artisan 提供经济学解释 → Executor 应用于预测），成功预判 2021 年 COVID 后经济反弹，GDP 命中率提升 20pp。共识度 3 轮内从 0.45 收敛至 0.85，Reviewer 纠错率 100%（7 个问题全部修正）。人均GDP/失业率命中率下降属"精度-覆盖率权衡"（Reviewer 收窄区间提升 MAPE 但降低覆盖率）。
+
+#### D7：真实 LLM 端云协同实机验证
+
+> 10 Agent 真实调用 DeepSeek API + Ollama 本地模型，零模拟。
+
+| 指标 | NexusFlow | SingleAgent |
+|:-----|:---------:|:-----------:|
+| 调用次数 | 11（7 云 + 4 端） | 1 |
+| 总 Token | 176,592 | 19,881 |
+| 耗时 | 339s | 23s |
+| 错误数 | **0** | 0 |
+
+**端云调度实机验证**（P0 达成）：
+
+| Agent | 端/云 | 模型 | 耗时 | 状态 |
+|:------|:-----:|------|-----:|:----:|
+| Coordinator | ☁️ | DeepSeek-chat | 36.2s | ✅ |
+| Miner | ☁️ | DeepSeek-chat | 26.1s | ✅ |
+| Assayer | ☁️ | DeepSeek-chat | 41.9s | ✅ |
+| Artisan | ☁️ | DeepSeek-chat | 24.2s | ✅ |
+| Reviewer | ☁️ | DeepSeek-chat | 48.4s | ✅ |
+| Researcher | 📱 | Qwen3.5-9B | 28.7s | ✅ |
+| Executor | 📱 | Qwen3.5-9B | 24.8s | ✅ |
+| Caster | 📱 | Qwen3.5-9B | 25.5s | ✅ |
+| Archivist | 📱 | Qwen3.5-9B | 22.4s | ✅ |
+
+**诚实评估**：在单一预测任务上，SA 用 1/9 的 Token 达到相当精度。NexusFlow 的价值体现在：(1) 端云协同架构可行性验证通过；(2) 结构化分析质量更高（表格化排名、传导路径、领先-滞后关系）；(3) 交叉验证确保逻辑自洽。**多 Agent 优势在复杂分析，非简单预测。**
+
 ---
 
 ### 横向对比：NexusFlow vs AutoGen
@@ -250,6 +306,7 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 | Stage 3 | 完整系统真实管线 | 质量门禁触发率 100%，ContextMask 真实裁剪 | [`examples/stage3_full_system/`](examples/stage3_full_system/) |
 | Stage 4 | 50步端到端全流程 | 14模块100%覆盖，9次拓扑切换，共识度 0.1→0.95 | [`examples/stage4_fifty_steps/`](examples/stage4_fifty_steps/) |
 | Stage 5 | 80步SA vs NF真实Benchmark | 质量+2.6%，耗时-14.9%，Token-6.2%，≥9分步数3.25倍 | [`examples/stage5_eighty_steps/`](examples/stage5_eighty_steps/) |
+| Stage 6 | WorkBuddy SA vs 10Agent | 加权总分+23.4%（8.28 vs 6.71），GDP命中率+20pp，端云协同实机零错误 | [`examples/workbuddy_comparison/`](examples/workbuddy_comparison/) |
 | 横向对比 | NexusFlow vs AutoGen | 交叉验证能力领先 100% | [`examples/horizontal_comparison/`](examples/horizontal_comparison/) |
 | Phase 2 | CDoL 轮次 Ablation（2/3/4轮） | 2-3轮最优平台期（0.715/0.699），4轮未超越平台期，验证 Nyquist 采样下界 | [`examples/demo_phase2_ablation_v3.py`](examples/demo_phase2_ablation_v3.py) |
 
@@ -286,15 +343,16 @@ NF 在质量更高的同时，Token 消耗反而更低（**-6.2%**），每 1000
 
 | 指标 | 数值 |
 |------|------|
-| 总文件数 | **454**（git tracked） |
-| Python 文件 | **145** |
-| 仓库大小 | **~14 MB** |
-| 核心模块 | **51** |
+| 总文件数 | **524**（git tracked） |
+| Python 文件 | **167** |
+| 仓库大小 | **~47 MB** |
+| 核心模块 | **68**（含 10 个 Agent、17 个工具） |
 | Agent 角色 | 10 |
 | 内置工具 | 17 |
 | 记忆层级 | 4 层 |
 | CDoL 分解策略 | 6 种 |
 | 路由拓扑模式 | 5 种 |
+| Benchmark 阶段 | 6（含 WorkBuddy 宏观实验） |
 
 ---
 
@@ -373,7 +431,8 @@ ollama pull qwen3.5:9b
 
 | 来源 | 说明 |
 |------|------|
-| [技术文档 v2.9](docs/NexusFlow技术文档v2.9.md) | NexusFlow 完整技术文档 |
+| [技术文档 v3.0](docs/NexusFlow技术文档v3.0.md) | NexusFlow 完整技术文档（含 Stage 6 WorkBuddy 实验） |
+| [技术文档 v2.9](docs/NexusFlow技术文档v2.9.md) | v2.9 版本存档 |
 | [Braintrust AI Evaluation Platform](https://www.braintrust.dev/) | 1,781 条真实轨迹——框架影响力 7.6 倍于模型 |
 | [Joel Niklaus — Don't Train the Model, Evolve the Harness](https://x.com/joelniklaus) | 冻结权重仅优化 Harness，3.5% → 80.1% |
 | [清华 & OpenBMB — 大窗口懒惰症研究](https://arxiv.org/abs/2606.15378) | Large-Window Laziness 现象的 Transformer 层证据 |

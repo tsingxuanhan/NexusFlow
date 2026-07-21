@@ -16,7 +16,7 @@ from datetime import datetime
 # ============================================================
 # 配置
 # ============================================================
-DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'sk-your-key-here')
+DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 DEEPSEEK_URL = 'https://api.deepseek.com/v1/chat/completions'
 DEEPSEEK_MODEL = 'deepseek-chat'
 
@@ -368,7 +368,7 @@ def run_single_agent():
     print('=' * 70)
 
     system = '你是一位资深宏观经济分析师。请基于提供的数据完成分析任务。'
-    user = L1_TASK_PROMPT + PREDICTION_FORMAT
+    user = f'宏观经济数据（全量）：\n{DATA_CLOUD}\n\n' + L1_TASK_PROMPT + PREDICTION_FORMAT
 
     print('\n  [SingleAgent] (cloud/deepseek-chat) ...', end='', flush=True)
     result = call_deepseek(system, user, max_tokens=4096, temperature=0.7)

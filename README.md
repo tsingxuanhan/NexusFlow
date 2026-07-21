@@ -373,7 +373,7 @@ ollama pull qwen3.5:9b
 
 | 来源 | 说明 |
 |------|------|
-| [技术文档 v2.8](docs/NexusFlow技术文档v2.9.md) | NexusFlow 完整技术文档 |
+| [技术文档 v2.9](docs/NexusFlow技术文档v2.9.md) | NexusFlow 完整技术文档 |
 | [Braintrust AI Evaluation Platform](https://www.braintrust.dev/) | 1,781 条真实轨迹——框架影响力 7.6 倍于模型 |
 | [Joel Niklaus — Don't Train the Model, Evolve the Harness](https://x.com/joelniklaus) | 冻结权重仅优化 Harness，3.5% → 80.1% |
 | [清华 & OpenBMB — 大窗口懒惰症研究](https://arxiv.org/abs/2606.15378) | Large-Window Laziness 现象的 Transformer 层证据 |

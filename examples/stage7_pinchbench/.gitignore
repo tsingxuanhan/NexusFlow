@@ -1,0 +1,5 @@
+workspace/
+results/
+debug_*
+*.pyc
+__pycache__/

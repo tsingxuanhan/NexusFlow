@@ -18,7 +18,7 @@
     "llm_judge": 0.0
   },
   "error": null,
-  "duration_seconds": 0.09,
+  "duration_seconds": 0.1,
   "agent_used": "caster+executor+reviewer",
-  "timestamp": "2026-07-22T16:18:35"
+  "timestamp": "2026-07-22T15:32:41"
 }

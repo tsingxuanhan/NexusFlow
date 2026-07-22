@@ -1,0 +1,29 @@
+{
+  "task_id": "task_cve_security_triage",
+  "status": "completed",
+  "automated_scores": {
+    "triage_report_created": 1.0,
+    "remediation_plan_created": 1.0,
+    "all_cves_covered": 0.0,
+    "priorities_assigned": 1.0,
+    "express_rce_is_p0": 0.0,
+    "jwt_bypass_is_p0": 0.0,
+    "build_only_lower_priority": 0.0,
+    "pci_scope_mentioned": 1.0,
+    "deploy_windows_in_plan": 0.0,
+    "major_version_flagged": 0.0,
+    "executive_summary_exists": 0.0
+  },
+  "automated_avg": 0.3636,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.1455,
+  "grading_weights": {
+    "automated": 0.4,
+    "llm_judge": 0.6
+  },
+  "error": null,
+  "duration_seconds": 0.1,
+  "agent_used": "researcher+reviewer",
+  "timestamp": "2026-07-22T15:28:58"
+}

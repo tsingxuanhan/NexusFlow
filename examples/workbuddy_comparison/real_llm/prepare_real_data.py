@@ -7,7 +7,7 @@ import os, sys, json, time, requests
 # ============================================================
 # 1. 验证新 DeepSeek API key
 # ============================================================
-NEW_KEY = 'sk-41c92afd7cb5461b842a9874f7ed1f2c'
+NEW_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 print('=' * 60)
 print('1. 验证 DeepSeek API（新 key）')
 print('=' * 60)

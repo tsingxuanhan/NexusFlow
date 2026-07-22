@@ -1,6 +1,6 @@
 {
-  "task_id": "task_byok_best_practices",
-  "status": "completed",
+  "task_id": "task_market_research",
+  "status": "skipped",
   "automated_scores": {},
   "automated_avg": 0.0,
   "llm_judge_scores": {},
@@ -10,8 +10,8 @@
     "automated": 1.0,
     "llm_judge": 0.0
   },
-  "error": null,
+  "error": "任务要求 automated/hybrid 评分但无 grade() 函数",
   "duration_seconds": 0.0,
   "agent_used": "miner+researcher+assayer",
-  "timestamp": "2026-07-22T16:20:00"
+  "timestamp": "2026-07-22T15:27:26"
 }

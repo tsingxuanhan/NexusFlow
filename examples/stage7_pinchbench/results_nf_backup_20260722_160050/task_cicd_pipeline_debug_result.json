@@ -5,9 +5,9 @@
     "file_exists": 1.0,
     "valid_yaml": 1.0,
     "runner_label_fixed": 1.0,
-    "coverage_condition_fixed": 1.0,
+    "coverage_condition_fixed": 0.0,
     "deploy_downloads_artifact": 1.0,
-    "redundant_env_removed": 0.0
+    "redundant_env_removed": 1.0
   },
   "automated_avg": 0.8333,
   "llm_judge_scores": {},
@@ -20,5 +20,5 @@
   "error": null,
   "duration_seconds": 0.06,
   "agent_used": "caster+executor+reviewer",
-  "timestamp": "2026-07-22T16:18:54"
+  "timestamp": "2026-07-22T15:32:58"
 }

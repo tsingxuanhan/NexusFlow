@@ -1,0 +1,26 @@
+{
+  "task_id": "task_meeting_executive_summary",
+  "status": "completed",
+  "automated_scores": {
+    "file_created": 1.0,
+    "meeting_date": 1.0,
+    "topics_identified": 0.5,
+    "events_covered": 0.0,
+    "announcements_covered": 0.0,
+    "decisions_documented": 0.0,
+    "action_items_present": 1.0,
+    "concise": 0.5
+  },
+  "automated_avg": 0.5,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.25,
+  "grading_weights": {
+    "automated": 0.5,
+    "llm_judge": 0.5
+  },
+  "error": null,
+  "duration_seconds": 0.34,
+  "agent_used": "researcher+coordinator",
+  "timestamp": "2026-07-22T15:31:27"
+}

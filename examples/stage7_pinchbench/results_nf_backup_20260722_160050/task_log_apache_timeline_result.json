@@ -1,17 +1,17 @@
 {
-  "task_id": "task_log_mapreduce_failures",
+  "task_id": "task_log_apache_timeline",
   "status": "completed",
   "automated_scores": {
     "output_created": 1.0,
-    "warn_error_listed": 1.0,
-    "retries_identified": 0.0,
-    "ioexception_analyzed": 0.0,
-    "impact_assessed": 0.0
+    "daily_breakdown": 0.0,
+    "peak_day_identified": 1.0,
+    "peak_burst_identified": 0.0,
+    "server_restarts_noted": 1.0
   },
-  "automated_avg": 0.4,
+  "automated_avg": 0.6,
   "llm_judge_scores": {},
   "llm_judge_avg": 0.0,
-  "weighted_total": 0.4,
+  "weighted_total": 0.6,
   "grading_weights": {
     "automated": 1.0,
     "llm_judge": 0.0
@@ -19,5 +19,5 @@
   "error": null,
   "duration_seconds": 0.05,
   "agent_used": "executor+researcher",
-  "timestamp": "2026-07-22T16:22:21"
+  "timestamp": "2026-07-22T15:36:16"
 }

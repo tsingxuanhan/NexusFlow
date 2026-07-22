@@ -1,0 +1,28 @@
+{
+  "task_id": "task_csv_pension_risk",
+  "status": "completed",
+  "automated_scores": {
+    "report_created": 1.0,
+    "ratio_ranking": 0.0,
+    "dc_highest_ratio": 0.0,
+    "nj_second_ratio": 0.0,
+    "concentration_risk": 1.0,
+    "district_hotspots": 0.0,
+    "oh13_top_district": 0.0,
+    "risk_tiers": 1.0,
+    "high_risk_states": 0.0,
+    "summary_recommendations": 1.0
+  },
+  "automated_avg": 0.4,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.24,
+  "grading_weights": {
+    "automated": 0.6,
+    "llm_judge": 0.4
+  },
+  "error": null,
+  "duration_seconds": 0.05,
+  "agent_used": "executor+researcher+reviewer",
+  "timestamp": "2026-07-22T15:30:41"
+}

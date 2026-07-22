@@ -1,0 +1,24 @@
+{
+  "task_id": "task_polymarket_briefing",
+  "status": "completed",
+  "automated_scores": {
+    "file_created": 1.0,
+    "has_date_header": 0.0,
+    "has_three_markets": 0.0,
+    "has_odds": 1.0,
+    "has_news_summaries": 0.0,
+    "correct_format": 0.5
+  },
+  "automated_avg": 0.4167,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.4167,
+  "grading_weights": {
+    "automated": 1.0,
+    "llm_judge": 0.0
+  },
+  "error": null,
+  "duration_seconds": 0.06,
+  "agent_used": "miner+researcher+assayer",
+  "timestamp": "2026-07-22T15:31:38"
+}

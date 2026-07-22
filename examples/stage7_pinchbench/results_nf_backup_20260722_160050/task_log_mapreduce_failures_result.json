@@ -4,20 +4,20 @@
   "automated_scores": {
     "output_created": 1.0,
     "warn_error_listed": 1.0,
-    "retries_identified": 0.0,
-    "ioexception_analyzed": 0.0,
-    "impact_assessed": 0.0
+    "retries_identified": 1.0,
+    "ioexception_analyzed": 0.5,
+    "impact_assessed": 1.0
   },
-  "automated_avg": 0.4,
+  "automated_avg": 0.9,
   "llm_judge_scores": {},
   "llm_judge_avg": 0.0,
-  "weighted_total": 0.4,
+  "weighted_total": 0.9,
   "grading_weights": {
     "automated": 1.0,
     "llm_judge": 0.0
   },
   "error": null,
-  "duration_seconds": 0.05,
+  "duration_seconds": 0.06,
   "agent_used": "executor+researcher",
-  "timestamp": "2026-07-22T16:22:21"
+  "timestamp": "2026-07-22T15:36:42"
 }

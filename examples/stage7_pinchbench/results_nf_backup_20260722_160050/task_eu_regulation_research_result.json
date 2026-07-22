@@ -1,5 +1,5 @@
 {
-  "task_id": "task_byok_best_practices",
+  "task_id": "task_eu_regulation_research",
   "status": "completed",
   "automated_scores": {},
   "automated_avg": 0.0,
@@ -13,5 +13,5 @@
   "error": null,
   "duration_seconds": 0.0,
   "agent_used": "miner+researcher+assayer",
-  "timestamp": "2026-07-22T16:20:00"
+  "timestamp": "2026-07-22T15:30:05"
 }

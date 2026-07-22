@@ -31,6 +31,7 @@ from .config import (
 from .task_parser import load_task, PinchBenchTask
 from .workspace_manager import WorkspaceManager
 from .nf_agent_runner import NFAgentRunner, AgentRunResult
+from .nf_orchestrator_runner import NFOrchestratorRunner
 from .grade_bridge import GradeBridge, GradeResult, build_transcript
 
 logger = logging.getLogger("pinchbench.runner")
@@ -99,7 +100,7 @@ def filter_tasks(
 def run_single_task(
     task_entry: dict,
     ws_manager: WorkspaceManager,
-    agent_runner: NFAgentRunner,
+    agent_runner,  # NFAgentRunner | NFOrchestratorRunner
     grade_bridge: GradeBridge,
     local_tasks_dir: Path | str | None = None,
 ) -> GradeResult:
@@ -273,10 +274,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="执行全部任务",
     )
     parser.add_argument(
+        "--mode",
+        type=str,
+        choices=["sa", "nf"],
+        default="sa",
+        help="执行模式: sa=单Agent基线(默认), nf=NexusFlow完整管线(CDoL多Agent协作)",
+    )
+    parser.add_argument(
         "--output",
         type=str,
         default=None,
-        help="结果输出目录 (默认: ./results/)",
+        help="结果输出目录 (默认: SA模式→./results/, NF模式→./results_nf/)",
     )
     parser.add_argument(
         "--tasks-dir",
@@ -311,7 +319,17 @@ def main() -> None:
 
     # 路径配置
     tasks_dir = Path(args.tasks_dir) if args.tasks_dir else TASKS_RAW_DIR
-    results_dir = Path(args.output) if args.output else RESULTS_ROOT
+
+    # 根据模式确定结果目录
+    mode = args.mode
+    if args.output:
+        results_dir = Path(args.output)
+    elif mode == "nf":
+        results_dir = Path(__file__).resolve().parent.parent / "results_nf"
+    else:
+        results_dir = RESULTS_ROOT
+
+    logger.info("执行模式: %s, 结果目录: %s", mode.upper(), results_dir)
 
     # 加载清单
     try:
@@ -336,7 +354,15 @@ def main() -> None:
 
     # 初始化组件
     ws_manager = WorkspaceManager()
-    agent_runner = NFAgentRunner()
+
+    # 根据模式选择执行器
+    if mode == "nf":
+        agent_runner = NFOrchestratorRunner()
+        logger.info("使用 NF 完整管线模式 (NexusOrchestrator + CDoL)")
+    else:
+        agent_runner = NFAgentRunner()
+        logger.info("使用 SA 单Agent基线模式")
+
     grade_bridge = GradeBridge(results_root=results_dir)
 
     # 逐任务执行

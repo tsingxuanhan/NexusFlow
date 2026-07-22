@@ -207,6 +207,21 @@ class NFOrchestratorRunner:
         start = time.time()
         result = AgentRunResult(task_id=task.id)
 
+        # 0. 多 Session 任务处理策略
+        #    - 编码类多Session任务：保留 CDoL（CDoL 能看到全部 session 并协作生成代码）
+        #    - 非编码类多Session任务：降级为 SA 模式（CDoL 无法处理结构化 sequential JSON 输出）
+        if task.multi_session and task.sessions:
+            cat = task.category.lower().replace(" ", "_")
+            if cat not in ("coding",):
+                logger.info("任务 %s 为非编码类多Session任务(category=%s)，降级为 SA 模式", task.id, cat)
+                from .nf_agent_runner import NFAgentRunner
+                sa_runner = NFAgentRunner(api_key=self.api_key, endpoint=self.endpoint)
+                sa_result = sa_runner.run_task(task, workspace_path)
+                sa_result.agent_used = f"nf_sa_mode({sa_result.agent_used})"
+                return sa_result
+            else:
+                logger.info("任务 %s 为编码类多Session任务，保留 CDoL 模式", task.id)
+
         # 1. 选择 Agent 子集
         agent_names = _select_agents_for_task(task)
         result.agent_used = "+".join(agent_names)
@@ -274,10 +289,27 @@ class NFOrchestratorRunner:
             return result
 
         # 7. 用 Producer Agent 把 CDoL 分析结果合成完整交付物
+        #    关键修复：Producer 必须能读取工作区输入文件（和 SA 一样的 prompt），
+        #    同时附加 CDoL 多Agent分析作为额外上下文，避免幻觉输出。
         try:
             producer = _create_agent_for_nf(self._select_producer_agent(task))
             producer.guardrails = None
-            synthesis_prompt = self._build_synthesis_prompt(task, cdol_analysis, workspace_path)
+
+            # 使用与 SA 相同的 build_user_prompt（包含工作区文件内容）
+            # 然后附加 CDoL 分析结论作为团队协作的额外上下文
+            base_prompt = build_user_prompt(task, workspace_path)
+
+            # 截断过长的 CDoL 分析，避免超出上下文窗口
+            max_cdol_len = 4000
+            cdol_context = cdol_analysis
+            if len(cdol_context) > max_cdol_len:
+                cdol_context = cdol_context[:max_cdol_len] + "\n...(分析内容已截断)"
+
+            synthesis_prompt = base_prompt + "\n\n## 多Agent协作分析参考\n"
+            synthesis_prompt += "以下是你的团队通过多Agent协作（CDoL协议）得到的分析结论，可作为你生成交付物的参考：\n\n"
+            synthesis_prompt += cdol_context
+            synthesis_prompt += "\n\n请基于工作区文件和以上分析，生成完整的任务交付物。"
+
             final_output = producer.chat(synthesis_prompt)
             result.response = final_output
             logger.info("任务 %s Producer 合成完成: output_len=%d", task.id, len(final_output))

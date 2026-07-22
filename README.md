@@ -509,7 +509,7 @@ ollama pull qwen3.5:9b
 
 | 来源 | 说明 |
 |------|------|
-| [技术文档 v3.0](docs/NexusFlow技术文档v3.0.md) | NexusFlow 完整技术文档（含 Stage 6-7 实验） |
+| [技术文档 v3.1](docs/NexusFlow技术文档v3.1.md) | NexusFlow 完整技术文档（含 Stage 6-7 实验） |
 | [Stage-7 PinchBench README](examples/stage7_pinchbench/README.md) | 25 Hard Cases SA vs NF 对比实验详情 |
 | [端到端 Demo 脚本](examples/demo_e2e_pinchbench.py) | 完整展示 NexusFlow 系统：架构总览→组件验证→PinchBench对比→HTML报告 |
 | [技术文档 v2.9](docs/NexusFlow技术文档v2.9.md) | v2.9 版本存档 |

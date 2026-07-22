@@ -1,0 +1,31 @@
+{
+  "version": "pinchbench-v2.0-hardcases",
+  "source": "https://github.com/pinchbench/skill",
+  "selected_tasks": [
+    {"id": "task_market_research", "name": "Competitive Market Research", "category": "research", "grading_type": "hybrid", "timeout": 300, "tier": 1},
+    {"id": "task_deep_research", "name": "Deep Research with Citations", "category": "research", "grading_type": "llm_judge", "timeout": 300, "tier": 1},
+    {"id": "task_contract_analysis", "name": "Contract/Legal Analysis", "category": "analysis", "grading_type": "llm_judge", "timeout": 300, "tier": 1, "workspace_files": ["sample_contract.pdf"]},
+    {"id": "task_cve_security_triage", "name": "CVE Security Triage", "category": "research", "grading_type": "hybrid", "timeout": 300, "tier": 1},
+    {"id": "task_session_chain_analysis", "name": "Cross-Session Analysis Chain", "category": "productivity", "grading_type": "automated", "timeout": 300, "tier": 1},
+    {"id": "task_eu_regulation_research", "name": "EU AI Act Compliance Research", "category": "research", "grading_type": "llm_judge", "timeout": 300, "tier": 1},
+    {"id": "task_csv_pension_risk", "name": "US Pension Fund Risk Assessment", "category": "csv_analysis", "grading_type": "hybrid", "timeout": 180, "tier": 1, "workspace_files": ["csvs/us_pension_by_state.csv"]},
+    {"id": "task_multi_file_refactoring", "name": "Multi-file Refactoring", "category": "coding", "grading_type": "automated", "timeout": 120, "tier": 1, "workspace_files": ["refactor/utils.py", "refactor/orders.py", "refactor/reports.py", "refactor/api.py"]},
+    {"id": "task_daily_summary", "name": "Daily Research Summary", "category": "productivity", "grading_type": "llm_judge", "timeout": 300, "tier": 1, "workspace_files": ["research/market_analysis.txt", "research/competitor_intelligence.txt", "research/customer_feedback.txt", "research/product_updates.txt", "research/industry_news.txt"]},
+    {"id": "task_meeting_executive_summary", "name": "Meeting Executive Summary", "category": "meeting_analysis", "grading_type": "hybrid", "timeout": 180, "tier": 1, "workspace_files": ["meetings/2021-06-28-gitlab-product-marketing-meeting.md"]},
+    {"id": "task_polymarket_briefing", "name": "Polymarket + News Briefing", "category": "research", "grading_type": "hybrid", "timeout": 180, "tier": 2},
+    {"id": "task_spreadsheet_summary", "name": "Excel/CSV Comprehensive Summary", "category": "csv_analysis", "grading_type": "hybrid", "timeout": 180, "tier": 2},
+    {"id": "task_financial_ratio_calculation", "name": "Financial Ratio Calculation", "category": "analysis", "grading_type": "automated", "timeout": 240, "tier": 2},
+    {"id": "task_csv_pension_liability", "name": "Pension Fund Liability Analysis", "category": "csv_analysis", "grading_type": "hybrid", "timeout": 180, "tier": 2},
+    {"id": "task_iterative_code_refine", "name": "Iterative Code Refinement", "category": "coding", "grading_type": "automated", "timeout": 300, "tier": 2},
+    {"id": "task_cicd_pipeline_debug", "name": "CI/CD Pipeline Debugging", "category": "coding", "grading_type": "automated", "timeout": 240, "tier": 2},
+    {"id": "task_k8s_debugging", "name": "Kubernetes Debugging", "category": "coding", "grading_type": "automated", "timeout": 240, "tier": 2},
+    {"id": "task_test_generation", "name": "Test Generation", "category": "coding", "grading_type": "hybrid", "timeout": 300, "tier": 2},
+    {"id": "task_byok_best_practices", "name": "BYOK Security Best Practices", "category": "writing", "grading_type": "llm_judge", "timeout": 300, "tier": 3},
+    {"id": "task_meeting_gov_qa_extract", "name": "Meeting Q&A Extraction", "category": "meeting_analysis", "grading_type": "hybrid", "timeout": 300, "tier": 3},
+    {"id": "task_meeting_sentiment_analysis", "name": "Meeting Sentiment Analysis", "category": "meeting_analysis", "grading_type": "llm_judge", "timeout": 300, "tier": 3},
+    {"id": "task_meeting_gov_controversy", "name": "Meeting Controversy Detection", "category": "meeting_analysis", "grading_type": "hybrid", "timeout": 300, "tier": 3},
+    {"id": "task_log_apache_timeline", "name": "Apache Error Timeline", "category": "log_analysis", "grading_type": "hybrid", "timeout": 180, "tier": 3, "workspace_files": ["logs/apache_error.log"]},
+    {"id": "task_log_mapreduce_failures", "name": "MapReduce Failure Analysis", "category": "log_analysis", "grading_type": "automated", "timeout": 180, "tier": 3},
+    {"id": "task_log_ssh_brute_force", "name": "SSH Brute Force Detection", "category": "log_analysis", "grading_type": "automated", "timeout": 180, "tier": 3}
+  ]
+}

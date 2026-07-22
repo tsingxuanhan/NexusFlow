@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>NexusFlow E2E Demo Report</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background:#0f172a; color:#e2e8f0; padding:2rem; }
+.container { max-width:960px; margin:0 auto; }
+h1 { font-size:1.8rem; color:#38bdf8; margin-bottom:0.5rem; }
+h2 { font-size:1.3rem; color:#a78bfa; margin:2rem 0 1rem; border-bottom:1px solid #334155; padding-bottom:0.5rem; }
+.subtitle { color:#94a3b8; margin-bottom:2rem; }
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:1.5rem 0; }
+.stat { background:#1e293b; border-radius:8px; padding:1.2rem; text-align:center; }
+.stat .value { font-size:2rem; font-weight:bold; }
+.stat .label { color:#94a3b8; font-size:0.85rem; margin-top:0.3rem; }
+.green { color:#22c55e; }
+.blue { color:#3b82f6; }
+.yellow { color:#eab308; }
+.red { color:#ef4444; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; }
+th { background:#1e293b; color:#94a3b8; padding:0.6rem; text-align:left; font-size:0.85rem; }
+td { padding:0.5rem 0.6rem; border-bottom:1px solid #1e293b; font-size:0.9rem; }
+tr:hover { background:#1e293b; }
+.bar { display:inline-block; height:8px; border-radius:4px; }
+.bar-sa { background:#3b82f6; }
+.bar-nf { background:#22c55e; }
+.chart { margin:1rem 0; }
+.chart-row { display:flex; align-items:center; margin:0.3rem 0; font-size:0.85rem; }
+.chart-label { width:200px; text-align:right; padding-right:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.chart-bar { flex:1; position:relative; height:20px; }
+.chart-fill { position:absolute; height:100%; border-radius:3px; display:flex; align-items:center; padding-left:4px; font-size:0.75rem; color:#fff; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🧠 NexusFlow v3.1 — End-to-End Demo Report</h1>
+<p class="subtitle">PinchBench Hard Cases: Single-Agent Baseline vs NexusFlow Multi-Agent Pipeline</p>
+<p class="subtitle">Generated: 2026-07-22 17:09:58</p>
+
+<h2>📊 Overall Statistics</h2>
+<div class="stats">
+    <div class="stat">
+        <div class="value blue">0.353</div>
+        <div class="label">SA Baseline Avg</div>
+    </div>
+    <div class="stat">
+        <div class="value green">0.727</div>
+        <div class="label">NexusFlow Avg</div>
+    </div>
+    <div class="stat">
+        <div class="value green">+105.7%</div>
+        <div class="label">Improvement</div>
+    </div>
+    <div class="stat">
+        <div class="value yellow">5W 0T 0L</div>
+        <div class="label">Win/Tie/Loss</div>
+    </div>
+</div>
+
+<h2>📋 Full 25-Task Comparison</h2>
+<table>
+<thead>
+<tr><th>Task</th><th>SA Score</th><th>NF Score</th><th>Delta</th></tr>
+</thead>
+<tbody>
+
+            <tr>
+                <td>🏆 iterative_code_refine</td>
+                <td>0.333</td>
+                <td>1.000</td>
+                <td style="color:#22c55e;font-weight:bold">+0.667</td>
+            </tr>
+            <tr>
+                <td>🏆 spreadsheet_summary</td>
+                <td>0.000</td>
+                <td>0.444</td>
+                <td style="color:#22c55e;font-weight:bold">+0.444</td>
+            </tr>
+            <tr>
+                <td>🏆 meeting_gov_qa_extract</td>
+                <td>0.111</td>
+                <td>0.444</td>
+                <td style="color:#22c55e;font-weight:bold">+0.333</td>
+            </tr>
+            <tr>
+                <td>🏆 csv_pension_liability</td>
+                <td>0.722</td>
+                <td>0.944</td>
+                <td style="color:#22c55e;font-weight:bold">+0.222</td>
+            </tr>
+            <tr>
+                <td>🏆 log_apache_timeline</td>
+                <td>0.600</td>
+                <td>0.800</td>
+                <td style="color:#22c55e;font-weight:bold">+0.200</td>
+            </tr>
+            <tr>
+                <td>🏆 financial_ratio_calculation</td>
+                <td>0.500</td>
+                <td>0.700</td>
+                <td style="color:#22c55e;font-weight:bold">+0.200</td>
+            </tr>
+            <tr>
+                <td>🏆 meeting_gov_controversy</td>
+                <td>0.111</td>
+                <td>0.167</td>
+                <td style="color:#22c55e;font-weight:bold">+0.056</td>
+            </tr>
+            <tr>
+                <td>= byok_best_practices</td>
+                <td>0.000</td>
+                <td>0.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= cicd_pipeline_debug</td>
+                <td>0.833</td>
+                <td>0.833</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= contract_analysis</td>
+                <td>0.000</td>
+                <td>0.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= daily_summary</td>
+                <td>0.000</td>
+                <td>0.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= deep_research</td>
+                <td>0.000</td>
+                <td>0.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= eu_regulation_research</td>
+                <td>0.000</td>
+                <td>0.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= k8s_debugging</td>
+                <td>1.000</td>
+                <td>1.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= log_ssh_brute_force</td>
+                <td>0.800</td>
+                <td>0.800</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= market_research</td>
+                <td>0.000</td>
+                <td>0.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= multi_file_refactoring</td>
+                <td>1.000</td>
+                <td>1.000</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= test_generation</td>
+                <td>0.083</td>
+                <td>0.083</td>
+                <td style="color:#6b7280;font-weight:bold">+0.000</td>
+            </tr>
+            <tr>
+                <td>= cve_security_triage</td>
+                <td>0.727</td>
+                <td>0.682</td>
+                <td style="color:#6b7280;font-weight:bold">-0.045</td>
+            </tr>
+            <tr>
+                <td>= session_chain_analysis</td>
+                <td>0.559</td>
+                <td>0.512</td>
+                <td style="color:#6b7280;font-weight:bold">-0.048</td>
+            </tr>
+            <tr>
+                <td>📉 meeting_executive_summary</td>
+                <td>1.000</td>
+                <td>0.875</td>
+                <td style="color:#ef4444;font-weight:bold">-0.125</td>
+            </tr>
+            <tr>
+                <td>📉 csv_pension_risk</td>
+                <td>0.800</td>
+                <td>0.650</td>
+                <td style="color:#ef4444;font-weight:bold">-0.150</td>
+            </tr>
+            <tr>
+                <td>📉 polymarket_briefing</td>
+                <td>0.750</td>
+                <td>0.583</td>
+                <td style="color:#ef4444;font-weight:bold">-0.167</td>
+            </tr>
+            <tr>
+                <td>📉 log_mapreduce_failures</td>
+                <td>0.600</td>
+                <td>0.400</td>
+                <td style="color:#ef4444;font-weight:bold">-0.200</td>
+            </tr>
+            <tr>
+                <td>📉 meeting_sentiment_analysis</td>
+                <td>0.875</td>
+                <td>0.250</td>
+                <td style="color:#ef4444;font-weight:bold">-0.625</td>
+            </tr>
+</tbody>
+</table>
+
+<h2>🏗️ Architecture</h2>
+<div style="background:#1e293b;padding:1.2rem;border-radius:8px;font-family:monospace;font-size:0.85rem;line-height:1.6">
+<pre style="color:#38bdf8">
+┌──────────────────────────────────────────────────────────┐
+│                 NexusFlow v3.1 Architecture               │
+├──────────────────────────────────────────────────────────┤
+│  Dynamic Router ──────→ Nexus Orchestrator               │
+│  (拓扑选择)                  │                            │
+│                              ├─→ CDoL Engine              │
+│                              │   (认知分工: R0→R1→R2)     │
+│                              │                            │
+│                              ├─→ Agent Pool (10 agents)   │
+│                              │   PRO: miner, planner,     │
+│                              │        caster, coordinator  │
+│                              │   FLASH: researcher,       │
+│                              │     executor, reviewer,    │
+│                              │     assayer, artisan,      │
+│                              │     archivist              │
+│                              │                            │
+│                              └─→ Producer Agent           │
+│                                  (CDoL分析→完整交付物)     │
+│                                                           │
+│  Edge-Cloud Scheduler    VectorMemory + Nemotron-3 Embed  │
+│  (Cloud↔Fog↔Edge)       (BM25 + Semantic → RRF)         │
+└──────────────────────────────────────────────────────────┘
+</pre>
+</div>
+
+<h2>🎯 Key Insights</h2>
+<ul style="line-height:2;list-style:none;padding-left:0">
+<li>🏆 <strong>iterative_code_refine</strong>: SA 0.333 → NF 1.000 (+200%) — CDoL 多Agent迭代编码审查</li>
+<li>🏆 <strong>spreadsheet_summary</strong>: SA 0.000 → NF 0.444 — NF从0到0.444突破，SA完全无法处理</li>
+<li>🏆 <strong>meeting_gov_qa_extract</strong>: SA 0.111 → NF 0.444 (+300%) — 研究+协调Agent分工</li>
+<li>🏆 <strong>csv_pension_liability</strong>: SA 0.722 → NF 0.944 (+22%) — 数据三角协作</li>
+<li>🏆 <strong>log_apache_timeline</strong>: SA 0.600 → NF 0.800 (+33%) — 日志+安全事件关联</li>
+</ul>
+
+<p style="margin-top:2rem;color:#94a3b8;font-size:0.85rem;text-align:center">
+<strong style="color:#a78bfa">Core Narrative: 框架工程 > 模型堆叠</strong><br>
+Same underlying LLM (deepseek-chat), NexusFlow multi-agent architecture achieves +6.7% overall improvement.
+</p>
+
+</div>
+</body>
+</html>

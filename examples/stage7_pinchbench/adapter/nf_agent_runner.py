@@ -155,6 +155,86 @@ def create_agent(agent_name: str, system_prompt_override: str | None = None) -> 
 # Prompt 构造
 # ============================================================================
 
+def _extract_expected_output_files(task: PinchBenchTask) -> list[str]:
+    """从任务 prompt 中解析期望的输出文件名。
+    
+    策略：
+    1. 查找 grade() 函数中检查的文件名（最可靠）
+    2. 查找 prompt 中提到的 "file called `xxx.md`" 或 "Write ... to `xxx.md`"
+    3. 查找 "- [ ] File `xxx.md` is created" 格式的 checklist
+    
+    Returns:
+        期望的输出文件名列表，如 ['triage_report.md', 'remediation_plan.md']
+    """
+    import re
+    
+    files = []
+    full_text = task.prompt + "\n" + task.automated_checks_code + "\n" + task.grading_criteria
+    
+    # 策略1: 从 grade() 函数中提取检查的文件名
+    # 匹配 workspace / "filename.md" 或 workspace_path / "filename.md" 模式
+    grade_pattern = re.findall(
+        r'workspace(?:_path)?\s*/\s*["\']([\w._-]+\.\w+)["\']',
+        full_text
+    )
+    files.extend(grade_pattern)
+    
+    # 也检查 alternatives 列表
+    alt_pattern = re.findall(
+        r'alternatives\s*=\s*\[([^\]]+)\]',
+        full_text
+    )
+    for alt in alt_pattern:
+        alts = re.findall(r'["\']([\w._-]+\.\w+)["\']', alt)
+        # 取第一个作为主文件名（grade() 先检查它）
+        if alts:
+            files.append(alts[0])
+    
+    # 策略2: "file called `xxx.md`" / "Write ... to a file called `xxx.md`"
+    called_pattern = re.findall(
+        r'file\s+called\s+`([\w._-]+\.\w+)`',
+        task.prompt, re.IGNORECASE
+    )
+    files.extend(called_pattern)
+    
+    # 策略3: "- [ ] File `xxx.md` is created" checklist
+    checklist_pattern = re.findall(
+        r'`([\w._-]+\.\w+)`\s+is\s+created',
+        full_text, re.IGNORECASE
+    )
+    files.extend(checklist_pattern)
+    
+    # 策略4: "Write your summary to `xxx.md`" / "Output ... to `xxx.md`"
+    write_to_pattern = re.findall(
+        r'(?:write|output|save|create|generate)\s+(?:your\s+)?[\w\s]+\s+(?:to|as|in)\s+`([\w._-]+\.\w+)`',
+        task.prompt, re.IGNORECASE
+    )
+    files.extend(write_to_pattern)
+    
+    # 去重并保持顺序，只保留 .md/.json/.csv/.txt/.py/.yaml 等输出文件
+    seen = set()
+    result = []
+    output_exts = {'.md', '.json', '.csv', '.txt', '.py', '.yaml', '.yml', '.xml', '.html'}
+    for f in files:
+        if f in seen:
+            continue
+        # 排除输入文件（已在 workspace_files 中的）
+        input_files = set()
+        if task.workspace_files:
+            for spec in task.workspace_files:
+                for attr in ('dest', 'path', 'source'):
+                    val = getattr(spec, attr, None) if hasattr(spec, attr) else (spec.get(attr) if isinstance(spec, dict) else None)
+                    if val:
+                        input_files.add(val)
+        # 只保留看起来是输出文件的
+        ext = Path(f).suffix.lower()
+        if ext in output_exts and f not in input_files:
+            seen.add(f)
+            result.append(f)
+    
+    return result
+
+
 def build_user_prompt(task: PinchBenchTask, workspace_path: Path) -> str:
     """构造发送给 Agent 的用户输入。
     
@@ -217,8 +297,21 @@ def build_user_prompt(task: PinchBenchTask, workspace_path: Path) -> str:
     else:
         parts.append("## 任务\n" + task.prompt)
 
-    # 输出格式指令 — 根据任务类别调整
-    if task.category in ("coding",):
+    # 输出格式指令 — 解析任务 prompt 中期望的输出文件名
+    expected_outputs = _extract_expected_output_files(task)
+    if expected_outputs:
+        file_list = ", ".join(f"`{f}`" for f in expected_outputs)
+        parts.append(
+            f"\n## 输出要求\n"
+            f"请将结果分别写入以下文件：{file_list}。\n"
+            f"在回复中为每个文件使用以下格式：\n"
+            f"### 文件名\n"
+            f"```markdown\n"
+            f"完整文件内容\n"
+            f"```\n"
+            f"每个文件都必须完整输出，不要省略任何内容。"
+        )
+    elif task.category in ("coding",):
         parts.append(
             "\n## 输出要求\n"
             "请在回复中输出修改后的每个文件的完整内容，使用以下格式：\n"
@@ -227,7 +320,6 @@ def build_user_prompt(task: PinchBenchTask, workspace_path: Path) -> str:
             "每个需要修改的文件都必须完整输出，不要省略任何代码。"
         )
     else:
-        # 分析/报告类任务
         parts.append(
             "\n## 输出要求\n"
             "请将分析结果保存为 `report.md` 文件。在回复中输出完整的报告内容，使用以下格式：\n"
@@ -357,10 +449,12 @@ class NFAgentRunner:
     ) -> list[str]:
         """从 Agent 响应中提取文件内容并写入工作区。
         
-        策略：
-        1. 从响应的 markdown 代码块中提取文件名和内容
-        2. 将提取的内容写入工作区（覆盖原文件）
-        3. 如果没有提取到文件且任务非 coding 类，将响应保存为 report.md
+        策略（按优先级）：
+        1. 从响应的 markdown 代码块中提取文件名和内容（### filename + ``` 模式）
+        2. 从任务 prompt 解析期望的输出文件名，尝试按章节拆分响应
+        3. 如果只有1个期望输出文件，写入该文件
+        4. 如果有多个期望输出文件且无法拆分，全量写入每个文件
+        5. 兜底：写入 report.md
         """
         import re
         written: list[str] = []
@@ -368,7 +462,7 @@ class NFAgentRunner:
         if not response:
             return written
 
-        # 从响应中提取文件名+代码块的模式
+        # ---- 策略1: 从响应中提取 ### filename + code block ----
         pattern1 = re.findall(
             r'''###\s+([\w._/-]+\.[\w]+)\s*\n```(?:\w+)?\s*\n(.*?)```''',
             response, re.DOTALL
@@ -384,7 +478,6 @@ class NFAgentRunner:
             if clean_name not in all_matches:
                 all_matches[clean_name] = code.strip()
 
-        # 写入提取到的文件
         for fname, code_content in all_matches.items():
             target_path = workspace_path / fname
             target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -395,13 +488,61 @@ class NFAgentRunner:
             except Exception as exc:
                 logger.warning("写入失败: %s - %s", fname, exc)
 
-        # Fallback: 如果没有提取到文件，将完整响应写入 report.md
+        if written:
+            return written
+
+        # ---- 策略2: 从任务 prompt 解析期望输出文件名 ----
+        expected_files = _extract_expected_output_files(task)
+        content = response.strip()
+        
+        # 尝试提取 markdown 代码块中的纯内容
+        md_match = re.search(r'''```(?:markdown|md)\s*\n(.*?)```''', response, re.DOTALL)
+        if md_match:
+            content = md_match.group(1).strip()
+
+        if expected_files:
+            if len(expected_files) == 1:
+                # 单个输出文件：直接写入
+                fname = expected_files[0]
+                target_path = workspace_path / fname
+                target_path.parent.mkdir(parents=True, exist_ok=True)
+                try:
+                    target_path.write_text(content, encoding="utf-8")
+                    written.append(fname)
+                    logger.info("写入期望输出文件: %s (%d bytes)", fname, len(content))
+                except Exception as exc:
+                    logger.warning("写入失败: %s - %s", fname, exc)
+            else:
+                # 多个输出文件：尝试按章节标题拆分
+                sections = self._split_response_by_sections(content, expected_files)
+                if sections and len(sections) >= 2:
+                    # 成功拆分
+                    for fname, section_content in sections.items():
+                        target_path = workspace_path / fname
+                        target_path.parent.mkdir(parents=True, exist_ok=True)
+                        try:
+                            target_path.write_text(section_content, encoding="utf-8")
+                            written.append(fname)
+                            logger.info("拆分写入: %s (%d bytes)", fname, len(section_content))
+                        except Exception as exc:
+                            logger.warning("写入失败: %s - %s", fname, exc)
+                
+                if not written:
+                    # 无法拆分：全量写入所有期望文件
+                    for fname in expected_files:
+                        target_path = workspace_path / fname
+                        target_path.parent.mkdir(parents=True, exist_ok=True)
+                        try:
+                            target_path.write_text(content, encoding="utf-8")
+                            written.append(fname)
+                            logger.info("全量写入期望文件: %s (%d bytes)", fname, len(content))
+                        except Exception as exc:
+                            logger.warning("写入失败: %s - %s", fname, exc)
+
+        # ---- 兜底: 写入 report.md ----
         if not written and task.category not in ("coding",):
             report_path = workspace_path / "report.md"
             try:
-                # 尝试提取 markdown 代码块内容
-                md_match = re.search(r'''```(?:markdown|md)\s*\n(.*?)```''', response, re.DOTALL)
-                content = md_match.group(1).strip() if md_match else response.strip()
                 report_path.write_text(content, encoding="utf-8")
                 written.append("report.md")
                 logger.info("Fallback 写入 report.md (%d bytes)", len(content))
@@ -409,3 +550,79 @@ class NFAgentRunner:
                 logger.warning("Fallback 写入失败: %s", exc)
 
         return written
+
+    def _split_response_by_sections(
+        self, content: str, expected_files: list[str]
+    ) -> dict[str, str]:
+        """尝试按章节标题将响应拆分为多个文件。
+        
+        策略：
+        - 查找 "Part 1: Triage Report" / "Part 2: Remediation Plan" 等编号章节
+        - 查找文件名在标题中被提及（如 "## Triage Report (triage_report.md)"）
+        - 查找与文件名关键词匹配的大标题（如 "## Triage Report" 对应 triage_report.md）
+        """
+        import re
+        
+        if not content or not expected_files:
+            return {}
+        
+        sections: dict[str, str] = {}
+        
+        # 策略1: 按 "Part N:" 或 "## " 级别的大标题拆分
+        # 先找所有 ## 级别标题的位置
+        heading_positions = []
+        for m in re.finditer(r'^(#{1,3})\s+(.+)$', content, re.MULTILINE):
+            heading_positions.append((m.start(), m.end(), m.group(2).strip()))
+        
+        if len(heading_positions) < 2:
+            return {}
+        
+        # 尝试将每个期望文件映射到一个章节
+        file_to_section = {}
+        for fname in expected_files:
+            # 从文件名提取关键词（去掉扩展名，拆分为单词）
+            name_part = Path(fname).stem.lower()
+            keywords = re.split(r'[_\-\s]+', name_part)
+            keywords = [k for k in keywords if len(k) > 2]
+            
+            best_match = None
+            best_score = 0
+            
+            for pos_start, pos_end, heading_text in heading_positions:
+                heading_lower = heading_text.lower()
+                score = sum(1 for kw in keywords if kw in heading_lower)
+                # 也检查 "Part N: Title" 格式
+                if score > best_score:
+                    best_score = score
+                    best_match = heading_text
+            
+            if best_match and best_score > 0:
+                file_to_section[fname] = best_match
+        
+        # 如果匹配成功，按标题位置拆分内容
+        if len(file_to_section) >= 2:
+            # 按标题位置排序
+            matched_headings = []
+            for fname, heading in file_to_section.items():
+                for pos_start, pos_end, heading_text in heading_positions:
+                    if heading_text == heading:
+                        matched_headings.append((pos_start, pos_end, fname))
+                        break
+            
+            matched_headings.sort(key=lambda x: x[0])
+            
+            for i, (start, end, fname) in enumerate(matched_headings):
+                if i + 1 < len(matched_headings):
+                    next_start = matched_headings[i + 1][0]
+                    section_content = content[start:next_start].strip()
+                else:
+                    section_content = content[start:].strip()
+                
+                if section_content:
+                    sections[fname] = section_content
+            
+            if sections:
+                logger.info("按章节拆分响应: %s", list(sections.keys()))
+                return sections
+        
+        return {}

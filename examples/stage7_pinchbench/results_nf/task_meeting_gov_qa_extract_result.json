@@ -1,0 +1,27 @@
+{
+  "task_id": "task_meeting_gov_qa_extract",
+  "status": "completed",
+  "automated_scores": {
+    "report_created": 1.0,
+    "exchange_count": 0.0,
+    "section_separation": 1.0,
+    "drake_kirkpatrick": 0.5,
+    "case_numbers": 0.5,
+    "faa_qa": 0.5,
+    "nhi_question": 0.0,
+    "attribution": 1.0,
+    "numbering": 1.0
+  },
+  "automated_avg": 0.6111,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.3056,
+  "grading_weights": {
+    "automated": 0.5,
+    "llm_judge": 0.5
+  },
+  "error": null,
+  "duration_seconds": 0.06,
+  "agent_used": "researcher+coordinator",
+  "timestamp": "2026-07-22T16:11:34"
+}

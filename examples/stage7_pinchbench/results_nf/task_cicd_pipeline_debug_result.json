@@ -1,0 +1,24 @@
+{
+  "task_id": "task_cicd_pipeline_debug",
+  "status": "completed",
+  "automated_scores": {
+    "file_exists": 1.0,
+    "valid_yaml": 1.0,
+    "runner_label_fixed": 1.0,
+    "coverage_condition_fixed": 0.0,
+    "deploy_downloads_artifact": 1.0,
+    "redundant_env_removed": 0.0
+  },
+  "automated_avg": 0.6667,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.6667,
+  "grading_weights": {
+    "automated": 1.0,
+    "llm_judge": 0.0
+  },
+  "error": null,
+  "duration_seconds": 0.05,
+  "agent_used": "caster+executor+reviewer",
+  "timestamp": "2026-07-22T16:09:41"
+}

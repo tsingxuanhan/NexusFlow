@@ -1,0 +1,234 @@
+{
+  "rows": [
+    {
+      "task": "task_byok_best_practices",
+      "sa": 0.0,
+      "nf_old": 0.0,
+      "nf_new": 0.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_cicd_pipeline_debug",
+      "sa": 0.833,
+      "nf_old": 0.417,
+      "nf_new": 0.6667,
+      "delta": 0.24969999999999998,
+      "vs_sa": -0.1663,
+      "result": "LOSS"
+    },
+    {
+      "task": "task_contract_analysis",
+      "sa": 0.0,
+      "nf_old": 0.0,
+      "nf_new": 0.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_csv_pension_liability",
+      "sa": 0.722,
+      "nf_old": 0.333,
+      "nf_new": 0.7778,
+      "delta": 0.44480000000000003,
+      "vs_sa": 0.05580000000000007,
+      "result": "WIN"
+    },
+    {
+      "task": "task_csv_pension_risk",
+      "sa": 0.8,
+      "nf_old": 0.4,
+      "nf_new": 0.7,
+      "delta": 0.29999999999999993,
+      "vs_sa": -0.10000000000000009,
+      "result": "LOSS"
+    },
+    {
+      "task": "task_cve_security_triage",
+      "sa": 0.727,
+      "nf_old": 0.364,
+      "nf_new": 0.8182,
+      "delta": 0.45420000000000005,
+      "vs_sa": 0.09120000000000006,
+      "result": "WIN"
+    },
+    {
+      "task": "task_daily_summary",
+      "sa": 0.0,
+      "nf_old": 0.0,
+      "nf_new": 0.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_deep_research",
+      "sa": 0.0,
+      "nf_old": 0.0,
+      "nf_new": 0.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_eu_regulation_research",
+      "sa": 0.0,
+      "nf_old": 0.0,
+      "nf_new": 0.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_financial_ratio_calculation",
+      "sa": 0.5,
+      "nf_old": 0.3,
+      "nf_new": 0.7,
+      "delta": 0.39999999999999997,
+      "vs_sa": 0.19999999999999996,
+      "result": "WIN"
+    },
+    {
+      "task": "task_iterative_code_refine",
+      "sa": 0.333,
+      "nf_old": 1.0,
+      "nf_new": 1.0,
+      "delta": 0.0,
+      "vs_sa": 0.667,
+      "result": "WIN"
+    },
+    {
+      "task": "task_k8s_debugging",
+      "sa": 1.0,
+      "nf_old": 1.0,
+      "nf_new": 1.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_log_apache_timeline",
+      "sa": 0.6,
+      "nf_old": 0.4,
+      "nf_new": 0.8,
+      "delta": 0.4,
+      "vs_sa": 0.20000000000000007,
+      "result": "WIN"
+    },
+    {
+      "task": "task_log_mapreduce_failures",
+      "sa": 0.6,
+      "nf_old": 0.6,
+      "nf_new": 0.6,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_log_ssh_brute_force",
+      "sa": 0.8,
+      "nf_old": 0.4,
+      "nf_new": 0.8,
+      "delta": 0.4,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_market_research",
+      "sa": 0.0,
+      "nf_old": 0.0,
+      "nf_new": 0.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_meeting_executive_summary",
+      "sa": 1.0,
+      "nf_old": 0.5,
+      "nf_new": 1.0,
+      "delta": 0.5,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_meeting_gov_controversy",
+      "sa": 0.111,
+      "nf_old": 0.111,
+      "nf_new": 0.1111,
+      "delta": 0.00010000000000000286,
+      "vs_sa": 0.00010000000000000286,
+      "result": "WIN"
+    },
+    {
+      "task": "task_meeting_gov_qa_extract",
+      "sa": 0.111,
+      "nf_old": 0.111,
+      "nf_new": 0.6111,
+      "delta": 0.5001,
+      "vs_sa": 0.5001,
+      "result": "WIN"
+    },
+    {
+      "task": "task_meeting_sentiment_analysis",
+      "sa": 0.875,
+      "nf_old": 0.5,
+      "nf_new": 0.5625,
+      "delta": 0.0625,
+      "vs_sa": -0.3125,
+      "result": "LOSS"
+    },
+    {
+      "task": "task_multi_file_refactoring",
+      "sa": 1.0,
+      "nf_old": 1.0,
+      "nf_new": 1.0,
+      "delta": 0.0,
+      "vs_sa": 0.0,
+      "result": "TIE"
+    },
+    {
+      "task": "task_polymarket_briefing",
+      "sa": 0.75,
+      "nf_old": 0.417,
+      "nf_new": 0.5833,
+      "delta": 0.16630000000000006,
+      "vs_sa": -0.16669999999999996,
+      "result": "LOSS"
+    },
+    {
+      "task": "task_session_chain_analysis",
+      "sa": 0.559,
+      "nf_old": 0.0,
+      "nf_new": 0.4643,
+      "delta": 0.4643,
+      "vs_sa": -0.09470000000000006,
+      "result": "LOSS"
+    },
+    {
+      "task": "task_spreadsheet_summary",
+      "sa": 0.0,
+      "nf_old": 0.0,
+      "nf_new": 0.2222,
+      "delta": 0.2222,
+      "vs_sa": 0.2222,
+      "result": "WIN"
+    },
+    {
+      "task": "task_test_generation",
+      "sa": 0.083,
+      "nf_old": 0.0,
+      "nf_new": 0.0833,
+      "delta": 0.0833,
+      "vs_sa": 0.0002999999999999947,
+      "result": "WIN"
+    }
+  ],
+  "nf_avg": 0.50002,
+  "sa_avg": 0.45616,
+  "wins": 9,
+  "ties": 11,
+  "losses": 5
+}

@@ -1,0 +1,23 @@
+{
+  "task_id": "task_financial_ratio_calculation",
+  "status": "completed",
+  "automated_scores": {
+    "file_created": 1.0,
+    "has_inputs": 0.5,
+    "has_formula": 1.0,
+    "ratio_correct": 0.0,
+    "readable": 1.0
+  },
+  "automated_avg": 0.7,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.7,
+  "grading_weights": {
+    "automated": 1.0,
+    "llm_judge": 0.0
+  },
+  "error": null,
+  "duration_seconds": 0.05,
+  "agent_used": "researcher+reviewer",
+  "timestamp": "2026-07-22T16:08:58"
+}

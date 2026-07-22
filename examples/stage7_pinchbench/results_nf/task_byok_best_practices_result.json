@@ -1,0 +1,17 @@
+{
+  "task_id": "task_byok_best_practices",
+  "status": "completed",
+  "automated_scores": {},
+  "automated_avg": 0.0,
+  "llm_judge_scores": {},
+  "llm_judge_avg": 0.0,
+  "weighted_total": 0.0,
+  "grading_weights": {
+    "automated": 1.0,
+    "llm_judge": 0.0
+  },
+  "error": null,
+  "duration_seconds": 0.0,
+  "agent_used": "miner+researcher+assayer",
+  "timestamp": "2026-07-22T16:10:53"
+}

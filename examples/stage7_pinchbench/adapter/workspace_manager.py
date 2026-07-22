@@ -30,9 +30,10 @@ logger = logging.getLogger("pinchbench.workspace")
 class WorkspaceManager:
     """管理工作区环境的创建、文件注入和清理。"""
 
-    def __init__(self, workspace_root: Path | str | None = None) -> None:
+    def __init__(self, workspace_root: Path | str | None = None, assets_cache: Path | str | None = None) -> None:
         self.workspace_root = Path(workspace_root) if workspace_root else WORKSPACE_ROOT
         self.workspace_root.mkdir(parents=True, exist_ok=True)
+        self.assets_cache = Path(assets_cache) if assets_cache else Path(__file__).resolve().parent.parent / "assets_cache"
         self._active_workspaces: dict[str, Path] = {}
 
     # ──────────────────────────────────────────────
@@ -120,7 +121,7 @@ class WorkspaceManager:
         return file_path
 
     def _download_asset(self, spec: WorkspaceFileSpec, workspace_path: Path) -> Path:
-        """从 PinchBench GitHub assets 下载文件"""
+        """从本地缓存或远程下载文件"""
         source = spec.source
         dest_name = spec.dest or Path(source).name
         file_path = workspace_path / dest_name
@@ -128,11 +129,19 @@ class WorkspaceManager:
         # 确保父目录存在
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # 如果本地已存在，跳过下载
+        # 如果工作区已有该文件，跳过
         if file_path.exists():
-            logger.info("文件已存在，跳过下载: %s", file_path)
+            logger.info("文件已存在，跳过: %s", file_path)
             return file_path
 
+        # 优先从本地缓存复制
+        cache_path = self.assets_cache / source
+        if cache_path.exists():
+            shutil.copy2(cache_path, file_path)
+            logger.info("从缓存复制: %s → %s", cache_path, file_path)
+            return file_path
+
+        # 回退到远程下载
         url = f"{PINCHBENCH_ASSETS_URL}/{source}"
         last_exc: Optional[Exception] = None
 
@@ -140,14 +149,11 @@ class WorkspaceManager:
             try:
                 resp = requests.get(url, timeout=DOWNLOAD_TIMEOUT)
                 resp.raise_for_status()
-
-                # 尝试 UTF-8 文本写入，否则二进制写入
                 try:
                     file_path.write_text(resp.text, encoding="utf-8")
                 except UnicodeEncodeError:
                     file_path.write_bytes(resp.content)
-
-                logger.info("资产文件已下载: %s → %s", url, file_path)
+                logger.info("从远程下载: %s → %s", url, file_path)
                 return file_path
             except Exception as exc:
                 last_exc = exc

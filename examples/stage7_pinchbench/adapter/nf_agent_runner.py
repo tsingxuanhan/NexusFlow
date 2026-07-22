@@ -77,7 +77,8 @@ def select_agent_for_task(task: PinchBenchTask) -> str:
     Returns:
         Agent 名称（如 'researcher'）
     """
-    agents = CATEGORY_AGENT_MAP.get(task.category, ["executor"])
+    category = task.category.lower().replace(" ", "_")
+    agents = CATEGORY_AGENT_MAP.get(category, ["executor"])
     return agents[0]
 
 
@@ -143,7 +144,10 @@ def create_agent(agent_name: str, system_prompt_override: str | None = None) -> 
         enable_compactor=True,
     )
 
-    logger.info("Agent 已创建: %s (model=%s)", agent_name, model)
+    # PinchBench 任务需要处理大输入，禁用 guardrails 避免误拦截
+    agent.guardrails = None
+
+    logger.info("Agent 已创建: %s (model=%s, guardrails=disabled)", agent_name, model)
     return agent
 
 
@@ -153,31 +157,56 @@ def create_agent(agent_name: str, system_prompt_override: str | None = None) -> 
 
 def build_user_prompt(task: PinchBenchTask, workspace_path: Path) -> str:
     """构造发送给 Agent 的用户输入。
-
-    包含：
-    - PinchBench 的原始 prompt
-    - 工作区文件路径提示
-    - 多 Session 任务的 session prompt
-
-    Args:
-        task: 任务对象
-        workspace_path: 工作区路径
-
-    Returns:
-        完整的用户 prompt
+    
+    策略：
+    - 小文件 (<5KB): 嵌入完整内容
+    - 大文件 (>=5KB): 只嵌入前30行 + 文件统计信息
+    - 输出指令根据任务类型调整
     """
     parts: list[str] = []
-
+    
     # 工作区上下文
     parts.append(f"## 工作区\n你的工作目录是: {workspace_path}\n")
-
-    # 工作区文件列表
+    
     if task.workspace_files:
-        file_list = []
+        file_contents = []
         for spec in task.workspace_files:
             fname = spec.dest or spec.path or spec.source or "unknown"
-            file_list.append(f"  - {fname}")
-        parts.append("### 可用文件\n" + "\n".join(file_list) + "\n")
+            fpath = workspace_path / fname
+            
+            # 获取文件内容
+            fcontent = None
+            if fpath.exists():
+                try:
+                    fcontent = fpath.read_text(encoding="utf-8", errors="replace")
+                except Exception:
+                    fcontent = None
+            elif spec.content:
+                fcontent = spec.content
+            
+            if fcontent is None:
+                file_contents.append(f"### {fname} (binary/unreadable)\n")
+                continue
+            
+            lines = fcontent.split("\n")
+            total_lines = len(lines)
+            total_chars = len(fcontent)
+            
+            if total_chars < 50000:
+                # 小文件：完整嵌入
+                file_contents.append(f"### {fname} ({total_lines} lines, {total_chars} chars)\n```\n{fcontent}\n```\n")
+            else:
+                # 大文件：只嵌入前30行
+                preview = "\n".join(lines[:30])
+                file_contents.append(
+                    f"### {fname} ({total_lines} lines, {total_chars} chars)\n"
+                    f"文件较大，以下是前30行预览：\n"
+                    f"```\n{preview}\n```\n"
+                    f"[文件共 {total_lines} 行，以上为前30行。请基于你的知识分析此文件。]\n"
+                )
+        
+        if file_contents:
+            parts.append("### 当前工作区文件\n" + "\n".join(file_contents))
 
     # 任务 prompt
     if task.multi_session and task.sessions:
@@ -188,12 +217,30 @@ def build_user_prompt(task: PinchBenchTask, workspace_path: Path) -> str:
     else:
         parts.append("## 任务\n" + task.prompt)
 
+    # 输出格式指令 — 根据任务类别调整
+    if task.category in ("coding",):
+        parts.append(
+            "\n## 输出要求\n"
+            "请在回复中输出修改后的每个文件的完整内容，使用以下格式：\n"
+            "### filename.ext\n"
+            "```语言\n完整文件内容\n```\n"
+            "每个需要修改的文件都必须完整输出，不要省略任何代码。"
+        )
+    else:
+        # 分析/报告类任务
+        parts.append(
+            "\n## 输出要求\n"
+            "请将分析结果保存为 `report.md` 文件。在回复中输出完整的报告内容，使用以下格式：\n"
+            "### report.md\n"
+            "```markdown\n完整报告内容\n```\n"
+            "报告应包含完整的数据分析、结论和建议。"
+        )
+
     return "\n".join(parts)
 
 
 def build_workspace_hint(workspace_path: Path) -> str:
-    """构造工作区文件路径提示，追加到 prompt 末尾。"""
-    return f"\n\n请将输出文件保存到工作目录: {workspace_path}"
+    return ""
 
 
 # ============================================================================
@@ -257,8 +304,10 @@ class NFAgentRunner:
             result.error = f"Agent 执行失败: {exc}"
             logger.error("任务 %s 执行失败: %s", task.id, exc)
 
-        # 5. 检查工作区输出文件
-        result.workspace_files_written = self._check_workspace_outputs(task, workspace_path)
+        # 5. 从 Agent 响应中提取文件内容并写入工作区
+        result.workspace_files_written = self._extract_and_write_files(
+            task, workspace_path, result.response
+        )
 
         # 6. 构建 transcript
         from .grade_bridge import build_transcript
@@ -300,97 +349,63 @@ class NFAgentRunner:
 
         return last_response
 
-    def _check_workspace_outputs(
+    def _extract_and_write_files(
         self,
         task: PinchBenchTask,
         workspace_path: Path,
+        response: str,
     ) -> list[str]:
-        """检查工作区中的输出文件
-
-        根据 prompt 中的文件名提示（如 "save to `market_research.md`"），
-        检查是否已创建。
-
-        Args:
-            task: 任务对象
-            workspace_path: 工作区路径
-
-        Returns:
-            存在的文件名列表
-        """
-        written: list[str] = []
-
-        # 从 prompt 中提取可能的输出文件名
-        import re
-        # 匹配 "save to `filename`" / "named exactly `filename`" / "write to filename"
-        filename_patterns = re.findall(
-            r'(?:save|write|output|create|named?\s+(?:exactly\s+)?)[`"]([\w.-]+(?:\.\w+)?)["`]',
-            task.prompt,
-            re.IGNORECASE,
-        )
-        # 也匹配行内的 markdown 文件名
-        filename_patterns.extend(
-            re.findall(r'`([\w-]+\.\w+)`', task.prompt)
-        )
-
-        # 去重
-        unique_names = list(dict.fromkeys(filename_patterns))
-
-        for fname in unique_names:
-            fpath = workspace_path / fname
-            if fpath.exists():
-                written.append(fname)
-                logger.info("输出文件已创建: %s", fpath)
-
-        # 如果 agent 没有自动写入文件，尝试从响应中提取并写入
-        if not written and task.status != "failed":
-            written = self._try_write_from_response(task, workspace_path)
-
-        return written
-
-    def _try_write_from_response(
-        self,
-        task: PinchBenchTask,
-        workspace_path: Path,
-    ) -> list[str]:
-        """如果 Agent 没有自动写文件，尝试从响应中提取内容并写入。
-
-        这是一个 fallback 机制：BaseAgent.chat() 只返回文本，
-        不会直接写文件。如果 prompt 要求保存文件但文件不存在，
-        尝试将 Agent 的完整响应写入目标文件。
-
-        Args:
-            task: 任务对象
-            workspace_path: 工作区路径
-
-        Returns:
-            成功写入的文件名列表
+        """从 Agent 响应中提取文件内容并写入工作区。
+        
+        策略：
+        1. 从响应的 markdown 代码块中提取文件名和内容
+        2. 将提取的内容写入工作区（覆盖原文件）
+        3. 如果没有提取到文件且任务非 coding 类，将响应保存为 report.md
         """
         import re
-
         written: list[str] = []
 
-        # 提取期望的文件名
-        filename_patterns = re.findall(
-            r'(?:save|write|output|create|named?\s+(?:exactly\s+)?)[`"]([\w.-]+\.\w+)["`]',
-            task.prompt,
-            re.IGNORECASE,
-        )
-        if not filename_patterns:
-            # 从 prompt 中的 markdown 代码块文件名提取
-            filename_patterns = re.findall(r'`([\w-]+\.\w+)`', task.prompt)
-
-        if not filename_patterns:
+        if not response:
             return written
 
-        target_fname = filename_patterns[0]
-        target_path = workspace_path / target_fname
+        # 从响应中提取文件名+代码块的模式
+        pattern1 = re.findall(
+            r'''###\s+([\w._/-]+\.[\w]+)\s*\n```(?:\w+)?\s*\n(.*?)```''',
+            response, re.DOTALL
+        )
+        pattern2 = re.findall(
+            r'''\*\*([\w._/-]+\.[\w]+)\*\*\s*\n```(?:\w+)?\s*\n(.*?)```''',
+            response, re.DOTALL
+        )
 
-        if target_path.exists():
-            return [target_fname]
+        all_matches = {}
+        for fname, code in pattern1 + pattern2:
+            clean_name = fname.strip()
+            if clean_name not in all_matches:
+                all_matches[clean_name] = code.strip()
 
-        # 尝试从 Agent 的 response 中提取 markdown 内容并写入
-        # 获取最后一次 Agent 响应
-        # 注意：此时需要从外部传入 response，这里用文件检查方式间接判断
-        logger.info("尝试 fallback 写入: %s", target_path)
+        # 写入提取到的文件
+        for fname, code_content in all_matches.items():
+            target_path = workspace_path / fname
+            target_path.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                target_path.write_text(code_content, encoding="utf-8")
+                written.append(fname)
+                logger.info("从响应提取并写入: %s (%d bytes)", fname, len(code_content))
+            except Exception as exc:
+                logger.warning("写入失败: %s - %s", fname, exc)
+
+        # Fallback: 如果没有提取到文件，将完整响应写入 report.md
+        if not written and task.category not in ("coding",):
+            report_path = workspace_path / "report.md"
+            try:
+                # 尝试提取 markdown 代码块内容
+                md_match = re.search(r'''```(?:markdown|md)\s*\n(.*?)```''', response, re.DOTALL)
+                content = md_match.group(1).strip() if md_match else response.strip()
+                report_path.write_text(content, encoding="utf-8")
+                written.append("report.md")
+                logger.info("Fallback 写入 report.md (%d bytes)", len(content))
+            except Exception as exc:
+                logger.warning("Fallback 写入失败: %s", exc)
 
         return written

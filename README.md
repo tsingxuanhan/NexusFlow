@@ -463,6 +463,19 @@ python server/nexusflow_server.py
 
 访问 Dashboard: http://localhost:8900
 
+### 端到端 Demo
+
+```bash
+# 完整演示（架构 + 组件 + PinchBench SA vs NF 对比 + HTML报告）
+python examples/demo_e2e_pinchbench.py
+
+# 仅架构展示模式（无需 API Key）
+python examples/demo_e2e_pinchbench.py --arch-only
+
+# 指定任务子集
+python examples/demo_e2e_pinchbench.py --tasks iterative_code_refine,csv_pension_liability
+```
+
 ---
 
 ## 配置说明
@@ -498,6 +511,7 @@ ollama pull qwen3.5:9b
 |------|------|
 | [技术文档 v3.0](docs/NexusFlow技术文档v3.0.md) | NexusFlow 完整技术文档（含 Stage 6-7 实验） |
 | [Stage-7 PinchBench README](examples/stage7_pinchbench/README.md) | 25 Hard Cases SA vs NF 对比实验详情 |
+| [端到端 Demo 脚本](examples/demo_e2e_pinchbench.py) | 完整展示 NexusFlow 系统：架构总览→组件验证→PinchBench对比→HTML报告 |
 | [技术文档 v2.9](docs/NexusFlow技术文档v2.9.md) | v2.9 版本存档 |
 | [Braintrust AI Evaluation Platform](https://www.braintrust.dev/) | 1,781 条真实轨迹——框架影响力 7.6 倍于模型 |
 | [Joel Niklaus — Don't Train the Model, Evolve the Harness](https://x.com/joelniklaus) | 冻结权重仅优化 Harness，3.5% → 80.1% |

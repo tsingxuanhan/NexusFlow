@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-
 """L2 回测计算 — 对比A组(单Agent) vs B组(NexusFlow)的预测精度
+
+数据文件应放置在 ../data/ 目录下:
+  - 表A_历史数据_1980-2020.xlsx
+  - 表B_回测真值.xlsx
+输出文件将保存到 ../output/ 目录。
 """
 import json
+import os
 import numpy as np
 
-with open(r"C:\Users\ASUS\WorkBuddy\2026-07-20-19-24-07\experiment_stats.json","r",encoding="utf-8") as f:
+_BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+_OUTPUT_DIR = os.path.join(_BASE_DIR, 'output')
+os.makedirs(_OUTPUT_DIR, exist_ok=True)
+
+with open(os.path.join(_OUTPUT_DIR, "experiment_stats.json"), "r", encoding="utf-8") as f:
     stats = json.load(f)
-with open(r"C:\Users\ASUS\WorkBuddy\2026-07-20-19-24-07\predictions_nexusflow.json","r",encoding="utf-8") as f:
+with open(os.path.join(_OUTPUT_DIR, "predictions_nexusflow.json"), "r", encoding="utf-8") as f:
     nf = json.load(f)
 
 sa_preds = stats["predictions"]
@@ -103,7 +113,7 @@ results["summary"] = {
     }
 }
 
-output_path = r"C:\Users\ASUS\WorkBuddy\2026-07-20-19-24-07\backtest_results.json"
+output_path = os.path.join(_OUTPUT_DIR, "backtest_results.json")
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(results, f, ensure_ascii=False, indent=2, default=str)
 print(f"\n回测结果已导出: {output_path}")

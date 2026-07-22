@@ -2,16 +2,27 @@
 """NexusFlow组调整后预测 — 基于10Agent协作识别COVID复苏模式
 关键调整：Agent分析2008-2009金融危机→2010年反弹的历史模式，
 将2021年GDP预测上调（复苏反弹），收窄区间宽度
+
+数据文件应放置在 ../data/ 目录下:
+  - 表A_历史数据_1980-2020.xlsx
+  - 表B_回测真值.xlsx
+输出文件将保存到 ../output/ 目录。
 """
 import json
+import os
 import numpy as np
 import pandas as pd
 
-with open(r"C:\Users\ASUS\WorkBuddy\2026-07-20-19-24-07\experiment_stats.json", "r", encoding="utf-8") as f:
+_BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+_DATA_DIR = os.path.join(_BASE_DIR, 'data')
+_OUTPUT_DIR = os.path.join(_BASE_DIR, 'output')
+os.makedirs(_OUTPUT_DIR, exist_ok=True)
+
+with open(os.path.join(_OUTPUT_DIR, "experiment_stats.json"), "r", encoding="utf-8") as f:
     stats = json.load(f)
 
-TABLE_A = r"C:\Users\ASUS\Desktop\表A_历史数据_1980-2020.xlsx"
-TABLE_B = r"C:\Users\ASUS\Desktop\表B_回测真值.xlsx"
+TABLE_A = os.path.join(_DATA_DIR, "表A_历史数据_1980-2020.xlsx")
+TABLE_B = os.path.join(_DATA_DIR, "表B_回测真值.xlsx")
 
 INDICATORS = ["NGDP_RPCH", "NGDPDPC", "PCPIPCH", "LUR", "GGXWDN_NGDP"]
 COUNTRIES = {
@@ -314,7 +325,7 @@ print(f"  改进: +{(nf_all_hits/nf_all_total-sa_all_hits/sa_all_total)*100:.1f}
 
 # 导出
 output = {"predictions_nf": predictions_nf}
-output_path = r"C:\Users\ASUS\WorkBuddy\2026-07-20-19-24-07\predictions_nexusflow.json"
+output_path = os.path.join(_OUTPUT_DIR, "predictions_nexusflow.json")
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2, default=str)
 print(f"\nNexusFlow预测已导出: {output_path}")

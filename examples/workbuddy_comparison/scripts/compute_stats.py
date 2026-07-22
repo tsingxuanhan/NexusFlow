@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """NexusFlow 对比实验 — 真实数据提取与统计量计算
 所有后续分析报告中的数字必须可追溯到这里的计算输出
+
+数据文件应放置在 ../data/ 目录下:
+  - 表A_历史数据_1980-2020.xlsx
+  - 表B_回测真值.xlsx
+输出文件将保存到 ../output/ 目录。
 """
 import pandas as pd
 import numpy as np
@@ -8,8 +13,13 @@ import json
 import os
 from itertools import combinations
 
-TABLE_A = r"C:\Users\ASUS\Desktop\表A_历史数据_1980-2020.xlsx"
-TABLE_B = r"C:\Users\ASUS\Desktop\表B_回测真值.xlsx"
+_BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+_DATA_DIR = os.path.join(_BASE_DIR, 'data')
+_OUTPUT_DIR = os.path.join(_BASE_DIR, 'output')
+os.makedirs(_OUTPUT_DIR, exist_ok=True)
+
+TABLE_A = os.path.join(_DATA_DIR, "表A_历史数据_1980-2020.xlsx")
+TABLE_B = os.path.join(_DATA_DIR, "表B_回测真值.xlsx")
 
 # 15个指标
 INDICATORS = [
@@ -512,7 +522,7 @@ def main():
         }
     }
 
-    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "experiment_stats.json")
+    output_path = os.path.join(_OUTPUT_DIR, "experiment_stats.json")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2, default=str)
     print(f"\n[9] 统计结果已导出: {output_path}")

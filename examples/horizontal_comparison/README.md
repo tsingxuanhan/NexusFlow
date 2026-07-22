@@ -4,6 +4,41 @@
 
 ---
 
+## ⚖️ 评分权威声明
+
+本目录存在多个版本的评分结果文件，为消除歧义，**权威评分来源**统一为以下文件：
+
+| 优先级 | 文件 | 说明 |
+|:------:|------|------|
+| **1（权威）** | `multi_framework_comparison.json` | 最新确定性规则评估（2026-07-17），覆盖全部4个框架（NexusFlow/AutoGen/CrewAI/LangGraph），**所有对外引用应以此为准** |
+| 2（权威） | `comparison_results.json` | 确定性规则评估（2026-07-14），覆盖 NexusFlow 和 AutoGen 两框架。其中 AutoGen=100 的版本已废弃（全维度满分10属于评估错误） |
+
+### 权威分数（来自 `multi_framework_comparison.json`）
+
+| 框架 | 综合得分 | 评估方法 |
+|------|:-------:|---------|
+| **NexusFlow** | **75.0** | 10维度确定性规则评估 |
+| **AutoGen** | **72.0** | 10维度确定性规则评估 |
+| **CrewAI** | **61.5** | 10维度确定性规则评估 |
+| **LangGraph** | **63.8** | 10维度确定性规则评估 |
+
+### 废弃/历史版本说明
+
+以下文件为**历史过程文件**，不应作为最终结论引用：
+
+| 文件 | 状态 | 说明 |
+|------|------|------|
+| `comparison_results.json`（AutoGen=100） | ⚠️ 部分废弃 | AutoGen 全维度满分10属评估错误，仅 NexusFlow=84.5 部分有效 |
+| `real_evaluation_results.json` | 📌 过程文件 | 早期确定性评估（NexusFlow=86.5, AutoGen=55.5），已被 `multi_framework_comparison.json` 取代 |
+| `evaluation_scores.md` | 📌 过程文件 | 细粒度评分记录（NexusFlow=92, AutoGen=88），为评分推导过程而非最终结论 |
+| `llm_evaluation_results.json` | 📌 过程文件 | LLM 5维评分（NexusFlow=75, AutoGen=72），与权威分数一致但非确定性规则评估 |
+
+详细评分方法论见 [SCORING_METHODOLOGY.md](SCORING_METHODOLOGY.md)。
+
+---
+
+---
+
 ## 🎯 实验目标
 
 使用**统一任务**（WHO BRICS五国健康分析）、**统一LLM**（DeepSeek）、**统一数据源**（WHO GHO API），对比 NexusFlow 与 AutoGen 两个框架的表现，验证NexusFlow的差异化优势。

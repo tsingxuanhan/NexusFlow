@@ -9,9 +9,20 @@ NexusFlow 端云协同 真实 LLM Benchmark
   端侧（Ollama 本地） : 标准化任务（背景调研、基础计算、代码验证、归档整理）
 
 数据：DBnomics IMF WEO 2025.4 真实宏观经济数据（20国×5指标×41年）
+
+数据文件应放置在 ../data/ 目录下:
+  - 表A_历史数据_1980-2020.xlsx
+  - 表B_回测真值.xlsx
+前序脚本生成的 data_cloud.txt / data_edge.txt 位于 ../output/ 目录。
+输出文件将保存到 ../output/ 目录。
 """
 import json, os, sys, time, requests, traceback
 from datetime import datetime
+
+_BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+_DATA_DIR = os.path.join(_BASE_DIR, 'data')
+_OUTPUT_DIR = os.path.join(_BASE_DIR, 'output')
+os.makedirs(_OUTPUT_DIR, exist_ok=True)
 
 # ============================================================
 # 配置
@@ -23,7 +34,7 @@ DEEPSEEK_MODEL = 'deepseek-chat'
 OLLAMA_URL = 'http://127.0.0.1:11434/api/chat'
 OLLAMA_MODEL = 'qwen3.5:9b'  # 端侧模型
 
-OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = _OUTPUT_DIR
 
 # ============================================================
 # 数据加载
@@ -44,7 +55,7 @@ DATA_CLOUD, DATA_EDGE = load_data()
 def load_truth():
     """加载表B 2021-2025 真值"""
     import openpyxl
-    XLSX_B = r'C:\Users\ASUS\Desktop\表B_回测真值.xlsx'
+    XLSX_B = os.path.join(_DATA_DIR, '表B_回测真值.xlsx')
     wb = openpyxl.load_workbook(XLSX_B, data_only=True)
 
     INDICATOR_SHEETS = {

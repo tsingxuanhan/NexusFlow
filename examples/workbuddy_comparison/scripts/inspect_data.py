@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """NexusFlow 对比实验 - 数据解析脚本
 检查表A、表B的结构、数据质量、缺失分布
+
+数据文件应放置在 ../data/ 目录下:
+  - 表A_历史数据_1980-2020.xlsx
+  - 表B_回测真值.xlsx
 """
 import pandas as pd
 import numpy as np
@@ -11,8 +15,11 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 200)
 pd.set_option('display.max_rows', 100)
 
-TABLE_A = r"C:\Users\ASUS\Desktop\表A_历史数据_1980-2020.xlsx"
-TABLE_B = r"C:\Users\ASUS\Desktop\表B_回测真值.xlsx"
+_BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+_DATA_DIR = os.path.join(_BASE_DIR, 'data')
+
+TABLE_A = os.path.join(_DATA_DIR, "表A_历史数据_1980-2020.xlsx")
+TABLE_B = os.path.join(_DATA_DIR, "表B_回测真值.xlsx")
 
 # 任务书定义的15个指标代码
 EXPECTED_INDICATORS = [

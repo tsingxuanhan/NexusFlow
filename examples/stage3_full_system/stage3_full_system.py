@@ -37,7 +37,7 @@ OUTPUT_BASE = "/app/data/所有对话/主对话/nexusflow-ppt"
 NOAA_CLI = "/app/data/所有对话/主对话/.skills/skill_noaa-data-skill/bin/_cli_wrapper.py"
 WHO_CLI = "/app/data/所有对话/主对话/.skills/skill_who-data-skill/scripts/_cli_wrapper.py"
 
-DEEPSEEK_API_KEY = "sk-your-key-here"
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
 DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # 添加NexusFlow到sys.path

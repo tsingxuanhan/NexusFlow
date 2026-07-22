@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """
 数据准备：验证 DeepSeek API + 提取表A数据为 prompt 文本
+
+数据文件应放置在 ../data/ 目录下:
+  - 表A_历史数据_1980-2020.xlsx
+输出文件将保存到 ../output/ 目录。
 """
 import os, sys, json, time, requests
+
+_BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+_DATA_DIR = os.path.join(_BASE_DIR, 'data')
 
 # ============================================================
 # 1. 验证新 DeepSeek API key
@@ -48,7 +55,7 @@ except ImportError:
     os.system(f'"{sys.executable}" -m pip install openpyxl -q')
     import openpyxl
 
-XLSX_PATH = r'C:\Users\ASUS\Desktop\表A_历史数据_1980-2020.xlsx'
+XLSX_PATH = os.path.join(_DATA_DIR, '表A_历史数据_1980-2020.xlsx')
 wb = openpyxl.load_workbook(XLSX_PATH, data_only=True)
 print(f'  Sheet 数量: {len(wb.sheetnames)}')
 print(f'  Sheet 名称: {wb.sheetnames}')
@@ -213,7 +220,8 @@ print(f'  端侧版数据: {len(edge_data_text)} chars (~{edge_token_est} tokens
 # ============================================================
 # 6. 保存到文件
 # ============================================================
-OUTPUT_DIR = r'C:\Users\ASUS\WorkBuddy\2026-07-20-19-24-07'
+OUTPUT_DIR = os.path.join(_BASE_DIR, 'output')
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 with open(os.path.join(OUTPUT_DIR, 'data_cloud.txt'), 'w', encoding='utf-8') as f:
     f.write(cloud_data_text)

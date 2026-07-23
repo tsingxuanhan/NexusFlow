@@ -1,5 +1,21 @@
 # Changelog
 
+## [v3.3.0] - 2026-07-23
+
+### Added
+- **端边云实机验证**：使用项目真实 `EdgeCloudScheduler` 完成 27 次真实 LLM 调用验证
+  - 三层真实端点：Edge(qwen3.5:9b) / Fog(deepseek-r1:14b) / Cloud(DeepSeek API)
+  - 11 次调度决策 + 2 次层间迁移 + 3 次容错 Fallback
+  - 混合调度模式节省 88% API 成本，隐私合规率 25%（纯云端 0%）
+  - 验证脚本：`examples/edge_cloud_scheduling/edge_cloud_real_verification.py`
+  - 验证报告：`examples/edge_cloud_scheduling/real_machine_report.md`
+  - 原始数据：`examples/edge_cloud_scheduling/real_machine_data.json`
+
+### Changed
+- README.md 添加端边云实机验证结果摘要
+- 版本号更新至 v3.3.0
+
+
 NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/)，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
 ## [Unreleased]

@@ -6,7 +6,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![Version](https://img.shields.io/badge/Version-3.1-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-3.1.0-green.svg)](CHANGELOG.md)
+[![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](.github/workflows/tests.yml)
+[![Security](https://img.shields.io/badge/Security-Gitleaks-blue.svg)](SECURITY.md)
 [![Code Size](https://img.shields.io/badge/Code-167%20Python%20files%20%7C%20524%20total-orange.svg)]()
 [![Benchmarks](https://img.shields.io/badge/Benchmarks-7%20Stages%20%7C%20PinchBench-red.svg)]()
 
@@ -512,6 +514,10 @@ ollama pull qwen3.5:9b
 | [技术文档 v3.1](docs/NexusFlow技术文档v3.1.md) | NexusFlow 完整技术文档（含 Stage 6-7 实验） |
 | [Stage-7 PinchBench README](examples/stage7_pinchbench/README.md) | 25 Hard Cases SA vs NF 对比实验详情 |
 | [端到端 Demo 脚本](examples/demo_e2e_pinchbench.py) | 完整展示 NexusFlow 系统：架构总览→组件验证→PinchBench对比→HTML报告 |
+| [变更日志](CHANGELOG.md) | 版本变更记录（v1.0 → v3.1） |
+| [贡献指南](CONTRIBUTING.md) | 开发环境、提交规范、代码风格 |
+| [安全策略](SECURITY.md) | 漏洞报告流程与安全实践 |
+| [审计报告](audits/) | 代码质量审计报告存档 |
 | [技术文档 v2.9](docs/NexusFlow技术文档v2.9.md) | v2.9 版本存档 |
 | [Braintrust AI Evaluation Platform](https://www.braintrust.dev/) | 1,781 条真实轨迹——框架影响力 7.6 倍于模型 |
 | [Joel Niklaus — Don't Train the Model, Evolve the Harness](https://x.com/joelniklaus) | 冻结权重仅优化 Harness，3.5% → 80.1% |

@@ -3,6 +3,22 @@
 NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/)，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
 ## [Unreleased]
+
+### 新增
+- **WorkBuddy 宏观经济对比实验完整数据**：`examples/workbuddy_comparison/`（含 real_llm/ 真实 LLM 端云验证、scripts/ 分析脚本、deliverables/ 6份交付物）
+- 真实 LLM 端边云回测数据（`data_cloud.txt`, `data_edge.txt`, `data_meta.json`）
+- NexusFlow 预测 vs Single-Agent 预测的 macro benchmark 对比脚本
+
+### 重构
+- **README 大幅精简**：540 行 → 193 行（64% 缩减）
+  - 拆分出 `docs/ARCHITECTURE.md`（系统架构 + Agent 角色 + 模块详解）
+  - 拆分出 `docs/EXPERIMENTS.md`（Stage 1-7 全量实验数据）
+  - Quick Start 前置，新增 Showcase 在线报告链接
+
+### 修复
+- 替换 README 中无效的 `localhost:8900` 链接为实际报告文件路径
+
+### 工程
 - 密钥泄露检测（gitleaks）集成至 CI
 - CONTRIBUTING.md 贡献指南
 
@@ -31,7 +47,10 @@ NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachan
 ### 新增
 - **Stage-6 WorkBuddy 宏观经济对比实验**：DBnomics IMF WEO 真实数据，20 国×15 指标×41 年
 - **Stage-6b L3 认知任务 Benchmark**：9 类高复杂度认知能力对比（模式挖掘、因果推断、反事实推理等）
-- 真实 LLM 端边云协同实机验证（DeepSeek API + Ollama 本地模型，零模拟）
+- **真实 LLM 端边云协同 Benchmark**：DeepSeek API（云端）+ Ollama 本地模型（端/边），零模拟全流程实机验证
+  - 数据准备：DBnomics IMF WEO 20国×15指标×41年
+  - 端侧数据 + 云端数据 + 元信息 + 实验报告 + 结果 JSON
+  - API Key 全部改为环境变量，确保可复现
 - 技术文档从 v2.9 升级至 v3.0（2071 行）
 
 ### 核心数据
@@ -54,8 +73,13 @@ NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachan
   - EdgeCloudScheduler EmbeddingModelRouter（GPU 感知）
   - NIM API 模式（云端推理，零外部依赖）
 - **30 页精华版文档**（v2.9.1）
+- **NIM/OpenRouter API 模式**：NemotronEmbeddingProvider 支持 NIM 云端推理（零外部依赖）和 OpenRouter 聚合路由两种部署模式
 - **端边云调度实证实验** + Dashboard 截图
-- Nemotron Benchmark 实验报告（E1-E4）
+- **Nemotron Benchmark 实验报告（E1-E4）**：
+  - E1：全仓库混合检索精度对比（TF-IDF vs BM25 vs Nemotron vs 三路 RRF）
+  - E2：论文库语义检索召回率
+  - E3：端边云三模式延迟/吞吐对比
+  - E4：GPU 感知路由准确率（EmbeddingModelRouter）
 
 ### 工程性重构（2026-07-17）
 - P0：删除 CrewAI 死代码、清理历史版本（9.6MB）、添加 pyproject.toml

@@ -2,7 +2,8 @@
 """Batch 1: Steps 1-3 (Coordinator + Strategist)"""
 import requests, json, os, time
 
-BASE = "/app/data/所有对话/主对话/nexusflow-ppt/stage4_fifty_steps"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE = os.path.join(REPO_ROOT, "examples", "stage4_fifty_steps")
 ART = os.path.join(BASE, "stage4_artifacts")
 
 def call_ds(sys_p, usr_p, max_t=3000):

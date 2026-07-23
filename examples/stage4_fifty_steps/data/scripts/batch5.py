@@ -2,7 +2,8 @@
 """Batch 5: Steps 46-50 (Report Generation)"""
 import requests, json, os
 
-ART = "/app/data/所有对话/主对话/nexusflow-ppt/stage4_fifty_steps/stage4_artifacts"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+ART = os.path.join(REPO_ROOT, "examples", "stage4_fifty_steps", "stage4_artifacts")
 
 def call_ds(sys_p, usr_p, max_t=3000):
     r = requests.post("https://api.deepseek.com/v1/chat/completions",

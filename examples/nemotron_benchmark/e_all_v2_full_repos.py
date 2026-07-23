@@ -22,9 +22,10 @@ from typing import List, Dict, Tuple
 random.seed(42)
 
 # === 路径配置 ===
-WORKSPACE = os.path.expanduser("/app/data/所有对话/主对话")
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+WORKSPACE = os.path.dirname(REPO_ROOT)  # parent of repo root
 REPO_DIRS = {
-    "NexusFlow": os.path.join(WORKSPACE, "NexusFlow-repo"),
+    "NexusFlow": REPO_ROOT,
 }
 # 动态加载 all-repos 下所有仓库
 ALL_REPOS_DIR = os.path.join(WORKSPACE, "all-repos")

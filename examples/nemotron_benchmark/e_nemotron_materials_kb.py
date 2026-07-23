@@ -22,9 +22,10 @@ from typing import List, Dict, Tuple
 random.seed(42)
 
 # === 路径 ===
-WORKSPACE = "/app/data/所有对话/主对话"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+WORKSPACE = os.path.dirname(REPO_ROOT)  # parent of repo root
 MATERIALS_KB = os.path.join(WORKSPACE, "all-repos", "materials-kb")
-BENCH_DIR = os.path.join(WORKSPACE, "NexusFlow-repo", "examples", "nemotron_benchmark")
+BENCH_DIR = os.path.join(REPO_ROOT, "examples", "nemotron_benchmark")
 RESULTS_DIR = os.path.join(BENCH_DIR, "results")
 os.makedirs(RESULTS_DIR, exist_ok=True)
 

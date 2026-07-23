@@ -41,8 +41,8 @@ dependencies = [
 Homepage = "https://github.com/tsingxuanhan/NexusFlow"
 Issues = "https://github.com/tsingxuanhan/NexusFlow/issues"
 
-[tool.setuptools]
-py-modules = ["run"]
+[project.scripts]
+nexusflow = "nexusflow.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["nexusflow*", "server*", "tools*", "evaluation*"]

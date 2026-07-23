@@ -2,10 +2,11 @@
 """Batch 2: Steps 4-13 (Literature + Hypothesis) + Steps 14-17 (NOAA/WHO Data)"""
 import requests, json, os, subprocess, time
 
-BASE = "/app/data/所有对话/主对话/nexusflow-ppt/stage4_fifty_steps"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE = os.path.join(REPO_ROOT, "examples", "stage4_fifty_steps")
 ART = os.path.join(BASE, "stage4_artifacts")
-NOAA = "/app/data/所有对话/主对话/.skills/skill_noaa-data-skill/bin/_cli_wrapper.py"
-WHO = "/app/data/所有对话/主对话/.skills/skill_who-data-skill/scripts/_cli_wrapper.py"
+NOAA = os.environ.get("NOAA_CLI_PATH", os.path.join(REPO_ROOT, "..", ".skills", "skill_noaa-data-skill", "bin", "_cli_wrapper.py"))
+WHO = os.environ.get("WHO_CLI_PATH", os.path.join(REPO_ROOT, "..", ".skills", "skill_who-data-skill", "scripts", "_cli_wrapper.py"))
 
 def call_ds(sys_p, usr_p, max_t=3000):
     r = requests.post("https://api.deepseek.com/v1/chat/completions",

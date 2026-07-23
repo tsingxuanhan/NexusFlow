@@ -237,3 +237,58 @@
 3. **动态终止机制锁定最优区间**：FusionJudge 动态终止自动锁定 2-3 轮平台期
 
 这与 Shannon 信道理论的映射一致：2 轮 = Nyquist 采样下界，2-3 轮 = 质量平台期，超过 3 轮 = 边际收益递减。
+
+---
+
+## 评分方法说明
+
+### Stage 1-2（NOAA/WHO）
+
+- **NOAA 评分**：基于 NOAA CDO 真实观测数据，计算 tmax/tmin/prcp 三物理量的 MAPE。评分 = 100 - MAPE（百分比）。
+- **WHO 评分**：基于 WHO GHO 真实指标数据，按 7 个健康维度评估排名准确性。完全匹配=100，每偏离一级扣 15 分。
+- **评分脚本**：[`examples/stage1_single_vs_6roles/data/noaa_v2/CORRECTION.md`](../examples/stage1_single_vs_6roles/data/noaa_v2/CORRECTION.md) 记录了口径修正过程。
+
+### Stage 4-5（步数 Benchmark）
+
+- **质量分定义**：每步由 LLM Judge（DeepSeek-Chat，temperature=0）按 10 分制评分。评分维度：信息增量(30%)、逻辑严谨性(25%)、数据准确性(25%)、结论可操作性(20%)。
+- **评分 Prompt**：固定模板，要求 Judge 输出 JSON 格式 `{score, rationale}`，确保可追溯。
+- **评分数据**：[`examples/stage5_eighty_steps/`](../examples/stage5_eighty_steps/) 包含逐步评分 JSON。
+- **局限性**：LLM-as-judge 本身存在偏差，但同一 Judge 对 SA 和 NF 使用相同模板，相对差异可比。
+
+### Stage 6（WorkBuddy 宏观经济）
+
+- **D1-D4 评分**：10 分制，由确定性规则计算（如命中率 = 预测区间覆盖真值的比例）。
+- **D5-D6 评分**：协作效率和可复现性为定性评估（5 分制 → 10 分制线性映射）。
+- **回测真值**：IMF WEO 2025.4 实际数据（表B），完全独立于训练集（表A 截止 2020 年）。
+
+### Stage 6b（L3 认知任务）
+
+- **9 维评分**：LLM Judge 按 9 个维度（信息完整性、分析深度、洞察质量、一致性、辩论质量、预测精度、因果推理、异常检测、可操作性）打分。
+- **每个任务**：同一 LLM 在 SA 和 NF 模式下各执行 3 次，取均值消除随机性。
+
+### Stage 7（PinchBench）
+
+- **评分来源**：PinchBench 原生评分引擎（`lib_grading.py`），支持三种模式：
+  - **Automated checks**：确定性代码验证（如文件存在、JSON 格式正确）
+  - **LLM Judge**：基于 GPT-4 级模型的语义评分
+  - **Mixed**：两者加权组合
+- **与 Orion Mission Mode 的对比说明**：Orion 报告综合得分 94.6%（PinchBench v2 全量 148 任务），NexusFlow Core 子集得分 78.4%（21 任务）。**两者不可直接对比**，原因：
+  1. **任务集不同**：Orion 跑全量 148 任务，NexusFlow 仅跑 Core 子集 21 任务
+  2. **工具链差异**：Orion 配备完整工具链（文件系统操作、代码执行、外部 API 调用），NexusFlow 当前以 LLM 文本生成为主，缺少原生工具调用能力
+  3. **弱项暴露**：NexusFlow 在 LOG_ANALYSIS（0%）和 INTEGRATIONS（4%）上失分严重，这两个类别高度依赖文件系统操作和外部工具调用能力
+  4. **强项验证**：在 CODING（95.2%）、CSV_ANALYSIS（96%）、ANALYSIS（96.5%）等推理密集型任务上表现优异，验证了 CDoL 架构在认知任务上的优势
+
+### 横向对比
+
+- **AutoGen**：真实执行，使用 `autogen_agentchat 0.7.5`，RoundRobinGroupChat 模式。
+- **CrewAI**：⚠️ 因 Python 3.13 兼容性问题无法安装，评分为基于文档和公开 Benchmark 的估算值，非真实执行结果。
+- **LangGraph**：同上，基于文档估算。
+
+---
+
+## 已知局限与诚实声明
+
+1. **NexusFlow 当前是"编排框架"而非"工具执行框架"**：核心优势在多 Agent 认知协作（CDoL），但缺少原生 function-calling / tool-use 闭环。PinchBench 中需要文件系统操作的任务（日志分析、工具集成）得分极低，反映了这一短板。
+2. **LLM-as-judge 偏差**：Stage 4-5 的质量评分依赖 LLM 评判，存在固有偏差。我们使用同一 Judge 和相同模板保证相对可比性，但绝对分值仅供参考。
+3. **CrewAI/LangGraph 对比为估算**：受限于环境兼容性，这两个框架的横向对比数据非真实执行产出，在解读时需注意。
+4. **PinchBench Core 子集 vs 全量**：78.4% 基于 21 个 Core 任务，不代表全量 148 任务的表现。全量评测需要补齐工具链能力后重新运行。

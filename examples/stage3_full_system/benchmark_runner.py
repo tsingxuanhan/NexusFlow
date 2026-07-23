@@ -87,8 +87,8 @@ def llm_chat(prompt: str, system: str = "", model: str = "deepseek-chat",
 # ============================================================
 # Data Skill CLI Wrappers
 # ============================================================
-NOAA_CLI = "/app/data/所有对话/主对话/.skills/skill_noaa-data-skill/bin/_cli_wrapper.py"
-WHO_CLI = "/app/data/所有对话/主对话/.skills/skill_who-data-skill/scripts/_cli_wrapper.py"
+NOAA_CLI = os.environ.get("NOAA_CLI_PATH", os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), ".skills", "skill_noaa-data-skill", "bin", "_cli_wrapper.py"))
+WHO_CLI = os.environ.get("WHO_CLI_PATH", os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), ".skills", "skill_who-data-skill", "scripts", "_cli_wrapper.py"))
 
 data_call_count = 0
 
@@ -104,7 +104,7 @@ def call_noaa(operation: str, params: Dict[str, str] = None) -> str:
     
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=60,
-                              cwd="/app/data/所有对话/主对话/.skills/skill_noaa-data-skill")
+                              cwd=os.path.dirname(NOAA_CLI))
         return result.stdout.strip()
     except Exception as e:
         return f"[NOAA ERROR: {e}]"
@@ -122,7 +122,7 @@ def call_who(operation: str, params: Dict[str, str] = None) -> str:
     
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=60,
-                              cwd="/app/data/所有对话/主对话/.skills/skill_who-data-skill")
+                              cwd=os.path.dirname(WHO_CLI))
         return result.stdout.strip()
     except Exception as e:
         return f"[WHO ERROR: {e}]"
@@ -691,7 +691,7 @@ if __name__ == "__main__":
     import sys
     
     task = sys.argv[1] if len(sys.argv) > 1 else "both"
-    base_dir = "/app/data/所有对话/主对话/nexusflow-ppt"
+    base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "output")
     
     if task in ("noaa", "both"):
         noaa_result = run_benchmark(

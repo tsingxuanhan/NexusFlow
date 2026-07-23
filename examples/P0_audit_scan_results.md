@@ -40,8 +40,8 @@
 
 | 文件 | 行号 | 原问题 | 修复方式 |
 |------|:----:|------|---------|
-| `stage7_pinchbench/adapter/config.py` | L14 | 硬编码回退密钥 `sk-e7bdbfd58dc847468d613411cee35951` | 改为 `os.environ.get("DEEPSEEK_API_KEY", "") or ""` |
-| `workbuddy_comparison/real_llm/prepare_real_data.py` | L10 | 硬编码 `NEW_KEY = 'sk-41c92afd7cb5461b842a9874f7ed1f2c'` | 改为 `os.environ.get('DEEPSEEK_API_KEY', '')` |
+| `stage7_pinchbench/adapter/config.py` | L14 | 硬编码回退密钥 `sk-****...****` | 改为 `os.environ.get("DEEPSEEK_API_KEY", "") or ""` |
+| `workbuddy_comparison/real_llm/prepare_real_data.py` | L10 | 硬编码 `NEW_KEY = 'sk-****...****'` | 改为 `os.environ.get('DEEPSEEK_API_KEY', '')` |
 
 #### 残留风险
 

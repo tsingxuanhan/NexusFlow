@@ -29,3 +29,7 @@ docs/iteration/versions/
 # CodeAct runtime output
 codeact/
 *backup*
+
+# Experiment generated outputs
+examples/routing_experiment_report.html
+examples/routing_experiment_results.json

@@ -32,10 +32,13 @@ from dataclasses import dataclass, field
 # ============================================================
 # 0. 环境配置
 # ============================================================
-NEXUSFLOW_DIR = "/app/data/所有对话/主对话/NexusFlow-repo"
-OUTPUT_BASE = "/app/data/所有对话/主对话/nexusflow-ppt"
-NOAA_CLI = "/app/data/所有对话/主对话/.skills/skill_noaa-data-skill/bin/_cli_wrapper.py"
-WHO_CLI = "/app/data/所有对话/主对话/.skills/skill_who-data-skill/scripts/_cli_wrapper.py"
+# 自动检测仓库根目录（支持任意部署位置）
+NEXUSFLOW_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+OUTPUT_BASE = os.path.join(NEXUSFLOW_DIR, 'examples', 'stage3_full_system', 'output')
+
+# 数据技能 CLI 路径（可通过环境变量覆盖）
+NOAA_CLI = os.environ.get('NOAA_CLI_PATH', os.path.join(NEXUSFLOW_DIR, '..', '.skills', 'skill_noaa-data-skill', 'bin', '_cli_wrapper.py'))
+WHO_CLI = os.environ.get('WHO_CLI_PATH', os.path.join(NEXUSFLOW_DIR, '..', '.skills', 'skill_who-data-skill', 'scripts', '_cli_wrapper.py'))
 
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
 DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
@@ -111,7 +114,7 @@ def call_noaa(operation: str, params: Dict[str, str] = None) -> str:
             cmd.extend(["--param", f"{k}={v}"])
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=60,
-                          cwd="/app/data/所有对话/主对话/.skills/skill_noaa-data-skill")
+                          cwd=os.path.dirname(NOAA_CLI))
         return r.stdout.strip()
     except Exception as e:
         return f"[NOAA_ERROR: {e}]"
@@ -125,7 +128,7 @@ def call_who(operation: str, params: Dict[str, str] = None) -> str:
             cmd.extend(["--param", f"{k}={v}"])
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=60,
-                          cwd="/app/data/所有对话/主对话/.skills/skill_who-data-skill")
+                          cwd=os.path.dirname(WHO_CLI))
         return r.stdout.strip()
     except Exception as e:
         return f"[WHO_ERROR: {e}]"

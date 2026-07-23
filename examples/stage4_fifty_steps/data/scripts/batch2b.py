@@ -2,9 +2,10 @@
 """Batch 2b: Fix NOAA data + additional WHO data"""
 import os, subprocess
 
-ART = "/app/data/所有对话/主对话/nexusflow-ppt/stage4_fifty_steps/stage4_artifacts"
-NOAA = "/app/data/所有对话/主对话/.skills/skill_noaa-data-skill/bin/_cli_wrapper.py"
-WHO = "/app/data/所有对话/主对话/.skills/skill_who-data-skill/scripts/_cli_wrapper.py"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+ART = os.path.join(REPO_ROOT, "examples", "stage4_fifty_steps", "stage4_artifacts")
+NOAA = os.environ.get("NOAA_CLI_PATH", os.path.join(REPO_ROOT, "..", ".skills", "skill_noaa-data-skill", "bin", "_cli_wrapper.py"))
+WHO = os.environ.get("WHO_CLI_PATH", os.path.join(REPO_ROOT, "..", ".skills", "skill_who-data-skill", "scripts", "_cli_wrapper.py"))
 
 def noaa(cmd, params=None):
     c = ["python3", NOAA, "call", cmd]

@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use NexusFlow in your research, please cite it as below."
+title: "NexusFlow: A Group Intelligence Engine for Ultra-Long Complex Tasks via Cognitive Division of Labor"
+authors:
+  - family-names: "Jing"
+    given-names: "Xuanhan"
+    alias: "素云秋"
+  - family-names: "Liu"
+    given-names: "Yunze"
+    alias: "炉守"
+version: "3.1.0"
+date-released: "2026-07-23"
+url: "https://github.com/tsingxuanhan/NexusFlow"
+repository-code: "https://github.com/tsingxuanhan/NexusFlow"
+license: "MIT"
+abstract: >
+  NexusFlow is the first group intelligence engine implementing Cognitive Division
+  of Labor (CDoL). Unlike traditional task-splitting multi-agent systems, NexusFlow
+  creates productive information asymmetry, forcing each agent to develop the ability
+  to reverse-engineer the context seen by others from their outputs, yielding reasoning
+  depth that surpasses any single agent. Validated through 7-stage progressive
+  benchmarks including PinchBench Hard Cases (+6.7% over single-agent baseline) and
+  WorkBuddy macroeconomic analysis (+23.4% weighted score).
+keywords:
+  - "multi-agent"
+  - "cognitive-architecture"
+  - "group-intelligence"
+  - "AGI"
+  - "edge-cloud-scheduling"
+  - "benchmark"
+preferred-citation:
+  type: conference
+  title: "NexusFlow: Cognitive Division of Labor for Ultra-Long Complex Tasks"
+  authors:
+    - family-names: "Jing"
+      given-names: "Xuanhan"
+    - family-names: "Liu"
+      given-names: "Yunze"
+  conference:
+    name: "荣耀揭榜挂帅赛题 XH-202631"
+  year: 2026

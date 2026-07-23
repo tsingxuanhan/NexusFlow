@@ -1,0 +1,43 @@
+# Gitleaks configuration for NexusFlow
+# https://github.com/gitleaks/gitleaks
+
+title = "NexusFlow Gitleaks Config"
+
+[extend]
+# 使用 gitleaks 内置的默认规则集
+useDefault = true
+
+[[rules]]
+id = "deepseek-api-key"
+description = "DeepSeek API Key"
+regex = '''sk-[a-zA-Z0-9]{20,}'''
+tags = ["api-key", "deepseek"]
+
+[[rules]]
+id = "nvidia-nim-key"
+description = "NVIDIA NIM API Key"
+regex = '''nvapi-[a-zA-Z0-9_-]{20,}'''
+tags = ["api-key", "nvidia"]
+
+[[rules]]
+id = "generic-api-key-nexusflow"
+description = "Generic API Key in source code"
+regex = '''(?i)(api[_-]?key|secret|token|password)\s*[:=]\s*['"][a-zA-Z0-9]{16,}['"]'''
+tags = ["api-key", "generic"]
+
+[allowlist]
+description = "允许列表"
+paths = [
+    '''^\.env\.example$''',
+    '''^docs/.*\.md$''',
+    '''^CHANGELOG\.md$''',
+    '''^README.*\.md$''',
+    '''^tests/.*\.py$''',
+    '''^\.gitleaks\.toml$''',
+]
+regexes = [
+    '''(?i)placeholder''',
+    '''(?i)example''',
+    '''(?i)your.*key''',
+    '''(?i)sk-xxx''',
+]

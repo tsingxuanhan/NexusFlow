@@ -91,3 +91,13 @@ examples/
 | NexusFlow | 84.5 | 89.8s | 7 | 18,799 | real (CDoL) |
 
 > 注: 横向对比是简单查询任务，NexusFlow的核心优势在复杂任务（Stage-4/5）。
+
+### edge_cloud_scheduling/ — 端边云调度验证
+
+| 文件 | 说明 |
+|:-----|:-----|
+| `edge_cloud_real_verification.py` | **实机验证脚本**（v3.3.0）：使用真实 EdgeCloudScheduler + 真实 LLM 端点 |
+| `real_machine_report.md` | **实机验证报告**：27次真实LLM调用，11次调度决策，混合模式节省88%成本 |
+| `real_machine_data.json` | **实机验证原始数据**：JSON格式完整实验数据 |
+| `edge_cloud_scheduling_experiment.py` | 模拟验证脚本（调度逻辑测试，无真实LLM调用） |
+| `scheduling_experiment_report.md` | 模拟验证报告（50次调度决策，0.00s耗时） |

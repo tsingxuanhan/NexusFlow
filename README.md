@@ -39,52 +39,72 @@
 
 ## 快速开始
 
-### 环境要求
-
-- Python 3.10+
-- [Ollama](https://ollama.com/)（本地部署）
-- DeepSeek API Key（可选，用于云端 Agent）
-
-### 安装
+### 🐳 Docker（推荐）
 
 ```bash
-git clone https://github.com/tsingxuanhan/NexusFlow.git
-cd NexusFlow
-pip install -r requirements.txt
-
-# 配置环境变量
-cp .env.example .env
-# 编辑 .env 填入你的 API Key
+git clone https://github.com/tsingxuanhan/NexusFlow.git && cd NexusFlow
+cp .env.example .env   # 填入 API Key
+docker compose up -d
 ```
 
-### 运行
+访问 `http://localhost:8900` 即可使用。
+
+<details>
+<summary>需要本地大模型？</summary>
 
 ```bash
-# 一键启动（推荐）
-python run.py
+docker compose --profile local up -d   # 同时启动 Ollama
+docker compose exec ollama ollama pull deepseek-r1:14b
+```
+</details>
 
+### 📦 pip 安装
+
+```bash
+git clone https://github.com/tsingxuanhan/NexusFlow.git && cd NexusFlow
+pip install -e .
+nexusflow doctor    # 检查环境
+nexusflow serve     # 启动服务
+```
+
+### ⚡ 快速体验
+
+```bash
 # 端到端 Demo（架构展示，无需 API Key）
 python examples/demo_e2e_pinchbench.py --arch-only
 
-# 完整 Demo（含 SA vs NF PinchBench 对比 + HTML报告）
+# 完整 Demo（含 SA vs NF PinchBench 对比 + HTML 报告）
 python examples/demo_e2e_pinchbench.py
+
+# 查看 CLI 帮助
+nexusflow --help
 ```
 
-运行完成后，在浏览器打开 `examples/demo_e2e_report.html` 查看可视化报告
-
-### 端边云配置
+<details>
+<summary>🛠️ 开发模式</summary>
 
 ```bash
-# Ollama 模型安装
-ollama pull deepseek-r1:14b
-ollama pull qwen3.5:9b
+pip install -e ".[dev]"
+make test        # 运行测试
+make lint        # 代码检查
+make format      # 代码格式化
+make check       # 全套检查（lint + format + test）
+make docker-build  # 构建 Docker 镜像
 ```
+</details>
+
+### 端边云配置
 
 | 层级 | 模型 | Agent |
 |------|------|-------|
 | ☁️ 云端 | DeepSeek API | Coordinator, Planner, Archivist, Reviewer, Caster, Researcher |
 | 🖥️ 边端 | Ollama 本地 | Executor, Miner |
 | 📱 终端 | Ollama 本地 | Assayer, Artisan |
+
+```bash
+ollama pull deepseek-r1:14b
+ollama pull qwen3.5:9b
+```
 
 ---
 

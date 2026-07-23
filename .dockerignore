@@ -1,0 +1,41 @@
+.git
+.github
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docs (not needed in image)
+docs/iteration/
+*.pdf
+
+# Test and dev artifacts
+codeact/
+od-design/
+.local/
+
+# Large data files
+*.npy
+*.npz
+*.pkl
+*.sqlite3
+data/

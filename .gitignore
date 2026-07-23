@@ -33,3 +33,12 @@ codeact/
 # Experiment generated outputs
 examples/routing_experiment_report.html
 examples/routing_experiment_results.json
+
+# Docker volumes (local dev)
+docker-data/
+
+# IDE / editor
+*.code-workspace
+
+# Coverage
+coverage.xml

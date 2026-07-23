@@ -1,0 +1,53 @@
+# ============================================================
+# NexusFlow — Docker Compose
+# ============================================================
+# Usage:
+#   docker compose up              # Start NexusFlow server
+#   docker compose --profile local up  # + local Ollama
+#   docker compose down -v         # Stop and remove volumes
+# ============================================================
+
+services:
+  # Core NexusFlow service
+  nexusflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nexusflow-server
+    ports:
+      - "${NEXUSFLOW_PORT:-8900}:8900"
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      - NEXUSFLOW_DATA_DIR=/app/data
+      - NEXUSFLOW_LOG_DIR=/app/logs
+    volumes:
+      - nexusflow-data:/app/data
+      - nexusflow-logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # Optional: Local Ollama for on-premise LLM
+  ollama:
+    image: ollama/ollama:latest
+    container_name: nexusflow-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    profiles:
+      - local
+    restart: unless-stopped
+
+volumes:
+  nexusflow-data:
+    driver: local
+  nexusflow-logs:
+    driver: local
+  ollama-data:
+    driver: local

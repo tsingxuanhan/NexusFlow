@@ -70,7 +70,7 @@ python examples/demo_e2e_pinchbench.py --arch-only
 python examples/demo_e2e_pinchbench.py
 ```
 
-访问 Dashboard: http://localhost:8900
+运行完成后，在浏览器打开 `examples/demo_e2e_report.html` 查看可视化报告
 
 ### 端边云配置
 

@@ -6,7 +6,7 @@ NexusFlow End-to-End Demo
 完整展示 NexusFlow 修复后系统的多智能体协作能力。
 
 架构:
-  NexusFlow v3.1 — 动态异构群体智能架构
+  NexusFlow v3.2 — 动态异构群体智能架构
   ┌─────────────────────────────────────────────────┐
   │  Dynamic Topology Router  (拓扑路由)            │
   │  CDoL Engine               (认知分工协议)       │
@@ -172,7 +172,7 @@ DEMO_TASKS = [
 
 def phase0_architecture_overview():
     """Phase 0: 展示 NexusFlow 架构全貌"""
-    banner("Phase 0: NexusFlow v3.1 — 架构总览", C.CYAN)
+    banner("Phase 0: NexusFlow v3.2 — 架构总览", C.CYAN)
 
     # 1. 导入核心模块
     print(f"  {C.BOLD}导入核心模块...{C.RESET}\n")
@@ -242,7 +242,7 @@ def phase0_architecture_overview():
     section("系统架构图")
     arch = f"""
 {C.CYAN}┌──────────────────────────────────────────────────────────────────────┐
-│                    NexusFlow v3.1 架构全景                            │
+│                    NexusFlow v3.2 架构全景                            │
 ├──────────────────────────────────────────────────────────────────────┤
 │                                                                      │
 │  {C.YELLOW}┌─────────────────┐{C.CYAN}    {C.GREEN}┌─────────────────┐{C.CYAN}                      │
@@ -830,7 +830,7 @@ tr:hover {{ background:#1e293b; }}
 <body>
 <div class="container">
 
-<h1>🧠 NexusFlow v3.1 — End-to-End Demo Report</h1>
+<h1>🧠 NexusFlow v3.2 — End-to-End Demo Report</h1>
 <p class="subtitle">PinchBench Hard Cases: Single-Agent Baseline vs NexusFlow Multi-Agent Pipeline</p>
 <p class="subtitle">Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}</p>
 
@@ -868,7 +868,7 @@ tr:hover {{ background:#1e293b; }}
 <div style="background:#1e293b;padding:1.2rem;border-radius:8px;font-family:monospace;font-size:0.85rem;line-height:1.6">
 <pre style="color:#38bdf8">
 ┌──────────────────────────────────────────────────────────┐
-│                 NexusFlow v3.1 Architecture               │
+│                 NexusFlow v3.2 Architecture               │
 ├──────────────────────────────────────────────────────────┤
 │  Dynamic Router ──────→ Nexus Orchestrator               │
 │  (拓扑选择)                  │                            │
@@ -942,7 +942,7 @@ def main():
     # Header
     print(f"""
 {C.CYAN}{C.BOLD}╔{'═' * W}╗
-║{'NexusFlow v3.1 — End-to-End Demo':^{W}}║
+║{'NexusFlow v3.2 — End-to-End Demo':^{W}}║
 ║{'Dynamic Heterogeneous Swarm Intelligence for Long-Horizon Tasks':^{W}}║
 ╚{'═' * W}╝{C.RESET}
 """)

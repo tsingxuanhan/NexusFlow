@@ -4,23 +4,37 @@ NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachan
 
 ## [Unreleased]
 
+## [3.2.0] — 2026-07-23
+
 ### 新增
-- **WorkBuddy 宏观经济对比实验完整数据**：`examples/workbuddy_comparison/`（含 real_llm/ 真实 LLM 端云验证、scripts/ 分析脚本、deliverables/ 6份交付物）
-- 真实 LLM 端边云回测数据（`data_cloud.txt`, `data_edge.txt`, `data_meta.json`）
-- NexusFlow 预测 vs Single-Agent 预测的 macro benchmark 对比脚本
+- **Docker 一键部署**：多阶段构建 Dockerfile（python:3.11-slim，非 root 用户，healthcheck）+ docker-compose.yml（NexusFlow + 可选 Ollama profile）+ .dockerignore
+- **Makefile**：12+ targets（install/install-dev/test/test-cov/lint/format/serve/demo/doctor/docker-build/docker-up/docker-down/clean）
+- **CLI 入口**：`nexusflow` 命令行工具（serve/run/demo/doctor/version）+ `python -m nexusflow` 支持，通过 pyproject.toml `[project.scripts]` 注册
+- **API 文档自动生成**：`.github/workflows/docs.yml`（pdoc 生成 + GitHub Pages 部署）
+- **CI/CD 完善**：`lint.yml`（ruff lint + format check）、`docker.yml`（构建 + smoke test）、`tests.yml` 升级（Python 3.10-3.12 矩阵 + coverage）
+- **开发工具链**：`.pre-commit-config.yaml`（ruff + pre-commit-hooks）、pyproject.toml dev 依赖组（pytest/pytest-cov/pytest-timeout/ruff/pre-commit）
 
 ### 重构
-- **README 大幅精简**：540 行 → 193 行（64% 缩减）
-  - 拆分出 `docs/ARCHITECTURE.md`（系统架构 + Agent 角色 + 模块详解）
-  - 拆分出 `docs/EXPERIMENTS.md`（Stage 1-7 全量实验数据）
-  - Quick Start 前置，新增 Showcase 在线报告链接
+- **base_agent.py Mixin 拆分**：2,597 行 → 1,211 行（-53%），拆为 7 个模块：
+  - `models.py`（254 行）— 数据类
+  - `reasoning_mixin.py`（323 行）— 推理能力
+  - `codeact_mixin.py`（130 行）— CodeAct 集成
+  - `memory_mixin.py`（112 行）— 记忆访问
+  - `checkpoint_mixin.py`（124 行）— 检查点管理
+  - `handoff_mixin.py`（188 行）— Agent 交接
+  - `agi_mixin.py`（401 行）— AGI 能力扩展
+  - 完全向后兼容：所有 `from nexusflow.agents.base_agent import XXX` 继续工作
 
-### 修复
-- 替换 README 中无效的 `localhost:8900` 链接为实际报告文件路径
+### 测试
+- **56 个新测试**（301 → 357 全通过，覆盖率 35% → 38%）：
+  - `tests/test_cli.py`（16 个）— CLI 子命令、参数解析、环境检查
+  - `tests/test_integration.py`（22 个）— 端到端集成（mock LLM）
+  - `tests/test_mixins.py`（18 个）— Mixin 模块 + 向后兼容验证
 
 ### 工程
-- 密钥泄露检测（gitleaks）集成至 CI
-- CONTRIBUTING.md 贡献指南
+- README Quick Start 重写：Docker 优先路径，折叠式开发模式
+- 端口统一为 8900（Dockerfile/docker-compose/CLI serve 一致）
+- .gitignore 增加 `docs/api/`（自动生成的 API 文档不入库）
 
 ## [3.1.0] — 2026-07-22
 
@@ -159,7 +173,8 @@ NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachan
 - **自适应上下文管理器**（1,642 行）
 - **动态拓扑路由器**（869 行）：5 种拓扑模式
 
-[Unreleased]: https://github.com/tsingxuanhan/NexusFlow/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/tsingxuanhan/NexusFlow/compare/v3.2.0...HEAD
+[3.2.0]: https://github.com/tsingxuanhan/NexusFlow/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v3.1.0
 [3.0.0]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v3.0.0
 [2.9.1]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v2.9.1

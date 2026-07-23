@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nexusflow"
-version = "3.2.0"
+version = "3.3.0"
 description = "NexusFlow — 面向超长程复杂任务的群体智能引擎"
 readme = "README.md"
 license = {text = "MIT"}

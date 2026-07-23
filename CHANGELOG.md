@@ -12,7 +12,9 @@
   - 原始数据：`examples/edge_cloud_scheduling/real_machine_data.json`
 
 ### Changed
-- README.md 添加端边云实机验证结果摘要
+- **技术文档升级至 v3.3**：§7.7.2 D7 替换为真实 EdgeCloudScheduler 实机验证数据（27次LLM调用），§6.2 EdgeCloudScheduler 行数更新（535→635），§10 项目规模数据刷新（653文件/195 Python/83,242行）
+- README.md 添加端边云实机验证结果摘要，参考资料表同步更新
+- EXPERIMENTS.md D7 段落同步更新为实机验证数据
 - 版本号更新至 v3.3.0
 
 

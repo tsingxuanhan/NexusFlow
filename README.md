@@ -275,7 +275,7 @@ make docker-build  # 构建 Docker 镜像
 
 | 框架 | 得分 | 说明 |
 |------|:----:|------|
-| **NexusFlow v3.2** | **75.0** | CDoL + 动态拓扑 + 端边云 |
+| **NexusFlow v3.3** | **75.0** | CDoL + 动态拓扑 + 端边云实机验证 |
 | AutoGen | 72.0 | 微软多 Agent 框架 |
 | LangGraph | 63.8 | LangChain 图编排 |
 | CrewAI | 61.5 | 角色协作框架 |
@@ -289,7 +289,7 @@ make docker-build  # 构建 Docker 镜像
 | 产出 | 说明 | 链接 |
 |------|------|------|
 | 📊 PinchBench 对比报告 | 25 Hard Cases SA vs NF 实时 HTML 报告 | [在线查看](https://www.coze.cn/s/RCDTzyE6r20/) |
-| 📄 技术文档 v3.2 | 完整技术文档（2198 行，含 Stage 6-7 实验） | [在线查看](https://www.coze.cn/s/ow8wNkQqf0g/) |
+| 📄 技术文档 v3.3 | 完整技术文档（2275 行，含端边云实机验证） | [在线查看](https://www.coze.cn/s/ow8wNkQqf0g/) |
 | 🔬 Stage-7 实验 | 25 任务 SA vs NF 全量 JSON + 对比报告 | [`examples/stage7_pinchbench/`](examples/stage7_pinchbench/) |
 | 🌍 Stage-6 WorkBuddy | 20 国×15 指标×41 年宏观经济对比 | [`examples/workbuddy_comparison/`](examples/workbuddy_comparison/) |
 | 📈 Stage-5 80 步 | SA vs NF 逐步评分全量数据 | [`examples/stage5_eighty_steps/`](examples/stage5_eighty_steps/) |
@@ -387,11 +387,11 @@ make docker-build  # 构建 Docker 镜像
 
 | 来源 | 说明 |
 |------|------|
-| [技术文档 v3.2](docs/NexusFlow技术文档v3.2.md) | 完整技术文档（含 Stage 6-7 实验） |
+| [技术文档 v3.3](docs/NexusFlow技术文档v3.3.md) | 完整技术文档（含端边云实机验证） |
 | [系统架构](docs/ARCHITECTURE.md) | 架构图、Agent 角色、模块详情 |
 | [实验验证](docs/EXPERIMENTS.md) | Stage 1-7 完整实验数据 |
 | [API 文档](https://tsingxuanhan.github.io/NexusFlow/) | 自动生成的模块级 API 参考 |
-| [变更日志](CHANGELOG.md) | 版本变更记录（v1.0 → v3.2） |
+| [变更日志](CHANGELOG.md) | 版本变更记录（v1.0 → v3.3） |
 | [贡献指南](CONTRIBUTING.md) | 开发环境、提交规范 |
 | [安全策略](SECURITY.md) | 漏洞报告流程 |
 | [Braintrust](https://www.braintrust.dev/) | 1,781 条真实轨迹——框架影响力 7.6 倍于模型 |

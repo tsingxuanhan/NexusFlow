@@ -3,7 +3,7 @@
 ## 技术文档 v3.4
 
 项目地址：https://github.com/tsingxuanhan/NexusFlow
-代码规模：653文件（git tracked） / 195个Python文件 / 83,242行Python（含注释空行） / 71个核心模块（含10个Agent角色、18个工具；统计口径：git tracked文件）
+代码规模：653文件（git tracked） / 195个Python文件 / 83,242行Python（含注释空行） / 71个核心模块（含10个Agent角色、17个工具；统计口径：git tracked文件）
 赛题：荣耀揭榜挂帅 XH-202631
 
 > **核心架构**：三层信息架构（AgentInformationPolicy）、统一任务编排器（NexusOrchestrator）、10个专用Agent、信息策略驱动的CDoL智能增强
@@ -40,7 +40,7 @@ NexusFlow不是又一个Agent框架，而是率先实现认知分工的群体智
 - **动态拓扑路由器**（869行）：运行时重建Agent协作图，支持五种拓扑模式，约束感知评分规避静态精密控制陷阱
 - **端边云三层调度器**（635行）：隐私优先调度，云端DeepSeek API+本地Ollama兜底，符合Braintrust报告"按任务类型构建差异化模型-框架组合"的最佳实践
 
-**关键数据**：Phase 7核心代码6,163行（CDoL 2058行 + ACM 1642行 + 信息策略511行 + 编排器479行 + SkillRetriever 408行 + 目标验证器/检查点等配套模块1,065行），10个专用Agent角色，18个内置工具，4层记忆系统，六种CDoL分解策略。框架无关设计，支持Claude/DeepSeek/Kimi/GPT全模型阵容。
+**关键数据**：Phase 7核心代码6,163行（CDoL 2058行 + ACM 1642行 + 信息策略511行 + 编排器479行 + SkillRetriever 408行 + 目标验证器/检查点等配套模块1,065行），10个专用Agent角色，17个内置工具，4层记忆系统，六种CDoL分解策略。框架无关设计，支持Claude/DeepSeek/Kimi/GPT全模型阵容。
 
 **实验验证（七阶段递进Benchmark）**：NOAA回测同口径精度相当（MAPE 9.31% vs 9.37%）但质量闭环形成代差（北京TMAX异常+17.78→校正+3.64°C/decade，单Agent自信输出错误结论），WHO排名纠错（错误俄罗斯#1→正确中国#1），Stage-3 WHO任务质量门禁触发（数据严重缺失时主动拒绝输出，单Agent为0%——单Agent会自信输出错误结论）。**Stage-4验证支持超长程任务（28步真实执行+17步模拟=45步，14个核心模块100%覆盖，CDoL三轮辩论共识度0.1→0.95）**。评分趋势：64→85→90→Stage-4全流程验证。**Stage-5 80步公平对比Benchmark**：NF vs SA，质量+2.6%、≥9分步数多3.25倍、Token-6.2%、耗时-14.9%，发现上下文污染是Single-Agent的结构性致命伤。**横向对比领先AutoGen 3分**（75 vs 72，LLM 5维评分，同一LLM下架构差异影响表现）。**复杂任务（全球能源转型评估）维持同等高水平，NexusFlow 75分**，简单任务75→复杂任务75，体现框架稳定性。**检索层Nemotron-3 Embed集成验证**：论文库语义检索Recall@5=93.3%（vs TF-IDF 86.7%、BM25 73.3%），三路RRF融合MRR=0.710（比单路Nemotron +10.2%）；全仓库1548文档块RRF融合Recall提升13个百分点。本地检索<1ms + Nemotron P50=683ms分层协同，验证"1B参数embedding + 巧妙架构 > 纯大模型方案"。**Stage-6 WorkBuddy宏观经济对比实验（20国×15指标×41年真实IMF数据）**：模拟推演加权总分8.28 vs 6.71（+23.4%），GDP预测命中率+20pp；端边云实机验证通过（27次真实LLM调用，混合调度成本节省88%，隐私合规+2），多Agent优势在结构化分析而非预测精度。**Stage-6b L3高复杂度认知任务Benchmark**：9类认知任务SA vs NF，NF在高风险决策（T8风险评估+0.85、T9政策建议+1.20）和辩论质量（D5 +1.10）显著领先。**Stage-7 PinchBench Hard Cases 25任务全量对比**：NF v2管线（CDoL多Agent分析+Producer合成两阶段）automated_avg 0.487 vs SA 0.456（+6.7%），7胜11平7负；编码迭代修复iterative_code_refine从0.333→1.000（+200%），政府会议纪要提取meeting_gov_qa_extract从0.111→0.444（+300%），验证"框架工程 > 模型堆叠"核心叙事。
 
@@ -926,7 +926,7 @@ NexusFlow通过七个迭代Phase逐步演进，每个Phase解决一个核心问�
 |-------|------|----------|---------|
 | 1 | 泛化基础设施 | 如何让Agent处理复杂多步任务 | TaskTree(615行) |
 | 2 | 规划引擎 | Planner/Executor分离 | 认知科学原则 |
-| 3 | 工具生态 | CodeAct执行范式+18工具 | MCP v2协议 |
+| 3 | 工具生态 | CodeAct执行范式+17工具 | MCP v2协议 |
 | 4 | 知识与记忆 | 三层记忆系统 | VectorMemory(1683行)等 |
 | 5 | AGI核心 | 自主循环+元认知 | autonomous.py(784行)等 |
 | 6 | 动态群体智能 | 运行时拓扑重建 | DynamicRouter(869行)+EdgeCloud(635行) |
@@ -2004,7 +2004,7 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 
 **Google A2A协议（v1.0, 2026年3月）**：Agent-to-Agent互操作标准。NexusFlow的A2A协议层参考了Agent Card概念和Task生命周期管理。
 
-**MCP协议（Model Context Protocol）**：Anthropic提出、Linux基金会治理的工具调用标准。NexusFlow通过MCP v2实现18个内置工具的标准化暴露。
+**MCP协议（Model Context Protocol）**：Anthropic提出、Linux基金会治理的工具调用标准。NexusFlow通过MCP v2实现17个内置工具的标准化暴露。
 
 **Arbor（arXiv:2606.11926, 2026）**：Hypothesis-Tree Refinement提出跨任务Insight回传。NexusFlow借鉴其Insight结构化提炼思想，适配CDoL的横向协同场景。
 
@@ -2034,7 +2034,7 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 | 可观测性 | NexusOrchestrator统一入口+仪表盘 | nexus_orchestrator.py + dashboard.py | ✅ Dashboard v4.0已实现（见§11） |
 | 信息分层治理 | AgentInformationPolicy三层架构 | agent_information_policy.py | ✅ Stage-1/2/3三阶段验证 |
 | 横向对比验证 | NexusFlow vs AutoGen | 全框架 | ✅ 横向对比实验（§7.3.6，独立于Stage-4）（NexusFlow 75 vs AutoGen 72，LLM 5维评分） |
-| 系统兼容性与可扩展性 | 10角色Agent矩阵+MCP v2+依赖全可选 | 全架构设计 | ✅ 10角色+18工具+4层记忆 |
+| 系统兼容性与可扩展性 | 10角色Agent矩阵+MCP v2+依赖全可选 | 全架构设计 | ✅ 10角色+17工具+4层记忆 |
 
 **赛题对齐增强**：
 
@@ -2056,7 +2056,7 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 | Python文件数 | 195 |
 | 统计口径 | 排除`.git/`、`iteration/`和`__pycache__` |
 | Python代码行数 | 83,242 |
-| 核心模块数 | 89（nexusflow/ 71模块 + tools/ 18个工具） |
+| 核心模块数 | 88（nexusflow/ 71模块 + tools/ 17个工具） |
 | 核心算法创新（CDoL引擎+Insight机制） | ~2,466行（CDoL 2,058行 + SkillRetriever 408行） |
 | Phase 7核心新增 | 6,163行（CDoL 2058行 + ACM 1642行 + 信息策略511行 + 编排器479行 + SkillRetriever 408行 + 目标验证器/检查点等配套模块1,065行） |
 | Phase 7关联修改 | 356行（11个文件） |
@@ -2183,7 +2183,7 @@ CDoL通信页展示三轮通信协议的执行细节，以及六种分解策略�
 ## Changelog
 
 ### v3.4 - 2026-08-01
-- **数据一致性修复**：§一执行摘要端边云调度器行数535→635（与实际代码edge_cloud_scheduler.py 635行对齐）；SkillRetriever行数349→408（与实际代码skill_retriever.py 408行对齐）；Phase 7核心代码总量6,104→6,163行；核心算法创新行数~2,400→~2,466行；§一/§8.3/§9.1工具数17→18（与§十项目规模表一致）
+- **数据一致性修复**：§一执行摘要端边云调度器行数535→635（与实际代码edge_cloud_scheduler.py 635行对齐）；SkillRetriever行数349→408（与实际代码skill_retriever.py 408行对齐）；Phase 7核心代码总量6,104→6,163行；核心算法创新行数~2,400→~2,466行；工具数保持17（与GitHub代码tools/目录实际文件数一致）
 - **Agent命名统一**：附录A.3旧命名（Strategist/Coder/Analyst/Critic/Synthesizer/Observer/Monitor）统一为v3.3规范（Planner/Executor/Miner/Reviewer/Caster/Assayer/Artisan）
 - **server端修复**：nexusflow_server.py中AGENT_ID_MAP、AGENT_DEFS、中文标签全部统一为新命名；新增POST /api/upload文件上传接口
 

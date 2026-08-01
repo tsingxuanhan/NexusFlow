@@ -85,3 +85,10 @@ clean:  ## Clean build artifacts
 
 version:  ## Show current version
 	@python -c "from nexusflow import __version__; print(__version__)"
+
+# ---------- Facts & Consistency ----------
+
+facts:  ## Regenerate PROJECT_FACTS.md from actual code
+	python scripts/generate_facts.py
+
+verify: check facts  ## Full verification (lint + format + test + facts)

@@ -1,5 +1,27 @@
 # Changelog
 
+## [v3.4.0] - 2026-08-01
+
+### Fixed
+- **数据一致性修复**：技术文档内部 4 处数据矛盾已修正
+  - 端边云调度器行数：535→635（与 `edge_cloud_scheduler.py` 实际 635 行对齐）
+  - SkillRetriever 行数：349→408（与 `skill_retriever.py` 实际 408 行对齐）
+  - Phase 7 核心代码总量：6,104→6,163 行
+  - 核心算法创新行数：~2,400→~2,466 行
+- **Agent 命名统一**：`nexusflow_server.py` 中 7 个旧英文名全部替换为 v3.3 规范
+  - Strategist→Planner, Coder→Executor, Analyst→Miner, Critic→Reviewer
+  - Synthesizer→Caster, Observer→Assayer, Monitor→Artisan
+- **附录 A.3 Agent 命名同步**：技术文档信息不对称架构面板描述更新为新命名
+
+### Added
+- **文件上传 API**：`POST /api/upload` + `GET /api/uploads`（Dashboard v4 文件管理支持）
+- **Dashboard v4**：Tabler 暗色主题实时监控面板（3,505 行），对接全部 25 条 API 路由
+
+### Changed
+- 技术文档升级至 v3.4（2,279 行）
+- README 同步更新：调度器行数修正、技术文档引用升级、Version badge 更新至 v3.4.0
+- 核心模块总数修正为 88（71 nexusflow + 17 tools）
+
 ## [v3.3.0] - 2026-07-23
 
 ### Added

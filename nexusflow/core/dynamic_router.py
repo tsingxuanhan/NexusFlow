@@ -26,6 +26,14 @@ logger = logging.getLogger("DynamicRouter")
 
 try:
     import networkx as nx
+
+# P2: 可解释性 + 可优化
+try:
+    from .topology_interpreter import TopologyInterpreter
+    from .topology_optimizer import TopologyOptimizer, ExecutionOutcome
+    HAS_P2 = True
+except ImportError:
+    HAS_P2 = False
     HAS_NETWORKX = True
 except ImportError:
     HAS_NETWORKX = False
@@ -140,6 +148,8 @@ class RoutePlan:
 
 # ============ 拓扑路由器核心 ============
 
+    
+    # P2: 可解释性    explanation: Optional[Any] = None  # RoutingExplanation object
 class DynamicTopologyRouter:
     """
     动态拓扑路由器
@@ -161,6 +171,17 @@ class DynamicTopologyRouter:
         Args:
             auto_rebuild_interval: 每隔N次路由请求自动重建拓扑图
         """
+        
+        # P2: 可解释性 + 可优化
+        self._p2_enabled = HAS_P2
+        if self._p2_enabled:
+            try:
+                self.interpreter = TopologyInterpreter()
+                self.optimizer = TopologyOptimizer(exploration_factor=1.0)
+                logger.info("[DynamicRouter] P2 interpretability + optimization enabled")
+            except Exception as e:
+                self._p2_enabled = False
+                logger.warning(f"[DynamicRouter] P2 init failed: {e}")
         self._agents: Dict[str, AgentCapabilityProfile] = {}
         self._topology: Optional[Any] = nx.DiGraph() if HAS_NETWORKX else None
         self._route_history: List[RoutePlan] = []
@@ -382,6 +403,8 @@ class DynamicTopologyRouter:
             f"confidence={plan.confidence:.2f}"
         )
         
+        
+        # P2: 生成解释 + 记录请求        if self._p2_enabled:            try:                plan.explanation = self.interpreter.explain(                    plan, task,                    candidates=candidates,                    edge_weights=self._get_edge_weights()                )            except Exception as e:                logger.warning(f"[DynamicRouter] Explanation generation failed: {e}")                plan.explanation = None                        # 记录请求用于优化学习            self.optimizer.record_request(task, plan)
         return plan
     
     def _filter_candidates(self, task: TaskRequirement) -> List[AgentCapabilityProfile]:
@@ -867,3 +890,112 @@ class DynamicTopologyRouter:
             suggestions.append("System is running well. No optimization needed.")
         
         return suggestions
+    
+    # ============ P2: 可解释性 + 可优化 辅助方法 ============
+    
+    def _get_edge_weights(self) -> Dict[Tuple[str, str], float]:
+        """获取当前拓扑的边权重字典"""
+        weights = {}
+        if self._topology and HAS_NETWORKX:
+            for src, dst, data in self._topology.edges(data=True):
+                weights[(src, dst)] = data.get('weight', 1.0)
+        return weights
+    
+    def record_execution_outcome(self, plan_id: str, outcome_dict: Dict) -> None:
+        """
+        记录执行结果（在执行完成后调用）
+        
+        Args:
+            plan_id: 路由方案 ID
+            outcome_dict: 执行结果字典 {success, latency_ms, cost, tokens, errors}
+        """
+        if not self._p2_enabled:
+            return
+        
+        try:
+            outcome = ExecutionOutcome(
+                plan_id=plan_id,
+                success=outcome_dict.get("success", False),
+                actual_latency_ms=outcome_dict.get("latency_ms", 0.0),
+                actual_cost=outcome_dict.get("cost", 0.0),
+                tokens_used=outcome_dict.get("tokens", 0),
+                errors=outcome_dict.get("errors", []),
+                task_completion_rate=outcome_dict.get("completion_rate", 1.0),
+            )
+            self.optimizer.record_execution(plan_id, outcome)
+            
+            # 如果执行成功，学习权重
+            if outcome.success:
+                task_pattern = self.optimizer.requests.get(plan_id, {}).get("task_pattern", "")
+                if task_pattern:
+                    self.optimizer.learn_weights(task_pattern)
+            
+        except Exception as e:
+            logger.warning(f"[DynamicRouter] Failed to record outcome: {e}")
+    
+    def get_routing_explanation(self, plan_id: str) -> Optional[Dict]:
+        """
+        获取路由方案的解释
+        
+        Args:
+            plan_id: 路由方案 ID
+        
+        Returns:
+            解释字典，如果没有则返回 None
+        """
+        if not self._p2_enabled:
+            return None
+        
+        # 从历史记录中查找
+        for hist_plan in self._route_history:
+            if hist_plan.plan_id == plan_id:
+                if hasattr(hist_plan, 'explanation') and hist_plan.explanation:
+                    return hist_plan.explanation.to_dict()
+        
+        return None
+    
+    def get_optimization_stats(self) -> Dict:
+        """获取优化器统计信息"""
+        if not self._p2_enabled:
+            return {"enabled": False}
+        
+        return {
+            "enabled": True,
+            "optimizer": self.optimizer.get_stats(),
+        }
+    
+    def get_learned_recommendations(self, task: TaskRequirement) -> List[str]:
+        """
+        基于学习到的历史数据，给出路由建议
+        
+        Args:
+            task: 任务需求
+        
+        Returns:
+            建议列表
+        """
+        if not self._p2_enabled:
+            return []
+        
+        task_pattern = self._extract_pattern_key(task)
+        optimal = self.optimizer.get_optimal_pattern(task_pattern)
+        
+        recommendations = []
+        
+        if optimal and optimal.total_count >= 3:
+            recommendations.append(
+                f"历史模式 '{task_pattern}' 最优路由: "
+                f"{' → '.join(optimal.agent_chain)} "
+                f"(成功率 {optimal.success_rate:.1%}, "
+                f"平均延迟 {optimal.avg_latency_ms:.0f}ms)"
+            )
+        
+        # 检查是否有改进空间
+        learned_weights = self.optimizer.get_learned_weights(task_pattern)
+        if learned_weights != self.optimizer.default_weights:
+            recommendations.append(
+                f"任务模式 '{task_pattern}' 已学习到定制权重，"
+                f"与默认权重不同（说明历史数据中有显著差异）"
+            )
+        
+        return recommendations

@@ -1,0 +1,105 @@
+id: T2-M-001
+category: software_engineering
+difficulty: medium
+title: 多模块Bug修复与回归测试
+description: >
+  在一个多模块项目中定位并修复一个跨模块的数据格式Bug，
+  添加回归测试，确保现有测试不受影响。
+  包含1次错误注入（错误的修复方案）和1次需求变更（新增边界条件处理）。
+
+max_steps: 120
+max_rounds: 40
+budget_limit_cny: 8.0
+privacy_constraints: []
+tags: [software, multi_module, bug_fix, regression]
+
+steps:
+  - id: s1_understand_bug
+    description: 阅读Bug报告和复现步骤
+    agent_role: coordinator
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s2_locate_root_cause
+    description: 跨模块追踪数据流，定位根因
+    agent_role: miner
+    input_deps: [s1_understand_bug]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s3_design_fix
+    description: 设计修复方案
+    agent_role: planner
+    input_deps: [s2_locate_root_cause]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s4_implement_fix
+    description: 实现修复代码
+    agent_role: executor
+    input_deps: [s3_design_fix]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s5_write_regression
+    description: 编写回归测试
+    agent_role: executor
+    input_deps: [s4_implement_fix]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s6_run_all_tests
+    description: 运行全量测试套件
+    agent_role: reviewer
+    input_deps: [s5_write_regression]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s7_verify_no_regression
+    description: 验证无回归且新功能正确
+    agent_role: assayer
+    input_deps: [s6_run_all_tests]
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s8_update_docs
+    description: 更新相关文档
+    agent_role: caster
+    input_deps: [s7_verify_no_regression]
+    device_preference: cloud
+    timeout_seconds: 30
+
+perturbations:
+  - type: low_quality_output
+    trigger_at_step: s4_implement_fix
+    target: executor
+    params: { error_type: "wrong_approach", description: "初始修复使用了错误的序列化方法" }
+    expected_recovery: auto
+
+  - type: requirement_change
+    trigger_at_step: s6_run_all_tests
+    target: reviewer
+    params: { new_requirement: "增加Unicode边界条件处理" }
+    expected_recovery: auto
+
+acceptance_criteria:
+  - name: all_tests_pass
+    type: test_pass
+    weight: 0.4
+    threshold: 1.0
+    params: { min_pass_rate: 1.0 }
+  - name: bug_fixed
+    type: rule
+    weight: 0.25
+    threshold: 1.0
+    params: { check: "original_bug_reproduced_and_fixed" }
+  - name: no_regression
+    type: rule
+    weight: 0.2
+    threshold: 1.0
+    params: { check: "all_existing_tests_still_pass" }
+  - name: fix_quality
+    type: llm_score
+    weight: 0.15
+    threshold: 0.7
+    params: { dimensions: [correctness, minimal_change, readability] }

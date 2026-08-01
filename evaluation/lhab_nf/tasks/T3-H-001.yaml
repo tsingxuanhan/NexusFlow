@@ -1,0 +1,154 @@
+id: T3-H-001
+category: data_analysis
+difficulty: hard
+title: 多源异构数据深度研究与决策支持
+description: >
+  从7+数据源（含结构化/非结构化/时序/截面）收集全球能源转型数据，
+  处理错误数据源、概念混淆和时效性问题，
+  生成带完整证据链的投资决策报告。2个错误源、概念混淆、时效性问题叠加。
+
+max_steps: 150
+max_rounds: 50
+budget_limit_cny: 10.0
+privacy_constraints: []
+tags: [data_analysis, research, heterogeneous, stress_test]
+
+steps:
+  - id: s1_scope_research
+    description: 明确研究范围和分析框架
+    agent_role: coordinator
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s2_multi_source_collection
+    description: 从7个异构数据源收集数据
+    agent_role: researcher
+    input_deps: [s1_scope_research]
+    device_preference: cloud
+    timeout_seconds: 120
+
+  - id: s3_quality_assessment
+    description: 全面评估数据质量、时效性和一致性
+    agent_role: assayer
+    input_deps: [s2_multi_source_collection]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s4_data_harmonization
+    description: 统一指标口径、时间粒度和地理范围
+    agent_role: executor
+    input_deps: [s3_quality_assessment]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s5_pattern_mining
+    description: 深度挖掘趋势、异常和关联模式
+    agent_role: miner
+    input_deps: [s4_data_harmonization]
+    device_preference: cloud
+    timeout_seconds: 120
+
+  - id: s6_hypothesis_testing
+    description: 构建并检验投资假设
+    agent_role: planner
+    input_deps: [s5_pattern_mining]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s7_cross_validation
+    description: 多视角交叉验证结论稳健性
+    agent_role: reviewer
+    input_deps: [s6_hypothesis_testing]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s8_risk_assessment
+    description: 评估投资风险和不确定性
+    agent_role: planner
+    input_deps: [s7_cross_validation]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s9_compile_report
+    description: 编写完整研究报告
+    agent_role: caster
+    input_deps: [s7_cross_validation, s8_risk_assessment]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s10_evidence_audit
+    description: 审计证据链完整性
+    agent_role: archivist
+    input_deps: [s9_compile_report]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s11_final_review
+    description: 最终审核和输出
+    agent_role: artisan
+    input_deps: [s10_evidence_audit]
+    device_preference: cloud
+    timeout_seconds: 30
+
+perturbations:
+  - type: data_conflict
+    trigger_at_step: s3_quality_assessment
+    target: source_2
+    params: { description: "源2使用过时的统计口径（2020年前的分类标准）" }
+    expected_recovery: auto
+
+  - type: data_conflict
+    trigger_at_step: s4_data_harmonization
+    target: source_5
+    params: { description: "源5数据包含系统性偏差，与真实值偏离15%" }
+    expected_recovery: auto
+
+  - type: low_quality_output
+    trigger_at_step: s5_pattern_mining
+    target: miner
+    params: { error_type: "concept_confusion", description: "混淆了'装机容量'和'发电量'两个概念" }
+    expected_recovery: auto
+
+  - type: data_conflict
+    trigger_at_step: s6_hypothesis_testing
+    target: planner
+    params: { description: "两组数据的时间窗口不一致导致虚假相关" }
+    expected_recovery: auto
+
+  - type: requirement_change
+    trigger_at_step: s8_risk_assessment
+    target: planner
+    params: { new_requirement: "增加政策情景分析（乐观/基准/悲观）" }
+    expected_recovery: auto
+
+acceptance_criteria:
+  - name: bad_sources_detected
+    type: rule
+    weight: 0.15
+    threshold: 1.0
+    params: { check: "both_bad_sources_identified" }
+  - name: concept_accuracy
+    type: rule
+    weight: 0.15
+    threshold: 1.0
+    params: { check: "no_concept_confusion_in_final_report" }
+  - name: evidence_completeness
+    type: rule
+    weight: 0.2
+    threshold: 0.9
+    params: { check: "all_conclusions_traced_to_evidence" }
+  - name: analysis_depth
+    type: llm_score
+    weight: 0.25
+    threshold: 0.75
+    params: { dimensions: [statistical_rigor, insight_depth, risk_awareness, actionability] }
+  - name: report_quality
+    type: llm_score
+    weight: 0.15
+    threshold: 0.7
+    params: { dimensions: [structure, clarity, professional_tone] }
+  - name: recovery_rate
+    type: rule
+    weight: 0.1
+    threshold: 0.8
+    params: { min_recovery_rate: 0.8 }

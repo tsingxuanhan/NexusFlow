@@ -2,8 +2,7 @@
 LHAB-NF Runner
 ===============
 Executes benchmark tasks and collects metrics.
-Loads task YAML definitions, runs through NexusFlow agents,
-injects perturbations, and produces scored results.
+Supports mock mode (testing) and real mode (NexusFlow server).
 """
 
 import os
@@ -16,7 +15,6 @@ from datetime import datetime
 from typing import List, Dict, Optional, Any
 from pathlib import Path
 
-# Add parent to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lhab_nf.task_schema import Task, Step, Perturbation, PerturbationType
@@ -28,15 +26,8 @@ logger = logging.getLogger("lhab_nf.runner")
 class PerturbationInjector:
     """
     Injects perturbations into task execution.
-    
-    Supports:
-    - device_offline: Simulate device becoming unavailable
-    - network_timeout: Simulate API timeout
-    - tool_failure: Simulate tool returning error
-    - requirement_change: Inject mid-task requirement change
-    - data_conflict: Inject conflicting data
-    - low_quality_output: Simulate poor agent output
-    - memory_injection: Attempt to pollute memory
+    7 types: device_offline, network_timeout, tool_failure, requirement_change,
+    data_conflict, low_quality_output, memory_injection
     """
     
     def __init__(self, config: Dict = None):
@@ -45,16 +36,7 @@ class PerturbationInjector:
         self.active_perturbations: List[Dict] = []
     
     def inject(self, perturbation: Perturbation, context: Dict) -> Dict:
-        """
-        Inject a perturbation and return its effect.
-        
-        Args:
-            perturbation: The perturbation to inject
-            context: Current execution context (step_id, agent, device, etc.)
-        
-        Returns:
-            Dict with: triggered, effect, recovery_action
-        """
+        """Inject perturbation and return effect."""
         timestamp = datetime.now().isoformat()
         
         effect = {
@@ -66,48 +48,39 @@ class PerturbationInjector:
             "params": perturbation.params,
         }
         
-        # Determine effect based on type
         if perturbation.type == PerturbationType.DEVICE_OFFLINE:
             effect["effect"] = "device_unavailable"
             effect["duration_seconds"] = perturbation.params.get("duration_seconds", 30)
-            effect["recovery_action"] = "migrate_to_alternative_device"
             effect["blocking"] = True
             
         elif perturbation.type == PerturbationType.NETWORK_TIMEOUT:
             effect["effect"] = "api_timeout"
             effect["timeout_seconds"] = perturbation.params.get("timeout_seconds", 60)
-            effect["recovery_action"] = "retry_with_backoff"
             effect["blocking"] = True
             
         elif perturbation.type == PerturbationType.TOOL_FAILURE:
             effect["effect"] = "tool_error"
             effect["error"] = perturbation.params.get("error", "unknown_error")
-            effect["recovery_action"] = "try_alternative_tool"
             effect["blocking"] = True
             
         elif perturbation.type == PerturbationType.REQUIREMENT_CHANGE:
             effect["effect"] = "scope_change"
             effect["new_requirement"] = perturbation.params.get("new_requirement", "")
-            effect["recovery_action"] = "replan_partial"
-            effect["blocking"] = False  # Doesn't block current step
+            effect["blocking"] = False
             
         elif perturbation.type == PerturbationType.DATA_CONFLICT:
             effect["effect"] = "data_inconsistency"
             effect["description"] = perturbation.params.get("description", "")
-            effect["recovery_action"] = "cross_validate_and_select"
             effect["blocking"] = False
             
         elif perturbation.type == PerturbationType.LOW_QUALITY_OUTPUT:
             effect["effect"] = "degraded_output"
             effect["error_type"] = perturbation.params.get("error_type", "generic")
-            effect["description"] = perturbation.params.get("description", "")
-            effect["recovery_action"] = "reviewer_reject_and_retry"
             effect["blocking"] = False
             
         elif perturbation.type == PerturbationType.MEMORY_INJECTION:
             effect["effect"] = "memory_pollution_attempt"
             effect["payload"] = perturbation.params.get("payload", "")
-            effect["recovery_action"] = "memory_validator_reject"
             effect["blocking"] = False
         
         effect["expected_recovery"] = perturbation.expected_recovery
@@ -118,7 +91,7 @@ class PerturbationInjector:
         return effect
     
     def resolve(self, perturbation_id: str, success: bool = True) -> Dict:
-        """Mark a perturbation as resolved."""
+        """Mark perturbation as resolved."""
         for p in self.active_perturbations:
             if p["perturbation_id"] == perturbation_id:
                 p["resolved_at"] = datetime.now().isoformat()
@@ -144,27 +117,23 @@ class PerturbationInjector:
 class NexusFlowAgentAdapter:
     """
     Adapter to run steps through NexusFlow agents.
-    
-    In mock mode: simulates agent responses for framework testing.
-    In real mode: connects to actual NexusFlow agent system.
+    Mock mode: simulates for testing.
+    Real mode: connects to server at port 8900.
     """
     
     def __init__(self, mode: str = "mock", config: Dict = None):
         self.mode = mode
         self.config = config or {}
         self.execution_log: List[Dict] = []
+        
+        if mode == "real":
+            from lhab_nf.agent_adapter import NexusFlowRealAdapter
+            self.real_adapter = NexusFlowRealAdapter(config=config)
+        else:
+            self.real_adapter = None
     
     def execute_step(self, step: Step, context: Dict) -> StepResult:
-        """
-        Execute a single step through the agent system.
-        
-        Args:
-            step: The step to execute
-            context: Execution context including previous step outputs
-        
-        Returns:
-            StepResult with execution details
-        """
+        """Execute step and return StepResult."""
         start_time = time.time()
         
         if self.mode == "mock":
@@ -186,32 +155,20 @@ class NexusFlowAgentAdapter:
         return result
     
     def _mock_execute(self, step: Step, context: Dict) -> StepResult:
-        """Mock execution for framework testing."""
+        """Mock execution for testing."""
         import random
         
-        # Simulate realistic execution
-        # Most steps succeed, some may fail based on perturbations
-        success_prob = 0.85  # Base success rate
-        
-        # Check if there's an active perturbation affecting this step
-        perturbation_active = context.get("active_perturbation")
-        if perturbation_active:
-            if perturbation_active["blocking"]:
-                success_prob = 0.3  # Reduced when perturbation is active
-            else:
-                success_prob = 0.7
+        success_prob = 0.85
+        if context.get("active_perturbation") and context["active_perturbation"].get("blocking"):
+            success_prob = 0.3
         
         success = random.random() < success_prob
         
         return StepResult(
             step_id=step.id,
             success=success,
-            output={
-                "action": "completed" if success else "failed",
-                "summary": f"Mock output for {step.description[:50]}",
-                "data_quality": random.uniform(0.6, 0.95) if success else 0.0,
-            },
-            error=None if success else f"Simulated failure in {step.id}",
+            output={"action": "completed" if success else "failed", "summary": f"Mock output"},
+            error=None if success else f"Simulated failure",
             tokens_used=random.randint(500, 3000),
             cost_cny=random.uniform(0.001, 0.01),
             agent_role=step.agent_role,
@@ -220,31 +177,29 @@ class NexusFlowAgentAdapter:
         )
     
     def _real_execute(self, step: Step, context: Dict) -> StepResult:
-        """
-        Real execution through NexusFlow agents.
+        """Real execution via NexusFlow server."""
+        if not self.real_adapter:
+            raise RuntimeError("Real adapter not initialized")
         
-        This connects to the actual NexusFlow server (port 8900)
-        and dispatches the step to the appropriate agent.
-        """
-        # TODO: Implement real execution
-        # This would:
-        # 1. POST to /api/tasks to create a task
-        # 2. Route to the appropriate agent via AGENT_ID_MAP
-        # 3. Execute the step with the agent
-        # 4. Collect the output
+        result_dict = self.real_adapter.execute_step(step, context)
         
-        raise NotImplementedError(
-            "Real execution mode not yet implemented. "
-            "Use --mock flag or set mode='mock' for testing."
+        return StepResult(
+            step_id=result_dict["step_id"],
+            success=result_dict["success"],
+            output=result_dict.get("output"),
+            error=result_dict.get("error"),
+            tokens_used=result_dict.get("tokens_used", 0),
+            cost_cny=result_dict.get("cost_cny", 0.0),
+            agent_role=result_dict.get("agent_role", step.agent_role),
+            device_used=result_dict.get("device_used", step.device_preference),
+            privacy_violation=result_dict.get("privacy_violation", False),
         )
 
 
 class LHABRunner:
     """
     Main benchmark runner.
-    
-    Orchestrates task execution, perturbation injection,
-    and metric collection.
+    Orchestrates task execution, perturbation injection, metric collection.
     """
     
     def __init__(self, mode: str = "mock", output_dir: str = "results/"):
@@ -256,54 +211,33 @@ class LHABRunner:
         os.makedirs(output_dir, exist_ok=True)
     
     def load_task(self, task_path: str) -> Task:
-        """Load a task definition from YAML."""
+        """Load task from YAML."""
         with open(task_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
         return Task.from_dict(data)
     
     def run_task(self, task: Task) -> Dict:
-        """
-        Execute a complete task and return results.
-        
-        Returns dict with:
-        - task_result: TaskResult object
-        - metrics: MetricScores
-        - score: composite score
-        - report: formatted report string
-        """
+        """Execute task and return results."""
         logger.info(f"Running task: {task.id} ({task.difficulty.value})")
         
         task_result = TaskResult(task_id=task.id)
         start_time = time.time()
         
-        # Build dependency graph
         step_outputs: Dict[str, Any] = {}
         step_map = {s.id: s for s in task.steps}
-        
-        # Execute steps in dependency order
         executed = set()
         pending = set(s.id for s in task.steps)
         
         while pending:
-            # Find steps whose dependencies are met
-            ready = []
-            for step_id in pending:
-                step = step_map[step_id]
-                deps_met = all(d in executed for d in step.input_deps)
-                if deps_met:
-                    ready.append(step)
+            ready = [s for s in (step_map[pid] for pid in list(pending))
+                    if all(d in executed for d in s.input_deps)]
             
             if not ready:
                 logger.error(f"Deadlock: no ready steps. Pending: {pending}")
                 break
             
             for step in ready:
-                # Check if perturbation should fire
-                context = {
-                    "step_id": step.id,
-                    "step_outputs": step_outputs,
-                    "active_perturbation": None,
-                }
+                context = {"step_id": step.id, "step_outputs": step_outputs, "active_perturbation": None}
                 
                 for pert in task.perturbations:
                     if pert.trigger_at_step == step.id:
@@ -311,53 +245,36 @@ class LHABRunner:
                         context["active_perturbation"] = effect
                         task_result.perturbations_triggered += 1
                 
-                # Execute step
                 result = self.agent_adapter.execute_step(step, context)
                 task_result.steps.append(result)
                 
                 if result.success:
                     step_outputs[step.id] = result.output
                     executed.add(step.id)
-                    
-                    # Check if perturbation was recovered
                     if context["active_perturbation"]:
                         task_result.perturbations_recovered += 1
                         self.perturbation_injector.resolve(
-                            context["active_perturbation"]["perturbation_id"],
-                            success=True
+                            context["active_perturbation"]["perturbation_id"], success=True
                         )
-                else:
-                    # Step failed - attempt recovery
-                    logger.warning(f"Step {step.id} failed: {result.error}")
-                    # In real mode, would trigger retry/fallback logic
                 
                 pending.discard(step.id)
         
-        # Finalize
         task_result.total_elapsed_seconds = time.time() - start_time
         task_result.total_tokens = sum(s.tokens_used for s in task_result.steps)
         task_result.total_cost_cny = sum(s.cost_cny for s in task_result.steps)
         task_result.privacy_violations = sum(1 for s in task_result.steps if s.privacy_violation)
         
-        # Compute metrics
         metrics = compute_metrics(task_result, task.max_steps)
         score = compute_composite_score(metrics)
         report = format_report(task.id, metrics, score)
         
-        # Save results
         self._save_results(task, task_result, metrics, score)
         
-        return {
-            "task_result": task_result,
-            "metrics": metrics,
-            "score": score,
-            "report": report,
-        }
+        return {"task_result": task_result, "metrics": metrics, "score": score, "report": report}
     
     def run_suite(self, task_dir: str, difficulty: str = None) -> List[Dict]:
-        """Run all tasks in a directory."""
+        """Run all tasks in directory."""
         results = []
-        
         task_files = sorted(Path(task_dir).glob("*.yaml"))
         if difficulty:
             task_files = [f for f in task_files if f"-{difficulty.upper()}-" in f.stem]
@@ -369,25 +286,20 @@ class LHABRunner:
             result = self.run_task(task)
             results.append(result)
         
-        # Summary
         scores = [r["score"] for r in results]
         avg_score = sum(scores) / len(scores) if scores else 0
-        
         logger.info(f"Suite complete: avg_score={avg_score:.4f}")
         
         return results
     
-    def _save_results(self, task: Task, task_result: TaskResult, 
-                      metrics: MetricScores, score: float):
+    def _save_results(self, task: Task, task_result: TaskResult, metrics: MetricScores, score: float):
         """Save results to output directory."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
-        # Save report
         report_path = os.path.join(self.output_dir, f"{task.id}_{timestamp}_report.md")
         with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(task_result.report if hasattr(task_result, 'report') else format_report(task.id, metrics, score))
+            f.write(format_report(task.id, metrics, score))
         
-        # Save metrics JSON
         metrics_dict = {
             "task_id": task.id,
             "timestamp": timestamp,
@@ -401,15 +313,6 @@ class LHABRunner:
                 "end_to_end_latency": metrics.end_to_end_latency,
                 "privacy_violation_count": metrics.privacy_violation_count,
             },
-            "steps": [
-                {
-                    "step_id": s.step_id,
-                    "success": s.success,
-                    "elapsed": s.elapsed_seconds,
-                    "tokens": s.tokens_used,
-                }
-                for s in task_result.steps
-            ],
         }
         
         json_path = os.path.join(self.output_dir, f"{task.id}_{timestamp}_metrics.json")
@@ -424,15 +327,12 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="LHAB-NF Benchmark Runner")
-    parser.add_argument("task", nargs="?", help="Task YAML file or directory")
-    parser.add_argument("--mode", default="mock", choices=["mock", "real"],
-                       help="Execution mode (default: mock)")
-    parser.add_argument("--difficulty", choices=["easy", "medium", "hard"],
-                       help="Filter tasks by difficulty")
-    parser.add_argument("--output", default="results/lhab_nf/",
-                       help="Output directory")
-    parser.add_argument("--suite", action="store_true",
-                       help="Run all tasks in directory")
+    parser.add_argument("task", nargs="?", help="Task YAML or directory")
+    parser.add_argument("--mode", default="mock", choices=["mock", "real"])
+    parser.add_argument("--difficulty", choices=["easy", "medium", "hard"])
+    parser.add_argument("--output", default="results/lhab_nf/")
+    parser.add_argument("--suite", action="store_true")
+    parser.add_argument("--server-url", default="http://localhost:8900")
     parser.add_argument("--verbose", "-v", action="store_true")
     
     args = parser.parse_args()
@@ -448,7 +348,6 @@ def main():
         task_dir = args.task or "evaluation/lhab_nf/tasks"
         results = runner.run_suite(task_dir, difficulty=args.difficulty)
         
-        # Print summary
         print("\n" + "="*60)
         print("  LHAB-NF Suite Results")
         print("="*60)
@@ -467,15 +366,7 @@ def main():
         print(result["report"])
     
     else:
-        # Default: run T1-E-001 as demo
-        print("No task specified. Running demo task T1-E-001...")
-        demo_task = Path("evaluation/lhab_nf/tasks/T1-E-001.yaml")
-        if demo_task.exists():
-            task = runner.load_task(str(demo_task))
-            result = runner.run_task(task)
-            print(result["report"])
-        else:
-            print("Demo task not found. Specify a task file or --suite.")
+        print("No task specified. Run with --suite or specify a task YAML.")
 
 
 if __name__ == "__main__":

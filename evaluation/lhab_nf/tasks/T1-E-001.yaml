@@ -1,0 +1,85 @@
+id: T1-E-001
+category: cross_device
+difficulty: easy
+title: 跨设备邮件摘要与回复
+description: >
+  手机端收到3封工作邮件，需要在平板上阅读附件，PC上草拟回复，
+  最终在手机上确认发送。无扰动，验证基本跨设备协同能力。
+
+max_steps: 30
+max_rounds: 15
+budget_limit_cny: 2.0
+privacy_constraints:
+  - email_content: edge_allowed
+  - contact_info: local_only
+tags: [cross_device, email, basic]
+
+steps:
+  - id: s1_parse_emails
+    description: 手机端解析3封邮件标题和摘要
+    agent_role: coordinator
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+  - id: s2_classify_priority
+    description: 对邮件按紧急程度分类
+    agent_role: planner
+    input_deps: [s1_parse_emails]
+    device_preference: edge
+    privacy_level: edge_allowed
+    timeout_seconds: 30
+
+  - id: s3_read_attachments
+    description: 在平板上阅读PDF附件并提取关键数据
+    agent_role: researcher
+    input_deps: [s2_classify_priority]
+    device_preference: edge
+    privacy_level: edge_allowed
+    timeout_seconds: 60
+
+  - id: s4_draft_replies
+    description: 在PC上为每封邮件草拟回复
+    agent_role: executor
+    input_deps: [s3_read_attachments]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s5_quality_check
+    description: 审核回复的语气和准确性
+    agent_role: reviewer
+    input_deps: [s4_draft_replies]
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s6_format_and_send
+    description: 格式化回复并在手机端展示确认
+    agent_role: caster
+    input_deps: [s5_quality_check]
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+perturbations: []
+
+acceptance_criteria:
+  - name: all_emails_processed
+    type: rule
+    weight: 0.3
+    threshold: 1.0
+    params: { check: "3_replies_generated" }
+  - name: attachment_data_correct
+    type: llm_score
+    weight: 0.3
+    threshold: 0.7
+    params: { dimensions: [accuracy, completeness] }
+  - name: privacy_compliance
+    type: rule
+    weight: 0.2
+    threshold: 1.0
+    params: { check: "no_contact_info_in_cloud" }
+  - name: response_quality
+    type: llm_score
+    weight: 0.2
+    threshold: 0.6
+    params: { dimensions: [tone, relevance] }

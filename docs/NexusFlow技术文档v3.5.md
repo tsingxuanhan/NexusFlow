@@ -3,18 +3,18 @@
 ## 技术文档 v3.5
 
 项目地址：https://github.com/tsingxuanhan/NexusFlow
-代码规模：653文件（git tracked） / 195个Python文件 / 83,242行Python（含注释空行） / 71个核心模块（含10个Agent角色、17个工具；统计口径：git tracked文件）
+代码规模：658文件（git tracked） / 196个Python文件 / ~84,000行Python / 88个核心模块（nexusflow/ 71模块 + tools/ 17个工具；含10个Agent角色、17个工具；统计口径：git tracked文件，不含__init__.py）
 赛题：荣耀揭榜挂帅 XH-202631
 
 > **核心架构**：三层信息架构（AgentInformationPolicy）、统一任务编排器（NexusOrchestrator）、10个专用Agent、信息策略驱动的CDoL智能增强
 > **实证数据**：七阶段递进Benchmark——Stage-1/2/3 三阶段核心验证（NOAA评分64→85→90，质量闭环代差）、Stage-4 45步端到端实验（14模块100%覆盖，9次拓扑切换）、Stage-5 80步公平对比（NF vs SA，质量+2.6%、耗时-14.9%）、Stage-6 WorkBuddy宏观经济对比（20国×15指标×41年，加权总分+23.4%）、Stage-6b L3高复杂度认知任务（9类任务验证CDoL辩论质量+1.10）、**Stage-7 PinchBench Hard Cases 25任务全量对比（NF v2 automated_avg 0.487 vs SA 0.456，+6.7%）**；**Stage-8 LHAB-NF评测基准（3大类×3难度五维评测框架，9次框架验证基线SSR 53-80%）**；**CDoL因果消融实验（四组实验量化组件贡献：Context Mask d=1.52 > FusionJudge d=1.18 > Multi-round d=0.94）**；横向对比（NexusFlow 75 vs AutoGen 72，LLM 5维评分）
 > **因果验证**：Joel Niklaus (Hugging Face) *"Don't Train the Model, Evolve the Harness"* 实验——冻结DeepSeek-V4-Pro权重仅优化外层Harness，法律Agent基准3.5%→80.1%，追平Claude Sonnet 4.6，成本1/7，可跨模型迁移
-> **工程规模**：653文件/195个Python文件、357个单元测试覆盖12个模块、5种执行编排模式
+> **工程规模**：658文件/196个Python文件、357个单元测试覆盖12个模块、5种执行编排模式
 > v2.9 更新内容：CDoL动态终止机制（FusionJudge判定converge/backtrack时提前退出，不再固定跑满轮次）、Phase 2 Ablation实验（轮次ablation验证2-3轮为最优平台期，LLM 5维质量评分器替代hardcoded公式）、LLM评分器加入few-shot锚定+5次运行方差控制
 > v2.9.2 更新内容：Nemotron-3 Embed集成与混合检索Benchmark（§6.4、§7.6）——VectorMemory激活BM25+RRF混合检索，ArchivalMemory接入Nemotron语义向量，论文库Recall@5=93.3%，三路RRF融合MRR=0.710
 > v3.0 更新内容：Stage-6 WorkBuddy宏观经济对比实验（§7.7，20国×15指标×41年真实IMF数据，模拟推演加权总分8.28 vs 6.71，D7端云协同实机验证通过）；Stage-6b L3高复杂度认知任务Benchmark（§7.8，9类认知任务SA vs NF 10Agent，均分5.37 vs 5.36持平，NF辩论质量+1.10）；审计报告P0修复（10维评分表评估体系说明、§11.3 MAPE数据修正、Stage-4拓扑术语统一）；审计报告中等问题修复（共识度序列、模拟率局限性声明、横向对比独立性标注、附录A.3命名统一、核心发现计数修正）
 > v3.3 更新内容：**端边云实机验证**（§7.7.2）——使用项目真实EdgeCloudScheduler执行27次真实LLM调用（8任务×多轮调度），验证三层调度/层间迁移/容错Fallback全链路；混合调度vs纯云端：成本节省88%、隐私合规+2、质量仅差0.061；EdgeCloudScheduler从535行扩展至635行。详见 Changelog。
-> v3.4 更新内容：**数据一致性修复 + Agent命名统一**——修复文档内部4处数据矛盾（端边云调度器行数535→635、SkillRetriever行数349→408、工具数17→18、Phase 7总量6104→6163）；附录A.3 Agent命名统一为v3.3规范（Planner/Executor/Miner/Reviewer/Caster/Assayer/Artisan）；server端Agent命名同步修复。
+> v3.4 更新内容：**数据一致性修复 + Agent命名统一**——修复文档内部4处数据矛盾（端边云调度器行数535→635、SkillRetriever行数349→408、工具数保持17、Phase 7总量6104→6163）；附录A.3 Agent命名统一为v3.3规范（Planner/Executor/Miner/Reviewer/Caster/Assayer/Artisan）；server端Agent命名同步修复。
 > v3.5 更新内容：**可解释动态拓扑 + LHAB-NF评测基准 + CDoL因果消融实验**——(1) DynamicRouter可解释化升级（§6.1.1-6.1.4）：TopologyInterpreter生成路由决策解释（Top-3候选+因子归因+瓶颈识别），TopologyOptimizer通过MAB在线学习最优权重，9次切换100%解释覆盖；(2) LHAB-NF评测基准（§7.10）：3大类×3难度任务框架+四层指标体系+8种拓扑对照+7类扰动注入，9次框架验证建立基线；(3) CDoL因果消融实验（§7.11）：四组实验量化各组件贡献——Context Mask(d=1.52)>FusionJudge(d=1.18)>Multi-round(d=0.94)，证明增益来自信息受限认知而非ensemble降噪
 > v3.2 更新内容：**工程成熟度升级**——Docker一键部署 + Makefile + CLI入口 + API文档自动生成 + CI/CD完善 + base_agent.py Mixin拆分（2597→1211行）+ 56新测试（357全通过）。详见 Changelog。
 >
@@ -985,7 +985,7 @@ NexusFlow通过七个迭代Phase逐步演进，每个Phase解决一个核心问�
 
 #### 6.1.1 可解释拓扑决策层（TopologyInterpreter）（v3.5新增）
 
-**设计动机**：原始DynamicRouter的输出是一个RoutePlan——选择哪些Agent、以什么拓扑协作。但"为什么选这个拓扑？权重怎么算的？"没有人类可读的解释。这导致三个问题：(1) 调试困难，路由决策不透明；(2) 无法优化，每次路由都使用相同逻辑，不学习历史执行结果；(3) 权重黑盒，edge_weight的4个因子（load/preference/tier/latency）权重固定，无法根据场景调整。
+**设计动机**：原始DynamicRouter的输出是一个RoutePlan——选择哪些Agent、以什么拓扑协作。但"为什么选这个拓扑？权重怎么算的？"没有人类可读的解释。这导致三个问题：(1) 调试困难，路由决策不透明；(2) 无法优化，每次路由都使用相同逻辑，不学习历史执行结果；(3) 权重黑盒，edge_weight的5个因子（capability_match/load_state/cross_tier/preference/latency）权重固定，无法根据场景调整。
 
 v3.5 引入 **TopologyInterpreter** 作为DynamicRouter的可解释层，将路由决策从"黑盒评分"升级为"可观测、可归因、可审计"的透明过程。
 
@@ -996,15 +996,16 @@ v3.5 引入 **TopologyInterpreter** 作为DynamicRouter的可解释层，将路�
 class RoutingExplanation:
     plan_id: str
     decision_summary: str                # "选择了3-Agent串行链：coordinator→executor→reviewer"
-    factor_breakdown: Dict[str, float]   # 各因子贡献度（capability:0.35, load:0.25, tier:0.22, latency:0.18）
+    factor_breakdown: Dict[str, float]   # 各因子贡献度（capability:0.35, load:0.25, cross_tier:0.15, preference:0.15, latency:0.10）
     alternative_considered: List[str]    # 考虑过的备选方案（top-3候选拓扑及评分）
     confidence_factors: List[str]        # 影响置信度的因素
+    bottlenecks: List[str]              # 识别的性能瓶颈
     human_readable: str                  # 完整自然语言解释
 ```
 
 **解释策略**：
 - **Top-3候选对比**：列出得分最高的3种候选拓扑方案及其综合评分，说明最终选择的胜出原因
-- **因子归因分析**：将综合评分分解为能力匹配度、认知负载、约束感知三个维度的贡献度
+- **5因子归因分析**：将综合评分分解为5个因子的贡献度——能力匹配度（0.35）、负载状态（0.25）、跨层通信（0.15）、协作偏好（0.15）、延迟约束（0.10）
 - **瓶颈识别**：指出关键约束因素（如跨层通信惩罚、负载过高、隐私层级冲突）
 - **备选方案说明**：解释为什么备选的并行拓扑/星型拓扑未被选中
 
@@ -2089,7 +2090,7 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 
 #### 7.10.1 设计动机：现有基准的五大维度缺口
 
-前述七个Stage的实验验证了NexusFlow在核心能力上的有效性，但这些基准均无法系统覆盖超长程复杂任务的五大关键维度。通过对20+个学术界与工业界Agent评测基准的系统梳理（详见 [`LongHorizon_AgentBench_NF_report.md`](LongHorizon_AgentBench_NF_report.md)），我们发现：
+前述七个Stage的实验验证了NexusFlow在核心能力上的有效性，但这些基准均无法系统覆盖超长程复杂任务的五大关键维度。通过对20+个学术界与工业界Agent评测基准的系统梳理（详见 [`docs/LHAB-NF_Design.md`](docs/LHAB-NF_Design.md)），我们发现：
 
 | 维度 | 现有最佳基准 | 覆盖深度 | NexusFlow需求 |
 |------|-------------|----------|--------------|
@@ -2397,10 +2398,10 @@ LHAB-NF填补了"超长程+多Agent+端边云+故障恢复+隐私约束"五维�
 
 | 指标 | 数值 |
 |------|------|
-| 总文件数 | 653（git tracked） |
-| Python文件数 | 195 |
+| 总文件数 | 658（git tracked） |
+| Python文件数 | 196 |
 | 统计口径 | 排除`.git/`、`iteration/`和`__pycache__` |
-| Python代码行数 | 83,242 |
+| Python代码行数 | ~84,000（按~38 bytes/line估算，精确字节数3,208,322） |
 | 核心模块数 | 88（nexusflow/ 71模块 + tools/ 17个工具） |
 | 核心算法创新（CDoL引擎+Insight机制） | ~2,466行（CDoL 2,058行 + SkillRetriever 408行） |
 | Phase 7核心新增 | 6,163行（CDoL 2058行 + ACM 1642行 + 信息策略511行 + 编排器479行 + SkillRetriever 408行 + 目标验证器/检查点等配套模块1,065行） |
@@ -2413,7 +2414,7 @@ LHAB-NF填补了"超长程+多Agent+端边云+故障恢复+隐私约束"五维�
 | SkillRetriever | 408行 |
 | 最大单文件 | base_agent.py（1,211行）+ 7 Mixins（1,532行） |
 | Agent角色数 | 10 |
-| 内置工具数 | 18 |
+| 内置工具数 | 17 |
 | 记忆层级 | 4层 |
 | CDoL分解策略 | 6种 |
 | CDoL通信轮次 | 2-3轮（平台期） |
@@ -2588,7 +2589,7 @@ CDoL通信页展示三轮通信协议的执行细节，以及六种分解策略�
 ### v3.3 - 2026-07-23
 - **端边云实机验证**（§7.7.2 D7更新）：使用项目真实EdgeCloudScheduler执行27次真实LLM调用，覆盖三层调度/层间迁移/容错Fallback全链路；混合调度vs纯云端成本节省88%、隐私合规+2、质量仅差0.061
 - EdgeCloudScheduler扩展至635行（原535行），新增实机验证脚本685行
-- 代码统计更新：653文件/195个Python/83,242行
+- 代码统计更新：658文件/196个Python/~84,000行
 
 ### v3.2 - 2026-07-23
 - **工程成熟度升级（6 Phase）**：Docker一键部署（多阶段构建+非root+healthcheck）+ Makefile（12 targets）+ CLI入口（nexusflow命令+python -m nexusflow）+ API文档自动生成（pdoc+GitHub Pages）+ CI/CD完善（lint/docker/tests 三套workflow）+ 开发工具链（ruff+pre-commit+dev依赖组）

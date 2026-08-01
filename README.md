@@ -10,7 +10,7 @@
 [![Tests](https://img.shields.io/badge/Tests-357%20Passing-brightgreen.svg)](.github/workflows/tests.yml)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](Dockerfile)
 [![Security](https://img.shields.io/badge/Security-Gitleaks-blue.svg)](SECURITY.md)
-[![Benchmarks](https://img.shields.io/badge/Benchmarks-LHAB--NF%20%7C%207%20Stages%20%7C%20PinchBench-red.svg)]()
+[![Benchmarks](https://img.shields.io/badge/Benchmarks-LHAB--NF%20%7C%208%20Stages%20%7C%20PinchBench-red.svg)]()
 [![LOC](https://img.shields.io/badge/LOC-84,000+-blue.svg)]()
 
 *Where cognitive diversity meets dynamic topology.*

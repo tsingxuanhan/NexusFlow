@@ -1,0 +1,67 @@
+id: T3-E-001
+category: data_analysis
+difficulty: easy
+title: 单数据源统计报告
+description: >
+  从一份CSV数据中提取统计摘要，生成可视化图表和简短分析报告。
+  2-3个数据源，无扰动。
+
+max_steps: 30
+max_rounds: 15
+budget_limit_cny: 2.0
+privacy_constraints: []
+tags: [data_analysis, statistics, basic]
+
+steps:
+  - id: s1_load_data
+    description: 加载CSV并检查数据质量
+    agent_role: coordinator
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s2_statistical_summary
+    description: 计算基本统计量（均值/中位数/标准差/分布）
+    agent_role: miner
+    input_deps: [s1_load_data]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s3_generate_charts
+    description: 生成统计图表
+    agent_role: executor
+    input_deps: [s2_statistical_summary]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s4_write_report
+    description: 撰写分析摘要
+    agent_role: caster
+    input_deps: [s2_statistical_summary, s3_generate_charts]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s5_review
+    description: 审核报告准确性
+    agent_role: reviewer
+    input_deps: [s4_write_report]
+    device_preference: cloud
+    timeout_seconds: 30
+
+perturbations: []
+
+acceptance_criteria:
+  - name: statistical_accuracy
+    type: rule
+    weight: 0.4
+    threshold: 1.0
+    params: { check: "statistics_match_ground_truth" }
+  - name: report_quality
+    type: llm_score
+    weight: 0.3
+    threshold: 0.6
+    params: { dimensions: [clarity, insight, visualization] }
+  - name: completeness
+    type: llm_score
+    weight: 0.3
+    threshold: 0.6
+    params: { dimensions: [all_metrics_covered, proper_formatting] }

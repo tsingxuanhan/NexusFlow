@@ -468,7 +468,7 @@ JSON数组，每条包含：lesson（经验描述）、category（技术/流程/
     },
     {
         "id": "planner",
-        "name": "Strategist",
+        "name": "Planner",
         "label": "规划师",
         "icon": "🧩",
         "tier": "cdol",
@@ -477,7 +477,7 @@ JSON数组，每条包含：lesson（经验描述）、category（技术/流程/
         "edge_cloud_layer": "cloud",
         "description": "分析任务本质，分解为多视角子问题，设计信息不对称方案",
         "capabilities": ["task_decomposition", "perspective_design", "strategy_planning", "evidence_partition"],
-        "system_prompt": """你是 NexusFlow CDoL引擎的 **Strategist（规划师）**。
+        "system_prompt": """你是 NexusFlow CDoL引擎的 **Planner（规划师）**。
 
 ## 核心职责
 1. 分析任务的本质和核心挑战
@@ -555,7 +555,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
     },
     {
         "id": "miner",
-        "name": "Analyst",
+        "name": "Miner",
         "label": "挖掘师",
         "icon": "📊",
         "tier": "cdol",
@@ -564,7 +564,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
         "edge_cloud_layer": "edge",
         "description": "数据分析、模式识别、量化洞察",
         "capabilities": ["data_analysis", "pattern_recognition", "statistical_modeling", "insight_generation"],
-        "system_prompt": """你是 NexusFlow 的 **Analyst（挖掘师）**。
+        "system_prompt": """你是 NexusFlow 的 **Miner（挖掘师）**。
 
 ## 核心职责
 1. 结构化分析数据和信息
@@ -583,7 +583,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
     },
     {
         "id": "reviewer",
-        "name": "Critic",
+        "name": "Reviewer",
         "label": "批评家",
         "icon": "🔥",
         "tier": "cdol",
@@ -592,7 +592,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
         "edge_cloud_layer": "cloud",
         "description": "对抗质疑、发现盲点、确保结论鲁棒",
         "capabilities": ["adversarial_review", "assumption_challenging", "edge_case_detection", "quality_gate"],
-        "system_prompt": """你是 NexusFlow 的 **Critic（批评家）**。
+        "system_prompt": """你是 NexusFlow 的 **Reviewer（批评家）**。
 
 ## 核心职责
 1. 质疑其他Agent的假设和结论
@@ -611,7 +611,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
     },
     {
         "id": "caster",
-        "name": "Synthesizer",
+        "name": "Caster",
         "label": "整合师",
         "icon": "🔬",
         "tier": "cdol",
@@ -620,7 +620,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
         "edge_cloud_layer": "cloud",
         "description": "多视角融合、解决矛盾、生成统一方案",
         "capabilities": ["multi_view_fusion", "conflict_resolution", "conclusion_synthesis", "report_generation"],
-        "system_prompt": """你是 NexusFlow 的 **Synthesizer（整合师）**。
+        "system_prompt": """你是 NexusFlow 的 **Caster（整合师）**。
 
 ## 核心职责
 1. 综合多个Agent的独立分析结论
@@ -639,7 +639,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
     },
     {
         "id": "assayer",
-        "name": "Observer",
+        "name": "Assayer",
         "label": "旁观者",
         "icon": "👁",
         "tier": "assayer",
@@ -648,7 +648,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
         "edge_cloud_layer": "endpoint",
         "description": "仅观察中间结论，发现跨视角隐藏模式",
         "capabilities": ["meta_observation", "cross_pattern_detection", "bias_detection"],
-        "system_prompt": """你是 NexusFlow 的 **Observer（旁观者）**。
+        "system_prompt": """你是 NexusFlow 的 **Assayer（旁观者）**。
 
 ## 核心职责
 你不参与直接推理，而是旁观整个协作过程：
@@ -662,7 +662,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
     },
     {
         "id": "artisan",
-        "name": "Monitor",
+        "name": "Artisan",
         "label": "工匠",
         "icon": "📡",
         "tier": "assayer",
@@ -671,7 +671,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
         "edge_cloud_layer": "endpoint",
         "description": "监控Agent负载与系统健康，检测异常",
         "capabilities": ["health_monitoring", "load_tracking", "anomaly_detection", "reroute_trigger"],
-        "system_prompt": """你是 NexusFlow 的 **Monitor（工匠）**。
+        "system_prompt": """你是 NexusFlow 的 **Artisan（工匠）**。
 
 ## 核心职责
 1. 监控各Agent的执行状态和资源消耗
@@ -835,7 +835,7 @@ TOPOLOGY_CONFIGS = {
              "active": ["planner", "executor", "researcher", "miner", "reviewer", "caster", "assayer", "artisan"]},
     "chain": {"name": "链式", "desc": "流水线顺序处理",
               "active": ["researcher", "executor", "reviewer", "caster", "assayer", "artisan"]},
-    "converge": {"name": "汇聚", "desc": "多路结果汇聚到Synthesizer",
+    "converge": {"name": "汇聚", "desc": "多路结果汇聚到Caster",
                  "active": ["researcher", "miner", "executor", "caster", "archivist", "assayer", "artisan"]},
 }
 
@@ -1755,7 +1755,7 @@ class NexusFlowEngine:
             injection_type = injection.get("type", "")
             
             if injection_type == "requirement_change":
-                # 需求变更：让 Strategist 重新评估任务
+                # 需求变更：让 Planner 重新评估任务
                 new_content = injection.get("content", "")
                 await self.events.log(f"📝 处理需求变更: {new_content[:60]}...")
                 
@@ -1917,7 +1917,7 @@ class NexusFlowEngine:
         await self.events.log(f"  🔄 CDoL Round 0: 独立推理 ({len(reasoning_agents)}个Agent)")
         cdol_rounds_completed += 1
         
-        # Strategist decomposes perspective
+        # Planner decomposes perspective
         agent_tasks = {}
         if "planner" in reasoning_agents:
             await self._update_agent("planner", "thinking", f"Step {step_num} 视角分解", cdol_round=0)
@@ -1935,9 +1935,9 @@ class NexusFlowEngine:
                     perspectives = strat_plan.get("perspectives", {})
                     if isinstance(perspectives, dict) and perspectives:
                         agent_tasks = {k: str(v) for k, v in perspectives.items() if k in reasoning_agents}
-                        await self.events.log(f"  🧩 Strategist 分解完成: {len(agent_tasks)}个视角")
+                        await self.events.log(f"  🧩 Planner 分解完成: {len(agent_tasks)}个视角")
             except Exception as e:
-                logger.warning(f"Strategist parse failed: {e}")
+                logger.warning(f"Planner parse failed: {e}")
             
             await self._update_agent("planner", "waiting", output=resp["content"][:200], cdol_round=0)
         
@@ -1953,7 +1953,7 @@ class NexusFlowEngine:
             specific_task = agent_tasks.get(agent_id, "")
             prompt = f"{step_context}"
             if specific_task:
-                prompt += f"\n\n【Strategist分配的专项任务】\n{specific_task}"
+                prompt += f"\n\n【Planner分配的专项任务】\n{specific_task}"
             else:
                 prompt += f"\n\n请从{adef.get('label', agent_id)}的角度独立分析。"
             
@@ -1992,12 +1992,12 @@ class NexusFlowEngine:
                 "tokens": resp.get("tokens", 0),
             })
         
-        # Critic executes after Round 0 (as per Fix 5)
+        # Reviewer executes after Round 0 (as per Fix 5)
         if "reviewer" in reasoning_agents:
             critic_def = self.agent_defs_map.get("reviewer")
             if critic_def:
                 await self._update_agent("reviewer", "thinking", f"Round 0 对抗质疑", cdol_round=0)
-                await self.events.log(f"  🔥 Critic Round 0 对抗质疑...")
+                await self.events.log(f"  🔥 Reviewer Round 0 对抗质疑...")
                 
                 crit_text = "\n\n".join([
                     f"[{aid}]: {c[:400]}" for aid, c in round0_conclusions.items()
@@ -2014,7 +2014,7 @@ class NexusFlowEngine:
                 )
                 
                 await self._update_agent("reviewer", "waiting", output=resp["content"][:200], cdol_round=0)
-                await self.events.log(f"  🔥 Critic 完成")
+                await self.events.log(f"  🔥 Reviewer 完成")
         
         # === ROUND 1: Difference Attribution ===
         await self.events.log(f"  🔄 CDoL Round 1: 差异归因")
@@ -2172,7 +2172,7 @@ class NexusFlowEngine:
             else:
                 step_summary = "\n".join(round2_conclusions.values())
         
-        # === Observer Meta-observation ===
+        # === Assayer Meta-observation ===
         observer_note = ""
         if "assayer" in step_participants and step_summary:
             obs_def = self.agent_defs_map.get("assayer", {})
@@ -2197,9 +2197,9 @@ class NexusFlowEngine:
                     "provider": resp.get("provider", "unknown"),
                     "tokens": resp.get("tokens", 0),
                 })
-                await self.events.log(f"  👁 Observer 完成元观察")
+                await self.events.log(f"  👁 Assayer 完成元观察")
         
-        # === Monitor Health Check ===
+        # === Artisan Health Check ===
         step_duration = time.time() - step_start
         monitor_metrics = {
             "duration_s": round(step_duration, 1),
@@ -2221,7 +2221,7 @@ class NexusFlowEngine:
                 monitor_report = resp["content"][:500]
                 step_tokens += resp.get("tokens", 0)
                 await self._update_agent("artisan", "complete", output=monitor_report[:200], cdol_round=2)
-                await self.events.log(f"  📡 Monitor 健康度: {monitor_metrics['health']}")
+                await self.events.log(f"  📡 Artisan 健康度: {monitor_metrics['health']}")
         
         # Mark all agents complete
         for agent_id in reasoning_agents:

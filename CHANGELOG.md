@@ -1,5 +1,48 @@
 # Changelog
 
+## [v3.5.0] - 2026-08-01
+
+### Added
+- **LHAB-NF 评测基准**（LongHorizon-AgentBench-NF）
+  - 9 个任务用例：T1-T3 × Easy/Medium/Hard（跨设备协作/软件工程/数据分析）
+  - 13 项评测指标：任务完成率、步骤成功率、Token 成本、延迟、隐私违规等
+  - 7 种扰动注入：设备离线、网络超时、工具失败、需求变更、数据冲突、低质量输出、记忆污染
+  - 统一评测入口：`scripts/run_benchmark.py`（支持 --suite/--task/--mode/--difficulty）
+  - Suite 测试通过：mock 模式 9 任务全部执行，平均评分 0.52
+- **P2 可解释动态拓扑**
+  - `nexusflow/core/topology_interpreter.py`（16KB）：路由决策解释器
+    - 因子贡献度分析（能力匹配/负载状态/跨层通信/协作偏好/延迟约束）
+    - 备选方案对比 + 瓶颈识别
+    - Markdown 格式解释报告
+  - `nexusflow/core/topology_optimizer.py`（13KB）：基于 UCB1 的拓扑优化器
+    - 执行结果记录 + 模式学习
+    - 动态权重调整（按任务模式）
+    - 改进建议生成
+  - DynamicRouter 集成 P2（+133 行，总计 1002 行）
+    - RoutePlan 新增 `explanation` 字段
+    - 新增方法：`record_execution_outcome`, `get_routing_explanation`
+    - P2 功能可选启用（无 P2 模块时自动降级）
+  - 演示脚本：`examples/p2_topology_demo.py`（3 个演示场景）
+- **P3 消融实验框架**
+  - `evaluation/lhab_nf/ablation_runner.py`（18KB）：4 组消融实验
+    - 基线对比：Single Agent vs Full CDoL
+    - Context Mask 消融（信息不对称的价值）
+    - 多轮通信消融（迭代精炼的价值）
+    - Fusion Judge 消融（复杂融合策略的价值）
+  - 设计文档：`docs/P3_Ablation_Design.md`（统计方法 + 实验矩阵）
+- **P0 可信度基础**
+  - `PROJECT_FACTS.md`：项目统计数据唯一权威来源（658 文件 / 196 Python / ~84K 行）
+  - `scripts/generate_facts.py`：自动从代码生成事实清单
+  - Makefile 目标：`make facts` / `make verify`
+
+### Changed
+- 技术文档引用升级至 v3.5
+- README Version badge 更新至 v3.5.0
+- LOC badge 更新至 84,000+
+
+### Fixed
+- task_schema.py PrivacyLevel enum 对齐 YAML 值（edge_allowed）
+
 ## [v3.4.0] - 2026-08-01
 
 ### Fixed
@@ -25,6 +68,10 @@
 ## [v3.3.0] - 2026-07-23
 
 ### Added
+- **端边云实机验证**：使用项目真实 `EdgeCloudScheduler` 完成 27 次真实 LLM 调用验证
+  - 三层真实端点：Edge(qwen3.5:9b) / Fog(deepseek-r1:14b) / Cloud(DeepSeek API)
+  - 11 次调度决策 + 2 次层间迁移 + 3 次容错 Fallback
+
 - **端边云实机验证**：使用项目真实 `EdgeCloudScheduler` 完成 27 次真实 LLM 调用验证
   - 三层真实端点：Edge(qwen3.5:9b) / Fog(deepseek-r1:14b) / Cloud(DeepSeek API)
   - 11 次调度决策 + 2 次层间迁移 + 3 次容错 Fallback

@@ -1,0 +1,104 @@
+id: T3-M-001
+category: data_analysis
+difficulty: medium
+title: 多源数据对比分析
+description: >
+  从4个数据源收集宏观经济数据，清洗对齐后做对比分析，
+  识别趋势和异常。包含1个错误数据源和1次冲突证据。
+
+max_steps: 80
+max_rounds: 30
+budget_limit_cny: 5.0
+privacy_constraints: []
+tags: [data_analysis, multi_source, conflict_resolution]
+
+steps:
+  - id: s1_collect_sources
+    description: 从4个数据源收集原始数据
+    agent_role: researcher
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s2_validate_quality
+    description: 检查各数据源质量和一致性
+    agent_role: assayer
+    input_deps: [s1_collect_sources]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s3_align_data
+    description: 对齐时间序列和指标口径
+    agent_role: executor
+    input_deps: [s2_validate_quality]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s4_statistical_analysis
+    description: 执行对比分析和回归检验
+    agent_role: miner
+    input_deps: [s3_align_data]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s5_identify_trends
+    description: 识别关键趋势和异常点
+    agent_role: planner
+    input_deps: [s4_statistical_analysis]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s6_cross_validate
+    description: 交叉验证结论的稳健性
+    agent_role: reviewer
+    input_deps: [s5_identify_trends]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s7_generate_report
+    description: 生成带证据链的分析报告
+    agent_role: caster
+    input_deps: [s6_cross_validate]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s8_final_review
+    description: 最终审核
+    agent_role: archivist
+    input_deps: [s7_generate_report]
+    device_preference: cloud
+    timeout_seconds: 30
+
+perturbations:
+  - type: data_conflict
+    trigger_at_step: s2_validate_quality
+    target: source_3
+    params: { description: "第3个数据源的GDP数据与其他3个来源偏差>20%" }
+    expected_recovery: auto
+
+  - type: data_conflict
+    trigger_at_step: s4_statistical_analysis
+    target: miner
+    params: { description: "两组数据的季节性调整方法不一致" }
+    expected_recovery: auto
+
+acceptance_criteria:
+  - name: data_quality_handled
+    type: rule
+    weight: 0.25
+    threshold: 1.0
+    params: { check: "bad_source_identified_and_excluded" }
+  - name: analysis_accuracy
+    type: llm_score
+    weight: 0.3
+    threshold: 0.7
+    params: { dimensions: [statistical_rigor, insight_depth, evidence_quality] }
+  - name: evidence_chain
+    type: rule
+    weight: 0.25
+    threshold: 0.8
+    params: { check: "all_conclusions_have_evidence" }
+  - name: report_quality
+    type: llm_score
+    weight: 0.2
+    threshold: 0.7
+    params: { dimensions: [clarity, completeness, actionability] }

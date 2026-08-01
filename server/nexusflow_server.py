@@ -58,7 +58,7 @@ except ImportError:
     pass
 
 import aiohttp
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
 from pydantic import BaseModel
@@ -189,6 +189,12 @@ DEEPSEEK_ENDPOINT = os.environ.get("DEEPSEEK_ENDPOINT", "https://api.deepseek.co
 
 SERVER_HOST = os.environ.get("NEXUSFLOW_HOST", "0.0.0.0")
 SERVER_PORT = int(os.environ.get("NEXUSFLOW_PORT", "8900"))
+
+# Dashboard directory
+DASHBOARD_DIR = os.path.join(PROJECT_ROOT, "docs", "dashboard")
+print(f"[STARTUP] PROJECT_ROOT = {PROJECT_ROOT}")
+print(f"[STARTUP] DASHBOARD_DIR = {DASHBOARD_DIR}")
+print(f"[STARTUP] DASHBOARD_DIR exists = {os.path.exists(DASHBOARD_DIR)}")
 
 OLLAMA_PRO_MODEL = os.environ.get("OLLAMA_PRO_MODEL", "deepseek-r1:14b")
 OLLAMA_FLASH_MODEL = os.environ.get("OLLAMA_FLASH_MODEL", "qwen3.5:9b")
@@ -385,21 +391,21 @@ MODEL_DISPLAY_NAMES = {
 TIER_LABELS = {
     "global": "🌐 全局层",
     "cdol": "🔗 CDoL 层",
-    "observer": "👁 观察层",
+    "assayer": "👁 观察层",
 }
 
 # Map Dashboard agent IDs to NexusOrchestrator agent names
 AGENT_ID_MAP = {
     "coordinator": "coordinator",
-    "strategist": "strategist", 
-    "coder": "coder",
+    "planner": "planner", 
+    "executor": "executor",
     "researcher": "researcher",
-    "analyst": "analyst",
-    "critic": "critic",
-    "synthesizer": "synthesizer",
+    "miner": "miner",
+    "reviewer": "reviewer",
+    "caster": "caster",
     "archivist": "archivist",
-    "observer": "observer",
-    "monitor": "monitor",
+    "assayer": "assayer",
+    "artisan": "artisan",
 }
 
 AGENT_DEFS = [
@@ -461,9 +467,9 @@ AGENT_DEFS = [
 JSON数组，每条包含：lesson（经验描述）、category（技术/流程/协作）、confidence（0-1）、tags（标签列表）"""
     },
     {
-        "id": "strategist",
+        "id": "planner",
         "name": "Strategist",
-        "label": "策略师",
+        "label": "规划师",
         "icon": "🧩",
         "tier": "cdol",
         "provider": "deepseek",
@@ -471,7 +477,7 @@ JSON数组，每条包含：lesson（经验描述）、category（技术/流程/
         "edge_cloud_layer": "cloud",
         "description": "分析任务本质，分解为多视角子问题，设计信息不对称方案",
         "capabilities": ["task_decomposition", "perspective_design", "strategy_planning", "evidence_partition"],
-        "system_prompt": """你是 NexusFlow CDoL引擎的 **Strategist（策略师）**。
+        "system_prompt": """你是 NexusFlow CDoL引擎的 **Strategist（规划师）**。
 
 ## 核心职责
 1. 分析任务的本质和核心挑战
@@ -491,7 +497,7 @@ JSON数组，每条包含：lesson（经验描述）、category（技术/流程/
 JSON包含：summary（分解策略简述）、perspectives（对象，key=agent_id, value=子问题描述）、rationale（分解理由）、bridgeability（视角间可桥接性评分0-1）"""
     },
     {
-        "id": "coder",
+        "id": "executor",
         "name": "Coder",
         "label": "编码师",
         "icon": "💻",
@@ -548,9 +554,9 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
 结构化报告：背景、关键发现（附来源链接）、证据列表、研究空白、建议方向"""
     },
     {
-        "id": "analyst",
+        "id": "miner",
         "name": "Analyst",
-        "label": "分析师",
+        "label": "挖掘师",
         "icon": "📊",
         "tier": "cdol",
         "provider": "ollama",
@@ -558,7 +564,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
         "edge_cloud_layer": "edge",
         "description": "数据分析、模式识别、量化洞察",
         "capabilities": ["data_analysis", "pattern_recognition", "statistical_modeling", "insight_generation"],
-        "system_prompt": """你是 NexusFlow 的 **Analyst（分析师）**。
+        "system_prompt": """你是 NexusFlow 的 **Analyst（挖掘师）**。
 
 ## 核心职责
 1. 结构化分析数据和信息
@@ -576,7 +582,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
 分析报告：数据摘要、关键发现（按重要性排序）、模式识别结果、量化指标、建议"""
     },
     {
-        "id": "critic",
+        "id": "reviewer",
         "name": "Critic",
         "label": "批评家",
         "icon": "🔥",
@@ -604,7 +610,7 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
 评审报告：总体评价（通过/需修改/驳回）、具体问题列表（每条含严重程度1-5）、改进建议、残余风险评估"""
     },
     {
-        "id": "synthesizer",
+        "id": "caster",
         "name": "Synthesizer",
         "label": "整合师",
         "icon": "🔬",
@@ -632,11 +638,11 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
 综合报告：共识列表、分歧列表（及解决方式）、最终结论、置信度评分、来源溯源"""
     },
     {
-        "id": "observer",
+        "id": "assayer",
         "name": "Observer",
         "label": "旁观者",
         "icon": "👁",
-        "tier": "observer",
+        "tier": "assayer",
         "provider": "ollama",
         "model": "flash",
         "edge_cloud_layer": "endpoint",
@@ -655,17 +661,17 @@ JSON包含：summary（分解策略简述）、perspectives（对象，key=agent
 观察报告：过程摘要、发现的跨视角模式、潜在偏见提醒、建议关注点"""
     },
     {
-        "id": "monitor",
+        "id": "artisan",
         "name": "Monitor",
-        "label": "监控者",
+        "label": "工匠",
         "icon": "📡",
-        "tier": "observer",
+        "tier": "assayer",
         "provider": "ollama",
         "model": "flash",
         "edge_cloud_layer": "endpoint",
         "description": "监控Agent负载与系统健康，检测异常",
         "capabilities": ["health_monitoring", "load_tracking", "anomaly_detection", "reroute_trigger"],
-        "system_prompt": """你是 NexusFlow 的 **Monitor（监控者）**。
+        "system_prompt": """你是 NexusFlow 的 **Monitor（工匠）**。
 
 ## 核心职责
 1. 监控各Agent的执行状态和资源消耗
@@ -822,15 +828,15 @@ class EventBus:
 
 TOPOLOGY_CONFIGS = {
     "star": {"name": "星形", "desc": "Coordinator中心分发，所有Agent并行",
-             "active": ["coordinator", "strategist", "coder", "researcher", "analyst", "critic", "synthesizer", "observer", "monitor"]},
+             "active": ["coordinator", "planner", "executor", "researcher", "miner", "reviewer", "caster", "assayer", "artisan"]},
     "tree": {"name": "树形", "desc": "分层委托，逐级传递",
-             "active": ["coordinator", "strategist", "researcher", "coder", "analyst", "observer"]},
+             "active": ["coordinator", "planner", "researcher", "executor", "miner", "assayer"]},
     "mesh": {"name": "网状", "desc": "全连接对等协商",
-             "active": ["strategist", "coder", "researcher", "analyst", "critic", "synthesizer", "observer", "monitor"]},
+             "active": ["planner", "executor", "researcher", "miner", "reviewer", "caster", "assayer", "artisan"]},
     "chain": {"name": "链式", "desc": "流水线顺序处理",
-              "active": ["researcher", "coder", "critic", "synthesizer", "observer", "monitor"]},
+              "active": ["researcher", "executor", "reviewer", "caster", "assayer", "artisan"]},
     "converge": {"name": "汇聚", "desc": "多路结果汇聚到Synthesizer",
-                 "active": ["researcher", "analyst", "coder", "synthesizer", "archivist", "observer", "monitor"]},
+                 "active": ["researcher", "miner", "executor", "caster", "archivist", "assayer", "artisan"]},
 }
 
 def select_topology(task_desc: str) -> str:
@@ -1858,10 +1864,10 @@ class NexusFlowEngine:
         """尝试恢复失效的Agent"""
         # 检查是否有备用Agent
         backup_agents = {
-            "researcher": "analyst",
-            "analyst": "researcher",
-            "coder": "analyst",
-            "critic": "synthesizer",
+            "researcher": "miner",
+            "miner": "researcher",
+            "executor": "miner",
+            "reviewer": "caster",
         }
         
         backup = backup_agents.get(agent_id)
@@ -1903,9 +1909,9 @@ class NexusFlowEngine:
             step_context += f"上一步结果: {prev['summary'][:100]}。"
         step_context += f"\n\n任务: {task.description}"
         
-        # Agents for reasoning (exclude global/observer agents)
+        # Agents for reasoning (exclude global/assayer agents)
         reasoning_agents = [p for p in step_participants 
-                           if p not in ("coordinator", "archivist", "observer", "monitor")]
+                           if p not in ("coordinator", "archivist", "assayer", "artisan")]
         
         # === ROUND 0: Independent Reasoning ===
         await self.events.log(f"  🔄 CDoL Round 0: 独立推理 ({len(reasoning_agents)}个Agent)")
@@ -1913,10 +1919,10 @@ class NexusFlowEngine:
         
         # Strategist decomposes perspective
         agent_tasks = {}
-        if "strategist" in reasoning_agents:
-            await self._update_agent("strategist", "thinking", f"Step {step_num} 视角分解", cdol_round=0)
-            strategist_def = self.agent_defs_map["strategist"]
-            resp = await self._call_llm("strategist", [
+        if "planner" in reasoning_agents:
+            await self._update_agent("planner", "thinking", f"Step {step_num} 视角分解", cdol_round=0)
+            strategist_def = self.agent_defs_map["planner"]
+            resp = await self._call_llm("planner", [
                 {"role": "system", "content": strategist_def["system_prompt"]},
                 {"role": "user", "content": f"使用'{cdol_strategy}'策略为以下步骤分解视角:\n{step_context}\n\n参与Agent: {reasoning_agents}\n\n{DECOMPOSITION_STRATEGIES.get(cdol_strategy, {}).get('desc', '')}"}
             ], temperature=0.4, max_tokens=800)
@@ -1933,11 +1939,11 @@ class NexusFlowEngine:
             except Exception as e:
                 logger.warning(f"Strategist parse failed: {e}")
             
-            await self._update_agent("strategist", "waiting", output=resp["content"][:200], cdol_round=0)
+            await self._update_agent("planner", "waiting", output=resp["content"][:200], cdol_round=0)
         
         # Round 0: All reasoning agents independently infer
         round0_conclusions = {}
-        non_critic_agents = [a for a in reasoning_agents if a != "strategist" and a != "critic"]
+        non_critic_agents = [a for a in reasoning_agents if a != "planner" and a != "reviewer"]
         
         for agent_id in non_critic_agents:
             adef = self.agent_defs_map.get(agent_id)
@@ -1987,27 +1993,27 @@ class NexusFlowEngine:
             })
         
         # Critic executes after Round 0 (as per Fix 5)
-        if "critic" in reasoning_agents:
-            critic_def = self.agent_defs_map.get("critic")
+        if "reviewer" in reasoning_agents:
+            critic_def = self.agent_defs_map.get("reviewer")
             if critic_def:
-                await self._update_agent("critic", "thinking", f"Round 0 对抗质疑", cdol_round=0)
+                await self._update_agent("reviewer", "thinking", f"Round 0 对抗质疑", cdol_round=0)
                 await self.events.log(f"  🔥 Critic Round 0 对抗质疑...")
                 
                 crit_text = "\n\n".join([
                     f"[{aid}]: {c[:400]}" for aid, c in round0_conclusions.items()
                 ])
-                resp = await self._call_llm("critic", [
+                resp = await self._call_llm("reviewer", [
                     {"role": "system", "content": critic_def["system_prompt"]},
                     {"role": "user", "content": f"请质疑以下结论的假设、逻辑漏洞:\n{crit_text}"}
                 ], temperature=0.5, max_tokens=1500)
                 
-                round0_conclusions["critic"] = resp["content"]
+                round0_conclusions["reviewer"] = resp["content"]
                 step_tokens += resp.get("tokens", 0)
-                laziness_metrics["critic"] = self.laziness_detector.compute_laziness_metrics(
-                    "critic", resp["content"]
+                laziness_metrics["reviewer"] = self.laziness_detector.compute_laziness_metrics(
+                    "reviewer", resp["content"]
                 )
                 
-                await self._update_agent("critic", "waiting", output=resp["content"][:200], cdol_round=0)
+                await self._update_agent("reviewer", "waiting", output=resp["content"][:200], cdol_round=0)
                 await self.events.log(f"  🔥 Critic 完成")
         
         # === ROUND 1: Difference Attribution ===
@@ -2132,9 +2138,9 @@ class NexusFlowEngine:
         # === Synthesis for this step ===
         step_summary = ""
         if round2_conclusions:
-            if "synthesizer" in step_participants:
-                await self._update_agent("synthesizer", "thinking", f"Step {step_num} 融合", cdol_round=2)
-                synth_def = self.agent_defs_map["synthesizer"]
+            if "caster" in step_participants:
+                await self._update_agent("caster", "thinking", f"Step {step_num} 融合", cdol_round=2)
+                synth_def = self.agent_defs_map["caster"]
                 
                 conc_text = "\n\n".join([
                     f"### {self.agent_defs_map.get(aid, {}).get('label', aid)} (Round 2):\n{c[:800]}"
@@ -2147,16 +2153,16 @@ class NexusFlowEngine:
                     _first_detail = _details[0] if isinstance(_details, list) and len(_details) > 0 and isinstance(_details[0], dict) else {}
                     fusion_note = f"\n\n⚠️ FusionJudge检测到虚假一致，请分离为条件方案。警告: {_first_detail.get('explanation', '')}"
                 
-                resp = await self._call_llm("synthesizer", [
+                resp = await self._call_llm("caster", [
                     {"role": "system", "content": synth_def["system_prompt"]},
                     {"role": "user", "content": f"任务: {task.description}\n步骤 {step_num}\n\n{conc_text}{fusion_note}\n\n请综合以上结论，给出统一结果。"}
                 ], temperature=0.5, max_tokens=1500)
                 
                 step_summary = resp["content"]
                 step_tokens += resp.get("tokens", 0)
-                await self._update_agent("synthesizer", "complete", output=step_summary[:200], cdol_round=2)
+                await self._update_agent("caster", "complete", output=step_summary[:200], cdol_round=2)
                 await self.events.emit("agent_output", {
-                    "agent_id": "synthesizer",
+                    "agent_id": "caster",
                     "step": step_num,
                     "round": 2,
                     "output": step_summary[:400],
@@ -2168,23 +2174,23 @@ class NexusFlowEngine:
         
         # === Observer Meta-observation ===
         observer_note = ""
-        if "observer" in step_participants and step_summary:
-            obs_def = self.agent_defs_map.get("observer", {})
+        if "assayer" in step_participants and step_summary:
+            obs_def = self.agent_defs_map.get("assayer", {})
             if obs_def:
-                await self._update_agent("observer", "thinking", f"Step {step_num} 元观察", cdol_round=2)
+                await self._update_agent("assayer", "thinking", f"Step {step_num} 元观察", cdol_round=2)
                 conc_text = "\n\n".join([
                     f"[{aid}]: {c[:300]}" for aid, c in round2_conclusions.items()
                 ])
                 obs_prompt = f"本步CDoL三轮完成:\n{conc_text}\n\n融合结果:\n{step_summary[:800]}\n\n请从旁观者角度分析: 1)是否有认知偏见？2)是否有跨视角隐藏模式？"
-                resp = await self._call_llm("observer", [
+                resp = await self._call_llm("assayer", [
                     {"role": "system", "content": obs_def["system_prompt"]},
                     {"role": "user", "content": obs_prompt}
                 ], temperature=0.5, max_tokens=800)
                 observer_note = resp["content"][:1000]
                 step_tokens += resp.get("tokens", 0)
-                await self._update_agent("observer", "complete", output=observer_note[:200], cdol_round=2)
+                await self._update_agent("assayer", "complete", output=observer_note[:200], cdol_round=2)
                 await self.events.emit("agent_output", {
-                    "agent_id": "observer",
+                    "agent_id": "assayer",
                     "step": step_num,
                     "round": 2,
                     "output": observer_note[:400],
@@ -2202,19 +2208,19 @@ class NexusFlowEngine:
             "health": "ok" if step_duration < 120 else "slow"
         }
         
-        if "monitor" in step_participants:
-            mon_def = self.agent_defs_map.get("monitor", {})
+        if "artisan" in step_participants:
+            mon_def = self.agent_defs_map.get("artisan", {})
             if mon_def:
-                await self._update_agent("monitor", "thinking", f"Step {step_num} 健康检查", cdol_round=2)
+                await self._update_agent("artisan", "thinking", f"Step {step_num} 健康检查", cdol_round=2)
                 metrics_text = json.dumps(monitor_metrics, ensure_ascii=False)
                 mon_prompt = f"系统指标: {metrics_text}\n\nCDoL轮次: {cdol_rounds_completed}\n冲突类型: {conflict_type}"
-                resp = await self._call_llm("monitor", [
+                resp = await self._call_llm("artisan", [
                     {"role": "system", "content": mon_def["system_prompt"]},
                     {"role": "user", "content": mon_prompt}
                 ], temperature=0.3, max_tokens=500)
                 monitor_report = resp["content"][:500]
                 step_tokens += resp.get("tokens", 0)
-                await self._update_agent("monitor", "complete", output=monitor_report[:200], cdol_round=2)
+                await self._update_agent("artisan", "complete", output=monitor_report[:200], cdol_round=2)
                 await self.events.log(f"  📡 Monitor 健康度: {monitor_metrics['health']}")
         
         # Mark all agents complete
@@ -2270,8 +2276,8 @@ class NexusFlowEngine:
             _first_detail = _details[0] if isinstance(_details, list) and len(_details) > 0 and isinstance(_details[0], dict) else {}
             fusion_note = f"\n\n⚠️ 最终FusionJudge检测: {_first_detail.get('explanation', '')}"
         
-        synth_def = self.agent_defs_map.get("synthesizer", {})
-        resp = await self._call_llm("synthesizer", [
+        synth_def = self.agent_defs_map.get("caster", {})
+        resp = await self._call_llm("caster", [
             {"role": "system", "content": synth_def.get("system_prompt", "综合所有步骤的结果，给出最终答案。")},
             {"role": "user", "content": f"原始任务: {task.description}\n\n{all_summaries}{fusion_note}\n\n请综合所有步骤的结果，给出完整、连贯的最终答案。"}
         ], temperature=0.4, max_tokens=4096)
@@ -2378,7 +2384,7 @@ engine: Optional[NexusFlowEngine] = None
 events = EventBus()
 tasks: Dict[str, TaskExecution] = {}
 task_history: List[TaskExecution] = []
-DASHBOARD_DIR = os.path.dirname(os.path.abspath(__file__))
+DASHBOARD_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'docs', 'dashboard'))
 
 # ============================================================================
 # Dynamic Cloud Agent Management (v3.4)
@@ -2388,7 +2394,7 @@ dynamic_providers: Dict[str, LLMProvider] = {} # name -> provider instance
 
 # 角色模板：根据 role_hint 生成 system_prompt
 ROLE_TEMPLATES = {
-    "coder": {
+    "executor": {
         "label": "开发者",
         "icon": "💻",
         "capabilities": ["code_generation", "debugging", "code_review", "algorithm_design"],
@@ -2409,11 +2415,11 @@ ROLE_TEMPLATES = {
 ## 输出格式
 提供完整的代码实现，附带必要的注释和说明。"""
     },
-    "analyst": {
-        "label": "分析师",
+    "miner": {
+        "label": "挖掘师",
         "icon": "📊",
         "capabilities": ["data_analysis", "pattern_recognition", "statistical_modeling", "insight_extraction"],
-        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（分析师）**。
+        "prompt_template": """你是 NexusFlow 多智能体协作系统中的 **{name}（挖掘师）**。
 
 ## 核心职责
 1. 对数据进行深入分析和挖掘
@@ -2451,7 +2457,7 @@ ROLE_TEMPLATES = {
 ## 输出格式
 研究报告：背景综述、关键发现、证据评估、知识缺口、建议方向。"""
     },
-    "critic": {
+    "reviewer": {
         "label": "评审者",
         "icon": "🔍",
         "capabilities": ["critical_thinking", "risk_assessment", "quality_review", "counterargument"],
@@ -2472,7 +2478,7 @@ ROLE_TEMPLATES = {
 ## 输出格式
 评审报告：优点总结、问题清单（含严重程度）、改进建议、最终评估。"""
     },
-    "synthesizer": {
+    "caster": {
         "label": "整合者",
         "icon": "🧬",
         "capabilities": ["information_synthesis", "summary_generation", "consensus_building", "report_writing"],
@@ -2518,11 +2524,11 @@ ROLE_TEMPLATES = {
 
 # 角色推断关键词映射
 ROLE_INFERENCE_KEYWORDS = {
-    "coder": ["code", "dev", "build", "编程", "开发", "工程", "debug", "程序员"],
-    "analyst": ["analyst", "data", "stats", "分析", "数据", "统计"],
+    "executor": ["code", "dev", "build", "编程", "开发", "工程", "debug", "执行者"],
+    "miner": ["miner", "data", "stats", "分析", "数据", "统计"],
     "researcher": ["research", "science", "literature", "研究", "学术", "文献", "调研"],
-    "critic": ["critic", "review", "verify", "评审", "审查", "验证", "质疑"],
-    "synthesizer": ["synthesis", "summary", "report", "整合", "综合", "总结", "报告"],
+    "reviewer": ["reviewer", "review", "verify", "评审", "审查", "验证", "质疑"],
+    "caster": ["synthesis", "summary", "report", "整合", "综合", "总结", "报告"],
 }
 
 def infer_role_from_name(name: str, role_hint: Optional[str] = None) -> str:
@@ -2610,10 +2616,18 @@ async def shutdown():
 async def serve_dashboard():
     for fname in ["nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
         path = os.path.join(DASHBOARD_DIR, fname)
+        print(f"[DASHBOARD] Checking: {path}  exists={os.path.exists(path)}")
         if os.path.exists(path):
             return FileResponse(path, media_type="text/html")
-    return HTMLResponse("<h1>Dashboard not found</h1>")
-
+    _server_dir = os.path.dirname(os.path.abspath(__file__))
+    _fallback_dir = os.path.join(os.path.dirname(_server_dir), "docs", "dashboard")
+    print(f"[DASHBOARD] Fallback dir: {_fallback_dir}")
+    for fname in ["nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
+        path = os.path.join(_fallback_dir, fname)
+        if os.path.exists(path):
+            print(f"[DASHBOARD] Found via fallback: {path}")
+            return FileResponse(path, media_type="text/html")
+    return HTMLResponse(f"<h1>Dashboard not found</h1><p>DASHBOARD_DIR={DASHBOARD_DIR}<br>Fallback={_fallback_dir}</p>")
 
 @app.get("/api/agents")
 async def api_agents():
@@ -3055,6 +3069,50 @@ async def ws_events(ws: WebSocket):
 # ============================================================================
 # Entry
 # ============================================================================
+
+
+# ========== 文件上传API ==========
+UPLOAD_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'uploads'))
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+@app.post("/api/upload")
+async def upload_file(file: UploadFile = File(...), task_id: str = Form(None)):
+    """Upload a file, optionally associating with a task."""
+    import shutil as _shutil
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    safe_name = f"{timestamp}_{file.filename}"
+    save_path = os.path.join(UPLOAD_DIR, safe_name)
+    with open(save_path, "wb") as buf:
+        _shutil.copyfileobj(file.file, buf)
+    file_size = os.path.getsize(save_path)
+    result = {
+        "success": True,
+        "filename": file.filename,
+        "saved_as": safe_name,
+        "path": os.path.abspath(save_path),
+        "size": file_size,
+        "content_type": file.content_type,
+    }
+    if task_id:
+        result["task_id"] = task_id
+    logger.info(f"File uploaded: {file.filename} ({file_size} bytes)")
+    return result
+
+@app.get("/api/uploads")
+async def list_uploads():
+    """List all uploaded files."""
+    if not os.path.exists(UPLOAD_DIR):
+        return {"files": []}
+    files = []
+    for fn in sorted(os.listdir(UPLOAD_DIR)):
+        fp = os.path.join(UPLOAD_DIR, fn)
+        if os.path.isfile(fp):
+            files.append({
+                "filename": fn,
+                "size": os.path.getsize(fp),
+                "modified": datetime.fromtimestamp(os.path.getmtime(fp)).isoformat(),
+            })
+    return {"files": files, "upload_dir": UPLOAD_DIR}
 
 if __name__ == "__main__":
     print(f"""

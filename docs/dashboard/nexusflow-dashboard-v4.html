@@ -944,6 +944,15 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
   box-shadow: 0 4px 20px var(--purple-glow);
 }
 .btn-add-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.file-item {
+  display:flex; align-items:center; gap:8px; padding:6px 10px;
+  background:var(--bg-2); border-radius:6px; font-size:.75rem;
+}
+.file-item-name { flex:1; color:var(--text-1); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.file-item-size { color:var(--text-3); font-size:.68rem; flex-shrink:0; }
+.file-item-remove { background:none; border:none; color:var(--red); cursor:pointer; font-size:.82rem; padding:2px 4px; flex-shrink:0; }
+.file-item-remove:hover { opacity:.7; }
+#fileDropZone:hover { border-color:var(--coral); background:var(--coral-dim); }
 </style>
 </head>
 <body>
@@ -980,6 +989,8 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
       <div class="status-pill" style="font-size:.72rem;color:var(--text-3)">
         <span id="currentTime">--:--:--</span>
       </div>
+      <button style="font-size:.75rem;padding:6px 12px;background:var(--bg-2);color:var(--text-2);border:1px solid var(--bg-3);border-radius:6px;cursor:pointer;margin-right:8px" id="btnRefreshModels" onclick="refreshModels()">\u{1F504} 刷新模型</button>
+
       <button class="btn-new" onclick="openTaskDialog()">
         <span>+</span> 新任务
       </button>
@@ -1022,6 +1033,17 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
           <div class="stat-value v-coral" id="statInsights">0</div>
           <div class="stat-sub">InsightStore</div>
         </div>
+        <div class="stat-card" style="border-left:3px solid var(--purple);cursor:pointer" onclick="showOutputsPanel()">
+          <div class="stat-label">输出文件</div>
+          <div class="stat-value" style="color:var(--purple)" id="statOutputs">0</div>
+          <div class="stat-sub">点击查看</div>
+        </div>
+        <div class="stat-card" style="border-left:3px solid var(--yellow);cursor:pointer" onclick="showDynamicAgentsPanel()">
+          <div class="stat-label">动态Agent</div>
+          <div class="stat-value" style="color:var(--yellow)" id="statDynamicAgents">0</div>
+          <div class="stat-sub">点击查看</div>
+        </div>
+
       </div>
 
       <!-- CDoL Pipeline -->
@@ -1697,6 +1719,18 @@ body { font-family:var(--font); background:var(--bg-0); color:var(--text-1); hei
         <textarea class="form-input" id="taskInput" rows="4" placeholder="描述您的任务，例如：分析蛋白质折叠问题并设计实验方案"></textarea>
       </div>
       <div class="form-group">
+        <label class="form-label">📎 参考文件（可选）</label>
+        <div style="border:2px dashed var(--bg-3);border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .2s" onclick="document.getElementById('fileInput').click()" id="fileDropZone">
+          <input type="file" id="fileInput" multiple accept=".txt,.md,.json,.csv,.py,.js,.html,.css,.xml,.yaml,.yml,.log,.ini,.cfg,.conf,.sh,.bat,.ps1,.c,.cpp,.h,.java,.go,.rs,.rb,.php,.sql,.r,.m,.tex,.rst,.toml" style="display:none" onchange="handleFileSelect(this.files)">
+          <div style="color:var(--text-3);font-size:.78rem">
+            <div style="font-size:1.4rem;margin-bottom:4px">📁</div>
+            点击选择文件 或 拖拽文件到此处<br>
+            <span style="font-size:.68rem;color:var(--text-3)">支持 txt/md/json/csv/py/js 等文本文件，可多选</span>
+          </div>
+        </div>
+        <div id="fileList" style="margin-top:8px;display:flex;flex-direction:column;gap:4px"></div>
+      </div>
+      <div class="form-group">
         <label class="form-label">最大步数</label>
         <select class="form-select" id="taskSteps">
           <option value="1">1步 (简单任务)</option>
@@ -1819,6 +1853,13 @@ const STRATEGY_DESCS = {
   'time_slice': '时序切片，如 Agent₁看时序前半段，Agent₂看后半段。协同增益：必须推断对方因果上下文',
   'abstraction_level': '抽象层级拆分，如 Agent₁看具体实例，Agent₂看抽象规则。协同增益：实例↔规则双向验证',
 };
+
+// --- Server-synced data (fetched from backend APIs) ---
+let serverStrategies = null;   // from GET /api/strategies
+let serverTopologies = null;   // from GET /api/topology
+let serverOutputs = [];        // from GET /api/outputs
+let serverDynamicAgents = [];  // from GET /api/agents/dynamic
+
 
 // FusionJudge data
 let fusionData = {
@@ -2065,12 +2106,27 @@ function renderTaskList() {
   $('taskCount').textContent = `${tasksData.length} 个`;
 }
 
-function openTaskDetail(taskId) {
+async function openTaskDetail(taskId) {
+  // Fetch fresh task detail from backend (API: GET /api/tasks/{task_id})
+  try {
+    const detailResp = await fetch(API_BASE + '/api/tasks/' + taskId);
+    if (detailResp.ok) {
+      const freshTask = await detailResp.json();
+      const idx = tasksData.findIndex(t => t.id === taskId);
+      if (idx >= 0) Object.assign(tasksData[idx], freshTask);
+    }
+  } catch(e) { console.warn('Failed to fetch task detail:', e); }
+
   const task = tasksData.find(t => t.id === taskId);
   if (!task) return;
   
   selectedTask = taskId;
   renderTaskList();
+
+  // 运行中或排队中的任务显示注入面板
+  if (task.status === 'running' || task.status === 'pending') {
+    showInjectionPanel();
+  }
   
   const statusLabels = { pending: '排队中', planning: '规划中', running: '运行中', completed: '已完成', failed: '失败', reviewing: '审核中' };
   
@@ -2137,9 +2193,44 @@ function openTaskDetail(taskId) {
 }
 
 // ─── Task Dialog ───
+let taskFiles = [];
+
+function handleFileSelect(files) {
+  for (const file of files) {
+    if (taskFiles.some(f => f.name === file.name && f.size === file.size)) continue;
+    taskFiles.push(file);
+  }
+  renderFileList();
+  $('fileInput').value = '';
+}
+
+function renderFileList() {
+  const container = $('fileList');
+  if (taskFiles.length === 0) { container.innerHTML = ''; return; }
+  container.innerHTML = taskFiles.map((f, i) => {
+    const size = f.size < 1024 ? f.size + ' B' : f.size < 1048576 ? (f.size/1024).toFixed(1) + ' KB' : (f.size/1048576).toFixed(1) + ' MB';
+    return `<div class="file-item"><span style="flex-shrink:0">📄</span><span class="file-item-name">${f.name}</span><span class="file-item-size">${size}</span><button class="file-item-remove" onclick="removeTaskFile(${i})" title="移除">✕</button></div>`;
+  }).join('');
+}
+
+function removeTaskFile(idx) {
+  taskFiles.splice(idx, 1);
+  renderFileList();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dz = $('fileDropZone');
+  if (!dz) return;
+  ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.style.borderColor = 'var(--coral)'; dz.style.background = 'var(--coral-dim)'; }));
+  ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.style.borderColor = ''; dz.style.background = ''; }));
+  dz.addEventListener('drop', e => { if (e.dataTransfer.files.length) handleFileSelect(e.dataTransfer.files); });
+});
+
 function openTaskDialog() {
   $('taskDialogOverlay').classList.add('open');
   $('taskInput').value = '';
+  taskFiles = [];
+  renderFileList();
   $('btnSubmitTask').disabled = false;
   $('btnSubmitTask').textContent = '提交执行';
   setTimeout(() => $('taskInput').focus(), 100);
@@ -2151,21 +2242,41 @@ function closeTaskDialog() {
 
 async function submitTask() {
   const desc = $('taskInput').value.trim();
-  if (!desc) {
-    showToast('请输入任务描述', 'warning');
+  if (!desc && taskFiles.length === 0) {
+    showToast('请输入任务描述或添加参考文件', 'warning');
     return;
   }
   
   const steps = parseInt($('taskSteps').value) || 5;
   const btn = $('btnSubmitTask');
   btn.disabled = true;
+  btn.textContent = '读取文件中...';
+
+  let fileContent = '';
+  if (taskFiles.length > 0) {
+    try {
+      const fileTexts = [];
+      for (const f of taskFiles) {
+        const text = await f.text();
+        fileTexts.push('\n--- 参考文件: ' + f.name + ' ---\n' + text);
+      }
+      fileContent = fileTexts.join('\n');
+    } catch(e) {
+      showToast('文件读取失败: ' + e.message, 'error');
+      btn.disabled = false;
+      btn.textContent = '提交执行';
+      return;
+    }
+  }
+
+  const finalDesc = desc + (fileContent ? '\n\n' + fileContent : '');
   btn.textContent = '提交中...';
   
   try {
     const resp = await fetch(API_BASE + '/api/tasks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ description: desc, max_steps: steps }),
+      body: JSON.stringify({ description: finalDesc, max_steps: steps }),
     });
     
     if (!resp.ok) {
@@ -2174,14 +2285,18 @@ async function submitTask() {
     }
     
     const result = await resp.json();
-    showToast(`任务 ${result.task_id} 已提交`, 'success');
+    showToast(`任务 ${result.task_id} 已提交${taskFiles.length ? '（含 ' + taskFiles.length + ' 个参考文件）' : ''}`, 'success');
+    taskFiles = [];
+    renderFileList();
     closeTaskDialog();
     switchView('overview');
+    selectedTask = result.task_id;
+    showInjectionPanel();
     
     // Add task to list
     tasksData.unshift({
       id: result.task_id,
-      description: desc,
+      description: finalDesc.length > 200 ? finalDesc.substring(0, 200) + '...' : finalDesc,
       max_steps: steps,
       status: 'pending',
       route: 'cdol',
@@ -2808,6 +2923,13 @@ async function fetchInitialData() {
       if (tasksDataResp.tasks?.length) {
         tasksData = tasksDataResp.tasks;
         renderTaskList();
+        // 自动选中第一个运行中或排队中的任务并显示注入面板
+        const runningTask = tasksData.find(t => t.status === 'running' || t.status === 'pending');
+        if (runningTask) {
+          selectedTask = runningTask.id;
+          showInjectionPanel();
+          renderTaskList();
+        }
       }
     }
     
@@ -2820,10 +2942,144 @@ async function fetchInitialData() {
       }
     }
     
+
+    // --- Fetch strategies from backend (API: GET /api/strategies) ---
+    try {
+      const stratResp = await fetch(API_BASE + '/api/strategies');
+      if (stratResp.ok) {
+        const stratData = await stratResp.json();
+        if (stratData.strategies) {
+          serverStrategies = stratData.strategies;
+          for (const [key, info] of Object.entries(stratData.strategies)) {
+            if (info.desc) STRATEGY_DESCS[key] = info.desc;
+          }
+          const sel = document.querySelector('.strategy-card.selected');
+          if (sel) $('strategyDesc').textContent = STRATEGY_DESCS[sel.dataset.strategy] || '';
+        }
+      }
+    } catch(e) { console.warn('Failed to fetch strategies:', e); }
+
+    // --- Fetch topology configs (API: GET /api/topology) ---
+    try {
+      const topoResp = await fetch(API_BASE + '/api/topology');
+      if (topoResp.ok) {
+        const topoData = await topoResp.json();
+        if (topoData.topologies) {
+          serverTopologies = topoData.topologies;
+          const topoCount = Object.keys(topoData.topologies).length;
+          addEvent('system', '\u{1F4E1} \u52A0\u8F7D ' + topoCount + ' \u79CD\u62D3\u6251\u914D\u7F6E');
+        }
+      }
+    } catch(e) { console.warn('Failed to fetch topology:', e); }
+
+    // --- Fetch output files (API: GET /api/outputs) ---
+    try {
+      const outResp = await fetch(API_BASE + '/api/outputs');
+      if (outResp.ok) {
+        const outData = await outResp.json();
+        serverOutputs = outData.outputs || [];
+        const outEl = document.getElementById('statOutputs');
+        if (outEl) outEl.textContent = serverOutputs.length;
+      }
+    } catch(e) { console.warn('Failed to fetch outputs:', e); }
+
+    // --- Fetch dynamic agents (API: GET /api/agents/dynamic) ---
+    try {
+      const dynResp = await fetch(API_BASE + '/api/agents/dynamic');
+      if (dynResp.ok) {
+        const dynData = await dynResp.json();
+        serverDynamicAgents = dynData.dynamic_agents || [];
+        const dynEl = document.getElementById('statDynamicAgents');
+        if (dynEl) dynEl.textContent = serverDynamicAgents.length;
+      }
+    } catch(e) { console.warn('Failed to fetch dynamic agents:', e); }
+
+
   } catch(e) {
     console.error('Failed to fetch initial data:', e);
   }
 }
+
+
+// --- Refresh Models (API: POST /api/system/refresh-models) ---
+async function refreshModels() {
+  const btn = document.getElementById('btnRefreshModels');
+  if (btn) { btn.disabled = true; btn.textContent = '\u5237\u65B0\u4E2D...'; }
+  try {
+    const resp = await fetch(API_BASE + '/api/system/refresh-models', { method: 'POST' });
+    if (resp.ok) {
+      const data = await resp.json();
+      const count = (data.ollama_models || []).length;
+      showToast('\u6A21\u578B\u5DF2\u5237\u65B0\uFF0COllama \u53EF\u7528 ' + count + ' \u4E2A\u6A21\u578B', 'success');
+      addEvent('system', '\u{1F504} \u6A21\u578B\u5217\u8868\u5DF2\u5237\u65B0 \u2014 Ollama: ' + count + ' \u4E2A\u6A21\u578B');
+    } else {
+      showToast('\u5237\u65B0\u5931\u8D25', 'error');
+    }
+  } catch(e) {
+    showToast('\u5237\u65B0\u5931\u8D25: ' + e.message, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '\u{1F504} \u5237\u65B0\u6A21\u578B'; }
+  }
+}
+
+// --- Show Outputs Panel (API: GET /api/outputs) ---
+function showOutputsPanel() {
+  fetch(API_BASE + '/api/outputs')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data) return;
+      serverOutputs = data.outputs || [];
+      let html = '<div class="drawer-section"><div class="drawer-section-title">\u{1F4C1} \u4EFB\u52A1\u8F93\u51FA\u6587\u4EF6 (' + serverOutputs.length + ')</div>';
+      if (serverOutputs.length === 0) {
+        html += '<div style="padding:12px;color:var(--text-3);font-size:.8rem">\u6682\u65E0\u8F93\u51FA\u6587\u4EF6</div>';
+      } else {
+        html += '<div style="display:flex;flex-direction:column;gap:6px">';
+        serverOutputs.forEach(f => {
+          const sizeKB = (f.size / 1024).toFixed(1);
+          const date = f.created ? f.created.substring(0, 16).replace('T', ' ') : '';
+          html += '<div style="background:var(--bg-0);border-radius:6px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center">';
+          html += '<div><div style="font-size:.8rem;font-weight:600">\u{1F4C4} ' + f.filename + '</div>';
+          html += '<div style="font-size:.68rem;color:var(--text-3)">' + sizeKB + ' KB \u00B7 ' + date + '</div></div>';
+          html += '<a href="/api/outputs/' + f.filename + '" download style="font-size:.72rem;color:var(--coral);text-decoration:none">\u2B07 \u4E0B\u8F7D</a>';
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
+      $('drawerTitle').textContent = '\u{1F4C1} \u8F93\u51FA\u6587\u4EF6';
+      $('drawerBody').innerHTML = html;
+      $('detailDrawer').classList.add('open');
+    }).catch(e => console.warn('Failed to load outputs:', e));
+}
+
+// --- Show Dynamic Agents Panel (API: GET /api/agents/dynamic) ---
+function showDynamicAgentsPanel() {
+  fetch(API_BASE + '/api/agents/dynamic')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data) return;
+      serverDynamicAgents = data.dynamic_agents || [];
+      let html = '<div class="drawer-section"><div class="drawer-section-title">\u{1F916} \u52A8\u6001 Agent (' + serverDynamicAgents.length + ')</div>';
+      if (serverDynamicAgents.length === 0) {
+        html += '<div style="padding:12px;color:var(--text-3);font-size:.8rem">\u6682\u65E0\u52A8\u6001 Agent</div>';
+      } else {
+        html += '<div style="display:flex;flex-direction:column;gap:6px">';
+        serverDynamicAgents.forEach(a => {
+          html += '<div style="background:var(--bg-0);border-radius:6px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center">';
+          html += '<div><div style="font-size:.8rem;font-weight:600">' + (a.icon || '\u{1F916}') + ' ' + (a.label || a.name) + '</div>';
+          html += '<div style="font-size:.68rem;color:var(--text-3)">' + (a.provider || 'unknown') + ' \u00B7 ' + (a.role || 'general') + ' \u00B7 ' + (a.model || '') + '</div></div>';
+          html += '<button class="btn btn-ghost" style="font-size:.68rem;padding:2px 8px" onclick="removeAgent(\''+a.name+'\')">\u5220\u9664</button>';
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
+      $('drawerTitle').textContent = '\u{1F916} \u52A8\u6001 Agent \u5217\u8868';
+      $('drawerBody').innerHTML = html;
+      $('detailDrawer').classList.add('open');
+    }).catch(e => console.warn('Failed to load dynamic agents:', e));
+}
+
 
 // ─── Clock ───
 function updateClock() {
@@ -2969,6 +3225,7 @@ function renderAgentList(agents) {
     const name = agent.label || agent.name || agent.id;
     const providerIcon = PROVIDER_ICONS[provider] || '🤖';
     const providerLabel = PROVIDER_LABELS[provider] || provider;
+    const isDynamic = serverDynamicAgents.some(da => da.name === agent.id || da.name === agent.name);
     
     return `
       <div class="pool-agent-card" data-agent-id="${escapeHtml(agent.id || agent.name)}">

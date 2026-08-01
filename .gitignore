@@ -45,3 +45,7 @@ coverage.xml
 
 # Auto-generated API docs (served via GitHub Pages)
 docs/api/
+
+# LHAB-NF benchmark results
+evaluation/lhab_nf/results/
+evaluation/lhab_nf/__pycache__/

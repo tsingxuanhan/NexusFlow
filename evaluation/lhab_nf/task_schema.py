@@ -35,7 +35,7 @@ class PerturbationType(str, Enum):
 
 class PrivacyLevel(str, Enum):
     PUBLIC = "public"            # 公开数据，可上云
-    EDGE_ALLOWED = "edge"        # 可出端，不可上云
+    EDGE_ALLOWED = "edge_allowed"        # 可出端，不可上云
     LOCAL_ONLY = "local_only"    # 仅端侧处理
 
 

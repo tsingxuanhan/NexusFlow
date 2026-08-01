@@ -1,0 +1,148 @@
+id: T2-H-001
+category: software_engineering
+difficulty: hard
+title: 跨模块系统重构与迁移
+description: >
+  对一个10+文件的系统进行API接口重构，保持向后兼容，
+  实现新功能，处理CI环境异常。包含2次错误注入、2次需求变更、1次环境异常。
+
+max_steps: 200
+max_rounds: 60
+budget_limit_cny: 15.0
+privacy_constraints: []
+tags: [software, refactoring, migration, stress_test]
+
+steps:
+  - id: s1_analyze_codebase
+    description: 全面分析代码库结构和依赖关系
+    agent_role: coordinator
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s2_map_dependencies
+    description: 绘制模块依赖图和数据流
+    agent_role: miner
+    input_deps: [s1_analyze_codebase]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s3_design_new_api
+    description: 设计新API接口，确保向后兼容
+    agent_role: planner
+    input_deps: [s2_map_dependencies]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s4_implement_core
+    description: 实现核心接口重构
+    agent_role: executor
+    input_deps: [s3_design_new_api]
+    device_preference: cloud
+    timeout_seconds: 120
+
+  - id: s5_migrate_callers
+    description: 迁移所有调用方到新接口
+    agent_role: executor
+    input_deps: [s4_implement_core]
+    device_preference: cloud
+    timeout_seconds: 120
+
+  - id: s6_add_compatibility
+    description: 添加兼容层和deprecation warnings
+    agent_role: executor
+    input_deps: [s5_migrate_callers]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s7_write_tests
+    description: 编写集成测试和回归测试
+    agent_role: executor
+    input_deps: [s6_add_compatibility]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s8_run_test_suite
+    description: 运行完整测试套件
+    agent_role: reviewer
+    input_deps: [s7_write_tests]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s9_cross_validate
+    description: 交叉验证新旧接口输出一致性
+    agent_role: assayer
+    input_deps: [s8_run_test_suite]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s10_update_docs
+    description: 更新API文档和迁移指南
+    agent_role: caster
+    input_deps: [s9_cross_validate]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s11_final_review
+    description: 最终审核
+    agent_role: reviewer
+    input_deps: [s10_update_docs]
+    device_preference: cloud
+    timeout_seconds: 30
+
+perturbations:
+  - type: low_quality_output
+    trigger_at_step: s4_implement_core
+    target: executor
+    params: { error_type: "breaking_change", description: "修改了一个公共方法的签名" }
+    expected_recovery: auto
+
+  - type: tool_failure
+    trigger_at_step: s8_run_test_suite
+    target: ci_environment
+    params: { error: "environment_unavailable" }
+    expected_recovery: fallback
+
+  - type: requirement_change
+    trigger_at_step: s6_add_compatibility
+    target: planner
+    params: { new_requirement: "增加v2和v3接口的并行支持" }
+    expected_recovery: auto
+
+  - type: low_quality_output
+    trigger_at_step: s9_cross_validate
+    target: assayer
+    params: { error_type: "missed_edge_case", description: "遗漏了空值处理的差异" }
+    expected_recovery: auto
+
+  - type: requirement_change
+    trigger_at_step: s10_update_docs
+    target: caster
+    params: { new_requirement: "增加版本迁移自动化脚本" }
+    expected_recovery: auto
+
+acceptance_criteria:
+  - name: all_tests_pass
+    type: test_pass
+    weight: 0.3
+    threshold: 1.0
+    params: { min_pass_rate: 1.0 }
+  - name: backward_compatible
+    type: rule
+    weight: 0.25
+    threshold: 1.0
+    params: { check: "old_api_still_works" }
+  - name: no_regression
+    type: rule
+    weight: 0.15
+    threshold: 1.0
+    params: { check: "all_existing_tests_pass" }
+  - name: refactoring_quality
+    type: llm_score
+    weight: 0.15
+    threshold: 0.7
+    params: { dimensions: [clean_design, minimal_diff, documentation] }
+  - name: recovery_success
+    type: rule
+    weight: 0.15
+    threshold: 0.8
+    params: { min_recovery_rate: 0.8 }

@@ -1,0 +1,74 @@
+id: T2-E-001
+category: software_engineering
+difficulty: easy
+title: 单文件功能实现与测试
+description: >
+  阅读需求文档，实现一个Python工具函数（字符串统计器），
+  编写单元测试，确保全部通过。单文件，无扰动。
+
+max_steps: 50
+max_rounds: 20
+budget_limit_cny: 3.0
+privacy_constraints: []
+tags: [software, single_file, basic]
+
+steps:
+  - id: s1_read_requirements
+    description: 解析需求文档，提取功能规格
+    agent_role: coordinator
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s2_design_interface
+    description: 设计函数签名和数据结构
+    agent_role: planner
+    input_deps: [s1_read_requirements]
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s3_implement
+    description: 实现功能代码
+    agent_role: executor
+    input_deps: [s2_design_interface]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s4_write_tests
+    description: 编写单元测试
+    agent_role: executor
+    input_deps: [s3_implement]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s5_run_tests
+    description: 执行测试并验证通过
+    agent_role: reviewer
+    input_deps: [s4_write_tests]
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s6_document
+    description: 生成文档字符串和使用说明
+    agent_role: caster
+    input_deps: [s5_run_tests]
+    device_preference: cloud
+    timeout_seconds: 30
+
+perturbations: []
+
+acceptance_criteria:
+  - name: tests_pass
+    type: test_pass
+    weight: 0.5
+    threshold: 1.0
+    params: { min_pass_rate: 1.0 }
+  - name: code_quality
+    type: llm_score
+    weight: 0.3
+    threshold: 0.7
+    params: { dimensions: [readability, correctness, edge_cases] }
+  - name: documentation
+    type: llm_score
+    weight: 0.2
+    threshold: 0.6
+    params: { dimensions: [completeness, examples] }

@@ -92,3 +92,12 @@ facts:  ## Regenerate PROJECT_FACTS.md from actual code
 	python scripts/generate_facts.py
 
 verify: check facts  ## Full verification (lint + format + test + facts)
+
+benchmark:  ## Run benchmark (use --stage N or --bench NAME)
+	python scripts/run_benchmark.py $(ARGS)
+
+benchmark-all:  ## Run all stages 1-7
+	python scripts/run_benchmark.py --all
+
+benchmark-dry:  ## Preview benchmark commands without running
+	python scripts/run_benchmark.py --dry-run --all

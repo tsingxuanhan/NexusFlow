@@ -1,0 +1,144 @@
+id: T1-H-001
+category: cross_device
+difficulty: hard
+title: 跨设备多任务协同与隐私保护
+description: >
+  同时处理邮件、日程、文件和即时消息四类任务，涉及4台设备。
+  包含2次设备离线、2次需求变更、1次工具失败。
+  严格隐私约束：个人财务数据不出端侧。
+
+max_steps: 150
+max_rounds: 50
+budget_limit_cny: 10.0
+privacy_constraints:
+  - financial_data: local_only
+  - personal_info: local_only
+  - work_content: edge_allowed
+tags: [cross_device, multi_task, privacy, stress_test]
+
+steps:
+  - id: s1_triage_tasks
+    description: 分类4类待办任务的优先级
+    agent_role: coordinator
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+  - id: s2_process_emails
+    description: 处理紧急邮件（含敏感附件）
+    agent_role: researcher
+    input_deps: [s1_triage_tasks]
+    device_preference: edge
+    privacy_level: edge_allowed
+    timeout_seconds: 60
+
+  - id: s3_check_schedule
+    description: 检查今日日程并识别冲突
+    agent_role: planner
+    input_deps: [s1_triage_tasks]
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+  - id: s4_analyze_finances
+    description: 在端侧分析个人财务报表
+    agent_role: miner
+    input_deps: [s1_triage_tasks]
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 90
+
+  - id: s5_process_documents
+    description: 在PC上处理工作文档
+    agent_role: executor
+    input_deps: [s2_process_emails]
+    device_preference: cloud
+    timeout_seconds: 90
+
+  - id: s6_cross_reference
+    description: 交叉引用邮件和日程中的关联信息
+    agent_role: assayer
+    input_deps: [s2_process_emails, s3_check_schedule]
+    device_preference: edge
+    privacy_level: edge_allowed
+    timeout_seconds: 60
+
+  - id: s7_generate_report
+    description: 综合所有任务生成日报
+    agent_role: caster
+    input_deps: [s4_analyze_finances, s5_process_documents, s6_cross_reference]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s8_review_report
+    description: 审核报告质量和隐私合规
+    agent_role: reviewer
+    input_deps: [s7_generate_report]
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s9_deliver
+    description: 在手机上展示最终结果
+    agent_role: artisan
+    input_deps: [s8_review_report]
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+perturbations:
+  - type: device_offline
+    trigger_at_step: s5_process_documents
+    target: pc_device
+    params: { duration_seconds: 45 }
+    expected_recovery: migrate
+
+  - type: tool_failure
+    trigger_at_step: s6_cross_reference
+    target: calendar_api
+    params: { error: "timeout" }
+    expected_recovery: retry_3
+
+  - type: requirement_change
+    trigger_at_step: s7_generate_report
+    target: caster
+    params: { new_requirement: "增加明日待办预测" }
+    expected_recovery: auto
+
+  - type: device_offline
+    trigger_at_step: s8_review_report
+    target: edge_device
+    params: { duration_seconds: 30 }
+    expected_recovery: migrate
+
+  - type: requirement_change
+    trigger_at_step: s8_review_report
+    target: reviewer
+    params: { new_requirement: "增加成本统计摘要" }
+    expected_recovery: auto
+
+acceptance_criteria:
+  - name: all_tasks_completed
+    type: rule
+    weight: 0.2
+    threshold: 1.0
+    params: { check: "4_task_types_processed" }
+  - name: output_quality
+    type: llm_score
+    weight: 0.25
+    threshold: 0.7
+    params: { dimensions: [completeness, accuracy, coherence, format] }
+  - name: privacy_compliance
+    type: rule
+    weight: 0.25
+    threshold: 1.0
+    params: { check: "no_financial_data_outside_terminal" }
+  - name: recovery_rate
+    type: rule
+    weight: 0.15
+    threshold: 0.8
+    params: { min_recovery_rate: 0.8 }
+  - name: time_budget
+    type: rule
+    weight: 0.15
+    threshold: 1.0
+    params: { max_seconds: 600 }

@@ -1,0 +1,104 @@
+id: T1-M-001
+category: cross_device
+difficulty: medium
+title: 跨设备日程冲突协调
+description: >
+  手机收到会议邀请，需要检查日历冲突，在平板上阅读参会者背景资料，
+  在PC上分析最优时间段，云端检索会议室，最终手机上展示结果。
+  包含1次设备离线和1次需求变更。
+
+max_steps: 80
+max_rounds: 30
+budget_limit_cny: 5.0
+privacy_constraints:
+  - calendar_data: local_only
+  - attendee_info: edge_allowed
+tags: [cross_device, calendar, privacy, recovery]
+
+steps:
+  - id: s1_receive_invite
+    description: 手机端解析会议邀请
+    agent_role: coordinator
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+  - id: s2_check_calendar
+    description: 读取本地日历，检查时间冲突
+    agent_role: researcher
+    input_deps: [s1_receive_invite]
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+  - id: s3_research_attendees
+    description: 在平板上检索参会者背景
+    agent_role: miner
+    input_deps: [s2_check_calendar]
+    device_preference: edge
+    privacy_level: edge_allowed
+    timeout_seconds: 60
+
+  - id: s4_analyze_slots
+    description: 分析最优时间段
+    agent_role: planner
+    input_deps: [s2_check_calendar, s3_research_attendees]
+    device_preference: cloud
+    timeout_seconds: 60
+
+  - id: s5_search_rooms
+    description: 检索可用会议室
+    agent_role: executor
+    input_deps: [s4_analyze_slots]
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s6_review_plan
+    description: 审核方案
+    agent_role: reviewer
+    input_deps: [s4_analyze_slots, s5_search_rooms]
+    device_preference: cloud
+    timeout_seconds: 30
+
+  - id: s7_format_output
+    description: 格式化最终输出
+    agent_role: caster
+    input_deps: [s6_review_plan]
+    device_preference: terminal
+    privacy_level: local_only
+    timeout_seconds: 30
+
+perturbations:
+  - type: device_offline
+    trigger_at_step: s4_analyze_slots
+    target: edge_device
+    params: { duration_seconds: 20 }
+    expected_recovery: migrate
+
+  - type: requirement_change
+    trigger_at_step: s5_search_rooms
+    target: planner
+    params: { new_requirement: "增加视频会议链接生成" }
+    expected_recovery: auto
+
+acceptance_criteria:
+  - name: output_completeness
+    type: llm_score
+    weight: 0.3
+    threshold: 0.7
+    params: { dimensions: [completeness, accuracy, format] }
+  - name: privacy_compliance
+    type: rule
+    weight: 0.3
+    threshold: 1.0
+    params: { check: "no_private_data_in_cloud" }
+  - name: recovery_success
+    type: rule
+    weight: 0.2
+    threshold: 1.0
+    params: { check: "all_perturbations_recovered" }
+  - name: time_budget
+    type: rule
+    weight: 0.2
+    threshold: 1.0
+    params: { max_seconds: 300 }

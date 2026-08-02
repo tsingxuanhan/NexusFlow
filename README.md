@@ -90,6 +90,24 @@ NexusFlow 正是为了解决这个问题而诞生。我们不是又做了一个�
 
 ---
 
+## 🖥️ Dashboard — 实时可观测性
+
+> NexusFlow Dashboard v4.0 提供任务执行全链路的可视化监控，对应荣耀挑战杯"界面美观度"评分项。
+
+| 概览 — KPI 卡片 + Agent 状态 | CDoL 三轮通信可视化 |
+|:---:|:---:|
+| ![Dashboard Overview](docs/dashboard_screenshots/dashboard_overview.png) | ![CDoL Communication](docs/dashboard_screenshots/dashboard_cdol_comm.png) |
+
+| 信息不对称架构 | 核心模块监控 |
+|:---:|:---:|
+| ![Info Architecture](docs/dashboard_screenshots/dashboard_info_arch.png) | ![Core Modules](docs/dashboard_screenshots/dashboard_core_modules.png) |
+
+**四个页签**：概览（6 维 KPI + 拓扑热力图）· CDoL 通信（三轮协议 + 六种分解策略）· Agent 状态（10 角色实时监控）· 核心模块（路由 / 质量门禁 / 记忆系统）
+
+📂 [打开 HTML Dashboard](docs/dashboard/nexusflow-dashboard-v4.html) | 🔧 [Gradio 实时面板源码](server/dashboard.py)
+
+---
+
 ## ✨ 核心特性
 
 ### 🧠 认知分工引擎（CDoL）

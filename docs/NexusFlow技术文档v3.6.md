@@ -1,6 +1,6 @@
 # NexusFlow：基于动态认知拓扑的超长程群体智能引擎
 
-## 技术文档 v3.5
+## 技术文档 v3.6
 
 项目地址：https://github.com/tsingxuanhan/NexusFlow
 代码规模：658文件（git tracked） / 196个Python文件 / ~84,000行Python / 88个核心模块（nexusflow/ 71模块 + tools/ 17个工具；含10个Agent角色、17个工具；统计口径：git tracked文件，不含__init__.py）
@@ -2328,7 +2328,7 @@ LHAB-NF填补了"超长程+多Agent+端边云+故障恢复+隐私约束"五维�
 
 这组消融实验从因果层面证明了：**NexusFlow的增益不是"多Agent ensemble的统计降噪"，而是"信息受限条件下的认知过程优化"**。Context Mask（信息不对称设计）是最大的独立贡献因素，FusionJudge（结构化融合）次之，多轮通信再次之。
 
-### 7.12 LHAB-NF 真实基准测试：NexusFlow vs Single Agent 对照实验（v3.5新增）
+### 7.12 LHAB-NF 真实基准测试：NexusFlow vs Single Agent 对照实验（v3.6新增）
 
 前述§7.10建立了LHAB-NF评测框架，§7.11通过因果消融实验验证了CDoL各组件的独立贡献。本节进一步回答一个更直接的问题：**在相同的LLM-as-Judge评分体系下，NexusFlow的CDoL多Agent协作相比Single Agent（单次LLM调用，无协作）究竟提升了多少？**
 
@@ -2596,6 +2596,9 @@ CDoL通信页展示三轮通信协议的执行细节，以及六种分解策略�
 
 ## Changelog
 
+### v3.6 - 2026-08-02
+- **LHAB-NF真实对照实验**（§7.12）：NexusFlow vs Single Agent对照（9任务×3种子，DeepSeek V4 Flash，LLM-as-Judge 5维统一评分），质量+67%（0.364 vs 0.218），步骤覆盖率100% vs 34%，3/9任务Single Agent完全失败，验证CDoL在复杂跨模块/多源任务上的显著优势
+
 ### v3.5 - 2026-08-01
 - **可解释动态拓扑升级**（§6.1.1-6.1.4）：DynamicRouter新增TopologyInterpreter可解释层（路由决策解释：Top-3候选对比+因子归因分析+瓶颈识别+备选方案说明）和TopologyOptimizer可优化层（MAB在线学习最优路由权重），Stage-4验证9次切换100%解释覆盖、路由评分+8.3%、调试效率-60%
 - **LHAB-NF评测基准**（§7.10）：设计LongHorizon-AgentBench-NF——面向超长程复杂任务的五维评测基准（100+步+多设备协同+端边云异构+故障恢复+隐私约束），3大类×3难度任务框架（T1跨设备/T2软件工程/T3深度研究），四层评估指标体系，8种拓扑对照+4种调度对照+4种恢复对照+7类扰动注入；9次框架验证运行完成，建立SSR 53-80%基线
@@ -2697,6 +2700,6 @@ CDoL通信页展示三轮通信协议的执行细节，以及六种分解策略�
 - 信息策略驱动的CDoL增强
 
 
-*文档版本：v3.5*
+*文档版本：v3.6*
 *更新日期：2026-08-01*
 *数据来源：NexusFlow v3.5 + Braintrust AI Evaluation Platform（1781条生产环境轨迹）+ 七阶段Benchmark实验数据（Stage-1/2/3 NOAA/WHO真实API核心验证 + Stage-4 45步端到端实验 + Stage-5 80步公平对比Benchmark + Stage-6 WorkBuddy宏观经济对比实验（20国×15指标×41年真实IMF数据）+ Stage-6b L3高复杂度认知任务Benchmark + Stage-7 PinchBench Hard Cases 25任务全量对比）+ 横向对比实验 + Phase 2 Ablation实验v3（轮次ablation验证2-3轮最优平台期/路由探索性发现/拓扑探索性发现）+ LHAB-NF评测基准（3大类×3难度五维框架/9次框架验证基线）+ CDoL因果消融实验（四组实验/组件贡献量化）*

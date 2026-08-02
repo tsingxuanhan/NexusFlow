@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![Version](https://img.shields.io/badge/Version-3.5.0-green.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-3.6.0-green.svg)](CHANGELOG.md)
 [![Tests](https://img.shields.io/badge/Tests-357%20Passing-brightgreen.svg)](.github/workflows/tests.yml)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](Dockerfile)
 [![Security](https://img.shields.io/badge/Security-Gitleaks-blue.svg)](SECURITY.md)
@@ -262,7 +262,7 @@ pip install -e ".[dev]"
 
 ## 📚 文档
 
-- **技术文档**：[NexusFlow技术文档v3.5.md](docs/NexusFlow技术文档v3.5.md)（完整架构说明）
+- **技术文档**：[NexusFlow技术文档v3.6.md](docs/NexusFlow技术文档v3.6.md)（完整架构说明）
 - **项目事实**：[PROJECT_FACTS.md](PROJECT_FACTS.md)（数据唯一权威来源）
 - **评测基准**：[LHAB-NF 设计文档](docs/LHAB-NF_Design.md)
 - **消融实验**：[P3 实验设计](docs/P3_Ablation_Design.md)

@@ -1,0 +1,93 @@
+{
+  "system": "PlainSingleAgent",
+  "model": "deepseek-v4-flash",
+  "total_tasks": 9,
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "total_runs": 27,
+  "started_at": "2026-08-02T14:23:03.493852",
+  "completed_at": "2026-08-02T15:24:27.112634",
+  "success_count": 27,
+  "success_rate": 1.0,
+  "avg_tokens": 14956,
+  "avg_elapsed": 127.1,
+  "avg_judge_score": 0.218,
+  "avg_step_coverage": 0.338,
+  "per_task": {
+    "T1-E-001": {
+      "title": "跨设备邮件摘要与回复",
+      "difficulty": "easy",
+      "avg_judge_score": 0.356,
+      "avg_step_coverage": 0.667,
+      "avg_tokens": 7758,
+      "avg_elapsed": 68.5
+    },
+    "T1-H-001": {
+      "title": "跨设备多任务协同与隐私保护",
+      "difficulty": "hard",
+      "avg_judge_score": 0.285,
+      "avg_step_coverage": 0.333,
+      "avg_tokens": 16534,
+      "avg_elapsed": 163.1
+    },
+    "T1-M-001": {
+      "title": "跨设备日程冲突协调",
+      "difficulty": "medium",
+      "avg_judge_score": 0.54,
+      "avg_step_coverage": 1.0,
+      "avg_tokens": 13767,
+      "avg_elapsed": 124.5
+    },
+    "T2-E-001": {
+      "title": "单文件功能实现与测试",
+      "difficulty": "easy",
+      "avg_judge_score": 0.173,
+      "avg_step_coverage": 0.333,
+      "avg_tokens": 16227,
+      "avg_elapsed": 126.9
+    },
+    "T2-H-001": {
+      "title": "跨模块系统重构与迁移",
+      "difficulty": "hard",
+      "avg_judge_score": 0.0,
+      "avg_step_coverage": 0.0,
+      "avg_tokens": 16602,
+      "avg_elapsed": 112.4
+    },
+    "T2-M-001": {
+      "title": "多模块Bug修复与回归测试",
+      "difficulty": "medium",
+      "avg_judge_score": 0.437,
+      "avg_step_coverage": 0.375,
+      "avg_tokens": 16350,
+      "avg_elapsed": 112.8
+    },
+    "T3-E-001": {
+      "title": "单数据源统计报告",
+      "difficulty": "easy",
+      "avg_judge_score": 0.167,
+      "avg_step_coverage": 0.333,
+      "avg_tokens": 14169,
+      "avg_elapsed": 100.3
+    },
+    "T3-H-001": {
+      "title": "多源异构数据深度研究与决策支持",
+      "difficulty": "hard",
+      "avg_judge_score": 0.0,
+      "avg_step_coverage": 0.0,
+      "avg_tokens": 16669,
+      "avg_elapsed": 186.4
+    },
+    "T3-M-001": {
+      "title": "多源数据对比分析",
+      "difficulty": "medium",
+      "avg_judge_score": 0.0,
+      "avg_step_coverage": 0.0,
+      "avg_tokens": 16529,
+      "avg_elapsed": 148.9
+    }
+  }
+}

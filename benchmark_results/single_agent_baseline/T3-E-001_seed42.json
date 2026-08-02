@@ -1,0 +1,20 @@
+{
+  "task_id": "T3-E-001",
+  "seed": 42,
+  "success": true,
+  "tokens_prompt": 437,
+  "tokens_completion": 9197,
+  "tokens_total": 9634,
+  "elapsed_seconds": 69.2,
+  "judge_score": 0.5,
+  "judge_scores": {
+    "task_completion": 0.2,
+    "correctness": 0.8,
+    "completeness": 0.2,
+    "structure": 0.8,
+    "practicality": 0.5
+  },
+  "step_coverage": 1.0,
+  "response_length": 4645,
+  "error": null
+}

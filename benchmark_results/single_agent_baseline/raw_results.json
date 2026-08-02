@@ -1,0 +1,536 @@
+[
+  {
+    "task_id": "T1-E-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 514,
+    "tokens_completion": 8362,
+    "tokens_total": 8876,
+    "elapsed_seconds": 77.9,
+    "judge_score": 0.468,
+    "judge_scores": {
+      "task_completion": 0.17,
+      "correctness": 0.8,
+      "completeness": 0.17,
+      "structure": 0.9,
+      "practicality": 0.3
+    },
+    "step_coverage": 0.167,
+    "response_length": 9558,
+    "error": null
+  },
+  {
+    "task_id": "T1-E-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 514,
+    "tokens_completion": 6709,
+    "tokens_total": 7223,
+    "elapsed_seconds": 61.3,
+    "judge_score": 0.6,
+    "judge_scores": {
+      "task_completion": 0.5,
+      "correctness": 0.7,
+      "completeness": 0.4,
+      "structure": 0.9,
+      "practicality": 0.5
+    },
+    "step_coverage": 1.0,
+    "response_length": 3480,
+    "error": null
+  },
+  {
+    "task_id": "T1-E-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 514,
+    "tokens_completion": 6662,
+    "tokens_total": 7176,
+    "elapsed_seconds": 66.2,
+    "judge_score": 0.0,
+    "judge_scores": {},
+    "step_coverage": 0.833,
+    "response_length": 3420,
+    "error": null
+  },
+  {
+    "task_id": "T1-H-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 600,
+    "tokens_completion": 16000,
+    "tokens_total": 16600,
+    "elapsed_seconds": 163.0,
+    "judge_score": 0.34,
+    "judge_scores": {
+      "task_completion": 0.1,
+      "correctness": 0.5,
+      "completeness": 0.1,
+      "structure": 0.7,
+      "practicality": 0.3
+    },
+    "step_coverage": 0.0,
+    "response_length": 282,
+    "error": null
+  },
+  {
+    "task_id": "T1-H-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 600,
+    "tokens_completion": 15999,
+    "tokens_total": 16599,
+    "elapsed_seconds": 171.9,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T1-H-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 600,
+    "tokens_completion": 15803,
+    "tokens_total": 16403,
+    "elapsed_seconds": 154.3,
+    "judge_score": 0.516,
+    "judge_scores": {
+      "task_completion": 0.33,
+      "correctness": 0.6,
+      "completeness": 0.25,
+      "structure": 0.9,
+      "practicality": 0.5
+    },
+    "step_coverage": 1.0,
+    "response_length": 4594,
+    "error": null
+  },
+  {
+    "task_id": "T1-M-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 515,
+    "tokens_completion": 14541,
+    "tokens_total": 15056,
+    "elapsed_seconds": 135.3,
+    "judge_score": 0.42,
+    "judge_scores": {
+      "task_completion": 0.2,
+      "correctness": 0.5,
+      "completeness": 0.2,
+      "structure": 0.9,
+      "practicality": 0.3
+    },
+    "step_coverage": 1.0,
+    "response_length": 4967,
+    "error": null
+  },
+  {
+    "task_id": "T1-M-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 515,
+    "tokens_completion": 13706,
+    "tokens_total": 14221,
+    "elapsed_seconds": 133.8,
+    "judge_score": 0.58,
+    "judge_scores": {
+      "task_completion": 0.4,
+      "correctness": 0.8,
+      "completeness": 0.3,
+      "structure": 0.9,
+      "practicality": 0.5
+    },
+    "step_coverage": 1.0,
+    "response_length": 4227,
+    "error": null
+  },
+  {
+    "task_id": "T1-M-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 515,
+    "tokens_completion": 11508,
+    "tokens_total": 12023,
+    "elapsed_seconds": 104.4,
+    "judge_score": 0.62,
+    "judge_scores": {
+      "task_completion": 0.4,
+      "correctness": 0.8,
+      "completeness": 0.3,
+      "structure": 0.9,
+      "practicality": 0.7
+    },
+    "step_coverage": 1.0,
+    "response_length": 4186,
+    "error": null
+  },
+  {
+    "task_id": "T2-E-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 441,
+    "tokens_completion": 15999,
+    "tokens_total": 16440,
+    "elapsed_seconds": 131.6,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T2-E-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 441,
+    "tokens_completion": 15358,
+    "tokens_total": 15799,
+    "elapsed_seconds": 118.9,
+    "judge_score": 0.52,
+    "judge_scores": {
+      "task_completion": 0.5,
+      "correctness": 0.6,
+      "completeness": 0.4,
+      "structure": 0.8,
+      "practicality": 0.3
+    },
+    "step_coverage": 1.0,
+    "response_length": 7191,
+    "error": null
+  },
+  {
+    "task_id": "T2-E-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 441,
+    "tokens_completion": 16000,
+    "tokens_total": 16441,
+    "elapsed_seconds": 130.1,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T2-H-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 602,
+    "tokens_completion": 16000,
+    "tokens_total": 16602,
+    "elapsed_seconds": 112.6,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T2-H-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 602,
+    "tokens_completion": 16000,
+    "tokens_total": 16602,
+    "elapsed_seconds": 113.8,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T2-H-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 602,
+    "tokens_completion": 16000,
+    "tokens_total": 16602,
+    "elapsed_seconds": 110.7,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T2-M-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 530,
+    "tokens_completion": 15460,
+    "tokens_total": 15990,
+    "elapsed_seconds": 108.8,
+    "judge_score": 0.31,
+    "judge_scores": {
+      "task_completion": 0.25,
+      "correctness": 0.4,
+      "completeness": 0.2,
+      "structure": 0.5,
+      "practicality": 0.2
+    },
+    "step_coverage": 0.125,
+    "response_length": 11855,
+    "error": null
+  },
+  {
+    "task_id": "T2-M-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 530,
+    "tokens_completion": 16000,
+    "tokens_total": 16530,
+    "elapsed_seconds": 116.5,
+    "judge_score": 0.53,
+    "judge_scores": {
+      "task_completion": 0.25,
+      "correctness": 0.8,
+      "completeness": 0.3,
+      "structure": 0.9,
+      "practicality": 0.4
+    },
+    "step_coverage": 0.5,
+    "response_length": 2401,
+    "error": null
+  },
+  {
+    "task_id": "T2-M-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 530,
+    "tokens_completion": 16000,
+    "tokens_total": 16530,
+    "elapsed_seconds": 113.0,
+    "judge_score": 0.47,
+    "judge_scores": {
+      "task_completion": 0.25,
+      "correctness": 0.6,
+      "completeness": 0.2,
+      "structure": 0.9,
+      "practicality": 0.4
+    },
+    "step_coverage": 0.5,
+    "response_length": 5389,
+    "error": null
+  },
+  {
+    "task_id": "T3-E-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 437,
+    "tokens_completion": 9197,
+    "tokens_total": 9634,
+    "elapsed_seconds": 69.2,
+    "judge_score": 0.5,
+    "judge_scores": {
+      "task_completion": 0.2,
+      "correctness": 0.8,
+      "completeness": 0.2,
+      "structure": 0.8,
+      "practicality": 0.5
+    },
+    "step_coverage": 1.0,
+    "response_length": 4645,
+    "error": null
+  },
+  {
+    "task_id": "T3-E-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 437,
+    "tokens_completion": 16000,
+    "tokens_total": 16437,
+    "elapsed_seconds": 109.9,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T3-E-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 437,
+    "tokens_completion": 16000,
+    "tokens_total": 16437,
+    "elapsed_seconds": 121.9,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T3-H-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 670,
+    "tokens_completion": 15997,
+    "tokens_total": 16667,
+    "elapsed_seconds": 195.5,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T3-H-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 670,
+    "tokens_completion": 16000,
+    "tokens_total": 16670,
+    "elapsed_seconds": 184.8,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T3-H-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 670,
+    "tokens_completion": 16000,
+    "tokens_total": 16670,
+    "elapsed_seconds": 178.8,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T3-M-001",
+    "seed": 42,
+    "success": true,
+    "tokens_prompt": 529,
+    "tokens_completion": 16000,
+    "tokens_total": 16529,
+    "elapsed_seconds": 152.9,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T3-M-001",
+    "seed": 123,
+    "success": true,
+    "tokens_prompt": 529,
+    "tokens_completion": 16000,
+    "tokens_total": 16529,
+    "elapsed_seconds": 153.3,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  },
+  {
+    "task_id": "T3-M-001",
+    "seed": 456,
+    "success": true,
+    "tokens_prompt": 529,
+    "tokens_completion": 16000,
+    "tokens_total": 16529,
+    "elapsed_seconds": 140.4,
+    "judge_score": 0.0,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "structure": 0.0,
+      "practicality": 0.0
+    },
+    "step_coverage": 0.0,
+    "response_length": 68,
+    "error": null
+  }
+]

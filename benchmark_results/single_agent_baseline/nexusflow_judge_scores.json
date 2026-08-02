@@ -1,0 +1,272 @@
+[
+  {
+    "task_id": "T1-E-001",
+    "seed": 0,
+    "judge_score": 0.54,
+    "judge_scores": {
+      "task_completion": 0.3,
+      "correctness": 0.8,
+      "completeness": 0.4,
+      "structure": 0.8,
+      "practicality": 0.4
+    },
+    "tokens_used": 44143,
+    "duration_seconds": 649.3456981182098,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.30167271823287056
+  },
+  {
+    "task_id": "T1-E-001",
+    "seed": 1,
+    "judge_score": 0.3,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.5,
+      "completeness": 0.1,
+      "structure": 0.8,
+      "practicality": 0.1
+    },
+    "tokens_used": 42268,
+    "duration_seconds": 629.2289438247681,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.34461812941488734
+  },
+  {
+    "task_id": "T1-M-001",
+    "seed": 0,
+    "judge_score": 0.5,
+    "judge_scores": {
+      "task_completion": 0.3,
+      "correctness": 0.6,
+      "completeness": 0.2,
+      "structure": 0.9,
+      "practicality": 0.5
+    },
+    "tokens_used": 42527,
+    "duration_seconds": 624.1734492778778,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.27880046318566387
+  },
+  {
+    "task_id": "T1-M-001",
+    "seed": 1,
+    "judge_score": 0.46,
+    "judge_scores": {
+      "task_completion": 0.3,
+      "correctness": 0.6,
+      "completeness": 0.2,
+      "structure": 0.8,
+      "practicality": 0.4
+    },
+    "tokens_used": 41273,
+    "duration_seconds": 644.3002736568451,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.2438727020966449
+  },
+  {
+    "task_id": "T1-M-001",
+    "seed": 2,
+    "judge_score": 0.28,
+    "judge_scores": {
+      "task_completion": 0.0,
+      "correctness": 0.3,
+      "completeness": 0.1,
+      "structure": 0.9,
+      "practicality": 0.1
+    },
+    "tokens_used": 40089,
+    "duration_seconds": 634.2412741184235,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.2822352201304435
+  },
+  {
+    "task_id": "T2-E-001",
+    "seed": 0,
+    "judge_score": 0.734,
+    "judge_scores": {
+      "task_completion": 0.83,
+      "correctness": 0.67,
+      "completeness": 0.67,
+      "structure": 0.9,
+      "practicality": 0.6
+    },
+    "tokens_used": 4967,
+    "duration_seconds": 211.24369645118713,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.0
+  },
+  {
+    "task_id": "T2-E-001",
+    "seed": 1,
+    "judge_score": 0.7,
+    "judge_scores": {
+      "task_completion": 0.8,
+      "correctness": 0.7,
+      "completeness": 0.6,
+      "structure": 0.9,
+      "practicality": 0.5
+    },
+    "tokens_used": 40157,
+    "duration_seconds": 604.0057406425476,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.26483771991118965
+  },
+  {
+    "task_id": "T2-E-001",
+    "seed": 2,
+    "judge_score": 0.0,
+    "judge_scores": {},
+    "tokens_used": 41953,
+    "duration_seconds": 624.1611399650574,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.3013441408131554
+  },
+  {
+    "task_id": "T2-H-001",
+    "seed": 0,
+    "judge_score": 0.5,
+    "judge_scores": {
+      "task_completion": 0.4,
+      "correctness": 0.6,
+      "completeness": 0.3,
+      "structure": 0.8,
+      "practicality": 0.4
+    },
+    "tokens_used": 41606,
+    "duration_seconds": 634.2237777709961,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.30791367366722383
+  },
+  {
+    "task_id": "T2-H-001",
+    "seed": 1,
+    "judge_score": 0.4,
+    "judge_scores": {
+      "task_completion": 0.2,
+      "correctness": 0.6,
+      "completeness": 0.2,
+      "structure": 0.7,
+      "practicality": 0.3
+    },
+    "tokens_used": 44752,
+    "duration_seconds": 639.25395154953,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.2378786927676702
+  },
+  {
+    "task_id": "T3-E-001",
+    "seed": 0,
+    "judge_score": 0.0,
+    "judge_scores": {},
+    "tokens_used": 40446,
+    "duration_seconds": 578.7551414966583,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.2942016306427336
+  },
+  {
+    "task_id": "T3-E-001",
+    "seed": 1,
+    "judge_score": 0.26,
+    "judge_scores": {
+      "task_completion": 0.1,
+      "correctness": 0.4,
+      "completeness": 0.1,
+      "structure": 0.6,
+      "practicality": 0.1
+    },
+    "tokens_used": 40535,
+    "duration_seconds": 598.9287111759186,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.4308380823544814
+  },
+  {
+    "task_id": "T3-E-001",
+    "seed": 2,
+    "judge_score": 0.44,
+    "judge_scores": {
+      "task_completion": 0.1,
+      "correctness": 0.6,
+      "completeness": 0.4,
+      "structure": 0.9,
+      "practicality": 0.2
+    },
+    "tokens_used": 40313,
+    "duration_seconds": 609.0104677677155,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.3203308147691722
+  },
+  {
+    "task_id": "T3-M-001",
+    "seed": 0,
+    "judge_score": 0.32,
+    "judge_scores": {
+      "task_completion": 0.2,
+      "correctness": 0.4,
+      "completeness": 0.2,
+      "structure": 0.6,
+      "practicality": 0.2
+    },
+    "tokens_used": 27049,
+    "duration_seconds": 508.1663599014282,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.20996206162372727
+  },
+  {
+    "task_id": "T3-M-001",
+    "seed": 1,
+    "judge_score": 0.39,
+    "judge_scores": {
+      "task_completion": 0.25,
+      "correctness": 0.5,
+      "completeness": 0.2,
+      "structure": 0.7,
+      "practicality": 0.3
+    },
+    "tokens_used": 42265,
+    "duration_seconds": 634.1680743694305,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.25248529347613347
+  },
+  {
+    "task_id": "T3-M-001",
+    "seed": 2,
+    "judge_score": 0.0,
+    "judge_scores": {},
+    "tokens_used": 39914,
+    "duration_seconds": 583.7689318656921,
+    "steps_completed": 2,
+    "total_steps": 2,
+    "cdol_rounds": 6,
+    "synergy_gain": 0.3077167349568515
+  }
+]

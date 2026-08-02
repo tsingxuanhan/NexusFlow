@@ -1,0 +1,20 @@
+{
+  "task_id": "T1-H-001",
+  "seed": 456,
+  "success": true,
+  "tokens_prompt": 600,
+  "tokens_completion": 15803,
+  "tokens_total": 16403,
+  "elapsed_seconds": 154.3,
+  "judge_score": 0.516,
+  "judge_scores": {
+    "task_completion": 0.33,
+    "correctness": 0.6,
+    "completeness": 0.25,
+    "structure": 0.9,
+    "practicality": 0.5
+  },
+  "step_coverage": 1.0,
+  "response_length": 4594,
+  "error": null
+}

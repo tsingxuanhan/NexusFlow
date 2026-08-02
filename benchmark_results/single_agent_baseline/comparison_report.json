@@ -1,0 +1,26 @@
+{
+  "experiment": "NexusFlow vs Single Agent Comparison",
+  "model": "deepseek-v4-flash",
+  "benchmark": "LHAB-NF",
+  "nexusflow": {
+    "runs": 16,
+    "avg_judge_score": 0.364,
+    "avg_tokens": 38391,
+    "avg_duration_s": 588,
+    "step_completion_rate": 1.0,
+    "avg_cdol_rounds": 6.0
+  },
+  "single_agent": {
+    "runs": 27,
+    "avg_judge_score": 0.218,
+    "avg_tokens": 14956,
+    "avg_duration_s": 127,
+    "avg_step_coverage": 0.338
+  },
+  "improvement": {
+    "judge_score_pct": 67,
+    "step_completion_pct": "100% vs 34%",
+    "tasks_failed_by_sa": 3
+  },
+  "conclusion": "NexusFlow CDoL multi-agent collaboration achieves 67% higher quality score, 100% step completion vs 34% for single agent, with 3/9 tasks completely failing for single agent. Trade-off: 2.6x tokens, 4.6x time."
+}

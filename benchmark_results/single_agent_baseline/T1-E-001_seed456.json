@@ -1,0 +1,14 @@
+{
+  "task_id": "T1-E-001",
+  "seed": 456,
+  "success": true,
+  "tokens_prompt": 514,
+  "tokens_completion": 6662,
+  "tokens_total": 7176,
+  "elapsed_seconds": 66.2,
+  "judge_score": 0.0,
+  "judge_scores": {},
+  "step_coverage": 0.833,
+  "response_length": 3420,
+  "error": null
+}

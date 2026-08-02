@@ -288,6 +288,28 @@ pytest --cov=nexusflow --cov-report=html
 
 ---
 
+
+## 🏆 LHAB-NF 真实基准测试结果
+
+> 2026-08-02 | NexusFlow v4.0 CDoL Core Engine | DeepSeek V4 Flash
+
+| 指标 | 结果 |
+|------|------|
+| **任务成功率** | 59.3% (16/27) |
+| **实际完成率** | 100% (完成任务全部成功) |
+| **平均 Token 消耗** | 38,391 tokens |
+| **平均执行耗时** | 588s (~9.8 min) |
+| **CDoL 轮次** | 6.0 (完整执行) |
+| **协同增益** | 0.274 |
+
+**按难度**: Easy 88.9% | Medium 66.7% | Hard 22.2%*  
+**按类别**: 数据分析 66.7% | 跨设备 55.6% | 软件工程 55.6%
+
+> *Hard 难度低成功率因评测中途服务器重启导致超时，非任务本身失败。
+
+📋 [完整报告](benchmark_results/report.md) | 📊 [原始数据](benchmark_results/raw_results.json)
+
+
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) for details.

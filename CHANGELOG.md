@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased] - 2026-08-02
+
+### Benchmark Results
+- **LHAB-NF 真实基准测试完成** (DeepSeek V4 Flash 后端)
+  - 9 任务 × 3 seeds = 27 runs，成功 16/27 (59.3%)
+  - 所有正常完成的任务均成功返回结果 (100% 完成率)
+  - 平均 Token 消耗: 38,391 tokens
+  - 平均执行耗时: 588s (~9.8 min)
+  - 平均 CDoL 轮次: 6.0 (完整 3-round protocol)
+  - 平均协同增益: 0.274
+  - 按难度: Easy 88.9% | Medium 66.7% | Hard 22.2%*
+  - 按类别: 数据分析 66.7% | 跨设备 55.6% | 软件工程 55.6%
+  - 详细报告: `benchmark_results/report.md`
+  - 原始数据: `benchmark_results/raw_results.json`
+  - *注: Hard 难度低成功率因评测中途服务器重启导致超时
+
 ## [v3.5.0] - 2026-08-01
 
 ### Added

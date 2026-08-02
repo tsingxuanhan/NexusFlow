@@ -1,0 +1,236 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-02T12:13:06.131975",
+    "num_seeds": 3,
+    "num_tasks": 9,
+    "total_runs": 27,
+    "mode": "real_concurrent",
+    "server": "NexusFlow v4.0 CDoL Core Engine",
+    "model": "deepseek-v4-flash",
+    "max_steps_override": 2
+  },
+  "total_runs": 27,
+  "successful": 16,
+  "failed": 11,
+  "success_rate": 0.5925925925925926,
+  "avg_tokens": 38391.0625,
+  "avg_duration": 587.9359769970179,
+  "avg_cdol_rounds": 6.0,
+  "avg_synergy": 0.273669254877678,
+  "total_wall_time": 1801.8044328689575,
+  "per_task": {
+    "T1-E-001": {
+      "title": "跨设备邮件摘要与回复",
+      "category": "cross_device",
+      "difficulty": "easy",
+      "runs": 3,
+      "successful": 2,
+      "success_rate": 0.6666666666666666,
+      "avg_tokens": 43205.5,
+      "avg_duration": 639.287320971489,
+      "avg_cdol_rounds": 6.0
+    },
+    "T1-H-001": {
+      "title": "跨设备多任务协同与隐私保护",
+      "category": "cross_device",
+      "difficulty": "hard",
+      "runs": 3,
+      "successful": 0,
+      "success_rate": 0.0,
+      "avg_tokens": 0,
+      "avg_duration": 0,
+      "avg_cdol_rounds": 0
+    },
+    "T1-M-001": {
+      "title": "跨设备日程冲突协调",
+      "category": "cross_device",
+      "difficulty": "medium",
+      "runs": 3,
+      "successful": 3,
+      "success_rate": 1.0,
+      "avg_tokens": 41296.333333333336,
+      "avg_duration": 634.2383323510488,
+      "avg_cdol_rounds": 6.0
+    },
+    "T2-E-001": {
+      "title": "单文件功能实现与测试",
+      "category": "software_engineering",
+      "difficulty": "easy",
+      "runs": 3,
+      "successful": 3,
+      "success_rate": 1.0,
+      "avg_tokens": 29025.666666666668,
+      "avg_duration": 479.80352568626404,
+      "avg_cdol_rounds": 6.0
+    },
+    "T2-H-001": {
+      "title": "跨模块系统重构与迁移",
+      "category": "software_engineering",
+      "difficulty": "hard",
+      "runs": 3,
+      "successful": 2,
+      "success_rate": 0.6666666666666666,
+      "avg_tokens": 43179.0,
+      "avg_duration": 636.7388646602631,
+      "avg_cdol_rounds": 6.0
+    },
+    "T2-M-001": {
+      "title": "多模块Bug修复与回归测试",
+      "category": "software_engineering",
+      "difficulty": "medium",
+      "runs": 3,
+      "successful": 0,
+      "success_rate": 0.0,
+      "avg_tokens": 0,
+      "avg_duration": 0,
+      "avg_cdol_rounds": 0
+    },
+    "T3-E-001": {
+      "title": "单数据源统计报告",
+      "category": "data_analysis",
+      "difficulty": "easy",
+      "runs": 3,
+      "successful": 3,
+      "success_rate": 1.0,
+      "avg_tokens": 40431.333333333336,
+      "avg_duration": 595.5647734800974,
+      "avg_cdol_rounds": 6.0
+    },
+    "T3-H-001": {
+      "title": "多源异构数据深度研究与决策支持",
+      "category": "data_analysis",
+      "difficulty": "hard",
+      "runs": 3,
+      "successful": 0,
+      "success_rate": 0.0,
+      "avg_tokens": 0,
+      "avg_duration": 0,
+      "avg_cdol_rounds": 0
+    },
+    "T3-M-001": {
+      "title": "多源数据对比分析",
+      "category": "data_analysis",
+      "difficulty": "medium",
+      "runs": 3,
+      "successful": 3,
+      "success_rate": 1.0,
+      "avg_tokens": 36409.333333333336,
+      "avg_duration": 575.3677887121836,
+      "avg_cdol_rounds": 6.0
+    }
+  },
+  "per_category": {
+    "data_analysis": {
+      "runs": 9,
+      "successful": 6,
+      "success_rate": 0.6666666666666666,
+      "avg_tokens": 38420.333333333336,
+      "avg_duration": 585.4662810961405
+    },
+    "cross_device": {
+      "runs": 9,
+      "successful": 5,
+      "success_rate": 0.5555555555555556,
+      "avg_tokens": 42060.0,
+      "avg_duration": 636.2579277992248
+    },
+    "software_engineering": {
+      "runs": 9,
+      "successful": 5,
+      "success_rate": 0.5555555555555556,
+      "avg_tokens": 34687.0,
+      "avg_duration": 542.5776612758636
+    }
+  },
+  "per_difficulty": {
+    "hard": {
+      "runs": 9,
+      "successful": 2,
+      "success_rate": 0.2222222222222222,
+      "avg_tokens": 43179.0,
+      "avg_duration": 636.7388646602631
+    },
+    "easy": {
+      "runs": 9,
+      "successful": 8,
+      "success_rate": 0.8888888888888888,
+      "avg_tokens": 36847.75,
+      "avg_duration": 563.0849424302578
+    },
+    "medium": {
+      "runs": 9,
+      "successful": 6,
+      "success_rate": 0.6666666666666666,
+      "avg_tokens": 38852.833333333336,
+      "avg_duration": 604.8030605316162
+    }
+  },
+  "failures": [
+    {
+      "task_id": "T1-E-001",
+      "seed": 2,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T1-H-001",
+      "seed": 0,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T1-H-001",
+      "seed": 1,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T1-H-001",
+      "seed": 2,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T2-H-001",
+      "seed": 2,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T2-M-001",
+      "seed": 0,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T2-M-001",
+      "seed": 1,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T2-M-001",
+      "seed": 2,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T3-H-001",
+      "seed": 0,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T3-H-001",
+      "seed": 1,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    },
+    {
+      "task_id": "T3-H-001",
+      "seed": 2,
+      "error": "Timeout after 1802s",
+      "status": "timeout"
+    }
+  ]
+}

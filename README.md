@@ -76,15 +76,17 @@ NexusFlow 正是为了解决这个问题而诞生。我们不是又做了一个�
 
 ### 更多实验数据
 
-| 实验 | 核心结果 |
-|------|----------|
-| PinchBench 25 Hard Cases | NF **+6.7%**，iterative_code_refine **+200%** |
-| WorkBuddy 宏观经济 (20国×15指标×41年) | 加权 **+23.4%**，GDP 命中率 **+20pp** |
-| 80 步全量 Benchmark (NF vs SA) | 质量 +2.6%，Token **-6.2%**，耗时 **-14.9%** |
-| CDoL 三阶段递进 | 64 → 85.5 → 90（SA → 6角色 → 10角色） |
-| 四框架横向对比 | NF **75.0** vs AutoGen 72.0 / CrewAI 61.5 / LangGraph 63.8 |
-| 质量门禁 | 错误率 **0%**（SA ≈ 100%），触发率 100% |
-| 端边云实机验证 | 成本 **-88%**，质量仅差 0.061 |
+> 所有实验均基于真实 LLM API 调用，数据和报告均可追溯。
+
+| 实验 | 核心结果 | 报告 | 数据 |
+|------|----------|:----:|:----:|
+| PinchBench 25 Hard Cases | NF **+6.7%**，iterative_code_refine **+200%** | [📋](examples/stage7_pinchbench/STAGE7_PINCHBENCH_HARDCASES.md) | [📊](examples/stage7_pinchbench/results_nf/summary.json) |
+| WorkBuddy 宏观经济 (20国×15指标×41年) | 加权 **+23.4%**，GDP 命中率 **+20pp** | [📋](examples/workbuddy_comparison/real_llm/D7_真实LLM实验报告.md) | [📊](examples/workbuddy_comparison/real_llm/real_benchmark_results.json) |
+| 80 步全量 Benchmark (NF vs SA) | 质量 +2.6%，Token **-6.2%**，耗时 **-14.9%** | [📋](examples/benchmark_summary.md) | [📊](examples/stage5_eighty_steps/data/comparison.json) |
+| CDoL 三阶段递进 | 64 → 85.5 → 90（SA → 6角色 → 10角色） | [📋](examples/benchmark_summary.md) | [📊](examples/stage1_single_vs_6roles/data/noaa/results_summary.json) |
+| 四框架横向对比 | NF **75.0** vs AutoGen 72.0 / CrewAI 61.5 / LangGraph 63.8 | [📋](examples/horizontal_comparison/multi_framework_comparison_report.md) | [📊](examples/horizontal_comparison/multi_framework_comparison.json) |
+| 质量门禁 | 错误率 **0%**（SA ≈ 100%），触发率 100% | [📋](examples/benchmark_summary.md) | — |
+| 端边云实机验证 | 成本 **-88%**，质量仅差 0.061 | [📋](examples/edge_cloud_scheduling/real_machine_report.md) | [📊](examples/edge_cloud_scheduling/real_machine_data.json) |
 
 ---
 

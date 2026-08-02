@@ -26,6 +26,10 @@ logger = logging.getLogger("DynamicRouter")
 
 try:
     import networkx as nx
+    HAS_NETWORKX = True
+except ImportError:
+    HAS_NETWORKX = False
+    logger.warning("networkx not installed, dynamic router degraded to simple mode")
 
 # P2: 可解释性 + 可优化
 try:
@@ -34,10 +38,6 @@ try:
     HAS_P2 = True
 except ImportError:
     HAS_P2 = False
-    HAS_NETWORKX = True
-except ImportError:
-    HAS_NETWORKX = False
-    logger.warning("networkx not installed, dynamic router degraded to simple mode")
 
 
 # ============ 数据结构 ============

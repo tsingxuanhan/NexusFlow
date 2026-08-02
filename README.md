@@ -9,7 +9,6 @@
 [![Version](https://img.shields.io/badge/Version-3.6.0-green.svg)](CHANGELOG.md)
 [![Tests](https://img.shields.io/badge/Tests-357%20Passing-brightgreen.svg)](.github/workflows/tests.yml)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](Dockerfile)
-[![Security](https://img.shields.io/badge/Security-Gitleaks-blue.svg)](SECURITY.md)
 [![Benchmarks](https://img.shields.io/badge/Benchmarks-LHAB--NF%20%7C%208%20Stages%20%7C%20PinchBench-red.svg)]()
 [![LOC](https://img.shields.io/badge/LOC-84,000+-blue.svg)]()
 
@@ -38,6 +37,57 @@ NexusFlow 正是为了解决这个问题而诞生。我们不是又做了一个�
 
 ---
 
+## 🏆 实证结果
+
+### LHAB-NF 真实基准测试：NexusFlow vs Single Agent
+
+> 2026-08-02 | DeepSeek V4 Flash | LLM-as-Judge 5维统一评分
+
+同一批 LHAB-NF 任务分别由 NexusFlow（CDoL 多 Agent 协作）和 Single Agent（单次 LLM 调用，无协作）执行，使用相同的 LLM-as-Judge 评分体系。
+
+| 指标 | NexusFlow (CDoL) | Single Agent | 对比 |
+|------|:-:|:-:|:-:|
+| **Judge 质量分** | **0.364** | 0.218 | **+67%** |
+| **步骤完成率** | **100%** | 34% | **+196%** |
+| 完全失败任务 | **0/6** | 3/9 | — |
+| Token 消耗 | 38,391 | 14,956 | 2.6x |
+| 平均耗时 | 588s | 127s | 4.6x |
+
+<details>
+<summary>按任务明细</summary>
+
+| 任务 | NexusFlow | Single Agent | 差距 |
+|------|:-:|:-:|:-:|
+| 跨设备邮件摘要 (T1-E) | 0.420 | 0.356 | +0.064 |
+| 跨设备日程协调 (T1-M) | 0.413 | **0.540** | -0.127 |
+| 单文件功能实现 (T2-E) | 0.478 | 0.173 | **+0.305** |
+| 跨模块系统重构 (T2-H) | 0.450 | **0.000** | **+0.450** |
+| 单数据源统计报告 (T3-E) | 0.233 | 0.167 | +0.067 |
+| 多源数据对比分析 (T3-M) | 0.237 | **0.000** | **+0.237** |
+
+</details>
+
+**关键发现**：
+- 在复杂跨模块/多源任务上，Single Agent 完全无法处理（3 任务得 0 分），NexusFlow 全部完成
+- 唯一 SA 胜出的任务（日程协调 T1-M）是相对简单的协调任务，说明 CDoL 对简单任务有额外开销——这正是动态路由的价值
+- 综合来看，多 Agent 协作在质量上高出 67%，步骤覆盖率从 34% 提升到 100%
+
+📋 [完整报告](benchmark_results/report.md) | 📊 [原始数据](benchmark_results/raw_results.json)
+
+### 更多实验数据
+
+| 实验 | 核心结果 |
+|------|----------|
+| PinchBench 25 Hard Cases | NF **+6.7%**，iterative_code_refine **+200%** |
+| WorkBuddy 宏观经济 (20国×15指标×41年) | 加权 **+23.4%**，GDP 命中率 **+20pp** |
+| 80 步全量 Benchmark (NF vs SA) | 质量 +2.6%，Token **-6.2%**，耗时 **-14.9%** |
+| CDoL 三阶段递进 | 64 → 85.5 → 90（SA → 6角色 → 10角色） |
+| 四框架横向对比 | NF **75.0** vs AutoGen 72.0 / CrewAI 61.5 / LangGraph 63.8 |
+| 质量门禁 | 错误率 **0%**（SA ≈ 100%），触发率 100% |
+| 端边云实机验证 | 成本 **-88%**，质量仅差 0.061 |
+
+---
+
 ## ✨ 核心特性
 
 ### 🧠 认知分工引擎（CDoL）
@@ -46,95 +96,42 @@ NexusFlow 正是为了解决这个问题而诞生。我们不是又做了一个�
 - **有损通信机制**：Agent 之间不共享原始输入，只交换压缩后的中间结论
 - **虚假一致检测**：当多个 Agent 给出表面一致但推理路径矛盾的答案时自动触发
 - **2-3 轮辩论平台期**：ablation 实验证明 2-3 轮即可达到质量收敛，无需无限辩论
+- **动态终止**：FusionJudge 判定 converge 时提前退出，不浪费算力
 - **核心效果**：NOAA 气候任务 64→90 分，WHO 健康评估 74→90 分
 
-### 🌐 可解释动态拓扑（P2 新增）
+### 🌐 可解释动态拓扑
 
 - **5 种运行时拓扑**：`simple` / `research` / `coding` / `cdol` / `adaptive`
 - **任务感知路由**：基于任务描述自动分类，运行时动态重建 Agent 协作图
 - **决策可解释**：每个路由决策都有因子贡献度分析（能力匹配/负载/跨层/偏好/延迟）
 - **自适应优化**：UCB1 多臂老虎机算法从执行历史学习最优路由模式
-- **Score-based 策略**：置信度提升 35%+，延迟降低 42%
-
-#### P2 能力展示
 
 ```python
-# 路由决策解释
+# 路由决策解释 — 每个决策都有因子归因
 plan = router.route(task)
 print(plan.explanation.human_readable)
-# 输出: "为任务选择混合拓扑，由 4 个 Agent 协作执行：coordinator → researcher → executor → reviewer。预估延迟 12.3s，置信度 78%。"
-
-# 因子分析
-for factor in plan.explanation.factor_breakdown:
-    print(f"{factor.factor_name}: {factor.contribution:+.2f}")
-# ✅ 能力匹配度: +0.85
-# ✅ 负载状态: +0.72
-# ❌ 跨层通信: -0.30
-
-# 优化器学习
-router.record_execution_outcome(plan.plan_id, outcome)
-recommendations = router.optimizer.recommend_improvements(plan)
+# → "混合拓扑，4 Agent 协作：coordinator → researcher → executor → reviewer。置信度 78%。"
 ```
 
 详见 [`examples/p2_topology_demo.py`](examples/p2_topology_demo.py)
-
-### 📊 LHAB-NF 评测基准（P1 新增）
-
-**LongHorizon-AgentBench-NF** —— 专为 NexusFlow 设计的长程任务评测框架
-
-- **9 个任务用例**：T1-T3 × Easy/Medium/Hard（跨设备协作/软件工程/数据分析）
-- **13 项评测指标**：任务完成率、步骤成功率、Token 成本、延迟、隐私违规等
-- **7 种扰动类型**：设备离线、网络超时、工具失败、需求变更、数据冲突、低质量输出、记忆污染
-- **统一评测入口**：`python scripts/run_benchmark.py --suite`
-- **消融实验框架**：4 组实验量化 CDoL 各组件贡献（P3）
-
-#### 快速开始评测
-
-```bash
-# Mock 模式测试（无需真实 Agent）
-python scripts/run_benchmark.py --suite --mode mock
-
-# 真实 Agent 评测（需要 server 运行）
-python scripts/run_benchmark.py --suite --mode real --server-url http://localhost:8900
-
-# 单任务评测
-python scripts/run_benchmark.py evaluation/lhab_nf/tasks/T1-H-001.yaml
-```
-
-详见 [`docs/LHAB-NF_Design.md`](docs/LHAB-NF_Design.md) 和 [`docs/P3_Ablation_Design.md`](docs/P3_Ablation_Design.md)
 
 ### 🏗️ 端边云三层调度
 
 - **云端**（DeepSeek API）：Coordinator, Planner, Archivist, Reviewer, Caster, Researcher
 - **边端**（Ollama 本地）：Executor, Miner — 敏感数据不出本机
 - **终端**（Ollama 本地）：Assayer, Artisan — 边缘设备轻量化执行
-- **隐私优先**：敏感任务可完全本地化执行
 
-#### 🔬 端边云实机验证（真实LLM推理）
+实机验证（27 次真实 LLM 调用）：混合调度 vs 纯云端，成本 **-88%**，质量仅差 0.061。详见 [`examples/edge_cloud_scheduling/real_machine_report.md`](examples/edge_cloud_scheduling/real_machine_report.md)
 
-> 详见 [`examples/edge_cloud_scheduling/real_machine_report.md`](examples/edge_cloud_scheduling/real_machine_report.md)
+### 📊 LHAB-NF 评测基准
 
-与模拟实验不同，实机验证使用**真实LLM端点**执行推理：
+专为 NexusFlow 设计的长程任务评测框架——3 大类 × 3 难度，13 项评测指标，7 种扰动注入。
 
-| 层级 | 模型 | 端点 | 隐私 |
-|:----:|:-----|:-----|:----:|
-| 📱 Edge(端侧) | qwen3.5:9b (6.6GB) | Ollama 本地 | ✅ |
-| 🖥️ Fog(边缘) | deepseek-r1:14b (9GB) | Ollama 本地 | ✅ |
-| ☁️ Cloud(云端) | deepseek-chat | DeepSeek API | ❌ |
+```bash
+python scripts/run_benchmark.py --suite --mode real --server-url http://localhost:8900
+```
 
-**验证规模**：27次真实LLM调用 | 11次EdgeCloudScheduler调度决策 | 2次层间迁移 | 3次容错Fallback
-
-**关键结果**：
-
-| 指标 | 混合调度 | 纯云端 | 差异 |
-|:-----|:--------:|:------:|:----:|
-| 成功率 | 8/8 (100%) | 8/8 (100%) | — |
-| 总成本 | ¥0.0002 | ¥0.0016 | **-88%** |
-| 隐私合规 | 2/8 | 0/8 | **+2** |
-| 平均质量 | 0.912 | 0.974 | -0.061 |
-
-使用项目真实的 `EdgeCloudScheduler` 类（`register_tier()` / `schedule()` / `migrate()` / `update_resource_state()`），非简化版重新实现。
-
+详见 [`docs/LHAB-NF_Design.md`](docs/LHAB-NF_Design.md) 和 [`docs/P3_Ablation_Design.md`](docs/P3_Ablation_Design.md)
 
 ### 🧬 四层记忆架构
 
@@ -157,9 +154,7 @@ python scripts/run_benchmark.py evaluation/lhab_nf/tasks/T1-H-001.yaml
 - **CLI 工具链**：`nexusflow doctor` / `serve` / `run` / `benchmark`
 - **CI/CD 完整**：GitHub Actions 自动测试、Lint、Docker 构建、安全扫描
 - **357 个自动化测试**：覆盖率 38%，持续扩展中
-- **API 文档自动生成**：pdoc + GitHub Pages
 - **Mixin 模块化架构**：BaseAgent 拆分为 7 个职责单一的 Mixin 模块
-- **自动化事实清单**：`make facts` 从代码生成 PROJECT_FACTS.md
 
 ---
 
@@ -181,24 +176,6 @@ NexusFlow 内置 10 个专业 Agent，每个角色有明确的认知边界和信
 | **Archivist** ☁️ | 旁观记录 | 蒸馏归档、知识沉淀、经验复用 | 仅中间结论 |
 
 > **三层信息架构**：全局视野层（2 Agent 看全量）→ CDoL 参与层（7 Agent 按角色切片）→ 旁观记录层（1 Agent 仅看中间结论）。主动制造信息不对称是 CDoL 增益的核心来源。
-
----
-
-## 📊 关键数字
-
-| 指标 | 数据 | 说明 |
-|------|------|------|
-| 框架 vs 模型影响力 | **7.6×** | [Braintrust 1,781 条轨迹](https://www.braintrust.dev/) |
-| 法律 Agent Harness 优化 | 3.5% → **80.1%** | [Joel Niklaus](https://x.com/joelniklaus) |
-| PinchBench 25 Hard Cases | NF **+6.7%** | iterative_code_refine **+200%** |
-| WorkBuddy 宏观经济 | 加权 **+23.4%** | GDP 命中率 **+20pp** |
-| 80 步全量 Benchmark | 质量 +2.6% | Token **-6.2%**，耗时 **-14.9%** |
-| CDoL 三阶段递进 | 64→85.5→90 | SA → 6 角色 → 10 角色 |
-| 质量门禁 | 错误率 **0%** | 触发率 100%，SA ≈100% |
-| 四框架横向对比 | **75.0** | AutoGen 72.0 / CrewAI 61.5 / LangGraph 63.8 |
-| 路由策略 Score-based | 置信度 **0.616** | 延迟 738ms，负载标准差最低 |
-| LHAB-NF 评测 | **9 任务** | 13 指标，7 扰动类型 |
-| P2 可解释路由 | **5 因子分析** | 能力/负载/跨层/偏好/延迟 |
 
 ---
 
@@ -241,7 +218,7 @@ python examples/demo_e2e_pinchbench.py --arch-only
 # 完整 Demo（含 SA vs NF PinchBench 对比 + HTML 报告）
 python examples/demo_e2e_pinchbench.py
 
-# P2 可解释拓扑演示
+# 可解释拓扑演示
 python examples/p2_topology_demo.py
 
 # LHAB-NF 评测基准
@@ -257,22 +234,17 @@ nexusflow --help
 ```bash
 pip install -e ".[dev]"
 ```
+</details>
 
 ---
 
-## 📚 文档
+## 📚 文档与测试
 
 - **技术文档**：[NexusFlow技术文档v3.6.md](docs/NexusFlow技术文档v3.6.md)（完整架构说明）
 - **项目事实**：[PROJECT_FACTS.md](PROJECT_FACTS.md)（数据唯一权威来源）
 - **评测基准**：[LHAB-NF 设计文档](docs/LHAB-NF_Design.md)
 - **消融实验**：[P3 实验设计](docs/P3_Ablation_Design.md)
-- **变更日志**：[CHANGELOG.md](CHANGELOG.md)
 - **API 文档**：[docs/api/index.html](docs/api/index.html)
-- **Dashboard**：访问 `http://localhost:8900/dashboard`
-
----
-
-## 🧪 测试
 
 ```bash
 # 运行全量测试
@@ -281,67 +253,9 @@ pytest tests/
 # 运行特定测试
 pytest tests/test_edge_cloud_scheduler.py
 pytest tests/test_dynamic_router.py
-
-# 生成覆盖率报告
-pytest --cov=nexusflow --cov-report=html
 ```
 
 ---
-
-
-## 🏆 LHAB-NF 真实基准测试结果
-
-> 2026-08-02 | NexusFlow v4.0 CDoL Core Engine | DeepSeek V4 Flash
-
-| 指标 | 结果 |
-|------|------|
-| **任务成功率** | 59.3% (16/27) |
-| **实际完成率** | 100% (完成任务全部成功) |
-| **平均 Token 消耗** | 38,391 tokens |
-| **平均执行耗时** | 588s (~9.8 min) |
-| **CDoL 轮次** | 6.0 (完整执行) |
-| **协同增益** | 0.274 |
-
-**按难度**: Easy 88.9% | Medium 66.7% | Hard 22.2%*  
-**按类别**: 数据分析 66.7% | 跨设备 55.6% | 软件工程 55.6%
-
-> *Hard 难度低成功率因评测中途服务器重启导致超时，非任务本身失败。
-
-📋 [完整报告](benchmark_results/report.md) | 📊 [原始数据](benchmark_results/raw_results.json)
-
-#### NexusFlow vs Single Agent 对照实验
-
-> 2026-08-02 | DeepSeek V4 Flash | LLM-as-Judge 5维统一评分
-
-同一批 LHAB-NF 任务分别由 NexusFlow（CDoL 多 Agent 协作）和 Single Agent（单次 LLM 调用，无协作）执行，使用相同的 LLM-as-Judge 评分体系。
-
-| 指标 | NexusFlow (CDoL) | Single Agent | 对比 |
-|------|:-:|:-:|:-:|
-| **Judge 质量分** | **0.364** | 0.218 | **+67%** |
-| **步骤完成率** | **100%** | 34% | **+196%** |
-| 完全失败任务 | **0/6** | 3/9 | — |
-| Token 消耗 | 38,391 | 14,956 | 2.6x |
-| 平均耗时 | 588s | 127s | 4.6x |
-
-<details>
-<summary>按任务明细</summary>
-
-| 任务 | NexusFlow | Single Agent | 差距 |
-|------|:-:|:-:|:-:|
-| 跨设备邮件摘要 (T1-E) | 0.420 | 0.356 | +0.064 |
-| 跨设备日程协调 (T1-M) | 0.413 | **0.540** | -0.127 |
-| 单文件功能实现 (T2-E) | 0.478 | 0.173 | **+0.305** |
-| 跨模块系统重构 (T2-H) | 0.450 | **0.000** | **+0.450** |
-| 单数据源统计报告 (T3-E) | 0.233 | 0.167 | +0.067 |
-| 多源数据对比分析 (T3-M) | 0.237 | **0.000** | **+0.237** |
-
-</details>
-
-**关键发现**：
-- 在复杂跨模块/多源任务上，Single Agent 完全无法处理（3 任务得 0 分），NexusFlow 全部完成
-- 唯一 SA 胜出的任务（日程协调 T1-M）是相对简单的协调任务，说明 CDoL 对简单任务有额外开销——这正是动态路由的价值
-- 综合来看，多 Agent 协作在质量上高出 67%，步骤覆盖率从 34% 提升到 100%
-
 
 ## 📄 License
 

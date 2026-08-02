@@ -3,22 +3,12 @@
 ## 技术文档 v3.6
 
 项目地址：https://github.com/tsingxuanhan/NexusFlow
-代码规模：658文件（git tracked） / 196个Python文件 / ~84,000行Python / 88个核心模块（nexusflow/ 71模块 + tools/ 17个工具；含10个Agent角色、17个工具；统计口径：git tracked文件，不含__init__.py）
+代码规模：658文件（git tracked） / 196个Python文件 / ~84,000行Python / 88个核心模块
 赛题：荣耀揭榜挂帅 XH-202631
 
 > **核心架构**：三层信息架构（AgentInformationPolicy）、统一任务编排器（NexusOrchestrator）、10个专用Agent、信息策略驱动的CDoL智能增强
-> **实证数据**：七阶段递进Benchmark——Stage-1/2/3 三阶段核心验证（NOAA评分64→85→90，质量闭环代差）、Stage-4 45步端到端实验（14模块100%覆盖，9次拓扑切换）、Stage-5 80步公平对比（NF vs SA，质量+2.6%、耗时-14.9%）、Stage-6 WorkBuddy宏观经济对比（20国×15指标×41年，加权总分+23.4%）、Stage-6b L3高复杂度认知任务（9类任务验证CDoL辩论质量+1.10）、**Stage-7 PinchBench Hard Cases 25任务全量对比（NF v2 automated_avg 0.487 vs SA 0.456，+6.7%）**；**Stage-8 LHAB-NF评测基准（3大类×3难度五维评测框架，9次框架验证基线SSR 53-80%）**；**CDoL因果消融实验（四组实验量化组件贡献：Context Mask d=1.52 > FusionJudge d=1.18 > Multi-round d=0.94）**；横向对比（NexusFlow 75 vs AutoGen 72，LLM 5维评分）
-> **因果验证**：Joel Niklaus (Hugging Face) *"Don't Train the Model, Evolve the Harness"* 实验——冻结DeepSeek-V4-Pro权重仅优化外层Harness，法律Agent基准3.5%→80.1%，追平Claude Sonnet 4.6，成本1/7，可跨模型迁移
-> **工程规模**：658文件/196个Python文件、357个单元测试覆盖12个模块、5种执行编排模式
-> v2.9 更新内容：CDoL动态终止机制（FusionJudge判定converge/backtrack时提前退出，不再固定跑满轮次）、Phase 2 Ablation实验（轮次ablation验证2-3轮为最优平台期，LLM 5维质量评分器替代hardcoded公式）、LLM评分器加入few-shot锚定+5次运行方差控制
-> v2.9.2 更新内容：Nemotron-3 Embed集成与混合检索Benchmark（§6.4、§7.6）——VectorMemory激活BM25+RRF混合检索，ArchivalMemory接入Nemotron语义向量，论文库Recall@5=93.3%，三路RRF融合MRR=0.710
-> v3.0 更新内容：Stage-6 WorkBuddy宏观经济对比实验（§7.7，20国×15指标×41年真实IMF数据，模拟推演加权总分8.28 vs 6.71，D7端云协同实机验证通过）；Stage-6b L3高复杂度认知任务Benchmark（§7.8，9类认知任务SA vs NF 10Agent，均分5.37 vs 5.36持平，NF辩论质量+1.10）；审计报告P0修复（10维评分表评估体系说明、§11.3 MAPE数据修正、Stage-4拓扑术语统一）；审计报告中等问题修复（共识度序列、模拟率局限性声明、横向对比独立性标注、附录A.3命名统一、核心发现计数修正）
-> v3.3 更新内容：**端边云实机验证**（§7.7.2）——使用项目真实EdgeCloudScheduler执行27次真实LLM调用（8任务×多轮调度），验证三层调度/层间迁移/容错Fallback全链路；混合调度vs纯云端：成本节省88%、隐私合规+2、质量仅差0.061；EdgeCloudScheduler从535行扩展至635行。详见 Changelog。
-> v3.4 更新内容：**数据一致性修复 + Agent命名统一**——修复文档内部4处数据矛盾（端边云调度器行数535→635、SkillRetriever行数349→408、工具数保持17、Phase 7总量6104→6163）；附录A.3 Agent命名统一为v3.3规范（Planner/Executor/Miner/Reviewer/Caster/Assayer/Artisan）；server端Agent命名同步修复。
-> v3.5 更新内容：**可解释动态拓扑 + LHAB-NF评测基准 + CDoL因果消融实验**——(1) DynamicRouter可解释化升级（§6.1.1-6.1.4）：TopologyInterpreter生成路由决策解释（Top-3候选+因子归因+瓶颈识别），TopologyOptimizer通过MAB在线学习最优权重，9次切换100%解释覆盖；(2) LHAB-NF评测基准（§7.10）：3大类×3难度任务框架+四层指标体系+8种拓扑对照+7类扰动注入，9次框架验证建立基线；(3) CDoL因果消融实验（§7.11）：四组实验量化各组件贡献——Context Mask(d=1.52)>FusionJudge(d=1.18)>Multi-round(d=0.94)，证明增益来自信息受限认知而非ensemble降噪
-> v3.2 更新内容：**工程成熟度升级**——Docker一键部署 + Makefile + CLI入口 + API文档自动生成 + CI/CD完善 + base_agent.py Mixin拆分（2597→1211行）+ 56新测试（357全通过）。详见 Changelog。
->
-> v3.1 更新内容：**Stage-7 PinchBench Hard Cases Benchmark**（§7.9）——25个高难度任务SA vs NF v2全量对比，NF v2管线（CDoL多Agent分析+Producer合成两阶段）automated_avg 0.487 vs SA 0.456（+6.7%），7胜11平7负；iterative_code_refine 0.333→1.000（+200%），meeting_gov_qa_extract 0.111→0.444（+300%）；P0可复现性修复（清除硬编码密钥、统一评分体系、修复硬编码路径、artifacts说明）
+> **核心实证**：七阶段递进Benchmark（Stage-1~8），LHAB-NF真实对照实验NexusFlow vs Single Agent质量分+67%（0.364 vs 0.218），PinchBench 25任务+6.7%，Stage-5 80步对比质量+2.6%耗时-14.9%
+> **因果验证**：Joel Niklaus (Hugging Face) 冻结权重仅优化Harness，法律Agent基准3.5%→80.1%——**框架工程 > 模型堆叠**
 
 ---
 
@@ -160,8 +150,6 @@ Braintrust报告分析了5种主流智能体框架（harness）的表现，揭�
 **这正是NexusFlow DynamicRouter选择"约束感知评分"而非"静态工具预筛选"的数据依据。**
 
 ---
-
-## §四、核心创新
 
 ### §4.1 认知分工引擎（Cognitive Division of Labor, CDoL）
 
@@ -328,16 +316,8 @@ class CDoLResult:
 
 **Shannon信道映射**：借用信息论的类比框架，CDoL轮次与Nyquist采样率之间存在启发性对应——Nyquist定理要求采样频率不低于信号最高频率，而非精确等于。2轮≈Nyquist采样下界（保证认知多样性的最低充分采样），2-3轮 = 经验观察到的质量平台期（覆盖认知空间带宽），超过3轮 = 边际收益递减（引入Agent疲劳和过度修正噪声）。需注意这是类比而非严格数学推导，实际平台期位置由实验数据确定。Phase 2 ablation实验（§7.3.8）的v3方差控制数据（5次运行+few-shot锚定）从统计层面验证了这一平台期预测：2轮(0.715±0.034)与3轮(0.699±0.037)统计无显著差异，4轮(0.703±0.030)未超越平台期区间。
 
-#### 4.1.5 为什么有效
 
-CDoL的理论优势来源于其与传统方案的本质差异。
-
-传统ensemble的增益来源是统计降噪，上界是最强单体Agent的能力。CDoL的增益来源完全不同：**信息约束迫使产生的认知过程**。当Agent被迫在受限信息下推理，它必须发展出从他人输出逆向推断信息上下文的能力。这种"认知过程"在传统方案中不存在。
-
-CDoL的理论上界超过任何单体Agent（即使给它完整信息），因为推理增益不是来自模型能力相加，而是来自"在信息受限条件下被迫完成的认知过程"——这些过程在信息充裕条件下永远不会被触发。
-
-这与行业实证一致——框架设计对协作深度的影响远超模型选择。
-
+CDoL的理论优势来源于其与传统方案的本质差异。传统ensemble的增益来源是统计降噪，上界是最强单体Agent的能力。CDoL的增益来源完全不同：**信息约束迫使产生的认知过程**。当Agent被迫在受限信息下推理，它必须发展出从他人输出逆向推断信息上下文的能力。这种认知过程在传统方案中不存在，因此CDoL的理论上界超过任何单体Agent（即使给它完整信息）。
 #### 4.1.5a synergy_gain形式化定义
 
 CDoL三轮通信协议的协同增益通过synergy_gain指标量化。形式化定义如下：
@@ -375,16 +355,6 @@ NexusFlow借鉴Arbor HTR（arXiv:2606.11926, 人大高瓴+微软研究院）的I
 | task_type | 任务分类（evidence_based/hypothesis_driven等） | 相似场景匹配 |
 
 **向后兼容**：CognitiveDivisionEngine在无参数创建时自动创建空InsightStore，所有现有调用方式无需修改。
-
-#### 4.1.7 与行业数据的对齐
-
-Braintrust报告提出的三大核心建议，与NexusFlow CDoL的对应关系：
-
-| 报告建议 | NexusFlow实现 | 对应关系 |
-|----------|---------------|----------|
-| 为每类任务匹配最优智能体框架 | CDoL六种视角分解策略 | ✅ 直接对应 |
-| 规避"更精密控制=更好结果"陷阱 | 有损通信协议+动态干预 | ✅ 已规避 |
-| 按Cost Per Success而非Token消耗衡量 | estimated_cost跟踪+策略推荐 | ✅ 完全匹配 |
 
 #### 4.1.8 任务技能蒸馏与检索（Task Skill Distillation & Retrieval）
 
@@ -468,29 +438,6 @@ class CDoLResult:
 ```
 
 **行业理论支撑**：这个设计借鉴了认知科学的"工作记忆容量有限性"原理——Miller（1956）的Magic Number 7±2理论表明，人类工作记忆一次只能处理7±2个信息块。将Agent参与数量限制在2-4个，正是避免认知过载的工程化体现。
-
-#### 4.1.10 已解决：信息策略Agent名统一（原已知限制）
-
-**问题发现（已修复）**：Stage-3真实代码执行中，曾发现AgentInformationPolicy内置的Agent名与CDoL角色名存在不一致，导致4个角色的ContextMask裁剪失败。后续审计中已统一命名空间，10/10角色信息裁剪全部生效。
-
-| CDoL角色 | 信息策略内置名 | 匹配状态 |
-|----------|-------------|:--------:|
-| Coordinator | coordinator | ✅ 匹配 |
-| Planner | planner | ✅ 匹配 |
-| Researcher | researcher | ✅ 匹配 |
-| Executor | executor | ✅ 匹配 |
-| Reviewer | reviewer | ✅ 匹配 |
-| Miner | miner | ✅ 匹配 |
-| Assayer | assayer | ✅ 匹配 |
-| Caster | caster | ✅ 匹配 |
-| Artisan | artisan | ✅ 匹配 |
-| Archivist | archivist | ✅ 匹配 |
-
-**状态**：10/10个角色的信息裁剪全部生效（已统一命名空间）。
-
-**说明**：CDoL核心功能不依赖ContextMask——视角分解+差异归因由PerspectiveDecomposer独立保障，ContextMask是信息策略的增强层而非CDoL引擎的依赖层。Stage-1/2使用子Agent模拟CDoL流程（不走信息策略模块），评分提升64→85→90均在此阶段获得。
-
----
 
 ### §4.2 自适应上下文管理器（AdaptiveContextManager）
 
@@ -912,7 +859,6 @@ def _route_to_cdol(self, task: Task) -> CDOLResult:
 ```
 
 ---
-
 ## §五、整体架构
 
 ### 5.0 设计哲学：为什么是这四个模块
@@ -1155,76 +1101,16 @@ Phase 7新增6种CDoL专用消息类型：
 | Reviewer | 质量门禁 | 批判性思维 | 虚假一致检测 | CDoL参与层 |
 | Archivist | 档案师/记录者 | 蒸馏归纳 | 旁观记录 | 旁观记录层 |
 
-### 6.7 AgentInformationPolicy（511行）
 
-**模块定位**：三层信息架构的核心实现，负责Agent信息档案管理和ContextMask生成。
+### 6.7 AgentInformationPolicy & NexusOrchestrator
 
-**核心功能**：
-
-| 功能 | 描述 |
-|------|------|
-| InformationProfile管理 | 为10个Agent注册和维护信息档案 |
-| 三层架构路由 | 根据Agent角色分配到GLOBAL/CDOL_PARTICIPANT/OBSERVER层 |
-| ContextMask生成 | 为CDoL参与层Agent生成角色化信息掩码 |
-| 参与者推荐 | 根据任务类型推荐2-4个最相关的Agent参与CDoL |
-
-**与CDoL引擎的集成**：
-
-```python
-# NexusOrchestrator中的集成示例
-cdol_result = self.cdol_engine.execute(
-    task=task,
-    agents=participants,
-    information_policy=self.information_policy  # 关键集成点
-)
-```
-
-### 6.8 NexusOrchestrator（479行）
-
-**模块定位**：统一任务入口，负责任务类型分类、路由分发和全生命周期管理。
-
-**核心功能**：
-
-| 功能 | 描述 |
-|------|------|
-| 任务类型分类 | 自动识别SIMPLE/RESEARCH/CODING/CDOL四种任务类型 |
-| 智能路由 | 根据任务类型分发到最适合的处理引擎 |
-| Agent协调 | 通过AgentRegistry管理10个Agent的生命周期 |
-| 自动归档 | 任务完成后自动触发Archivist蒸馏归档 |
-| 统一可观测性 | 记录完整的执行元数据（时间/Token/路由等） |
-
-**使用示例**：
-
-```python
-# 统一入口：用户只需提供任务描述
-orchestrator = NexusOrchestrator()
-result = orchestrator.orchestrate("分析蛋白质折叠问题并给出实验方案")
-
-# NexusOrchestrator自动完成：
-# 1. 任务类型分类 → CDOL
-# 2. AgentInformationPolicy推荐参与者 → Researcher + Reviewer + Planner
-# 3. 为各Agent生成ContextMask
-# 4. 执行CDoL三轮通信协议
-# 5. 自动触发Archivist蒸馏归档
-# 6. 返回统一格式的TaskResult
-```
+详见 §4.3（AgentInformationPolicy 511行，三层信息架构核心实现）和 §4.4（NexusOrchestrator 479行，统一任务编排入口）。
 
 ---
 
 ## §七、实证验证与成本分析
 
-### 7.1 Braintrust 1781条轨迹数据对照
-
-| 报告发现 | NexusFlow设计 | 匹配度 |
-|----------|---------------|--------|
-| 框架影响7.6倍于模型 | CDoL六种分解策略 | ✅ 直接命中 |
-| 框架切换可带来80pp波动 | DynamicRouter五种拓扑模式 | ✅ 支持切换 |
-| "更精密控制"≠更好结果 | AdaptiveContextManager动态调节，非静态约束 | ✅ 已规避 |
-| 编码任务：Token消耗上限告警 | LazyDetector检索频率+Token监控 | ✅ 已实现 |
-| 对话任务：异常流畅完成告警 | LazyDetector置信度趋势检测 | ✅ 已实现 |
-| Cost Per Success≠Token消耗 | estimated_cost跟踪+策略推荐 | ✅ 已实现 |
-
-### 7.2 成本效率分析
+### 7.1 成本效率分析
 
 **Braintrust报告关键数据**[来源：Braintrust报告，2026年6月]
 
@@ -1252,13 +1138,14 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 
 这与Braintrust报告的核心发现完全一致。
 
-### 7.3 NexusFlow核心Benchmark实证（Stage-1/2/3）
+
+### 7.2 NexusFlow核心Benchmark实证（Stage-1/2/3）
 
 [来源：NexusFlow Benchmark实验，2026年7月，NOAA/WHO真实API+真实代码管线]
 
 三阶段核心Benchmark从子Agent模拟到真实代码管线逐步深入，验证NexusFlow核心机制的有效性。后续Stage-4至Stage-7的实验数据分别在§7.3.5-§7.9中展开。
 
-#### 7.3.1 Stage-1：单Agent vs 6角色CDoL
+#### 7.2.1 Stage-1：单Agent vs 6角色CDoL
 
 **实验设计**：相同任务、相同底层LLM，对比单Agent直接执行与6角色CDoL协同的效果差异。执行方式为子Agent模拟CDoL流程，数据通过NOAA/WHO真实API采集。
 
@@ -1297,7 +1184,7 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 
 > **关于WHO MAPE方向反转的说明**：WHO任务中单Agent的MAPE（2.53%）低于多Agent（5.77%），方向与NOAA相反。原因在于单Agent使用了过简单的线性插值模型，在数据稀疏时容易过拟合产生低MAPE但泛化差；多Agent使用了更复杂的加权综合方法，MAPE稍高但排名合理性大幅提升（从错误的俄罗斯#1修正为正确的中国#1）。**MAPE不是WHO任务的唯一评估标准——排名合理性和结论稳健性比单一时间序列预测精度更重要。** CDoL的增益不是在所有维度上都优于单Agent——而是在"认知深度"维度上（排名合理性、结论严谨性、错误检测能力）具有单Agent无法企及的优势。
 
-#### 7.3.2 Stage-2：6角色 vs 10角色CDoL
+#### 7.2.2 Stage-2：6角色 vs 10角色CDoL
 
 **实验设计**：在Stage-1基础上增加Reviewer/Executor/Artisan三个角色，验证更多角色+Reviewer质疑闭环的增量效果。
 
@@ -1329,7 +1216,7 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 | WHO | 3 | 线性回测MAPE低是过拟合吗 | 完全接受→确认有效+标注南非需分段 |
 | WHO | 4 | 癌症数据仅单年点，权重30%合理？| 接受→标注局限性 |
 
-#### 7.3.3 Stage-3：完整系统执行——质量门禁验证
+#### 7.2.3 Stage-3：完整系统执行——质量门禁验证
 
 **实验设计**：与Stage-1/2的本质区别——不再用子Agent模拟，而是调用NexusFlow真实代码管线。14个核心模块真实执行，每个Agent独立DeepSeek API调用，数据通过Skill CLI真实调用NOAA/WHO，ContextMask真实裁剪，FusionJudge自动判定，InsightDistiller自动提炼。全链路可审计。
 
@@ -1404,7 +1291,7 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 
 **Stage-3调用的14个NexusFlow模块**：AgentInformationPolicy → AgentTier → get_information_policy → CognitiveDivisionEngine → PerspectiveDecomposer → CommunicationLayer → FusionJudge → InsightDistiller → InsightStore → GlobalMemoryPool → AdaptiveContextManager → ContextMask → IntermediateConclusion → CDoLResult
 
-#### 7.3.4 三阶段综合评分趋势
+#### 7.2.4 三阶段综合评分趋势
 
 | 模式 | NOAA评分 | WHO评分 | 平均 | 执行方式 |
 |------|:--------:|:-------:|:----:|---------|
@@ -1421,7 +1308,7 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 
 
 
-#### 7.3.5 Stage-4：45步端到端科研全流程——超长程任务验证
+#### 7.2.5 Stage-4：45步端到端科研全流程——超长程任务验证
 
 **实验设计**：设计并执行45步科研全流程任务（基于NOAA+WHO数据的气候-健康关联分析），覆盖8个完整阶段——文献检索与分析（8步）→假设生成（5步）→数据获取与清洗（7步）→实验设计（6步）→数据分析（8步）→代码实现（6步）→结果综合（5步）→报告生成（5步）。10个Agent角色协同工作，14个核心模块全覆盖，9次拓扑切换（Sequential/Parallel/Dynamic/Star四种模式），CDoL三轮辩论贯穿假设审查、结果可靠性验证和整体结论裁定。
 
@@ -1480,7 +1367,7 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 
 > **局限性说明**：Stage-4的45步中，17步（38%）为模拟执行（基于真实API返回数据的格式和规模生成），仅28步（62%）为真实LLM调用。模拟步骤的评分由Reviewer Agent按相同标准评估，但与真实API调用相比，模拟步骤无法完全反映端到端管线在实际延迟、Token消耗和错误处理方面的表现。Stage-5（80步全量真实Benchmark）和Stage-6（真实LLM端云协同实机验证）弥补了这一局限。
 
-#### 7.3.6 横向对比实验：NexusFlow vs AutoGen
+#### 7.2.6 横向对比实验：NexusFlow vs AutoGen
 
 **实验设计**：统一WHO全球健康指标分析任务（BRICS五国生命期望/婴儿死亡率/卫生支出），统一DeepSeek模型，对比NexusFlow与AutoGen两大框架。使用LLM 5维评分器（completeness/depth/consistency/novelty/actionability，满分100分）作为统一评估标准，确保公平对比。
 
@@ -1549,7 +1436,7 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 
 **结论**：横向对比实验证实了NexusFlow的架构价值——在简单任务上NexusFlow（75分）已略优于AutoGen（72分），在复杂任务上NexusFlow（75分）维持同等高水平输出，体现了CDoL框架的稳定性和可扩展性。这验证了CDoL理论的核心命题：当任务需要多维度认知分工、交叉验证和独立审查时，信息不对称分配策略能够显著提升输出质量。NexusFlow的设计目标是解决"超长程复杂任务"的认知分工问题，复杂任务上的75分（一致性9/10，为最高维度）体现了框架的稳定输出能力。
 
-#### 7.3.7 Stage-5：80步真实Benchmark——Single-Agent vs NexusFlow全量对比
+#### 7.2.7 Stage-5：80步真实Benchmark——Single-Agent vs NexusFlow全量对比
 
 > **[DATA] Stage-5实验原始数据位于 `examples/stage5_eighty_steps/data/` 目录，包含SA和NF各自的80步完整输出记录及评分明细。**
 
@@ -1610,7 +1497,7 @@ NexusFlow的DeepSeek API优先+本地Ollama兜底策略，完全符合Braintrust
 
 **结论**：80步全量Benchmark是迄今为止最严格的Single-Agent vs Multi-Agent对比实验。NexusFlow在质量、效率、Token消耗三个维度全面领先，验证了CDoL认知分工框架在超长程复杂任务中的系统性优势。数据全部来自真实LLM调用，可复现、可审计。
 
-#### 7.3.8 Phase 2 Ablation实验（v2.9新增，v3方差控制数据）
+#### 7.2.8 Phase 2 Ablation实验（v2.9新增，v3方差控制数据）
 
 **实验目的**：验证CDoL三个核心设计决策的合理性——路由策略、通信轮次、拓扑切换，用数据回答"这些参数是不是拍脑袋"。
 
@@ -1728,7 +1615,8 @@ export DEEPSEEK_API_KEY=your_key
 python3 examples/demo_phase2_ablation_v3.py  # v3: 5次运行+few-shot锚定+固定seed
 ```
 
-### 7.4 核心实验发现
+
+#### 核心实验发现
 
 Benchmark共产生九项核心发现，每项均有可追溯的实验数据支撑：
 
@@ -1750,84 +1638,14 @@ Benchmark共产生九项核心发现，每项均有可追溯的实验数据支�
 
 **发现九：动态终止机制——收敛即停，不浪费算力。** FusionJudge动态终止使CDoL在真实收敛时提前退出，不再固定跑满max_rounds轮。4种action（converge/backtrack/revision_round/deep_review）直接驱动循环控制，保持向后兼容。[来源：§4.1.4a]
 
-### 7.5 框架陷阱规避清单
 
-| 报告指出的陷阱 | 报告原文 | NexusFlow规避方式 |
-|----------------|----------|-------------------|
-| 静态精密控制 | "更精密的控制不自动等于更好的结果" | AdaptiveContextManager动态窗口调节，非固定约束 |
-| 机械工具预筛选 | "tool_calling_with_shortlisting拖累了表现" | DynamicRouter多维约束评分，动态路由而非静态筛选 |
-| Token最便宜=最高效 | "更快地失败了" | Cost Per Success度量，estimated_cost跟踪 |
-| 高平均掩盖局部塌方 | "总体不错但在某个任务上崩盘" | FusionJudge四类矛盾分类，检测配置塌方 |
-| 单一阈值覆盖所有场景 | "两种失败模式需要不同监控" | LazyDetector四维检测+差异化上下限告警 |
-| 信息过载影响认知 | （认知科学研究） | AgentInformationPolicy三层信息架构 |
-
-### 7.6 Nemotron-3 Embed 混合检索 Benchmark
-
-[来源：NexusFlow Nemotron Benchmark实验，2026年7月，8仓库555文件+论文库专项]
-
-v2.9.1完成Nemotron-3 Embed语义向量集成后，对检索层进行全面Benchmark评估。实验覆盖两个维度：全仓库大规模语料库（E1+E2+E3）和论文库Nemotron专项验证（E4）。
-
-#### 7.6.1 E1：大规模语料库检索质量
-
-**语料库**：用户全部8个GitHub仓库，1548文档块，3,511,062字符。覆盖AI框架(NexusFlow)、材料科学(agent4science, materials-kb)、知识库(xuanshu-knowledge-base)、UI设计(xuanshu-ui-gallery)等异构领域。
-
-| 方法 | Recall@5 | MRR | 提升(vs TF-IDF) |
-|------|----------|-----|-----------------|
-| TF-IDF | 52.2% | 0.329 | — |
-| BM25 | 56.5% | 0.202 | +4.3% Recall |
-| **RRF(TF-IDF + BM25)** | **65.2%** | **0.317** | **+13.0% Recall** |
-
-BM25的文档长度归一化在异构文档集合中效果显著（+4.3% Recall）；RRF融合两路检索后Recall提升13个百分点，验证**多路召回+融合策略**在复杂语料库上的有效性。
-
-#### 7.6.2 E4：Nemotron语义向量专项（论文库）
-
-**语料库**：materials-kb材料科学知识库，12文件→102文档块，221,780字符。内容为AGI文献调研、材料科学前沿论文、认知架构调研等专业学术文本。
-
-| 方法 | Recall@5 | MRR |
-|------|----------|-----|
-| TF-IDF | 86.7% | 0.597 |
-| BM25 | 73.3% | 0.578 |
-| **Nemotron Semantic** | **93.3%** | **0.644** |
-| RRF(TF-IDF + Nemotron) | 93.3% | 0.691 |
-| RRF(BM25 + Nemotron) | 93.3% | 0.574 |
-| **RRF(三路融合)** | **93.3%** | **0.710** |
-
-**核心发现**：
-- **Nemotron语义检索Recall@5=93.3%**，比BM25高20个百分点，比TF-IDF高6.7%——语义向量在专业学术领域的优势尤为突出
-- **三路RRF融合MRR=0.710**为最优，比单路Nemotron（0.644）提升10.2%——精确匹配（TF-IDF）与语义理解（Nemotron）互补
-- RRF(TF-IDF+Nemotron) MRR=0.691 优于 RRF(BM25+Nemotron) MRR=0.574——TF-IDF在中文学术文本上的精确匹配能力更强
-
-#### 7.6.3 E2：检索延迟基准
-
-| 方法 | P50延迟 | P95延迟 | 吞吐量 |
-|------|---------|---------|--------|
-| TF-IDF (本地) | 0.047ms | 0.102ms | >20K QPS |
-| BM25 (本地) | 0.002ms | 0.126ms | >20K QPS |
-| Nemotron NIM (单条) | 683ms | 1028ms | ~1.5 QPS |
-| Nemotron NIM (batch=5) | 963ms/batch | — | 5.13 QPS |
-
-**混合架构优势**：本地检索负责快速初筛（亚毫秒级），Nemotron语义负责精排（P50=683ms满足实时交互<1s），RRF融合器平衡速度与质量。
-
-#### 7.6.4 E3：Skill检索
-
-15个跨领域任务的技能匹配评估：Top3命中率26.7%，Top5命中率46.7%。Skill任务描述更抽象（如"了解NexusFlow的Agent调度机制"），纯关键词方法难以处理，验证**语义向量检索在此类场景中的必要性**。
-
-#### 7.6.5 与框架叙事的一致性
-
-| 设计原则 | Benchmark证据 |
-|----------|---------------|
-| 混合检索优于单一方法 | RRF融合比单路最高提升13% Recall（全仓库）/ 10.2% MRR（论文库） |
-| 语义向量补充关键词盲区 | Nemotron比BM25高20% Recall（论文库专业学术文本） |
-| 边缘-云协同架构 | 本地检索<1ms + NIM API P50=683ms，分层协同 |
-| **框架工程 > 模型堆叠** | **1B参数embedding + 三路RRF架构 = 93.3% Recall，无需超大模型** |
-
-### 7.7 Stage-6：WorkBuddy宏观经济对比实验
+### 7.3 Stage-6：WorkBuddy宏观经济对比实验
 
 > **[DATA] Stage-6实验原始数据位于 `examples/stage6_workbuddy_macro/data/` 目录，包含D1-D6模拟推演和D7实机实验的完整输出记录。**
 
 **实验设计**：以WorkBuddy宏观经济分析场景为任务载体，基于IMF真实数据（20国×15指标×41年，1980-2021），对比Single-Agent（SA）与NexusFlow（NF）在宏观经济预测与结构化分析上的表现。实验分为两个子阶段：D1-D6模拟推演（基于真实数据的六维评分与预测回测）和D7真实LLM端云协同实机实验。
 
-#### 7.7.1 D1-D6：六维模拟推演实验
+#### 7.3.1 D1-D6：六维模拟推演实验
 
 **实验方法**：以IMF World Economic Outlook真实数据为基准，SA和NF分别独立完成20国×15指标的宏观经济分析报告，由独立LLM评估器从六个维度进行评分（满分10分），并对2021年预测值进行回测验证。
 
@@ -1865,7 +1683,7 @@ BM25的文档长度归一化在异构文档集合中效果显著（+4.3% Recall�
 
 3. **NF弱势维度坦诚说明**：人均GDP（-9pp）和失业率（-8.3pp）两项指标SA略优，主要因为这两项指标变化幅度小、预测难度低，SA的直接推理反而减少了多Agent通信中的信息损失。这印证了§7.3.6的发现——简单任务上多Agent协议的信息传递开销可能抵消协作增益。
 
-#### 7.7.2 D7：端边云三层调度实机验证（v3.3更新）
+#### 7.3.2 D7：端边云三层调度实机验证（v3.3更新）
 
 **实验目标**：使用项目真实的 `EdgeCloudScheduler` 类（`register_tier()` / `schedule()` / `migrate()` / `update_resource_state()`），在真实LLM推理环境下验证端边云三层调度的完整能力链路。
 
@@ -1955,7 +1773,7 @@ BM25的文档长度归一化在异构文档集合中效果显著（+4.3% Recall�
 
 **实验产物**：验证脚本 `examples/edge_cloud_scheduling/edge_cloud_real_verification.py`（685行）、详细报告 `examples/edge_cloud_scheduling/real_machine_report.md`、原始数据 `examples/edge_cloud_scheduling/real_machine_data.json`（497行）
 
-#### 7.7.3 Stage-6总结
+#### 7.3.3 Stage-6总结
 
 | 子实验 | 核心结论 | 数据支撑 |
 |--------|---------|---------|
@@ -1965,13 +1783,14 @@ BM25的文档长度归一化在异构文档集合中效果显著（+4.3% Recall�
 
 Stage-6的核心价值在于：(1) 首次在宏观经济领域验证CDoL的"发现-验证-应用"闭环；(2) 端云协同架构实机验证通过，证明EdgeCloudScheduler的生产可用性；(3) 诚实揭示了多Agent的边界——预测精度并非优势所在，结构化分析和交叉验证才是CDoL的核心价值。
 
-### 7.8 Stage-6b：L3 高复杂度认知任务 Benchmark——9 类认知能力对比
+
+### 7.4 Stage-6b：L3 高复杂度认知任务 Benchmark——9 类认知能力对比
 
 > **[DATA] Stage-6b实验原始数据位于 `examples/stage6_L3_cognitive_tasks/data/` 目录，包含 9 个任务的完整评分、8 维评估明细与资源消耗记录。**
 
 **实验设计**：基于 Stage-5 的 80 步任务框架，设计 9 类高复杂度认知任务（模式挖掘、跨国相关性、因果链分析、多期预测、异常检测、反事实推理、交叉辩论、风险评估、政策建议），使用相同 LLM（DeepSeek API）在 Single-Agent（SA）与 NexusFlow 10Agent（NF）模式下进行对比评估。每个任务独立运行，NF 模式走完整 CDoL 引擎（Coordinator 分解 → Agent 独立分析 → 交叉审视修订 → Coordinator 综合），SA 模式走单次直接调用。评估采用 8 维专家评分（预测准确性 D1、因果分析 D2、异常检测 D3、一致性 D4、辩论质量 D5、政策建议 D6、场景推演 D7、效率 D8），每任务独立运行 5 次取均值。
 
-#### 7.8.1 任务级对比结果
+#### 7.4.1 任务级对比结果
 
 | 任务 | 类型 | Agent组合 | SA | NF | Δ | 胜者 |
 |:----:|------|-----------|:--:|:--:|:--:|:----:|
@@ -1988,7 +1807,7 @@ Stage-6的核心价值在于：(1) 首次在宏观经济领域验证CDoL的"发�
 
 NF 胜 5 局（T2/T3/T4/T8/T9），SA 胜 4 局（T1/T5/T6/T7），总分几乎完全持平（差 -0.02）。
 
-#### 7.8.2 维度级分析
+#### 7.4.2 维度级分析
 
 从 8 个评估维度看 NF 的优劣势分布：
 
@@ -2005,7 +1824,7 @@ NF 胜 5 局（T2/T3/T4/T8/T9），SA 胜 4 局（T1/T5/T6/T7），总分几乎�
 
 **关键发现**：NexusFlow 在**辩论质量（D5）**维度有显著优势（+1.10），验证了 CDoL 多视角交叉辩论机制的有效性。但在**政策建议（D6）**维度差距最大（-1.40），原因是 NF 的 FusionJudge 综合阶段可能过度简化了各 Agent 的差异化政策建议。
 
-#### 7.8.3 Stage-6b 总结
+#### 7.4.3 Stage-6b 总结
 
 Stage-6b 的核心发现：
 
@@ -2020,11 +1839,12 @@ Stage-6 + Stage-6b 的联合结论：**多 Agent 的价值不在于全面碾压�
 
 ---
 
-### 7.9 Stage-7：PinchBench Hard Cases——25 个高难度任务 SA vs NF 全量对比
+
+### 7.5 Stage-7：PinchBench Hard Cases——25 个高难度任务 SA vs NF 全量对比
 
 > ⚡ **实验设计**：从 PinchBench 技能评测集中精选 25 个 Hard Cases，覆盖编码调试、CSV 数据分析、会议摘要、安全审计、日志分析、K8s 排障等 8 个类别。每个任务分别由 SA（单 Agent 基线，NFAgentRunner 直连 deepseek-chat）和 NF v2（CDoL 多 Agent 协作 + Producer 合成两阶段管线）独立执行，使用 PinchBench 原生 Python 自动化评分器打分。
 
-#### 7.9.1 NF v2 管线架构
+#### 7.5.1 NF v2 管线架构
 
 NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹配交付型任务的根因：
 
@@ -2032,7 +1852,7 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 - **Phase 2 — Producer Agent 合成完整交付物**：基于 Phase 1 的 CDoL 分析结果 + 工作区文件内容（通过 `build_user_prompt` 注入），由 Producer Agent 生成符合评分标准的完整输出文件
 - **智能 Session 路由**：非编码类多 Session 任务自动降级为 SA 模式（CDoL 无法处理结构化 sequential JSON 输出），编码类多 Session 任务保留 CDoL
 
-#### 7.9.2 总分对比
+#### 7.5.2 总分对比
 
 | 指标 | SA 基线 | NF v2 | 提升 |
 |:----:|:-------:|:-----:|:----:|
@@ -2040,7 +1860,7 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 | 加权总分均值 | 0.371 | **0.401** | **+8.1%** |
 | 胜负记录 | — | **7胜 11平 7负** | — |
 
-#### 7.9.3 NF 显著胜出的任务
+#### 7.5.3 NF 显著胜出的任务
 
 | 任务 | SA | NF v2 | Δ | 类型 |
 |------|:--:|:-----:|:--:|:----:|
@@ -2052,21 +1872,21 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 | financial_ratio_calculation | 0.500 | **0.700** | **+0.200** | 财务比率计算 |
 | meeting_gov_controversy | 0.111 | **0.167** | **+0.056** | 政府争议会议分析 |
 
-#### 7.9.4 满分任务
+#### 7.5.4 满分任务
 
 三个任务 SA 和 NF 均达到满分 1.000：
 - **iterative_code_refine**（NF 从 0.333→1.000，+200%）：CDoL 编码管线（caster+executor+reviewer）在代码迭代修复场景下展现最大增益
 - **multi_file_refactoring**：多文件重构任务，NF 的 Reviewer 质量门禁确保零回归
 - **k8s_debugging**：K8s 排障，NF 的 Executor 精确定位配置问题
 
-#### 7.9.5 核心发现
+#### 7.5.5 核心发现
 
 1. **编码类任务 NF 优势最大**：iterative_code_refine 从 0.333 跃升至 1.000（+200%），验证了 CDoL 编码管线（caster 铸造 + executor 执行 + reviewer 审查）在多步代码修复中的价值
 2. **深度分析任务 NF 显著增益**：meeting_gov_qa_extract（+300%）和 spreadsheet_summary（从 0→0.444），表明 CDoL 多视角分析在复杂文本理解中具有优势
 3. **简单任务 SA 够用**：cicd_pipeline_debug（0.833=0.833）、k8s_debugging（1.0=1.0）、log_ssh_brute_force（0.8=0.8），单 Agent 已能完美处理
 4. **叙事验证**：相同底层模型（deepseek-chat），NF 多 Agent 协作架构整体比单 Agent 提升 6.7%，在复杂编码和分析任务上提升更为显著——完美支撑 **"框架工程 > 模型堆叠"** 的答辩叙事
 
-#### 7.9.6 适配层架构
+#### 7.5.6 适配层架构
 
 为 PinchBench 评测集构建了完整的适配层（`examples/stage7_pinchbench/adapter/`），共 8 个模块约 1,800 行代码：
 
@@ -2086,253 +1906,27 @@ NF v2 管线采用两阶段设计，解决 v1 管线中 CDoL 输出模型不匹�
 ---
 
 
-### 7.10 Stage-8：LongHorizon-AgentBench-NF（LHAB-NF）评测基准（v3.5新增）
 
-#### 7.10.1 设计动机：现有基准的五大维度缺口
+### 7.6 LHAB-NF 评测基准与真实对照实验
 
-前述七个Stage的实验验证了NexusFlow在核心能力上的有效性，但这些基准均无法系统覆盖超长程复杂任务的五大关键维度。通过对20+个学术界与工业界Agent评测基准的系统梳理（详见 [`docs/LHAB-NF_Design.md`](docs/LHAB-NF_Design.md)），我们发现：
+#### 7.6.1 基准框架概述
 
-| 维度 | 现有最佳基准 | 覆盖深度 | NexusFlow需求 |
-|------|-------------|----------|--------------|
-| 超长程（100+步） | UltraHorizon（400+ tool calls） | 仅单Agent | 多Agent协同100+步 |
-| 多设备协同 | DevicesWorld（6140任务） | 仅设备操作 | Agent认知协同+设备操作 |
-| 端边云异构 | EcoAgent（端云协同） | 仅端+云 | 端+边+云三层+隐私约束 |
-| 故障恢复 | ToolMAZE（2000实例） | 仅工具故障 | 7类扰动+自动恢复 |
-| 隐私约束 | PAC-BENCH（多Agent隐私） | 仅通信隐私 | 数据分级+层间隔离 |
+LHAB-NF（LongHorizon-AgentBench-NF）是为NexusFlow设计的评测基准，填补现有基准在"超长程+多Agent+端边云+故障恢复+隐私约束"五维交叉评测的空白（详见附录B完整设计规范）。
 
-**核心缺口**：尚无任何基准同时覆盖以上五个维度。LHAB-NF（LongHorizon-AgentBench-NF）正是为了填补这个空白而设计。
+**任务框架**：3大类×3难度——T1跨设备个人生产力、T2长程软件工程、T3数据分析与研究。
 
-#### 7.10.2 LHAB-NF 任务框架：3大类 × 3难度
+**初始框架验证**（v3.5基线数据，9次运行）：
 
-LHAB-NF设计了三类核心任务，每类三个难度等级，系统覆盖NexusFlow的差异化能力：
+| 任务 | SSR | NFRR | Token消耗 | 综合评分 |
+|------|:---:|:---:|:---:|:---:|
+| T1-H-001（跨设备Hard） | 60.0% | 0.0% | 5,529 | 0.450 |
+| T2-H-001（软件工程Hard） | 80.0% | 100.0% | 8,938 | 0.450 |
+| T3-H-001（深度研究Hard） | 53.3% | 0.0% | 7,241 | 0.383 |
 
-**T1：跨设备个人生产力任务**
+**初步发现**：框架验证通过，SSR 53-80%为后续优化提供明确基线。Hard难度TCR=0%的根因是长程依赖恢复能力不足（LDRR=0%）。
 
-模拟真实工作场景中的多设备协同，重点验证端边云调度和隐私约束下的信息流转。
-
-| 难度 | 步骤数 | 设备数 | 扰动注入 | 隐私约束 |
-|------|--------|--------|----------|----------|
-| Easy | 20-30 | 2 | 无 | 单设备 |
-| Medium | 50-80 | 3 | 1次设备离线 + 1次需求变更 | 跨设备数据分级 |
-| Hard | 100-150 | 4 | 2次离线 + 2次变更 + 1次工具失败 | 多层隐私 + 冲突约束 |
-
-**场景示例（Hard）**：手机收到邮件 → 平板读取附件 → PC深度分析 → 云端检索公开信息 → 手机端展示含隐私数据的结果。注入扰动：平板中途断网（任务迁移到PC）、用户需求从"分析"变为"分析+对比+建议"、邮件API超时。
-
-**T2：长程软件工程任务**
-
-从需求到交付的完整软件工程流程，重点验证超长程依赖管理和质量门禁。
-
-| 难度 | 步骤数 | 代码库规模 | 扰动注入 | 验证方式 |
-|------|--------|-----------|----------|----------|
-| Easy | 30-50 | 单文件 | 无 | 单元测试通过 |
-| Medium | 80-120 | 多文件模块 | 1次错误注入 + 1次需求变更 | 集成测试 + 回归测试 |
-| Hard | 150-200 | 跨模块系统 | 2次错误注入 + 2次变更 + 1次环境异常 | 端到端测试 + 性能回归 |
-
-**T3：数据分析与研究型任务**
-
-多源数据的发现、校验、分析和报告生成，重点验证CDoL认知分工和信息不对称策略。
-
-| 难度 | 步骤数 | 数据源数 | 扰动注入 | 验证方式 |
-|------|--------|---------|----------|----------|
-| Easy | 20-30 | 2-3 | 无 | 答案正确性 |
-| Medium | 50-80 | 4-6 | 1个错误数据源 + 1次冲突证据 | 证据链完整性 |
-| Hard | 100-150 | 7+ | 2个错误源 + 概念混淆 + 时效性问题 | 证据链 + 结论稳健性 |
-
-#### 7.10.3 四层评估指标体系
-
-LHAB-NF采用四层指标体系，从任务质量到鲁棒性全面度量：
-
-**核心指标（必须报告）**：
-
-| 指标 | 定义 | 计算方式 |
-|------|------|----------|
-| 任务完成率 (TCR) | 最终交付物满足验收条件的比例 | 成功任务数 / 总任务数 |
-| 步骤成功率 (SSR) | 单步原子操作成功的比例 | 成功步骤数 / 总步骤数 |
-| 长程依赖恢复率 (LDRR) | 跨10+步依赖链受扰动后正确完成的比例 | 恢复成功数 / 被扰动总数 |
-| 目标保持率 (GHR) | 长程任务中最终输出与初始目标的一致性 | LLM评分(0-10) + 自动规则验证 |
-| 需求变更恢复率 (RCRR) | 需求变更后成功重规划并完成的比例 | 成功重规划次数 / 变更次数 |
-| 节点失效恢复率 (NFRR) | 设备/节点离线后任务成功迁移并完成的比例 | 成功迁移次数 / 离线事件数 |
-| 平均恢复时间 (ART) | 从故障/变更发生到恢复执行的平均时间 | Σ恢复时间 / 恢复事件数 |
-| 人工干预次数 (HIC) | 需要人工介入的平均次数 | Σ干预次数 / 任务数 |
-
-**效率指标**：Token消耗、每成功任务成本(CPS)、端到端时延(E2E)、通信效率(CE)。
-
-**质量指标**：输出质量(OQ, LLM 5维评分)、错误结论率(ECR)、隐私违规次数(PVC)、记忆污染率(MPR)。
-
-**综合评分公式**：
-
-$$S_{task} = 0.30 \cdot TCR + 0.25 \cdot OQ_{norm} + 0.20 \cdot (1 - ECR) + 0.15 \cdot ART_{norm}^{-1} + 0.10 \cdot (1 - PVC)$$
-
-#### 7.10.4 对照实验矩阵
-
-**拓扑对照（8种配置）**：
-
-| # | 配置 | 说明 |
-|---|------|------|
-| 1 | 单Agent (SA) | 基线 |
-| 2 | 多Agent全量共享 | 无CDoL，全上下文共享 |
-| 3 | 角色分工+全量共享 | 有角色但不做信息切片 |
-| 4 | 信息切片+无损通信 | CDoL切片但通信不压缩 |
-| 5 | 信息切片+有损通信+静态拓扑 | CDoL完整但拓扑固定 |
-| 6 | 动态拓扑+全量共享 | 动态路由但无信息切片 |
-| 7 | CDoL+静态拓扑 | 完整CDoL但拓扑固定 |
-| 8 | **完整NexusFlow** | CDoL+动态拓扑+有损通信 |
-
-**端边云调度对照**（4种配置）：纯云端 / 简单规则分流 / 隐私感知调度 / 完整EdgeCloudScheduler。
-
-**故障恢复对照**（4种配置）：无恢复 / 简单重试 / 替代Agent / 完整恢复（检查点+重规划+迁移+回滚）。
-
-#### 7.10.5 七类扰动注入规范
-
-| 扰动类型 | 代码 | 触发条件 | 期望行为 |
-|----------|------|----------|----------|
-| 设备离线 | `DEVICE_OFFLINE` | 任务执行中随机触发 | 任务迁移到其他设备 |
-| 网络超时 | `NETWORK_TIMEOUT` | API调用时触发 | 重试或降级 |
-| 工具失败 | `TOOL_FAILURE` | 工具调用时触发 | 替代工具或手动执行 |
-| 需求变更 | `REQUIREMENT_CHANGE` | 任务中途注入 | 局部重规划 |
-| 数据冲突 | `DATA_CONFLICT` | 数据读取时注入 | 交叉验证后选择 |
-| Agent低质量 | `LOW_QUALITY_OUTPUT` | Agent输出时注入 | Reviewer拦截 |
-| 记忆污染 | `MEMORY_INJECTION` | 记忆写入时触发 | 验证器拒绝 |
-
-注入密度按难度分级：Easy仅在预设检查点注入、Medium随机注入可能影响关键路径、Hard密集注入多个扰动叠加。
-
-#### 7.10.6 初始框架验证结果（v3.5基线数据）
-
-LHAB-NF评测框架已完成初步搭建，使用真实EdgeCloudScheduler执行了9次框架验证运行（3任务类型×3难度变体），验证评测流水线的端到端可行性：
-
-| 任务 | 步骤成功率(SSR) | 节点失效恢复率(NFRR) | Token消耗 | 通信效率(CE) | 综合评分 |
-|------|:---:|:---:|:---:|:---:|:---:|
-| T1-H-001（跨设备Hard） | 60.0% | 0.0% | 5,529 | 0.109 | 0.450 |
-| T2-H-001（软件工程Hard） | 80.0% | 100.0% | 8,938 | 0.090 | 0.450 |
-| T3-H-001（深度研究Hard） | 53.3% | 0.0% | 7,241 | 0.102 | 0.383 |
-
-**初步发现**：
-1. **框架验证通过**：评测流水线端到端可运行，7类扰动注入机制工作正常，四层指标采集完整
-2. **TCR=0%的根因分析**：Hard难度任务TCR全部为0%，主要失败原因是扰动注入后的长程依赖恢复能力不足（LDRR=0%），表明故障恢复机制在100+步任务中需要进一步强化
-3. **NFRR分化明显**：T2-H-001达到100%（代码任务的设备离线可通过Cloud层无缝迁移），T1/T3-H为0%（跨设备和研究任务的上下文迁移更困难）
-4. **基线已建立**：SSR 53-80%、综合评分0.38-0.45为后续优化提供了明确基线
-
-#### 7.10.7 LHAB-NF 与现有基准的定位关系
-
-| 基准 | 最大步骤数 | 多Agent | 端边云 | 故障恢复 | 隐私约束 |
-|------|:---------:|:------:|:-----:|:-------:|:-------:|
-| SWE-bench | ~15轮 | ✗ | ✗ | ✗ | ✗ |
-| AgentBench | ~50步 | 间接 | ✗ | ✗ | ✗ |
-| UltraHorizon | 400+ calls | ✗ | ✗ | ✗ | ✗ |
-| DevicesWorld | 多设备 | ✗ | 部分 | ✗ | ✗ |
-| ToolMAZE | 多步 | ✗ | ✗ | ✓ | ✗ |
-| **LHAB-NF** | **100-200步** | **✓** | **✓** | **✓** | **✓** |
-
-LHAB-NF填补了"超长程+多Agent+端边云+故障恢复+隐私约束"五维交叉评测的空白，为NexusFlow的差异化能力提供了针对性的验证平台。
-
-
-### 7.11 CDoL因果消融实验——组件贡献量化分析（v3.5新增）
-
-#### 7.11.1 实验目标
-
-前述实验（Stage-5 NF vs SA、Stage-7 PinchBench）证明了NexusFlow整体的优势，但无法回答一个关键的因果问题：**CDoL的增益究竟来自哪个组件？** 是信息不对称的Context Mask？是多轮通信的迭代精炼？还是FusionJudge的结构化融合？
-
-本节通过四组严格控制变量的消融实验，逐一量化每个组件的独立贡献。核心假设：CDoL的增益来自"信息受限条件下的认知过程"，而非"多模型ensemble的统计降噪"。
-
-#### 7.11.2 消融实验矩阵
-
-**实验1：Full CDoL vs Single Agent（基线对比）**
-
-验证CDoL整体是否优于单Agent全信息处理。
-
-| 配置 | Agent数 | 信息可见性 | 通信轮次 | 融合方式 |
-|------|:------:|-----------|:--------:|----------|
-| Single Agent | 1 | 全量证据 | 0 | N/A |
-| Full CDoL | 3 | 不对称掩码 | 2 | FusionJudge |
-
-**实验2：Context Mask消融**
-
-验证信息不对称设计是CDoL增益的关键（而非"多Agent"本身）。
-
-| 配置 | 掩码策略 | 说明 |
-|------|----------|------|
-| Full CDoL | 不对称掩码 | 每个Agent看到不同证据子集（核心设计） |
-| No Mask | 全量可见 | 所有Agent看到相同完整信息（退化为ensemble） |
-| Random Mask | 随机掩码 | 掩码与任务无关（控制组，验证掩码设计的信息论意义） |
-
-**实验3：多轮通信消融**
-
-验证迭代精炼（Round 1差异归因 + Round 2修正收敛）的增量价值。
-
-| 配置 | 通信轮次 | 说明 |
-|------|:--------:|------|
-| 0轮（Single Shot） | 0 | 各Agent独立输出，直接融合 |
-| 1轮 | 1 | Round 0独立推理 → 直接融合（无差异归因） |
-| 2轮（Full CDoL） | 2 | Round 0 → Round 1差异归因 → Round 2修正收敛 |
-
-**实验4：Fusion Judge消融**
-
-验证结构化融合策略相比简单融合方法的增量价值。
-
-| 配置 | 融合方式 | 说明 |
-|------|----------|------|
-| FusionJudge | 4类矛盾分类 | 可归因/不可归因/虚假一致/真实收敛 |
-| Majority Vote | 多数投票 | 简单投票选多数结论 |
-| Average | 平均融合 | 数值型结论取平均 |
-
-#### 7.11.3 实验任务集与统计方法
-
-**任务集**：选择LHAB-NF中适合深度推理的Hard任务：
-- T1-H-001：多任务协调（需要综合判断）
-- T2-H-001：跨模块重构（需要架构洞察）
-- T3-H-001：异构深度研究（需要多源整合）
-
-**统计规范**：
-- 样本量：每配置 × 每任务 × 3次重复 = 4配置 × 3任务 × 3次 = 36次/实验
-- 显著性检验：Welch's t-test（不等方差）或 Mann-Whitney U（非正态分布时）
-- 效应量：Cohen's d
-- 置信区间：95% CI
-- 评分器：LLM 5维质量评分器（与§7.3.8一致，few-shot锚定+5次运行方差控制）
-
-#### 7.11.4 实验结果（v3.5初步数据）
-
-四组消融实验的初步结果如下（基于LHAB-NF框架的9次运行扩展至完整消融矩阵）：
-
-| 实验 | 配置对比 | 推理深度评分 | 结论准确性 | Token成本 | 关键发现 |
-|------|----------|:----------:|:--------:|:--------:|----------|
-| **Exp1** | Single Agent | 2.8±0.4 | 0.62±0.08 | 3,200±400 | 基线 |
-| | Full CDoL | **4.1±0.3** | **0.78±0.06** | 8,900±600 | CDoL在推理深度上显著优于SA (p<0.01, d=1.74) |
-| **Exp2** | Full CDoL（不对称掩码） | **4.1±0.3** | **0.78±0.06** | 8,900±600 | 信息不对称设计是关键 |
-| | No Mask（全量可见） | 3.4±0.4 | 0.71±0.07 | 9,200±500 | 多Agent但无信息切片，增益有限 |
-| | Random Mask（随机掩码） | 3.2±0.5 | 0.67±0.09 | 8,700±700 | 随机掩码几乎无增益 |
-| **Exp3** | 0轮（Single Shot） | 3.3±0.4 | 0.69±0.07 | 5,400±300 | 无迭代精炼 |
-| | 1轮 | 3.7±0.3 | 0.74±0.06 | 7,100±400 | 1轮精炼带来中等增益 |
-| | 2轮（Full CDoL） | **4.1±0.3** | **0.78±0.06** | 8,900±600 | 2轮最优，与§7.3.8 ablation结论一致 |
-| **Exp4** | FusionJudge | **4.1±0.3** | **0.78±0.06** | 8,900±600 | 结构化融合最优 |
-| | Majority Vote | 3.6±0.4 | 0.72±0.08 | 8,500±500 | 简单投票丢失推理路径信息 |
-| | Average | 3.3±0.5 | 0.68±0.09 | 8,600±600 | 平均融合效果最差 |
-
-#### 7.11.5 核心发现与贡献分析
-
-**发现一：信息不对称是CDoL增益的核心来源。** Full CDoL（不对称掩码）推理深度4.1 vs No Mask（全量可见）3.4，差距0.7分（p<0.05）。Random Mask（3.2分）与No Mask（3.4分）无显著差异，证明掩码必须基于任务信息结构（而非随机分配）才能产生认知增益。这验证了CDoL的理论根基——Simon有限理性理论：约束改变认知过程本身。
-
-**发现二：多轮通信的边际收益递减但显著。** 0轮→1轮提升+0.4分，1轮→2轮提升+0.4分，但Token成本从5,400→7,100→8,900递增。2-3轮为最优平台区，与§7.3.8 Phase 2 Ablation实验的结论（轮次ablation验证2-3轮为最优平台期）形成交叉验证。
-
-**发现三：FusionJudge的结构化融合显著优于简单方法。** FusionJudge(4.1) vs Majority Vote(3.6) vs Average(3.3)。关键差异在于虚假一致检测——Majority Vote和Average无法识别"结论相同但推理路径矛盾"的情况，可能将错误共识融合为最终结论。
-
-**发现四：CDoL的Token成本效益比合理。** Full CDoL相比Single Agent的Token增加约2.8倍（8,900 vs 3,200），但推理深度提升46%（4.1 vs 2.8），结论准确性提升26%（0.78 vs 0.62）。每单位Token投入的推理深度增益为SA的1.64倍。
-
-**贡献量化排序**（按效应量Cohen's d）：
-
-| 组件 | Cohen's d | 贡献排序 | 解读 |
-|------|:---------:|:--------:|------|
-| Context Mask（信息不对称） | 1.52 | **#1** | 最大独立贡献，CDoL范式的核心 |
-| FusionJudge（结构化融合） | 1.18 | **#2** | 虚假一致检测是不可替代的 |
-| Multi-round Communication | 0.94 | **#3** | 显著但边际递减，2轮为最优 |
-| CDoL整体 vs Single Agent | 1.74 | — | 三组件叠加的总效应 |
-
-这组消融实验从因果层面证明了：**NexusFlow的增益不是"多Agent ensemble的统计降噪"，而是"信息受限条件下的认知过程优化"**。Context Mask（信息不对称设计）是最大的独立贡献因素，FusionJudge（结构化融合）次之，多轮通信再次之。
-
-### 7.12 LHAB-NF 真实基准测试：NexusFlow vs Single Agent 对照实验（v3.6新增）
-
-前述§7.10建立了LHAB-NF评测框架，§7.11通过因果消融实验验证了CDoL各组件的独立贡献。本节进一步回答一个更直接的问题：**在相同的LLM-as-Judge评分体系下，NexusFlow的CDoL多Agent协作相比Single Agent（单次LLM调用，无协作）究竟提升了多少？**
-
-#### 7.12.1 实验设计
+#### 7.6.2 真实对照实验：NexusFlow vs Single Agent
+#### 7.6.3 实验设计
 
 **实验设置**：使用相同的LHAB-NF任务集，分别由两种模式执行：
 
@@ -2345,7 +1939,7 @@ LHAB-NF填补了"超长程+多Agent+端边云+故障恢复+隐私约束"五维�
 
 **任务覆盖**：Single Agent覆盖全部9个LHAB-NF任务（T1-T3 × E/M/H），NexusFlow完成其中6个（T1-E-001, T1-M-001, T2-E-001, T2-H-001, T3-E-001, T3-M-001）。6个重叠任务构成直接对照集，使用完全相同的LLM-as-Judge评分标准。
 
-#### 7.12.2 总体结果对比
+#### 7.6.4 总体结果对比
 
 | 指标 | NexusFlow (CDoL) | Single Agent | 对比 |
 |------|:-:|:-:|:-:|
@@ -2358,7 +1952,7 @@ LHAB-NF填补了"超长程+多Agent+端边云+故障恢复+隐私约束"五维�
 
 NexusFlow在质量分上领先67%（0.364 vs 0.218），步骤完成率从34%提升到100%。代价是Token消耗增加2.6倍、耗时增加4.6倍——这与Stage-5的发现一致：多Agent协作以计算资源换取质量保障。
 
-#### 7.12.3 按任务明细对比（6个重叠任务）
+#### 7.6.5 按任务明细对比（6个重叠任务）
 
 | 任务 | 类别 | 难度 | NexusFlow | Single Agent | 差距 |
 |------|:---:|:---:|:-:|:-:|:-:|
@@ -2369,7 +1963,7 @@ NexusFlow在质量分上领先67%（0.364 vs 0.218），步骤完成率从34%提
 | T3-E-001 单数据源统计报告 | 数据分析 | Easy | 0.233 | 0.167 | +0.067 |
 | T3-M-001 多源数据对比分析 | 数据分析 | Medium | 0.237 | **0.000** | **+0.237** |
 
-#### 7.12.4 关键发现与分析
+#### 7.6.5 关键发现与分析
 
 **发现一：Single Agent在复杂任务上完全失败。** 9个任务中有3个得分为0（T2-H-001跨模块系统重构、T3-H-001多源异构数据深度研究、T3-M-001多源数据对比分析），失败率33%。这些任务的共同特征是**跨模块/多源数据整合**——需要同时理解多个信息源并在它们之间建立关联。Single Agent在单次推理中无法维持这种多源并行认知，直接输出空结果或完全偏离的回答。NexusFlow在所有6个测试任务上均产出了有效结果（最低0.233）。
 
@@ -2382,7 +1976,7 @@ NexusFlow在质量分上领先67%（0.364 vs 0.218），步骤完成率从34%提
 
 任务复杂度越高，CDoL多Agent协作的优势越明显。这与CDoL的理论预期完全一致：信息受限条件下的认知分工，在需要多源整合和交叉验证的复杂任务上产生最大增益。
 
-#### 7.12.5 结论
+#### 7.6.6 结论
 
 LHAB-NF真实基准测试对照实验从端到端任务执行的维度验证了NexusFlow的核心价值主张：
 
@@ -2393,6 +1987,12 @@ LHAB-NF真实基准测试对照实验从端到端任务执行的维度验证了N
 
 综合Stage-5（80步公平对比）、Stage-7（PinchBench 25任务）和本节（LHAB-NF真实对照）三组实验，NexusFlow vs Single Agent的质量优势在+6.7%到+67%区间，且任务复杂度越高优势越显著。
 
+
+### 7.7 消融实验设计
+
+**已有真实数据**：§7.2中的Phase 2 Ablation实验（轮次ablation）验证了CDoL 2-3轮最优平台期，LLM 5维质量评分器+few-shot锚定+5次运行方差控制。
+
+**规划中**：四组CDoL因果消融实验（Full CDoL vs SA / Context Mask消融 / 多轮通信消融 / Fusion Judge消融）旨在量化各组件独立贡献，实验设计已完成（详见附录C），数据待基于LHAB-NF环境采集。
 ## §八、理论基础与引用文献
 
 ### 8.1 认知科学
@@ -2558,6 +2158,9 @@ NexusFlow的架构选择——CDoL认知分工范式、AdaptiveContextManager动
 
 ---
 
+
+---
+
 ## 附录A：Dashboard v4.0 可观测性界面
 
 NexusFlow Dashboard v4.0 是基于 FastAPI + WebSocket 构建的实时可观测性界面，提供四个核心页签：概览、CDoL通信、Agent状态、核心模块。
@@ -2594,112 +2197,259 @@ CDoL通信页展示三轮通信协议的执行细节，以及六种分解策略�
 
 ---
 
-## Changelog
 
-### v3.6 - 2026-08-02
-- **LHAB-NF真实对照实验**（§7.12）：NexusFlow vs Single Agent对照（9任务×3种子，DeepSeek V4 Flash，LLM-as-Judge 5维统一评分），质量+67%（0.364 vs 0.218），步骤覆盖率100% vs 34%，3/9任务Single Agent完全失败，验证CDoL在复杂跨模块/多源任务上的显著优势
+---
 
-### v3.5 - 2026-08-01
-- **可解释动态拓扑升级**（§6.1.1-6.1.4）：DynamicRouter新增TopologyInterpreter可解释层（路由决策解释：Top-3候选对比+因子归因分析+瓶颈识别+备选方案说明）和TopologyOptimizer可优化层（MAB在线学习最优路由权重），Stage-4验证9次切换100%解释覆盖、路由评分+8.3%、调试效率-60%
-- **LHAB-NF评测基准**（§7.10）：设计LongHorizon-AgentBench-NF——面向超长程复杂任务的五维评测基准（100+步+多设备协同+端边云异构+故障恢复+隐私约束），3大类×3难度任务框架（T1跨设备/T2软件工程/T3深度研究），四层评估指标体系，8种拓扑对照+4种调度对照+4种恢复对照+7类扰动注入；9次框架验证运行完成，建立SSR 53-80%基线
-- **CDoL因果消融实验**（§7.11）：四组严格控制变量的消融实验量化CDoL各组件独立贡献——Context Mask信息不对称(d=1.52,#1贡献)>FusionJudge结构化融合(d=1.18,#2)>Multi-round多轮通信(d=0.94,#3)；证明增益来自"信息受限条件下的认知过程"而非"ensemble统计降噪"
-- §11.3 展望更新：可解释动态拓扑、LHAB-NF基准、CDoL消融实验标记为已完成
-- §一 执行摘要追加v3.5关键数据
-- **LHAB-NF真实对照实验**（§7.12）：NexusFlow vs Single Agent对照（6重叠任务，LLM-as-Judge 5维统一评分），质量+67%（0.364 vs 0.218），步骤覆盖率100% vs 34%，3/9任务Single Agent完全失败，验证CDoL在复杂跨模块/多源任务上的不可替代性
+## 附录B：框架陷阱规避清单
 
-### v3.4 - 2026-08-01
-- **数据一致性修复**：§一执行摘要端边云调度器行数535→635（与实际代码edge_cloud_scheduler.py 635行对齐）；SkillRetriever行数349→408（与实际代码skill_retriever.py 408行对齐）；Phase 7核心代码总量6,104→6,163行；核心算法创新行数~2,400→~2,466行；工具数保持17（与GitHub代码tools/目录实际文件数一致）
-- **Agent命名统一**：附录A.3旧命名（Strategist/Coder/Analyst/Critic/Synthesizer/Observer/Monitor）统一为v3.3规范（Planner/Executor/Miner/Reviewer/Caster/Assayer/Artisan）
-- **server端修复**：nexusflow_server.py中AGENT_ID_MAP、AGENT_DEFS、中文标签全部统一为新命名；新增POST /api/upload文件上传接口
-
-### v3.1 - 2026-07-22
-- **Stage-7 PinchBench Hard Cases Benchmark**（§7.9）：25个高难度任务SA vs NF全量对比，NF v2管线（CDoL多Agent分析+Producer合成两阶段）automated_avg 0.487 vs SA 0.456（+6.7%），7胜11平7负；iterative_code_refine从0.333→1.000（+200%），meeting_gov_qa_extract从0.111→0.444（+300%）
-- **NF v2 管线架构**：Phase 1 CDoL多Agent深度分析→Phase 2 Producer Agent基于工作区文件合成完整交付物；智能Session路由（非编码类降级SA，编码类保留CDoL）
-- **P0可复现性修复**：清除硬编码API密钥（config.py/prepare_real_data.py→os.environ.get）；统一横向对比评分体系（SCORING_METHODOLOGY.md）；修复workbuddy_comparison 6脚本14处Windows硬编码路径→相对路径；stage4 artifacts添加非可执行说明
-- 适配层8模块~1800行（config/task_parser/workspace_manager/grade_bridge/nf_agent_runner/nf_orchestrator_runner/runner/__init__）
-- README Badge更新为7 Stages；实验案例表新增Stage 7行
-
-### v3.0 - 2026-07-22
-- **Stage-6 WorkBuddy宏观经济对比实验**（§7.7）：D1-D6模拟推演（20国×15指标×41年真实IMF数据）六维加权总分8.28 vs 6.71（+23.4%），GDP命中率+20pp，共识度3轮收敛（0.45→0.85）；D7端边云三层调度实机验证通过（27次真实LLM调用，混合调度成本节省88%，隐私合规+2），多Agent优势在结构化分析而非预测精度
-- **审计报告P0修复**：§7.3.6 10维评分表增加评估体系说明（75/72来自5维LLM评分器，10维表为独立人工审查辅助表）；§11.3 MAPE数据修正（"-50%"→"同口径持平9.31% vs 9.37%"）；Stage-4拓扑术语统一（Chain→Sequential, Debate→Dynamic, Tree→Star，与§6.1五种模式一致）
-- **审计报告中等问题修复**：M1共识度序列修正（0.1→0.3→0.7→0.95，与详细表格一致）；M5 Stage-4结论增加38%模拟率局限性声明；M6 §9.1横向对比标注为独立于Stage-4；M7 附录A.3层级命名统一（CDOL_PARTICIPANT/OBSERVER）；M8执行摘要Stage描述修正；L2核心发现计数"七项"→"九项"
-- 执行摘要追加Stage-6关键数据；头部新增v3.0更新说明；数据来源声明更新
-
-### v2.9.2 - 2026-07-20
-- **Nemotron-3 Embed集成与混合检索Benchmark**（§6.4、§7.6、examples/nemotron_benchmark/）：VectorMemory激活BM25+RRF混合检索，ArchivalMemory接入Nemotron-3 Embed语义向量（NVIDIA NIM API），EdgeCloudScheduler新增EmbeddingModelRouter。Benchmark覆盖8仓库1548文档块+论文库102文档块：论文库Nemotron语义检索Recall@5=93.3%（vs TF-IDF 86.7%、BM25 73.3%），三路RRF融合MRR=0.710（比单路Nemotron +10.2%）；全仓库RRF融合Recall提升13个百分点。验证"1B参数embedding + 巧妙架构 > 纯大模型方案"
-
-### v2.9.1 - 2026-07-17
-- **端边云调度实证**（§9、§10、examples/edge_cloud_scheduling/）：EdgeCloudScheduler三层调度实证实验完成——50次调度决策（5策略×10任务）+3次层间迁移+4次容错Fallback验证，三层分流结果符合设计预期
-- **Dashboard v4.0截图**（附录A）：新增5张Dashboard截图，覆盖概览页、CDoL通信页、信息架构页、核心模块页、任务执行实况页
-- **赛题对齐状态更新**（§9）：端边云调度、可观测性两项由⚠️升级为✅
-
-### v2.9 - 2026-07-16
-- **CDoL动态终止机制**（§4.1.4a）：FusionJudge判定converge/backtrack时提前退出循环，不再固定跑满max_rounds轮。CDoLResult新增communication_rounds/terminated_early/total_revision_rounds字段，保持向后兼容
-- **Phase 2 Ablation实验**（§7.3.8）：三组实验验证框架设计决策——轮次ablation（v3方差控制数据验证2-3轮最优平台期，5次运行+few-shot锚定，核心实验）、路由ablation（探索性实验：数据方向与预期相反，坦诚讨论任务复杂度局限性）、拓扑切换成本（探索性实验：拓扑选择对质量影响极小）
-- **LLM 5维质量评分器**（examples/llm_quality_scorer.py）：替代hardcoded公式，5维评分（完整性/深度/一致性/创新性/可操作性），temperature=0.1保证评分一致性。v3加入few-shot锚定+5次运行方差控制+固定seed=42
-- §7.4 核心实验发现扩展至九项（新增Nyquist采样下界验证、动态终止机制）
-- §11.3 展望更新：动态终止、Phase 2实验、LLM评分器、Stage-5标记为已完成
-- 答辩叙事策略：框架设计叙事链条（Simon→Shannon→CDoL→双层自适应）→Shannon类比启发Nyquist下界→实验观测到平台期→v3方差控制数据验证方向一致→动态终止锁定最优区间
-
-### v2.9 工程性重构 - 2026-07-16
-- **P0 工程性重构**：删除crew/死代码、清理iteration/versions/历史副本（9.6MB）、添加pyproject.toml支持pip install、统一版本号为v2.9
-- **P1 根目录模块重组**：41个根目录平铺.py文件归入6个子包（nexusflow/{core,agents,memory,cognition,protocol} + server），根目录仅保留__init__.py和run.py
-- **P2 配置管理统一**：config.example.py（437行Python）转为config/config.yaml结构化配置；补充4个核心模块单元测试151个（总计301测试全通过）；修复config/start.bat旧路径引用
-- **P3 agents目录合并**：11个Agent角色文件从旧agents/合并至nexusflow/agents/，消除目录分裂；核心模块数更新为67（nexusflow/ 50模块 + tools/ 17个工具）
-
-### v2.8 - 2026-07-13
-- **全面审计修复**：17项问题全部修复完毕（S1-S5严重 / M1-M10中等 / L1-L8轻微）
-- §6.1 DynamicTopologyRouter：参数`topology_name`统一为`topology_type`，拓扑描述与代码对齐（5种执行编排模式：sequential/parallel/hybrid/dynamic/star）
-- §6.2 EdgeCloudScheduler：模型名kimi_k2_5修正为kimi_k2
-- §7.3.6 横向对比：AutoGen更新为真实执行数据（~110s / 5次API / ~2,400 tokens），CrewAI已移除（Python 3.13不兼容，无真实执行数据）
-- §十 项目规模：更新文件统计（444文件（git tracked）/ 144个Python文件）
-- §十 新增测试覆盖：301个单元测试覆盖9个模块（agent_information_policy / guardrails / quality / cognitive_division_engine / adaptive_context_manager / base_agent / dynamic_router / nexus_orchestrator / skill_integration）
-
-### v3.3 - 2026-07-23
-- **端边云实机验证**（§7.7.2 D7更新）：使用项目真实EdgeCloudScheduler执行27次真实LLM调用，覆盖三层调度/层间迁移/容错Fallback全链路；混合调度vs纯云端成本节省88%、隐私合规+2、质量仅差0.061
-- EdgeCloudScheduler扩展至635行（原535行），新增实机验证脚本685行
-- 代码统计更新：658文件/196个Python/~84,000行
-
-### v3.2 - 2026-07-23
-- **工程成熟度升级（6 Phase）**：Docker一键部署（多阶段构建+非root+healthcheck）+ Makefile（12 targets）+ CLI入口（nexusflow命令+python -m nexusflow）+ API文档自动生成（pdoc+GitHub Pages）+ CI/CD完善（lint/docker/tests 三套workflow）+ 开发工具链（ruff+pre-commit+dev依赖组）
-- **base_agent.py Mixin拆分**：2,597行→1,211行（-53%），拆为7个模块（models/reasoning/codeact/memory/checkpoint/handoff/agi），完全向后兼容
-- **测试增强**：新增56个测试（CLI 16 + 集成 22 + Mixin 18），总计357全通过，覆盖率35%→38%
-- §4.1.10 信息策略Agent名不匹配限制已解决（10/10角色ContextMask裁剪全部生效）
-- §十 外部依赖：chromadb标注为可选依赖
-- 执行摘要：补充审计修复版本信息
-
-### v2.7 - 2026-07-08
-- 新增§7.3.7 Stage-5 80步公平对比Benchmark（SA vs NF，质量+2.6%、耗时-14.9%、Token-6.2%）
-- §4.1.5a synergy_gain形式化定义（三分量加权公式）
-- §7.4核心实验发现扩展至七项（新增上下文污染、Token效率优势）
-- 修复文档版本号不一致（v2.6→v2.7统一）
-- 补充数据来源声明（Stage-5 Benchmark数据）
-
-### v2.6 - 2026-07-07
-- 新增§7.3.5 Stage-4 45步端到端实验（14模块100%覆盖，9次拓扑切换，CDoL共识度0.1→0.95）
-- 新增§7.3.6 横向对比实验（NexusFlow 75 vs AutoGen 72，LLM 5维评分）
-- 执行摘要补充超长程任务和横向对比核心数据
-- §6.1 DynamicRouter补充Stage-4验证数据（9次切换4种模式）
-- §9赛题对齐：45步任务验证状态更新为✅，新增横向对比验证行
-- §11.3展望更新：Stage-4和横向对比标记为已完成，补充阶段四（答辩准备）
-
-### v2.5 - 2026-07-07
-- Stage-3叙事重构为"质量门禁验证"（§7.3.3）
-- 执行摘要压缩
-- §5.0设计哲学段落
-- synergy_gain形式化定义（§4.1.5a）
-- NOAA数据源Bug归因
-- 信息策略裁剪影响补强
-- MAPE方向反转解释
-- §9验证状态列
-
-### v2.3 - 2026-07-06
-- 新增三层信息架构（AgentInformationPolicy）
-- 统一任务编排器（NexusOrchestrator）
-- Agent扩展至10个
-- 信息策略驱动的CDoL增强
+| 报告指出的陷阱 | 报告原文 | NexusFlow规避方式 |
+|----------------|----------|-------------------|
+| 静态精密控制 | "更精密的控制不自动等于更好的结果" | AdaptiveContextManager动态窗口调节，非固定约束 |
+| 机械工具预筛选 | "tool_calling_with_shortlisting拖累了表现" | DynamicRouter多维约束评分，动态路由而非静态筛选 |
+| Token最便宜=最高效 | "更快地失败了" | Cost Per Success度量，estimated_cost跟踪 |
+| 高平均掩盖局部塌方 | "总体不错但在某个任务上崩盘" | FusionJudge四类矛盾分类，检测配置塌方 |
+| 单一阈值覆盖所有场景 | "两种失败模式需要不同监控" | LazyDetector四维检测+差异化上下限告警 |
+| 信息过载影响认知 | （认知科学研究） | AgentInformationPolicy三层信息架构 |
 
 
-*文档版本：v3.6*
-*更新日期：2026-08-01*
-*数据来源：NexusFlow v3.5 + Braintrust AI Evaluation Platform（1781条生产环境轨迹）+ 七阶段Benchmark实验数据（Stage-1/2/3 NOAA/WHO真实API核心验证 + Stage-4 45步端到端实验 + Stage-5 80步公平对比Benchmark + Stage-6 WorkBuddy宏观经济对比实验（20国×15指标×41年真实IMF数据）+ Stage-6b L3高复杂度认知任务Benchmark + Stage-7 PinchBench Hard Cases 25任务全量对比）+ 横向对比实验 + Phase 2 Ablation实验v3（轮次ablation验证2-3轮最优平台期/路由探索性发现/拓扑探索性发现）+ LHAB-NF评测基准（3大类×3难度五维框架/9次框架验证基线）+ CDoL因果消融实验（四组实验/组件贡献量化）*
+---
+
+## 附录C：Nemotron-3 Embed 混合检索 Benchmark
+
+[来源：NexusFlow Nemotron Benchmark实验，2026年7月，8仓库555文件+论文库专项]
+
+v2.9.1完成Nemotron-3 Embed语义向量集成后，对检索层进行全面Benchmark评估。实验覆盖两个维度：全仓库大规模语料库（E1+E2+E3）和论文库Nemotron专项验证（E4）。
+
+#### C.1 E1：大规模语料库检索质量
+
+**语料库**：用户全部8个GitHub仓库，1548文档块，3,511,062字符。覆盖AI框架(NexusFlow)、材料科学(agent4science, materials-kb)、知识库(xuanshu-knowledge-base)、UI设计(xuanshu-ui-gallery)等异构领域。
+
+| 方法 | Recall@5 | MRR | 提升(vs TF-IDF) |
+|------|----------|-----|-----------------|
+| TF-IDF | 52.2% | 0.329 | — |
+| BM25 | 56.5% | 0.202 | +4.3% Recall |
+| **RRF(TF-IDF + BM25)** | **65.2%** | **0.317** | **+13.0% Recall** |
+
+BM25的文档长度归一化在异构文档集合中效果显著（+4.3% Recall）；RRF融合两路检索后Recall提升13个百分点，验证**多路召回+融合策略**在复杂语料库上的有效性。
+
+#### C.2 E4：Nemotron语义向量专项（论文库）
+
+**语料库**：materials-kb材料科学知识库，12文件→102文档块，221,780字符。内容为AGI文献调研、材料科学前沿论文、认知架构调研等专业学术文本。
+
+| 方法 | Recall@5 | MRR |
+|------|----------|-----|
+| TF-IDF | 86.7% | 0.597 |
+| BM25 | 73.3% | 0.578 |
+| **Nemotron Semantic** | **93.3%** | **0.644** |
+| RRF(TF-IDF + Nemotron) | 93.3% | 0.691 |
+| RRF(BM25 + Nemotron) | 93.3% | 0.574 |
+| **RRF(三路融合)** | **93.3%** | **0.710** |
+
+**核心发现**：
+- **Nemotron语义检索Recall@5=93.3%**，比BM25高20个百分点，比TF-IDF高6.7%——语义向量在专业学术领域的优势尤为突出
+- **三路RRF融合MRR=0.710**为最优，比单路Nemotron（0.644）提升10.2%——精确匹配（TF-IDF）与语义理解（Nemotron）互补
+- RRF(TF-IDF+Nemotron) MRR=0.691 优于 RRF(BM25+Nemotron) MRR=0.574——TF-IDF在中文学术文本上的精确匹配能力更强
+
+#### C.3 E2：检索延迟基准
+
+| 方法 | P50延迟 | P95延迟 | 吞吐量 |
+|------|---------|---------|--------|
+| TF-IDF (本地) | 0.047ms | 0.102ms | >20K QPS |
+| BM25 (本地) | 0.002ms | 0.126ms | >20K QPS |
+| Nemotron NIM (单条) | 683ms | 1028ms | ~1.5 QPS |
+| Nemotron NIM (batch=5) | 963ms/batch | — | 5.13 QPS |
+
+**混合架构优势**：本地检索负责快速初筛（亚毫秒级），Nemotron语义负责精排（P50=683ms满足实时交互<1s），RRF融合器平衡速度与质量。
+
+#### C.4 E3：Skill检索
+
+15个跨领域任务的技能匹配评估：Top3命中率26.7%，Top5命中率46.7%。Skill任务描述更抽象（如"了解NexusFlow的Agent调度机制"），纯关键词方法难以处理，验证**语义向量检索在此类场景中的必要性**。
+
+#### C.5 与框架叙事的一致性
+
+| 设计原则 | Benchmark证据 |
+|----------|---------------|
+| 混合检索优于单一方法 | RRF融合比单路最高提升13% Recall（全仓库）/ 10.2% MRR（论文库） |
+| 语义向量补充关键词盲区 | Nemotron比BM25高20% Recall（论文库专业学术文本） |
+| 边缘-云协同架构 | 本地检索<1ms + NIM API P50=683ms，分层协同 |
+| **框架工程 > 模型堆叠** | **1B参数embedding + 三路RRF架构 = 93.3% Recall，无需超大模型** |
+
+
+
+## 附录D：LHAB-NF 评测基准详细设计规范
+
+以下为LHAB-NF评测基准的完整设计规范，§7.6中仅保留概述和真实实验结果。
+
+#### D.1 LHAB-NF 任务框架：3大类 × 3难度
+
+LHAB-NF设计了三类核心任务，每类三个难度等级，系统覆盖NexusFlow的差异化能力：
+
+**T1：跨设备个人生产力任务**
+
+模拟真实工作场景中的多设备协同，重点验证端边云调度和隐私约束下的信息流转。
+
+| 难度 | 步骤数 | 设备数 | 扰动注入 | 隐私约束 |
+|------|--------|--------|----------|----------|
+| Easy | 20-30 | 2 | 无 | 单设备 |
+| Medium | 50-80 | 3 | 1次设备离线 + 1次需求变更 | 跨设备数据分级 |
+| Hard | 100-150 | 4 | 2次离线 + 2次变更 + 1次工具失败 | 多层隐私 + 冲突约束 |
+
+**场景示例（Hard）**：手机收到邮件 → 平板读取附件 → PC深度分析 → 云端检索公开信息 → 手机端展示含隐私数据的结果。注入扰动：平板中途断网（任务迁移到PC）、用户需求从"分析"变为"分析+对比+建议"、邮件API超时。
+
+**T2：长程软件工程任务**
+
+从需求到交付的完整软件工程流程，重点验证超长程依赖管理和质量门禁。
+
+| 难度 | 步骤数 | 代码库规模 | 扰动注入 | 验证方式 |
+|------|--------|-----------|----------|----------|
+| Easy | 30-50 | 单文件 | 无 | 单元测试通过 |
+| Medium | 80-120 | 多文件模块 | 1次错误注入 + 1次需求变更 | 集成测试 + 回归测试 |
+| Hard | 150-200 | 跨模块系统 | 2次错误注入 + 2次变更 + 1次环境异常 | 端到端测试 + 性能回归 |
+
+**T3：数据分析与研究型任务**
+
+多源数据的发现、校验、分析和报告生成，重点验证CDoL认知分工和信息不对称策略。
+
+| 难度 | 步骤数 | 数据源数 | 扰动注入 | 验证方式 |
+|------|--------|---------|----------|----------|
+| Easy | 20-30 | 2-3 | 无 | 答案正确性 |
+| Medium | 50-80 | 4-6 | 1个错误数据源 + 1次冲突证据 | 证据链完整性 |
+| Hard | 100-150 | 7+ | 2个错误源 + 概念混淆 + 时效性问题 | 证据链 + 结论稳健性 |
+
+#### D.2 四层评估指标体系
+
+LHAB-NF采用四层指标体系，从任务质量到鲁棒性全面度量：
+
+**核心指标（必须报告）**：
+
+| 指标 | 定义 | 计算方式 |
+|------|------|----------|
+| 任务完成率 (TCR) | 最终交付物满足验收条件的比例 | 成功任务数 / 总任务数 |
+| 步骤成功率 (SSR) | 单步原子操作成功的比例 | 成功步骤数 / 总步骤数 |
+| 长程依赖恢复率 (LDRR) | 跨10+步依赖链受扰动后正确完成的比例 | 恢复成功数 / 被扰动总数 |
+| 目标保持率 (GHR) | 长程任务中最终输出与初始目标的一致性 | LLM评分(0-10) + 自动规则验证 |
+| 需求变更恢复率 (RCRR) | 需求变更后成功重规划并完成的比例 | 成功重规划次数 / 变更次数 |
+| 节点失效恢复率 (NFRR) | 设备/节点离线后任务成功迁移并完成的比例 | 成功迁移次数 / 离线事件数 |
+| 平均恢复时间 (ART) | 从故障/变更发生到恢复执行的平均时间 | Σ恢复时间 / 恢复事件数 |
+| 人工干预次数 (HIC) | 需要人工介入的平均次数 | Σ干预次数 / 任务数 |
+
+**效率指标**：Token消耗、每成功任务成本(CPS)、端到端时延(E2E)、通信效率(CE)。
+
+**质量指标**：输出质量(OQ, LLM 5维评分)、错误结论率(ECR)、隐私违规次数(PVC)、记忆污染率(MPR)。
+
+**综合评分公式**：
+
+$$S_{task} = 0.30 \cdot TCR + 0.25 \cdot OQ_{norm} + 0.20 \cdot (1 - ECR) + 0.15 \cdot ART_{norm}^{-1} + 0.10 \cdot (1 - PVC)$$
+
+#### D.3 对照实验矩阵
+
+**拓扑对照（8种配置）**：
+
+| # | 配置 | 说明 |
+|---|------|------|
+| 1 | 单Agent (SA) | 基线 |
+| 2 | 多Agent全量共享 | 无CDoL，全上下文共享 |
+| 3 | 角色分工+全量共享 | 有角色但不做信息切片 |
+| 4 | 信息切片+无损通信 | CDoL切片但通信不压缩 |
+| 5 | 信息切片+有损通信+静态拓扑 | CDoL完整但拓扑固定 |
+| 6 | 动态拓扑+全量共享 | 动态路由但无信息切片 |
+| 7 | CDoL+静态拓扑 | 完整CDoL但拓扑固定 |
+| 8 | **完整NexusFlow** | CDoL+动态拓扑+有损通信 |
+
+**端边云调度对照**（4种配置）：纯云端 / 简单规则分流 / 隐私感知调度 / 完整EdgeCloudScheduler。
+
+**故障恢复对照**（4种配置）：无恢复 / 简单重试 / 替代Agent / 完整恢复（检查点+重规划+迁移+回滚）。
+
+#### D.4 七类扰动注入规范
+
+| 扰动类型 | 代码 | 触发条件 | 期望行为 |
+|----------|------|----------|----------|
+| 设备离线 | `DEVICE_OFFLINE` | 任务执行中随机触发 | 任务迁移到其他设备 |
+| 网络超时 | `NETWORK_TIMEOUT` | API调用时触发 | 重试或降级 |
+| 工具失败 | `TOOL_FAILURE` | 工具调用时触发 | 替代工具或手动执行 |
+| 需求变更 | `REQUIREMENT_CHANGE` | 任务中途注入 | 局部重规划 |
+| 数据冲突 | `DATA_CONFLICT` | 数据读取时注入 | 交叉验证后选择 |
+| Agent低质量 | `LOW_QUALITY_OUTPUT` | Agent输出时注入 | Reviewer拦截 |
+| 记忆污染 | `MEMORY_INJECTION` | 记忆写入时触发 | 验证器拒绝 |
+
+注入密度按难度分级：Easy仅在预设检查点注入、Medium随机注入可能影响关键路径、Hard密集注入多个扰动叠加。
+
+#### D.5 初始框架验证结果（v3.5基线数据）
+
+LHAB-NF评测框架已完成初步搭建，使用真实EdgeCloudScheduler执行了9次框架验证运行（3任务类型×3难度变体），验证评测流水线的端到端可行性：
+
+| 任务 | 步骤成功率(SSR) | 节点失效恢复率(NFRR) | Token消耗 | 通信效率(CE) | 综合评分 |
+|------|:---:|:---:|:---:|:---:|:---:|
+| T1-H-001（跨设备Hard） | 60.0% | 0.0% | 5,529 | 0.109 | 0.450 |
+| T2-H-001（软件工程Hard） | 80.0% | 100.0% | 8,938 | 0.090 | 0.450 |
+| T3-H-001（深度研究Hard） | 53.3% | 0.0% | 7,241 | 0.102 | 0.383 |
+
+**初步发现**：
+1. **框架验证通过**：评测流水线端到端可运行，7类扰动注入机制工作正常，四层指标采集完整
+2. **TCR=0%的根因分析**：Hard难度任务TCR全部为0%，主要失败原因是扰动注入后的长程依赖恢复能力不足（LDRR=0%），表明故障恢复机制在100+步任务中需要进一步强化
+3. **NFRR分化明显**：T2-H-001达到100%（代码任务的设备离线可通过Cloud层无缝迁移），T1/T3-H为0%（跨设备和研究任务的上下文迁移更困难）
+4. **基线已建立**：SSR 53-80%、综合评分0.38-0.45为后续优化提供了明确基线
+
+#### D.6 LHAB-NF 与现有基准的定位关系
+
+| 基准 | 最大步骤数 | 多Agent | 端边云 | 故障恢复 | 隐私约束 |
+|------|:---------:|:------:|:-----:|:-------:|:-------:|
+| SWE-bench | ~15轮 | ✗ | ✗ | ✗ | ✗ |
+| AgentBench | ~50步 | 间接 | ✗ | ✗ | ✗ |
+| UltraHorizon | 400+ calls | ✗ | ✗ | ✗ | ✗ |
+| DevicesWorld | 多设备 | ✗ | 部分 | ✗ | ✗ |
+| ToolMAZE | 多步 | ✗ | ✗ | ✓ | ✗ |
+| **LHAB-NF** | **100-200步** | **✓** | **✓** | **✓** | **✓** |
+
+LHAB-NF填补了"超长程+多Agent+端边云+故障恢复+隐私约束"五维交叉评测的空白，为NexusFlow的差异化能力提供了针对性的验证平台。
+
+
+
+
+## 附录E：CDoL因果消融实验设计（待执行）
+
+§7.3.8中的Phase 2 Ablation实验（轮次ablation）已有真实数据。以下四组消融实验旨在量化CDoL各组件的独立贡献，实验设计已完成，**数据待采集**。
+
+#### E.1 消融实验矩阵
+
+**实验1：Full CDoL vs Single Agent（基线对比）**
+
+验证CDoL整体是否优于单Agent全信息处理。
+
+| 配置 | Agent数 | 信息可见性 | 通信轮次 | 融合方式 |
+|------|:------:|-----------|:--------:|----------|
+| Single Agent | 1 | 全量证据 | 0 | N/A |
+| Full CDoL | 3 | 不对称掩码 | 2 | FusionJudge |
+
+**实验2：Context Mask消融**
+
+验证信息不对称设计是CDoL增益的关键（而非"多Agent"本身）。
+
+| 配置 | 掩码策略 | 说明 |
+|------|----------|------|
+| Full CDoL | 不对称掩码 | 每个Agent看到不同证据子集（核心设计） |
+| No Mask | 全量可见 | 所有Agent看到相同完整信息（退化为ensemble） |
+| Random Mask | 随机掩码 | 掩码与任务无关（控制组，验证掩码设计的信息论意义） |
+
+**实验3：多轮通信消融**
+
+验证迭代精炼（Round 1差异归因 + Round 2修正收敛）的增量价值。
+
+| 配置 | 通信轮次 | 说明 |
+|------|:--------:|------|
+| 0轮（Single Shot） | 0 | 各Agent独立输出，直接融合 |
+| 1轮 | 1 | Round 0独立推理 → 直接融合（无差异归因） |
+| 2轮（Full CDoL） | 2 | Round 0 → Round 1差异归因 → Round 2修正收敛 |
+
+**实验4：Fusion Judge消融**
+
+验证结构化融合策略相比简单融合方法的增量价值。
+
+| 配置 | 融合方式 | 说明 |
+|------|----------|------|
+| FusionJudge | 4类矛盾分类 | 可归因/不可归因/虚假一致/真实收敛 |
+| Majority Vote | 多数投票 | 简单投票选多数结论 |
+| Average | 平均融合 | 数值型结论取平均 |
+
+
+**状态**：实验设计已完成。§7.11.4-7.11.5中的初步数据为基于9次框架验证的推演估计，非真实运行数据，已移除。后续将基于LHAB-NF真实运行环境采集。

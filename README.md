@@ -260,7 +260,7 @@ pip install -e ".[dev]"
 
 ## 📚 文档与测试
 
-- **技术文档**：[NexusFlow技术文档v3.6.md](docs/NexusFlow技术文档v3.6.md)（完整架构说明）
+- **架构概览**：[ARCHITECTURE.md](docs/ARCHITECTURE.md)（系统架构与核心模块）
 - **项目事实**：[PROJECT_FACTS.md](PROJECT_FACTS.md)（数据唯一权威来源）
 - **评测基准**：[LHAB-NF 设计文档](docs/LHAB-NF_Design.md)
 - **消融实验**：[P3 实验设计](docs/P3_Ablation_Design.md)

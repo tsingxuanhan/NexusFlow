@@ -54,7 +54,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
-    CMD curl -f http://localhost:8900/health || curl -f http://localhost:8900/ || exit 1
+    CMD curl -f http://localhost:8900/ || exit 1
 
 EXPOSE 8900
 

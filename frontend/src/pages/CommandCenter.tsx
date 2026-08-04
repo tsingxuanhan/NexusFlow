@@ -84,11 +84,11 @@ const logLevelColors: Record<string, string> = {
 }
 
 const faultTypes = [
-  { value: 'network_latency', label: '网络延迟 +200ms' },
-  { value: 'agent_crash', label: 'Agent 宕机' },
-  { value: 'memory_pressure', label: '内存压力 95%' },
-  { value: 'disk_full', label: '磁盘满载' },
-  { value: 'cpu_spike', label: 'CPU 飙升' },
+  { value: 'node_failure', label: '💀 节点失效 — Agent 宕机，触发自动恢复' },
+  { value: 'latency_inject', label: '⏱️ 延迟注入 — 模拟响应延迟，测试超时机制' },
+  { value: 'data_corruption', label: '🗑️ 数据损坏 — 数据载荷损坏，触发重新获取' },
+  { value: 'topology_disrupt', label: '🔀 拓扑扰动 — 强制切换拓扑结构' },
+  { value: 'resource_exhaust', label: '🔥 资源耗尽 — CPU/内存/磁盘资源耗尽模拟' },
 ]
 
 const strategies = [
@@ -111,7 +111,7 @@ export function CommandCenter() {
   const [strategy, setStrategy] = useState('auto')
   const [selectedFileIds, setSelectedFileIds] = useState<Set<string>>(new Set())
   const [faultTaskId, setFaultTaskId] = useState('')
-  const [faultType, setFaultType] = useState('network_latency')
+  const [faultType, setFaultType] = useState('node_failure')
   const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'error'>('connecting')
   const [dragOver, setDragOver] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -422,7 +422,7 @@ export function CommandCenter() {
                   <input
                     type="range"
                     min={1}
-                    max={100}
+                    max={500}
                     value={maxSteps}
                     onChange={(e) => setMaxSteps(Number(e.target.value))}
                     className="w-full accent-[#6366f1] cursor-pointer"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-NexusFlow Dashboard Server v3.4 — Dynamic Agents & Log Archiving
+NexusFlow Dashboard Server v3.6 — Dynamic Agents & Log Archiving
 ===================================================================
 Full-stack AGI task execution server, now using agent4science_nexus/ core modules.
 
@@ -43,6 +43,15 @@ import re
 import traceback
 import sys
 from pathlib import Path
+
+# Fix Windows GBK encoding issues
+import io as _io
+try:
+    sys.stdout = _io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = _io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Callable, Awaitable
 from dataclasses import dataclass, field, asdict
@@ -2617,7 +2626,7 @@ class _AgentWrapper:
 # FastAPI Application
 # ============================================================================
 
-app = FastAPI(title="NexusFlow Dashboard", version="3.1")
+app = FastAPI(title="NexusFlow Dashboard", version="3.6")
 
 # Pre-initialize AgentOS for route mounting (will be re-linked to engine in startup)
 _agentos_for_routes = None
@@ -2841,7 +2850,7 @@ async def startup():
     global engine
     
     logger.info("=" * 50)
-    logger.info("  NexusFlow Server v3.1 starting...")
+    logger.info("  NexusFlow Server v3.6 starting...")
     logger.info(f"  Core Engine: {'Enabled' if CORE_ENGINE_AVAILABLE else 'Disabled (Fallback)'}")
     logger.info("=" * 50)
     
@@ -2902,7 +2911,7 @@ async def shutdown():
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():
-    for fname in ["nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
+    for fname in ["nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
         path = os.path.join(DASHBOARD_DIR, fname)
         print(f"[DASHBOARD] Checking: {path}  exists={os.path.exists(path)}")
         if os.path.exists(path):
@@ -2910,7 +2919,7 @@ async def serve_dashboard():
     _server_dir = os.path.dirname(os.path.abspath(__file__))
     _fallback_dir = os.path.join(os.path.dirname(_server_dir), "docs", "dashboard")
     print(f"[DASHBOARD] Fallback dir: {_fallback_dir}")
-    for fname in ["nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
+    for fname in ["nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
         path = os.path.join(_fallback_dir, fname)
         if os.path.exists(path):
             print(f"[DASHBOARD] Found via fallback: {path}")
@@ -3821,7 +3830,7 @@ async def guardrails_check_output(req: Dict):
 if __name__ == "__main__":
     print(f"""
 ╔══════════════════════════════════════════════════════╗
-║    NexusFlow Server v3.4 — Dynamic Agents & Logs     ║
+║    NexusFlow Server v3.6 — Dynamic Agents & Logs     ║
 ╠══════════════════════════════════════════════════════╣
 ║  Dashboard : http://localhost:{SERVER_PORT:<6}               ║
 ║  API Docs  : http://localhost:{SERVER_PORT}/docs          ║

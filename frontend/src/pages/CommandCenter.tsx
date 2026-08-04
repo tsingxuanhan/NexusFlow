@@ -92,10 +92,13 @@ const faultTypes = [
 ]
 
 const strategies = [
-  { value: 'auto', label: 'Auto (自动)' },
-  { value: 'cdol', label: 'CDOL' },
-  { value: 'simple', label: 'Simple' },
-  { value: 'parallel', label: 'Parallel' },
+  { value: 'auto', label: '🤖 自动选择' },
+  { value: 'evidence_split', label: '🔍 证据拆分 — 分证据集并行，需通信拼链' },
+  { value: 'role_constraint', label: '⚔️ 角色约束 — 质疑者 vs 辩护者对抗' },
+  { value: 'layer_separation', label: '📐 层级分离 — 高层策略 + 底层验证' },
+  { value: 'modality_split', label: '📊 模态拆分 — 结构化 + 非结构化互补' },
+  { value: 'time_slice', label: '⏳ 时序切片 — 按时间阶段分工' },
+  { value: 'abstraction_level', label: '🧩 抽象层级 — 不同抽象层并行分析' },
 ]
 
 // --- Component ---

@@ -179,6 +179,93 @@ except ImportError as e:
     print(f"[NexusFlow] [WARNING] Core Engine not available: {e}")
     print("[NexusFlow] Falling back to simplified inline implementations")
 
+
+# ============================================================================
+# Extended Module Imports — Memory, Cognition, Protocol, Tools, Scheduler
+# ============================================================================
+EXTENDED_MODULES_AVAILABLE = False
+try:
+    # Memory system
+    from nexusflow.memory.memory_manager import MemoryManager
+    from nexusflow.memory.sleeptime import SleeptimeEngine
+    MEMORY_AVAILABLE = True
+except ImportError as e:
+    MEMORY_AVAILABLE = False
+    print(f"[NexusFlow] Memory modules not available: {e}")
+
+    # Cognition system
+try:
+    from nexusflow.cognition.meta_cognition import MetaCognition
+    from nexusflow.cognition.cross_domain import CrossDomainTransfer
+    from nexusflow.cognition.continuous_learning import ContinuousLearningPipeline
+    from nexusflow.cognition.autonomous import AutonomousGoalHandler as AutonomousHandler
+    COGNITION_AVAILABLE = True
+except ImportError as e:
+    COGNITION_AVAILABLE = False
+    print(f"[NexusFlow] Cognition modules not available: {e}")
+
+# Edge-Cloud Scheduler
+try:
+    from nexusflow.core.edge_cloud_scheduler import EdgeCloudScheduler, DeployTier, SchedulingPolicy, TierResource
+    SCHEDULER_AVAILABLE = True
+except ImportError as e:
+    SCHEDULER_AVAILABLE = False
+    print(f"[NexusFlow] EdgeCloudScheduler not available: {e}")
+
+# Dynamic Topology Router + Optimizer
+try:
+    from nexusflow.core.dynamic_router import DynamicTopologyRouter, AgentCapabilityProfile, TaskRequirement
+    from nexusflow.core.topology_optimizer import TopologyOptimizer
+    ROUTER_AVAILABLE = True
+except ImportError as e:
+    ROUTER_AVAILABLE = False
+    print(f"[NexusFlow] DynamicRouter/TopologyOptimizer not available: {e}")
+
+# Tool Registry
+try:
+    from tools.tool_registry import ToolRegistry
+    TOOL_REGISTRY_AVAILABLE = True
+except ImportError as e:
+    TOOL_REGISTRY_AVAILABLE = False
+    print(f"[NexusFlow] ToolRegistry not available: {e}")
+
+# Protocol layer (A2A + MCP)
+try:
+    from nexusflow.protocol.a2a_gateway import A2AGateway, A2AAgentInfo
+    A2A_AVAILABLE = True
+except ImportError as e:
+    A2A_AVAILABLE = False
+    print(f"[NexusFlow] A2A Gateway not available: {e}")
+
+try:
+    from nexusflow.protocol.mcp_server import XuanshuMCPServer
+    MCP_AVAILABLE = True
+except ImportError as e:
+    MCP_AVAILABLE = False
+    print(f"[NexusFlow] MCP Server not available: {e}")
+
+# Observability
+try:
+    from nexusflow.agents.observability import AgentTracer, MetricsCollector as TraceCollector
+    OBSERVABILITY_AVAILABLE = True
+except ImportError as e:
+    OBSERVABILITY_AVAILABLE = False
+    print(f"[NexusFlow] Observability not available: {e}")
+
+# Guardrails
+try:
+    from nexusflow.agents.guardrails import InputGuardrail, OutputGuardrail, ToolGuardrail
+    GUARDRAILS_AVAILABLE = True
+except ImportError as e:
+    GUARDRAILS_AVAILABLE = False
+    print(f"[NexusFlow] Guardrails not available: {e}")
+
+EXTENDED_MODULES_AVAILABLE = True
+print(f"[NexusFlow] ✓ Extended modules: Memory={MEMORY_AVAILABLE}, Cognition={COGNITION_AVAILABLE}, "
+      f"Scheduler={SCHEDULER_AVAILABLE}, Router={ROUTER_AVAILABLE}, Tools={TOOL_REGISTRY_AVAILABLE}, "
+      f"A2A={A2A_AVAILABLE}, MCP={MCP_AVAILABLE}, Observability={OBSERVABILITY_AVAILABLE}, "
+      f"Guardrails={GUARDRAILS_AVAILABLE}")
+
 # ============================================================================
 # Configuration
 # ============================================================================
@@ -1310,6 +1397,160 @@ class NexusFlowEngine:
         # FusionJudge
         self.fusion_judge = FusionJudge()
         
+        # ---- Extended module instances ----
+        self.memory_manager = None
+        self.sleeptime_engine = None
+        self.meta_cognition = None
+        self.cross_domain = None
+        self.continuous_learning = None
+        self.autonomous_handler = None
+        self.edge_cloud_scheduler = None
+        self.dynamic_router = None
+        self.topology_optimizer = None
+        self.tool_registry_instance = None
+        self.a2a_gateway = None
+        self.mcp_server = None
+        self.trace_collector = None
+        self.input_guardrails = []
+        self.output_guardrails = []
+        self.tool_guardrails = []
+        self.agentos_instance = None
+        
+        self._init_extended_modules()
+        
+
+    def _init_extended_modules(self):
+        """Initialize all extended modules"""
+        # Memory Manager
+        if MEMORY_AVAILABLE:
+            try:
+                self.memory_manager = MemoryManager()
+                self.sleeptime_engine = SleeptimeEngine(
+                    memory_manager=self.memory_manager,
+                )
+                logger.info("[NexusFlow] ✓ Memory system initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] Memory init failed: {e}")
+        
+        # Cognition modules
+        if COGNITION_AVAILABLE:
+            try:
+                self.meta_cognition = MetaCognition(
+                    memory_manager=self.memory_manager,
+                )
+                self.cross_domain = CrossDomainTransfer(
+                    memory_manager=self.memory_manager,
+                )
+                self.continuous_learning = ContinuousLearningPipeline(
+                    memory_manager=self.memory_manager,
+                )
+                self.autonomous_handler = AutonomousHandler(
+                    memory_manager=self.memory_manager,
+                )
+                logger.info("[NexusFlow] ✓ Cognition system initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] Cognition init failed: {e}")
+        
+        # Edge-Cloud Scheduler
+        if SCHEDULER_AVAILABLE:
+            try:
+                self.edge_cloud_scheduler = EdgeCloudScheduler(policy=SchedulingPolicy.BALANCED)
+                self.edge_cloud_scheduler.setup_default_tiers()
+                logger.info("[NexusFlow] ✓ Edge-Cloud Scheduler initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] Scheduler init failed: {e}")
+        
+        # Dynamic Router + Topology Optimizer
+        if ROUTER_AVAILABLE:
+            try:
+                self.dynamic_router = DynamicTopologyRouter()
+                self.topology_optimizer = TopologyOptimizer()
+                # Register existing agents
+                for adef in self._get_all_agent_defs():
+                    try:
+                        profile = AgentCapabilityProfile(
+                            agent_id=adef["id"],
+                            name=adef.get("name", adef["id"]),
+                            role=adef.get("role", "general"),
+                            capabilities=[adef.get("role", "general")],
+                            tier=adef.get("tier", "cloud"),
+                        )
+                        self.dynamic_router.register_agent(profile)
+                    except Exception as e:
+                        logger.debug(f"Router: skip agent {adef.get('id')}: {e}")
+                logger.info("[NexusFlow] ✓ Dynamic Router + Topology Optimizer initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] Router init failed: {e}")
+        
+        # Tool Registry
+        if TOOL_REGISTRY_AVAILABLE:
+            try:
+                self.tool_registry_instance = ToolRegistry(enable_guardrails=True)
+                # Register built-in tools
+                from tools.web_search import WebSearchTool
+                from tools.calculator import CalculatorTool
+                from tools.file_ops import FileOpsTool
+                from tools.api_caller import APICallerTool
+                for tool_cls in [WebSearchTool, CalculatorTool, FileOpsTool, APICallerTool]:
+                    try:
+                        self.tool_registry_instance.register(tool_cls())
+                    except Exception:
+                        pass
+                logger.info("[NexusFlow] ✓ Tool Registry initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] ToolRegistry init failed: {e}")
+        
+        # Protocol layer
+        if A2A_AVAILABLE:
+            try:
+                self.a2a_gateway = A2AGateway(self_agent_id="nexusflow-coordinator")
+                logger.info("[NexusFlow] ✓ A2A Gateway initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] A2A init failed: {e}")
+        
+        if MCP_AVAILABLE:
+            try:
+                self.mcp_server = XuanshuMCPServer()
+                logger.info("[NexusFlow] ✓ MCP Server initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] MCP init failed: {e}")
+        
+        # Observability
+        if OBSERVABILITY_AVAILABLE:
+            try:
+                self.trace_collector = TraceCollector()
+                logger.info("[NexusFlow] ✓ Observability initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] Observability init failed: {e}")
+        
+        # Guardrails
+        if GUARDRAILS_AVAILABLE:
+            try:
+                # Register default guardrails
+                from nexusflow.agents.guardrails import InputGuardrail, OutputGuardrail
+                self.input_guardrails.append(InputGuardrail(name="basic_input", description="Basic input validation"))
+                self.output_guardrails.append(OutputGuardrail(name="basic_output", description="Basic output validation"))
+                logger.info("[NexusFlow] ✓ Guardrails initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] Guardrails init failed: {e}")
+        
+        # AgentOS integration
+        try:
+            from server.agentos import AgentOS
+            self.agentos_instance = AgentOS(
+                agent=None,  # Will use engine as hub
+                memory_manager=self.memory_manager,
+                sleeptime_engine=self.sleeptime_engine,
+                meta_cognition=self.meta_cognition,
+                continuous_learning=self.continuous_learning,
+                autonomous_handler=self.autonomous_handler,
+                cross_domain=self.cross_domain,
+            )
+            self.agentos_instance._stats["start_time"] = time.time()
+            logger.info("[NexusFlow] ✓ AgentOS integrated")
+        except Exception as e:
+            logger.warning(f"[NexusFlow] AgentOS integration failed: {e}")
+
         logger.info(f"[NexusFlow] Engine initialized (Core Engine: {CORE_ENGINE_AVAILABLE})")
     
     def _get_all_agent_defs(self) -> List[Dict]:
@@ -2377,6 +2618,48 @@ class _AgentWrapper:
 # ============================================================================
 
 app = FastAPI(title="NexusFlow Dashboard", version="3.1")
+
+# Pre-initialize AgentOS for route mounting (will be re-linked to engine in startup)
+_agentos_for_routes = None
+try:
+    if MEMORY_AVAILABLE:
+        from nexusflow.memory.memory_manager import MemoryManager as _MM
+        _tmp_mm = _MM()
+    else:
+        _tmp_mm = None
+    if COGNITION_AVAILABLE:
+        from nexusflow.cognition.meta_cognition import MetaCognition as _MC
+        from nexusflow.cognition.cross_domain import CrossDomainTransfer as _CD
+        from nexusflow.cognition.continuous_learning import ContinuousLearningPipeline as _CL
+        from nexusflow.cognition.autonomous import AutonomousGoalHandler as _AH
+        _tmp_mc = _MC(memory_manager=_tmp_mm)
+        _tmp_cd = _CD(memory_manager=_tmp_mm)
+        _tmp_cl = _CL(memory_manager=_tmp_mm)
+        _tmp_ah = _AH(memory_manager=_tmp_mm)
+    else:
+        _tmp_mc = _tmp_cd = _tmp_cl = _tmp_ah = None
+    try:
+        from nexusflow.memory.sleeptime import SleeptimeEngine as _SE
+        _tmp_se = _SE(memory_manager=_tmp_mm)
+    except Exception:
+        _tmp_se = None
+    
+    from server.agentos import AgentOS as _AgentOS
+    _agentos_for_routes = _AgentOS(
+        agent=None,
+        memory_manager=_tmp_mm,
+        sleeptime_engine=_tmp_se,
+        meta_cognition=_tmp_mc,
+        continuous_learning=_tmp_cl,
+        autonomous_handler=_tmp_ah,
+        cross_domain=_tmp_cd,
+    )
+    _agentos_for_routes._stats["start_time"] = time.time()
+    _agentos_router = _agentos_for_routes.create_router(prefix="/agentos")
+    app.include_router(_agentos_router)
+    logger.info("[NexusFlow] ✓ AgentOS routes mounted at /agentos/ (pre-init)")
+except Exception as e:
+    logger.warning(f"[NexusFlow] AgentOS pre-init route mount failed: {e}")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 llm_router = LLMRouter()
@@ -2591,6 +2874,11 @@ async def startup():
         llm_router.assign_model(adef["id"], prov, actual_model)
     
     engine = NexusFlowEngine(llm_router, events)
+    
+    # Link engine's agentos instance to the pre-mounted router's AgentOS
+    if _agentos_for_routes and engine.agentos_instance:
+        # Share the same instance - routes use _agentos_for_routes which already has components
+        engine.agentos_instance = _agentos_for_routes
     
     logger.info(f"📡 Dashboard: http://localhost:{SERVER_PORT}")
     logger.info(f"📡 API Docs:  http://localhost:{SERVER_PORT}/docs")
@@ -3113,6 +3401,422 @@ async def list_uploads():
                 "modified": datetime.fromtimestamp(os.path.getmtime(fp)).isoformat(),
             })
     return {"files": files, "upload_dir": UPLOAD_DIR}
+
+
+# ============================================================================
+# Edge-Cloud Scheduler Routes
+# ============================================================================
+@app.get("/api/scheduler/tiers")
+async def scheduler_get_tiers():
+    """Get all tier resources"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    return engine.edge_cloud_scheduler.get_all_resources()
+
+@app.post("/api/scheduler/tiers")
+async def scheduler_register_tier(req: Dict):
+    """Register a new tier resource"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    try:
+        tier = DeployTier(req.get("tier", "cloud"))
+        resource = TierResource(
+            name=req.get("name", "unknown"),
+            tier=tier,
+            gpu_type=req.get("gpu_type", "none"),
+            gpu_count=req.get("gpu_count", 0),
+            memory_gb=req.get("memory_gb", 0),
+            latency_ms=req.get("latency_ms", 100),
+            cost_per_hour=req.get("cost_per_hour", 0.0),
+        )
+        engine.edge_cloud_scheduler.register_tier(resource)
+        return {"status": "ok", "resource": req.get("name")}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.put("/api/scheduler/tiers/{tier}/{name}")
+async def scheduler_update_resource(tier: str, name: str, req: Dict):
+    """Update resource state"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    try:
+        t = DeployTier(tier)
+        engine.edge_cloud_scheduler.update_resource_state(
+            tier=t, name=name,
+            gpu_util=req.get("gpu_util"),
+            mem_util=req.get("mem_util"),
+            active_tasks=req.get("active_tasks"),
+        )
+        return {"status": "ok"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/scheduler/schedule")
+async def scheduler_schedule(req: Dict):
+    """Schedule a task to appropriate tier"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    result = engine.edge_cloud_scheduler.schedule(req)
+    return {
+        "decision": {
+            "tier": result.selected_tier.value if result.selected_tier else "none",
+            "resource": result.selected_resource,
+            "confidence": result.confidence,
+            "reason": result.reason,
+            "latency_ms": result.estimated_latency_ms,
+            "cost": result.estimated_cost,
+        }
+    }
+
+@app.post("/api/scheduler/migrate")
+async def scheduler_migrate(req: Dict):
+    """Migrate task between tiers"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    task_id = req.get("task_id", "")
+    from_tier = DeployTier(req.get("from_tier", "edge"))
+    to_tier = DeployTier(req.get("to_tier", "cloud"))
+    result = engine.edge_cloud_scheduler.migrate(task_id, from_tier, to_tier, reason=req.get("reason", "manual"))
+    return {"success": result, "task_id": task_id, "from": req.get("from_tier"), "to": req.get("to_tier")}
+
+@app.get("/api/scheduler/stats")
+async def scheduler_stats():
+    """Get scheduling statistics"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    return engine.edge_cloud_scheduler.get_scheduling_stats()
+
+@app.get("/api/scheduler/policies")
+async def scheduler_policies():
+    """List available scheduling policies"""
+    return {
+        "policies": [
+            {"value": p.value, "description": {
+                "balanced": "均衡调度：综合考虑延迟、成本、负载",
+                "latency_first": "延迟优先：优先选择低延迟资源",
+                "cost_first": "成本优先：优先选择低成本资源",
+                "privacy_first": "隐私优先：敏感数据优先本地处理",
+                "edge_preferred": "端侧优先：优先使用端侧资源",
+            }.get(p.value, "")}
+            for p in SchedulingPolicy
+        ]
+    }
+
+
+# ============================================================================
+# Dynamic Topology Router Routes
+# ============================================================================
+@app.get("/api/router/agents")
+async def router_list_agents():
+    """List registered agents in router"""
+    if not engine.dynamic_router:
+        raise HTTPException(status_code=503, detail="DynamicRouter not available")
+    agents = []
+    for aid, profile in engine.dynamic_router._agents.items():
+        agents.append({
+            "agent_id": profile.agent_id,
+            "name": profile.name,
+            "capabilities": profile.capabilities,
+            "load_state": profile.load_state.value,
+            "tier": profile.tier,
+            "score": profile.compute_score(),
+        })
+    return {"agents": agents, "total": len(agents)}
+
+@app.post("/api/router/agents")
+async def router_register_agent(req: Dict):
+    """Register agent capability profile"""
+    if not engine.dynamic_router:
+        raise HTTPException(status_code=503, detail="DynamicRouter not available")
+    try:
+        profile = AgentCapabilityProfile(
+            agent_id=req.get("agent_id", str(uuid.uuid4())[:8]),
+            name=req.get("name", "unknown"),
+            capabilities=req.get("capabilities", []),
+            tier=req.get("tier", "cloud"),
+        )
+        engine.dynamic_router.register_agent(profile)
+        return {"status": "ok", "agent_id": profile.agent_id}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/router/route")
+async def router_route(req: Dict):
+    """Preview topology routing decision for a task"""
+    if not engine.dynamic_router:
+        raise HTTPException(status_code=503, detail="DynamicRouter not available")
+    from nexusflow.core.dynamic_router import TaskComplexity
+    complexity_map = {"trivial": TaskComplexity.TRIVIAL, "simple": TaskComplexity.SIMPLE, "moderate": TaskComplexity.MODERATE, "complex": TaskComplexity.COMPLEX, "epic": TaskComplexity.EPIC, "medium": TaskComplexity.MODERATE, "low": TaskComplexity.SIMPLE, "high": TaskComplexity.COMPLEX}
+    task_req = TaskRequirement(
+        description=req.get("description", ""),
+        required_capabilities=req.get("capabilities", []),
+        complexity=complexity_map.get(req.get("complexity", "medium"), TaskComplexity.MODERATE),
+    )
+    plan = engine.dynamic_router.route(task_req)
+    return {
+        "plan_id": plan.plan_id,
+        "topology": plan.topology_type,
+        "agent_chain": plan.agent_chain,
+        "estimated_cost": plan.estimated_cost,
+        "estimated_latency_ms": plan.estimated_latency_ms,
+        "confidence": plan.confidence,
+    }
+
+@app.get("/api/router/history")
+async def router_history(limit: int = 20):
+    """Get routing decision history"""
+    if not engine.dynamic_router:
+        raise HTTPException(status_code=503, detail="DynamicRouter not available")
+    return {"history": engine.dynamic_router.get_route_history(limit=limit)}
+
+@app.get("/api/router/optimization")
+async def router_optimization():
+    """Get optimization stats and suggestions"""
+    if not engine.dynamic_router:
+        raise HTTPException(status_code=503, detail="DynamicRouter not available")
+    stats = engine.dynamic_router.get_optimization_stats()
+    suggestions = engine.dynamic_router.suggest_optimization() if hasattr(engine.dynamic_router, 'suggest_optimization') else []
+    return {"stats": stats, "suggestions": suggestions}
+
+
+# ============================================================================
+# Topology Optimizer Routes
+# ============================================================================
+@app.get("/api/topology-optimizer/stats")
+async def topo_opt_stats():
+    """Get topology optimizer statistics"""
+    if not engine.topology_optimizer:
+        raise HTTPException(status_code=503, detail="TopologyOptimizer not available")
+    return engine.topology_optimizer.get_stats()
+
+@app.get("/api/topology-optimizer/weights")
+async def topo_opt_weights(task_pattern: str = ""):
+    """Get learned topology weights"""
+    if not engine.topology_optimizer:
+        raise HTTPException(status_code=503, detail="TopologyOptimizer not available")
+    weights = engine.topology_optimizer.get_learned_weights(task_pattern)
+    return {"weights": weights, "task_pattern": task_pattern}
+
+@app.get("/api/topology-optimizer/recommendations")
+async def topo_opt_recommendations():
+    """Get topology improvement recommendations"""
+    if not engine.topology_optimizer:
+        raise HTTPException(status_code=503, detail="TopologyOptimizer not available")
+    # Return general recommendations based on optimizer stats
+    stats = engine.topology_optimizer.get_stats()
+    recs = []
+    if stats["total_patterns"] == 0:
+        recs.append("暂无历史路由数据，建议运行一些任务后查看优化建议")
+    else:
+        recs.append(f"已学习 {stats['total_patterns']} 种任务模式，{stats['total_executions']} 次执行记录")
+        if stats.get("success_rate", 0) < 0.8:
+            recs.append(f"整体成功率 {stats['success_rate']:.1%}，建议检查失败任务并调整路由策略")
+    return {"recommendations": recs, "stats": stats}
+
+
+# ============================================================================
+# Tool Registry Routes
+# ============================================================================
+@app.get("/api/tools/list")
+async def tools_list():
+    """List all registered tools"""
+    if not engine.tool_registry_instance:
+        raise HTTPException(status_code=503, detail="ToolRegistry not available")
+    return {"tools": engine.tool_registry_instance.list_tools()}
+
+@app.get("/api/tools/discover")
+async def tools_discover(capability: str = ""):
+    """Discover tools by capability"""
+    if not engine.tool_registry_instance:
+        raise HTTPException(status_code=503, detail="ToolRegistry not available")
+    tools = engine.tool_registry_instance.discover(capability)
+    return {"tools": tools, "capability": capability}
+
+@app.post("/api/tools/execute")
+async def tools_execute(req: Dict):
+    """Execute a tool"""
+    if not engine.tool_registry_instance:
+        raise HTTPException(status_code=503, detail="ToolRegistry not available")
+    tool_name = req.get("tool_name", "")
+    params = req.get("parameters", {})
+    try:
+        result = engine.tool_registry_instance.execute(tool_name=tool_name, parameters=params)
+        return {"tool": tool_name, "result": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/tools/stats")
+async def tools_stats():
+    """Get tool registry statistics"""
+    if not engine.tool_registry_instance:
+        raise HTTPException(status_code=503, detail="ToolRegistry not available")
+    return engine.tool_registry_instance.get_stats()
+
+@app.get("/api/tools/log")
+async def tools_log(limit: int = 50):
+    """Get tool execution log"""
+    if not engine.tool_registry_instance:
+        raise HTTPException(status_code=503, detail="ToolRegistry not available")
+    return {"log": engine.tool_registry_instance.get_execution_log(limit=limit)}
+
+
+# ============================================================================
+# Protocol Routes (A2A Gateway + MCP Server)
+# ============================================================================
+@app.get("/api/protocol/a2a/agents")
+async def a2a_list_agents():
+    """List A2A registered agents"""
+    if not engine.a2a_gateway:
+        raise HTTPException(status_code=503, detail="A2A Gateway not available")
+    agents = [a.to_dict() for a in engine.a2a_gateway.list_agents()]
+    return {"agents": agents, "total": len(agents)}
+
+@app.post("/api/protocol/a2a/agents")
+async def a2a_register_agent(req: Dict):
+    """Register an external agent in A2A gateway"""
+    if not engine.a2a_gateway:
+        raise HTTPException(status_code=503, detail="A2A Gateway not available")
+    info = A2AAgentInfo(
+        agent_id=req.get("agent_id", str(uuid.uuid4())[:8]),
+        name=req.get("name", "unknown"),
+        capabilities=req.get("capabilities", []),
+        endpoint=req.get("endpoint", ""),
+    )
+    aid = engine.a2a_gateway.register_agent(info)
+    return {"status": "ok", "agent_id": aid}
+
+@app.get("/api/protocol/a2a/discover")
+async def a2a_discover(capability: str = ""):
+    """Discover agents by capability"""
+    if not engine.a2a_gateway:
+        raise HTTPException(status_code=503, detail="A2A Gateway not available")
+    agents = [a.to_dict() for a in engine.a2a_gateway.discover_agents(capability)]
+    return {"agents": agents}
+
+@app.post("/api/protocol/a2a/delegate")
+async def a2a_delegate(req: Dict):
+    """Delegate a task to an external agent"""
+    if not engine.a2a_gateway:
+        raise HTTPException(status_code=503, detail="A2A Gateway not available")
+    result = engine.a2a_gateway.delegate_task(
+        target_agent_id=req.get("target_agent_id", ""),
+        goal=req.get("goal", ""),
+        context=req.get("context", ""),
+    )
+    return result.to_dict() if hasattr(result, 'to_dict') else result
+
+@app.get("/api/protocol/a2a/stats")
+async def a2a_stats():
+    """Get A2A gateway statistics"""
+    if not engine.a2a_gateway:
+        raise HTTPException(status_code=503, detail="A2A Gateway not available")
+    return engine.a2a_gateway.get_stats()
+
+@app.get("/api/protocol/mcp/tools")
+async def mcp_list_tools():
+    """List MCP server tools"""
+    if not engine.mcp_server:
+        raise HTTPException(status_code=503, detail="MCP Server not available")
+    return engine.mcp_server._handle_tools_list({})
+
+@app.get("/api/protocol/mcp/resources")
+async def mcp_list_resources():
+    """List MCP server resources"""
+    if not engine.mcp_server:
+        raise HTTPException(status_code=503, detail="MCP Server not available")
+    return engine.mcp_server._handle_resources_list({})
+
+@app.post("/api/protocol/mcp/call")
+async def mcp_call(req: Dict):
+    """Call MCP tool via JSON-RPC"""
+    if not engine.mcp_server:
+        raise HTTPException(status_code=503, detail="MCP Server not available")
+    result = engine.mcp_server.handle_request(req)
+    return result
+
+@app.get("/api/protocol/mcp/stats")
+async def mcp_stats():
+    """Get MCP server statistics"""
+    if not engine.mcp_server:
+        raise HTTPException(status_code=503, detail="MCP Server not available")
+    return engine.mcp_server.get_stats()
+
+
+# ============================================================================
+# Observability Routes
+# ============================================================================
+@app.get("/api/observability/traces")
+async def obs_list_traces():
+    """List all agent traces"""
+    if not engine.trace_collector:
+        raise HTTPException(status_code=503, detail="Observability not available")
+    # Return summary of all tracked agents
+    return {
+        "traces": engine.trace_collector.get_all_stats() if hasattr(engine.trace_collector, 'get_all_stats') else {},
+        "metrics": list(engine.trace_collector.metrics.keys()) if hasattr(engine.trace_collector, 'metrics') else [],
+    }
+
+@app.get("/api/observability/traces/{agent_name}")
+async def obs_get_trace(agent_name: str):
+    """Get detailed trace for a specific agent"""
+    if not engine.trace_collector:
+        raise HTTPException(status_code=503, detail="Observability not available")
+    stats = engine.trace_collector.get_stats(agent_name)
+    if stats is None:
+        raise HTTPException(status_code=404, detail=f"No trace for agent: {agent_name}")
+    return stats
+
+@app.get("/api/observability/summary")
+async def obs_summary():
+    """Get overall observability summary"""
+    if not engine.trace_collector:
+        raise HTTPException(status_code=503, detail="Observability not available")
+    return engine.trace_collector.get_all_stats() if hasattr(engine.trace_collector, 'get_all_stats') else {"status": "ok"}
+
+
+# ============================================================================
+# Guardrails Routes
+# ============================================================================
+@app.get("/api/guardrails/list")
+async def guardrails_list():
+    """List all configured guardrails"""
+    return {
+        "input_guardrails": [{"name": g.name, "description": g.description} for g in engine.input_guardrails],
+        "output_guardrails": [{"name": g.name, "description": g.description} for g in engine.output_guardrails],
+        "tool_guardrails": [{"name": g.name, "description": g.description} for g in engine.tool_guardrails],
+    }
+
+@app.post("/api/guardrails/check-input")
+async def guardrails_check_input(req: Dict):
+    """Check input against guardrails"""
+    user_input = req.get("input", "")
+    results = []
+    for g in engine.input_guardrails:
+        r = g.check(user_input)
+        results.append({
+            "guardrail": g.name,
+            "passed": r.passed,
+            "blocked": r.blocked,
+            "reason": r.message,
+        })
+    return {"results": results, "all_passed": all(r["passed"] for r in results)}
+
+@app.post("/api/guardrails/check-output")
+async def guardrails_check_output(req: Dict):
+    """Check output against guardrails"""
+    output = req.get("output", "")
+    results = []
+    for g in engine.output_guardrails:
+        r = g.check(output)
+        results.append({
+            "guardrail": g.name,
+            "passed": r.passed,
+            "blocked": r.blocked,
+            "reason": r.message,
+        })
+    return {"results": results, "all_passed": all(r["passed"] for r in results)}
+
+
 
 if __name__ == "__main__":
     print(f"""

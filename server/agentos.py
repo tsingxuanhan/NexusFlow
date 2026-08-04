@@ -28,7 +28,7 @@ logger = logging.getLogger("AgentOS")
 
 # FastAPI可选依赖
 try:
-    from fastapi import FastAPI, HTTPException, BackgroundTasks
+    from fastapi import FastAPI, HTTPException, BackgroundTasks, APIRouter
     from fastapi.responses import StreamingResponse, JSONResponse
     from fastapi.middleware.cors import CORSMiddleware
     from pydantic import BaseModel
@@ -169,8 +169,16 @@ class AgentOS:
 
     # ============ FastAPI App创建 ============
 
+    def create_router(self, prefix: str = "") -> Any:
+        """创建APIRouter（用于挂载到主app）"""
+        if not FASTAPI_AVAILABLE:
+            raise ImportError("FastAPI未安装")
+        router = APIRouter(prefix=prefix)
+        self._register_routes(router)
+        return router
+
     def create_app(self) -> Any:
-        """创建FastAPI应用"""
+        """创建独立FastAPI应用"""
         if not FASTAPI_AVAILABLE:
             raise ImportError(
                 "FastAPI未安装，请运行: pip install fastapi uvicorn"
@@ -182,7 +190,6 @@ class AgentOS:
             version="2.7.0",
         )
 
-        # CORS: 允许Hub控制面板等前端访问
         app.add_middleware(
             CORSMiddleware,
             allow_origins=["*"],

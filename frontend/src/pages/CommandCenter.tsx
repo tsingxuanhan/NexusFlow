@@ -2,12 +2,12 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import type { ReactNode } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
+import { FaultInjection } from './FaultInjection'
 import { Button } from '@/components/ui/Button'
 import { api } from '@/api/client'
 import type { AgentInfo, TaskExecution, WSEvent, UploadResponse } from '@/api/client'
 import {
-  Zap, Plus, AlertTriangle, Radio, Circle, Clock,
-  CheckCircle, XCircle, Loader, Upload, File as FileIcon,
+  CheckCircle, XCircle, Loader, Upload, File as FileIcon, Clock, Circle, Zap, Plus, Radio,
   Trash2, Wifi, WifiOff,
 } from 'lucide-react'
 
@@ -83,13 +83,6 @@ const logLevelColors: Record<string, string> = {
   debug: 'text-gray-400',
 }
 
-const faultTypes = [
-  { value: 'node_failure', label: '💀 节点失效 — Agent 宕机，触发自动恢复' },
-  { value: 'latency_inject', label: '⏱️ 延迟注入 — 模拟响应延迟，测试超时机制' },
-  { value: 'data_corruption', label: '🗑️ 数据损坏 — 数据载荷损坏，触发重新获取' },
-  { value: 'topology_disrupt', label: '🔀 拓扑扰动 — 强制切换拓扑结构' },
-  { value: 'resource_exhaust', label: '🔥 资源耗尽 — CPU/内存/磁盘资源耗尽模拟' },
-]
 
 const strategies = [
   { value: 'auto', label: '🤖 自动选择' },
@@ -113,8 +106,6 @@ export function CommandCenter() {
   const [maxSteps, setMaxSteps] = useState(5)
   const [strategy, setStrategy] = useState('auto')
   const [selectedFileIds, setSelectedFileIds] = useState<Set<string>>(new Set())
-  const [faultTaskId, setFaultTaskId] = useState('')
-  const [faultType, setFaultType] = useState('node_failure')
   const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'error'>('connecting')
   const [dragOver, setDragOver] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -303,16 +294,16 @@ export function CommandCenter() {
   }, [newTask, maxSteps, strategy, uploadedFiles, selectedFileIds, fetchTasks])
 
   // Inject fault
-  const handleInjectFault = useCallback(async () => {
-    if (!faultTaskId) return
+  const handleInjectFault = useCallback(async (tid: string, faultType: string, _params: Record<string, unknown>) => {
+    if (!tid) return
     setInjecting(true)
     try {
-      await api.injectFault(faultTaskId, faultType)
+      await api.injectFault(tid, faultType)
       setLogs(prev => [...prev.slice(-199), {
         time: formatTime(new Date()),
         level: 'warn',
         source: 'system',
-        message: `异常已注入: ${faultType} → 任务 ${faultTaskId}`,
+        message: `异常已注入: ${faultType} → ${tid}`,
       }])
     } catch (err) {
       setLogs(prev => [...prev.slice(-199), {
@@ -324,7 +315,7 @@ export function CommandCenter() {
     } finally {
       setInjecting(false)
     }
-  }, [faultTaskId, faultType])
+  }, [])
 
   // Render
   return (
@@ -523,48 +514,12 @@ export function CommandCenter() {
             </div>
           </Card>
 
-          <Card title="异常注入" icon={<AlertTriangle className="w-4 h-4" />}>
-            <div className="space-y-3">
-              <div>
-                <label className="text-xs text-gray-500 block mb-1">目标任务</label>
-                <select
-                  value={faultTaskId}
-                  onChange={(e) => setFaultTaskId(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 focus:border-[#6366f1] bg-white"
-                >
-                  <option value="">选择任务...</option>
-                  {tasks.map(t => (
-                    <option key={t.id} value={t.id}>{t.id} — {t.description}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="text-xs text-gray-500 block mb-1">注入类型</label>
-                <select
-                  value={faultType}
-                  onChange={(e) => setFaultType(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 focus:border-[#6366f1] bg-white"
-                >
-                  {faultTypes.map(f => (
-                    <option key={f.value} value={f.value}>{f.label}</option>
-                  ))}
-                </select>
-              </div>
-              <Button
-                variant="danger"
-                size="sm"
-                onClick={handleInjectFault}
-                disabled={injecting || !faultTaskId}
-                className="w-full"
-              >
-                {injecting ? (
-                  <><Loader className="w-3.5 h-3.5 mr-1 animate-spin" /> 注入中...</>
-                ) : (
-                  <><AlertTriangle className="w-3.5 h-3.5 mr-1" /> 执行注入</>
-                )}
-              </Button>
-            </div>
-          </Card>
+          <FaultInjection
+            tasks={tasks}
+            agents={agents}
+            onInject={handleInjectFault}
+            injecting={injecting}
+          />
         </div>
       </div>
     </div>

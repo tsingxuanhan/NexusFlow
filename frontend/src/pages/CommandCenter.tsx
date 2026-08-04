@@ -422,7 +422,7 @@ export function CommandCenter() {
                   <input
                     type="range"
                     min={1}
-                    max={20}
+                    max={100}
                     value={maxSteps}
                     onChange={(e) => setMaxSteps(Number(e.target.value))}
                     className="w-full accent-[#6366f1] cursor-pointer"

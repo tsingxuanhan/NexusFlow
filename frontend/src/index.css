@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1;
+  --color-accent: #F97316;
+  --color-success: #10B981;
+  --color-info: #0EA5E9;
+  --color-sidebar: #1E1B4B;
+  --color-sidebar-hover: #312E81;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #F8FAFC;
+  color: #1E293B;
+}

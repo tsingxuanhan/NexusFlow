@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { CommandCenter } from '@/pages/CommandCenter'
 import { CognitionEngine } from '@/pages/CognitionEngine'
 import { EdgeCloudScheduler } from '@/pages/EdgeCloudScheduler'
 import { TopologyRouter } from '@/pages/TopologyRouter'
-import { LayoutDashboard, Brain, Server, Network, ChevronRight } from 'lucide-react'
+import { api } from '@/api/client'
+import type { SystemStatus } from '@/api/client'
+import { LayoutDashboard, Brain, Server, Network, ChevronRight, Activity, CheckCircle } from 'lucide-react'
 
 const pages = [
   { id: 'command', label: '指挥中心', icon: LayoutDashboard, component: CommandCenter },
@@ -16,7 +18,23 @@ const pageColors = ['text-[#6366f1]', 'text-[#F97316]', 'text-[#0EA5E9]', 'text-
 
 export default function App() {
   const [active, setActive] = useState('command')
+  const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null)
   const ActivePage = pages.find(p => p.id === active)?.component || CommandCenter
+
+  const fetchSystemStatus = useCallback(async () => {
+    try {
+      const data = await api.getSystemStatus()
+      setSystemStatus(data)
+    } catch {
+      // silent fail — header shows "连接中..."
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchSystemStatus()
+    const interval = setInterval(fetchSystemStatus, 10000)
+    return () => clearInterval(interval)
+  }, [fetchSystemStatus])
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
@@ -54,10 +72,23 @@ export default function App() {
             <span className="text-xs text-gray-400">NexusFlow Dashboard</span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#10B981]/10 rounded-full">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-              <span className="text-[10px] font-medium text-[#10B981]">System Online</span>
-            </div>
+            {systemStatus ? (
+              <>
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#0EA5E9]/10 rounded-full">
+                  <Activity className="w-3 h-3 text-[#0EA5E9]" />
+                  <span className="text-[10px] font-medium text-[#0EA5E9]">{systemStatus.active_tasks} 活跃</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#10B981]/10 rounded-full">
+                  <CheckCircle className="w-3 h-3 text-[#10B981]" />
+                  <span className="text-[10px] font-medium text-[#10B981]">{systemStatus.completed_tasks} 完成</span>
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 rounded-full">
+                <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-pulse" />
+                <span className="text-[10px] font-medium text-gray-500">连接中...</span>
+              </div>
+            )}
             <span className="text-xs text-gray-400">v3.6</span>
           </div>
         </header>

@@ -1,24 +1,16 @@
 import { useState, useCallback } from 'react'
-
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { Badge } from '@/components/ui/Badge'
+import { api } from '@/api/client'
 import type { TaskExecution, AgentInfo } from '@/api/client'
-import { AlertTriangle, Loader, Zap, Clock, Database, GitBranch, Cpu, CheckCircle, XCircle } from 'lucide-react'
+import { AlertTriangle, Loader, Zap, Clock, Database, GitBranch, Cpu, CheckCircle, XCircle, RotateCcw } from 'lucide-react'
 
 interface FaultInjectionProps {
   tasks: TaskExecution[]
   agents: AgentInfo[]
   onInject: (taskId: string, faultType: string, params: Record<string, unknown>) => void
   injecting: boolean
-}
-
-interface FaultConfig {
-  value: string
-  label: string
-  icon: typeof Zap
-  color: string
-  description: string
-  fields: FieldDef[]
 }
 
 interface FieldDef {
@@ -32,6 +24,15 @@ interface FieldDef {
   defaultValue: string | number
   options?: { value: string; label: string }[]
   unit?: string
+}
+
+interface FaultConfig {
+  value: string
+  label: string
+  icon: typeof Zap
+  color: string
+  description: string
+  fields: FieldDef[]
 }
 
 const faultConfigs: FaultConfig[] = [
@@ -131,23 +132,58 @@ export function FaultInjection({ tasks, agents, onInject, injecting }: FaultInje
   const [taskId, setTaskId] = useState('')
   const [params, setParams] = useState<Record<string, unknown>>({})
   const [injectResult, setInjectResult] = useState<{ success: boolean; message: string } | null>(null)
+  const [recoveringAgent, setRecoveringAgent] = useState<string>('')
+  const [recoverResult, setRecoverResult] = useState<{ success: boolean; message: string } | null>(null)
 
   const currentConfig = faultConfigs.find(f => f.value === selectedFault)!
-
 
   const handleParamChange = (key: string, value: string | number) => {
     setParams(prev => ({ ...prev, [key]: value }))
   }
 
-  const runningTasks = tasks.filter(t => ['pending', 'running', 'planning', 'reviewing'].includes(t.status))
+  // Get disabled agents for selected task
+  const selectedTask = tasks.find(t => t.id === taskId)
+  const disabledAgents = selectedTask?.disabled_agents || []
 
   const handleInject = useCallback(async () => {
     if (!taskId) return
+    setInjectResult(null)
     onInject(taskId, selectedFault, params)
-    // Show a mock result for demo (real result comes from WebSocket)
     setInjectResult({ success: true, message: `已注入: ${currentConfig.label} → ${taskId}` })
     setTimeout(() => setInjectResult(null), 5000)
   }, [taskId, selectedFault, params, onInject, currentConfig])
+
+  const handleRecover = useCallback(async (agentId: string) => {
+    if (!taskId || !agentId) return
+    setRecoveringAgent(agentId)
+    setRecoverResult(null)
+    try {
+      await api.recoverAgent(taskId, agentId)
+      setRecoverResult({ success: true, message: `已恢复: ${agentId}` })
+    } catch (err) {
+      setRecoverResult({ success: false, message: `恢复失败: ${err instanceof Error ? err.message : '未知错误'}` })
+    } finally {
+      setRecoveringAgent('')
+      setTimeout(() => setRecoverResult(null), 5000)
+    }
+  }, [taskId])
+
+  const handleRecoverAll = useCallback(async () => {
+    if (!taskId || disabledAgents.length === 0) return
+    setRecoveringAgent('__all__')
+    setRecoverResult(null)
+    try {
+      for (const agentId of disabledAgents) {
+        await api.recoverAgent(taskId, agentId)
+      }
+      setRecoverResult({ success: true, message: `已恢复全部 ${disabledAgents.length} 个 Agent` })
+    } catch (err) {
+      setRecoverResult({ success: false, message: `批量恢复失败: ${err instanceof Error ? err.message : '未知错误'}` })
+    } finally {
+      setRecoveringAgent('')
+      setTimeout(() => setRecoverResult(null), 5000)
+    }
+  }, [taskId, disabledAgents])
 
   const renderField = (field: FieldDef) => {
     const value = (params[field.key] ?? field.defaultValue) as string | number
@@ -220,102 +256,163 @@ export function FaultInjection({ tasks, agents, onInject, injecting }: FaultInje
   }
 
   return (
-    <Card
-      title="异常注入"
-      icon={<AlertTriangle className="w-4 h-4" />}
-      action={injectResult && (
-        <div className={`flex items-center gap-1 text-xs ${injectResult.success ? 'text-[#10B981]' : 'text-red-500'}`}>
-          {injectResult.success ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
-          {injectResult.message}
-        </div>
-      )}
-    >
-      <div className="space-y-4">
-        {/* Target Task */}
-        <div>
-          <label className="text-xs text-gray-500 block mb-1">目标任务</label>
-          <select
-            value={taskId}
-            onChange={e => setTaskId(e.target.value)}
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 focus:border-[#6366f1]"
-          >
-            <option value="">选择任务...</option>
-            {runningTasks.length > 0 && (
-              <optgroup label="运行中">
-                {runningTasks.map(t => (
+    <div className="space-y-5">
+      {/* Fault Injection Panel */}
+      <Card
+        title="异常注入"
+        icon={<AlertTriangle className="w-4 h-4" />}
+        action={injectResult && (
+          <div className={`flex items-center gap-1 text-xs ${injectResult.success ? 'text-[#10B981]' : 'text-red-500'}`}>
+            {injectResult.success ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+            {injectResult.message}
+          </div>
+        )}
+      >
+        <div className="space-y-4">
+          {/* Target Task */}
+          <div>
+            <label className="text-xs text-gray-500 block mb-1">目标任务</label>
+            <select
+              value={taskId}
+              onChange={e => setTaskId(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]/30 focus:border-[#6366f1]"
+            >
+              <option value="">选择任务...</option>
+              {tasks.filter(t => ['pending', 'running', 'planning', 'reviewing'].includes(t.status)).length > 0 && (
+                <optgroup label="运行中">
+                  {tasks.filter(t => ['pending', 'running', 'planning', 'reviewing'].includes(t.status)).map(t => (
+                    <option key={t.id} value={t.id}>{t.id} — {t.description.slice(0, 30)}</option>
+                  ))}
+                </optgroup>
+              )}
+              <optgroup label="全部任务">
+                {tasks.slice(0, 20).map(t => (
                   <option key={t.id} value={t.id}>{t.id} — {t.description.slice(0, 30)}</option>
                 ))}
               </optgroup>
-            )}
-            <optgroup label="全部任务">
-              {tasks.slice(0, 20).map(t => (
-                <option key={t.id} value={t.id}>{t.id} — {t.description.slice(0, 30)}</option>
-              ))}
-            </optgroup>
-          </select>
-        </div>
-
-        {/* Fault Type Selector (cards) */}
-        <div>
-          <label className="text-xs text-gray-500 block mb-2">故障类型</label>
-          <div className="grid grid-cols-1 gap-1.5">
-            {faultConfigs.map(fc => {
-              const Icon = fc.icon
-              const isActive = selectedFault === fc.value
-              return (
-                <button
-                  key={fc.value}
-                  onClick={() => { setSelectedFault(fc.value); setParams({}); setInjectResult(null) }}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all border ${
-                    isActive
-                      ? 'border-current bg-opacity-5 shadow-sm'
-                      : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
-                  }`}
-                  style={isActive ? { borderColor: fc.color, backgroundColor: `${fc.color}08` } : {}}
-                >
-                  <Icon className="w-4 h-4 shrink-0" style={{ color: isActive ? fc.color : undefined }} />
-                  <div className="flex-1 min-w-0">
-                    <span className={`text-xs font-medium ${isActive ? '' : 'text-gray-700'}`} style={isActive ? { color: fc.color } : {}}>
-                      {fc.label}
-                    </span>
-                  </div>
-                  {isActive && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: fc.color }} />}
-                </button>
-              )
-            })}
+            </select>
           </div>
-        </div>
 
-        {/* Dynamic Parameters */}
-        <div className="p-3 rounded-lg bg-gray-50 border border-gray-100 space-y-3">
-          <div className="flex items-center gap-2 mb-1">
-            <currentConfig.icon className="w-3.5 h-3.5" style={{ color: currentConfig.color }} />
-            <span className="text-xs font-semibold" style={{ color: currentConfig.color }}>{currentConfig.label}</span>
-            <span className="text-[10px] text-gray-400">— {currentConfig.description}</span>
-          </div>
-          {currentConfig.fields.map(field => (
-            <div key={field.key}>
-              <label className="text-xs text-gray-500 block mb-1">{field.label}</label>
-              {renderField(field)}
+          {/* Fault Type Selector (cards) */}
+          <div>
+            <label className="text-xs text-gray-500 block mb-2">故障类型</label>
+            <div className="grid grid-cols-1 gap-1.5">
+              {faultConfigs.map(fc => {
+                const Icon = fc.icon
+                const isActive = selectedFault === fc.value
+                return (
+                  <button
+                    key={fc.value}
+                    onClick={() => { setSelectedFault(fc.value); setParams({}); setInjectResult(null) }}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all border ${
+                      isActive
+                        ? 'border-current bg-opacity-5 shadow-sm'
+                        : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
+                    }`}
+                    style={isActive ? { borderColor: fc.color, backgroundColor: `${fc.color}08` } : {}}
+                  >
+                    <Icon className="w-4 h-4 shrink-0" style={{ color: isActive ? fc.color : undefined }} />
+                    <div className="flex-1 min-w-0">
+                      <span className={`text-xs font-medium ${isActive ? '' : 'text-gray-700'}`} style={isActive ? { color: fc.color } : {}}>
+                        {fc.label}
+                      </span>
+                    </div>
+                    {isActive && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: fc.color }} />}
+                  </button>
+                )
+              })}
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* Inject Button */}
-        <Button
-          variant="danger"
-          size="sm"
-          onClick={handleInject}
-          disabled={injecting || !taskId}
-          className="w-full"
+          {/* Dynamic Parameters */}
+          <div className="p-3 rounded-lg bg-gray-50 border border-gray-100 space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <currentConfig.icon className="w-3.5 h-3.5" style={{ color: currentConfig.color }} />
+              <span className="text-xs font-semibold" style={{ color: currentConfig.color }}>{currentConfig.label}</span>
+              <span className="text-[10px] text-gray-400">— {currentConfig.description}</span>
+            </div>
+            {currentConfig.fields.map(field => (
+              <div key={field.key}>
+                <label className="text-xs text-gray-500 block mb-1">{field.label}</label>
+                {renderField(field)}
+              </div>
+            ))}
+          </div>
+
+          {/* Inject Button */}
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={handleInject}
+            disabled={injecting || !taskId}
+            className="w-full"
+          >
+            {injecting ? (
+              <><Loader className="w-3.5 h-3.5 mr-1 animate-spin" /> 注入中...</>
+            ) : (
+              <><AlertTriangle className="w-3.5 h-3.5 mr-1" /> 执行注入</>
+            )}
+          </Button>
+        </div>
+      </Card>
+
+      {/* Recovery Panel - only show if task has disabled agents */}
+      {taskId && disabledAgents.length > 0 && (
+        <Card
+          title="Agent 恢复"
+          icon={<RotateCcw className="w-4 h-4" />}
+          action={
+            recoverResult && (
+              <div className={`flex items-center gap-1 text-xs ${recoverResult.success ? 'text-[#10B981]' : 'text-red-500'}`}>
+                {recoverResult.success ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+                {recoverResult.message}
+              </div>
+            )
+          }
         >
-          {injecting ? (
-            <><Loader className="w-3.5 h-3.5 mr-1 animate-spin" /> 注入中...</>
-          ) : (
-            <><AlertTriangle className="w-3.5 h-3.5 mr-1" /> 执行注入</>
-          )}
-        </Button>
-      </div>
-    </Card>
+          <div className="space-y-3">
+            <p className="text-xs text-gray-500">以下 Agent 已被禁用，可手动恢复：</p>
+            <div className="space-y-2">
+              {disabledAgents.map((agentId: string) => (
+                <div key={agentId} className="flex items-center justify-between p-2.5 bg-red-50 border border-red-100 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-red-500" />
+                    <span className="text-sm font-medium text-gray-700">{agentId}</span>
+                    <Badge color="red">disabled</Badge>
+                  </div>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => handleRecover(agentId)}
+                    disabled={recoveringAgent !== ''}
+                  >
+                    {recoveringAgent === agentId ? (
+                      <><Loader className="w-3.5 h-3.5 mr-1 animate-spin" /> 恢复中...</>
+                    ) : (
+                      <><RotateCcw className="w-3.5 h-3.5 mr-1" /> 恢复</>
+                    )}
+                  </Button>
+                </div>
+              ))}
+            </div>
+            {disabledAgents.length > 1 && (
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleRecoverAll}
+                disabled={recoveringAgent !== ''}
+                className="w-full"
+              >
+                {recoveringAgent === '__all__' ? (
+                  <><Loader className="w-3.5 h-3.5 mr-1 animate-spin" /> 批量恢复中...</>
+                ) : (
+                  <><RotateCcw className="w-3.5 h-3.5 mr-1" /> 恢复全部 ({disabledAgents.length})</>
+                )}
+              </Button>
+            )}
+          </div>
+        </Card>
+      )}
+    </div>
   )
 }

@@ -14,6 +14,7 @@ export interface TaskExecution {
   total_steps?: number
   created_at?: string
   tokens_total?: number
+  disabled_agents?: string[]
   duration_seconds?: number
   error?: string
 }
@@ -113,6 +114,17 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fault_type: faultType, target_agent: targetAgent }),
+    })
+    if (!res.ok) throw new Error(await res.text())
+    return res.json()
+  },
+
+  // Recover disabled agent
+  async recoverAgent(taskId: string, agentId: string) {
+    const res = await fetch(`${API_BASE}/api/tasks/${taskId}/recover`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ agent_id: agentId }),
     })
     if (!res.ok) throw new Error(await res.text())
     return res.json()

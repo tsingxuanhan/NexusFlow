@@ -6,7 +6,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.p
 ART = os.path.join(REPO_ROOT, "examples", "stage4_fifty_steps", "stage4_artifacts")
 
 def call_ds(sys_p, usr_p, max_t=3000):
-    r = requests.post("https://api.deepseek.com/v1/chat/completions",
+    r = requests.post("https://api.deepseek.com/chat/completions",
         headers={"Authorization":"Bearer sk-your-key-here","Content-Type":"application/json"},
         json={"model":"deepseek-chat","messages":[{"role":"system","content":sys_p},{"role":"user","content":usr_p}],"max_tokens":max_t,"temperature":0.7},
         timeout=120)

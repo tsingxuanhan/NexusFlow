@@ -28,7 +28,7 @@ os.makedirs(_OUTPUT_DIR, exist_ok=True)
 # 配置
 # ============================================================
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
-DEEPSEEK_URL = 'https://api.deepseek.com/v1/chat/completions'
+DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions'
 DEEPSEEK_MODEL = 'deepseek-chat'
 
 OLLAMA_URL = 'http://127.0.0.1:11434/api/chat'

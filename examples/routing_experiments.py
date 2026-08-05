@@ -54,7 +54,7 @@ from tools.model_router import (
 # ── DeepSeek API ──
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "") or (sys.argv[3] if len(sys.argv) > 3 else "")
 DEEPSEEK_ENDPOINT = os.environ.get(
-    "DEEPSEEK_ENDPOINT", "https://api.deepseek.com/v1/chat/completions"
+    "DEEPSEEK_ENDPOINT", "https://api.deepseek.com/chat/completions"
 )
 
 # ── 输出目录 ──

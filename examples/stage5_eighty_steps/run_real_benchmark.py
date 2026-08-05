@@ -16,7 +16,7 @@ from datetime import datetime
 # 配置
 # ============================================================
 API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'sk-your-key-here')
-API_URL = 'https://api.deepseek.com/v1/chat/completions'
+API_URL = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-chat'
 OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(OUTPUT_DIR, 'data')

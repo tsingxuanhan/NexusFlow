@@ -8,7 +8,7 @@ import json, time, os, sys, urllib.request
 from datetime import datetime
 
 API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
+ENDPOINT = "https://api.deepseek.com/chat/completions"
 MODEL = "deepseek-chat"
 
 COMPLEX_TASK = """对全球5个主要经济体（中国、美国、德国、印度、巴西）的能源转型进展进行综合评估。

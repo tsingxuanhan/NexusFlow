@@ -60,7 +60,7 @@ RESULTS_NF_DIR = STAGE7_DIR / "results_nf"
 
 # ── API 配置 ──────────────────────────────────────────────────────────────
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_ENDPOINT = "https://api.deepseek.com/chat/completions"
 DEEPSEEK_MODEL = "deepseek-chat"
 
 # ── 终端样式 ──────────────────────────────────────────────────────────────

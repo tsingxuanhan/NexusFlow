@@ -21,7 +21,7 @@ from typing import Dict, List, Tuple
 # 配置
 # ============================================================
 API_KEY = os.environ.get("DEEPSEEK_API_KEY", "sk-your-key-here")
-ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
+ENDPOINT = "https://api.deepseek.com/chat/completions"
 MODEL = "deepseek-chat"
 
 WHO_TASK = """查询WHO GHO数据库，获取BRICS五国（巴西、俄罗斯、印度、中国、南非）的以下三项指标的最新数据：

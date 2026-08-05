@@ -78,7 +78,7 @@ def create_model_client():
     return OpenAIChatCompletionClient(
         model="deepseek-chat",
         api_key=api_key,
-        base_url="https://api.deepseek.com/v1",
+        base_url="https://api.deepseek.com",
         model_info={
             "vision": False,
             "function_calling": True,
@@ -432,7 +432,7 @@ async def main():
             "date": datetime.now().isoformat(),
             "task_description": "WHO BRICS 五国医疗卫生体系分析",
             "llm": "DeepSeek Chat (deepseek-chat)",
-            "api_endpoint": "https://api.deepseek.com/v1",
+            "api_endpoint": "https://api.deepseek.com",
             "python_version": sys.version.split()[0],
             "autogen_version": "0.7.5",
             "autogen_ext_version": "0.7.5",

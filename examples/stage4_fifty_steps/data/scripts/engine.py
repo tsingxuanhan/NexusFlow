@@ -21,7 +21,7 @@ ARTIFACTS_DIR = os.path.join(BASE_DIR, "stage4_artifacts")
 NOAA_CLI = os.environ.get("NOAA_CLI_PATH", os.path.join(REPO_ROOT, "..", ".skills", "skill_noaa-data-skill", "bin", "_cli_wrapper.py"))
 WHO_CLI = os.environ.get("WHO_CLI_PATH", os.path.join(REPO_ROOT, "..", ".skills", "skill_who-data-skill", "scripts", "_cli_wrapper.py"))
 
-DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_URL = "https://api.deepseek.com/chat/completions"
 DEEPSEEK_KEY = "sk-your-key-here"
 DEEPSEEK_MODEL = "deepseek-chat"
 

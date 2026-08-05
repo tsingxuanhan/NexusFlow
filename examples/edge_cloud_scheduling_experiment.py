@@ -113,7 +113,7 @@ def setup_three_tier_resources() -> EdgeCloudScheduler:
     cloud = TierResource(
         tier=DeployTier.CLOUD,
         name="deepseek-api",
-        endpoint="https://api.deepseek.com/v1",
+        endpoint="https://api.deepseek.com",
         cpu_cores=0,
         gpu_count=0,
         ram_gb=0.0,

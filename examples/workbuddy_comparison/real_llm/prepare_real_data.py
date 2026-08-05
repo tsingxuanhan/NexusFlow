@@ -20,7 +20,7 @@ print('1. 验证 DeepSeek API（新 key）')
 print('=' * 60)
 try:
     t0 = time.time()
-    r = requests.post('https://api.deepseek.com/v1/chat/completions',
+    r = requests.post('https://api.deepseek.com/chat/completions',
         headers={'Authorization': f'Bearer {NEW_KEY}', 'Content-Type': 'application/json'},
         json={'model': 'deepseek-chat',
               'messages': [{'role': 'user', 'content': 'Reply with exactly: API_OK'}],

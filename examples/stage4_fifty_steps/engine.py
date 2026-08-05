@@ -20,7 +20,7 @@ ARTIFACTS_DIR = os.path.join(BASE_DIR, "stage4_artifacts")
 NOAA_CLI = "../skills/noaa/bin/_cli_wrapper.py"
 WHO_CLI = "../skills/who/scripts/_cli_wrapper.py"
 
-DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_URL = "https://api.deepseek.com/chat/completions"
 DEEPSEEK_KEY = "YOUR_DEEPSEEK_API_KEY"  # Set your API key here
 DEEPSEEK_MODEL = "deepseek-chat"
 

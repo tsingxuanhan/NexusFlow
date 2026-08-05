@@ -62,7 +62,7 @@ def run_langgraph_real() -> dict:
     llm = ChatOpenAI(
         model="deepseek-chat",
         api_key=api_key,
-        base_url="https://api.deepseek.com/v1",
+        base_url="https://api.deepseek.com",
         temperature=0.7,
     )
 

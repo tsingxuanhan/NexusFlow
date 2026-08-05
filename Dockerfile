@@ -23,7 +23,7 @@ FROM python:3.11-slim AS runtime
 
 LABEL maintainer="NexusFlow Team"
 LABEL description="NexusFlow — 面向超长程复杂任务的群体智能引擎"
-LABEL version="3.1.0"
+LABEL version="3.6.0"
 
 # System deps for PDF processing
 RUN apt-get update && \

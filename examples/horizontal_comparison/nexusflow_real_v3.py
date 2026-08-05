@@ -7,7 +7,7 @@ import json, time, os, sys, urllib.request
 from datetime import datetime
 
 API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
+ENDPOINT = "https://api.deepseek.com/chat/completions"
 MODEL = "deepseek-chat"
 
 TASK_V3 = """查询WHO最新数据，对全球10个国家的健康指标进行综合分析。

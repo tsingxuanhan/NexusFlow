@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-NexusFlow Dashboard Server v3.6 — Dynamic Agents & Log Archiving
+NexusFlow Dashboard Server v3.6.0 — Dynamic Agents & Log Archiving
 ===================================================================
 Full-stack AGI task execution server, now using agent4science_nexus/ core modules.
 
@@ -26,6 +26,8 @@ Usage:
     export DEEPSEEK_API_KEY="sk-xxx"
     export DEEPSEEK_ENDPOINT="https://api.deepseek.com/chat/completions"
     export OLLAMA_URL="http://localhost:11434"
+    # Enable structured JSON logging (optional, default: text format)
+    export NEXUSFLOW_LOG_JSON=true
 
     # Run
     python nexusflow_server.py
@@ -676,11 +678,41 @@ CONFIG_DIR = os.path.join(PROJECT_ROOT, "config")
 os.makedirs(CONFIG_DIR, exist_ok=True)
 MODEL_SETTINGS_FILE = os.path.join(CONFIG_DIR, "model_settings.json")
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
-    datefmt="%H:%M:%S",
-)
+# ---------------------------------------------------------------------------
+# Structured JSON Log Formatter (optional)
+# Enable via: export NEXUSFLOW_LOG_JSON=true
+# ---------------------------------------------------------------------------
+class _JsonFormatter(logging.Formatter):
+    """Emit each log record as a single JSON line."""
+
+    def format(self, record: logging.LogRecord) -> str:
+        log_entry = {
+            "timestamp": datetime.utcfromtimestamp(record.created).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "level": record.levelname,
+            "logger": record.name,
+            "message": record.getMessage(),
+        }
+        # Attach any extra fields passed via the `extra` kwarg
+        _reserved = set(record.__dict__)
+        for key, value in getattr(record, "__extra_fields__", {}).items():
+            log_entry[key] = value
+        if record.exc_info and not record.exc_text:
+            record.exc_text = self.formatException(record.exc_info)
+        if record.exc_text:
+            log_entry["exception"] = record.exc_text
+        return json.dumps(log_entry, ensure_ascii=False)
+
+
+if os.environ.get("NEXUSFLOW_LOG_JSON", "").lower() == "true":
+    _handler = logging.StreamHandler()
+    _handler.setFormatter(_JsonFormatter())
+    logging.basicConfig(level=logging.INFO, handlers=[_handler])
+else:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
 logger = logging.getLogger("NexusFlow")
 
 
@@ -3083,7 +3115,7 @@ class _AgentWrapper:
 # FastAPI Application
 # ============================================================================
 
-app = FastAPI(title="NexusFlow Dashboard", version="3.6")
+app = FastAPI(title="NexusFlow Dashboard", version="3.6.0")
 
 # Pre-initialize AgentOS for route mounting (will be re-linked to engine in startup)
 _agentos_for_routes = None
@@ -3308,7 +3340,7 @@ async def startup():
     global engine
     
     logger.info("=" * 50)
-    logger.info("  NexusFlow Server v3.7 starting...")
+    logger.info("  NexusFlow Server v3.6.0 starting...")
     logger.info(f"  Core Engine: {'Enabled' if CORE_ENGINE_AVAILABLE else 'Disabled (Fallback)'}")
     logger.info("=" * 50)
     
@@ -3372,7 +3404,7 @@ async def shutdown():
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():
-    for fname in ["nexusflow-dashboard-v13.html", "nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
+    for fname in ["nexusflow-dashboard-v13.html"]:
         path = os.path.join(DASHBOARD_DIR, fname)
         print(f"[DASHBOARD] Checking: {path}  exists={os.path.exists(path)}")
         if os.path.exists(path):
@@ -3380,7 +3412,7 @@ async def serve_dashboard():
     _server_dir = os.path.dirname(os.path.abspath(__file__))
     _fallback_dir = os.path.join(os.path.dirname(_server_dir), "docs", "dashboard")
     print(f"[DASHBOARD] Fallback dir: {_fallback_dir}")
-    for fname in ["nexusflow-dashboard-v13.html", "nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
+    for fname in ["nexusflow-dashboard-v13.html"]:
         path = os.path.join(_fallback_dir, fname)
         if os.path.exists(path):
             print(f"[DASHBOARD] Found via fallback: {path}")
@@ -4925,7 +4957,7 @@ async def guardrails_check_output(req: Dict):
 if __name__ == "__main__":
     print(f"""
 ╔══════════════════════════════════════════════════════╗
-║    NexusFlow Server v3.7 — Dynamic Agents & Logs     ║
+║    NexusFlow Server v3.6.0 — Dynamic Agents & Logs     ║
 ╠══════════════════════════════════════════════════════╣
 ║  Dashboard : http://localhost:{SERVER_PORT:<6}               ║
 ║  API Docs  : http://localhost:{SERVER_PORT}/docs          ║

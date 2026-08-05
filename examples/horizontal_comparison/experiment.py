@@ -90,7 +90,7 @@ async def run_autogen_real(task: str) -> dict:
     model_client = OpenAIChatCompletionClient(
         model="deepseek-chat",
         api_key=api_key,
-        base_url="https://api.deepseek.com/v1",
+        base_url="https://api.deepseek.com",
     )
     
     researcher = AssistantAgent(
@@ -224,7 +224,7 @@ def main():
             "task_description": args.task,
             "mode": mode_desc,
             "llm": "DeepSeek Chat (deepseek-chat)",
-            "api_endpoint": "https://api.deepseek.com/v1",
+            "api_endpoint": "https://api.deepseek.com",
             "python_version": sys.version.split()[0],
             "autogen_version": "0.7.5",
             "autogen_ext_version": "0.7.5",

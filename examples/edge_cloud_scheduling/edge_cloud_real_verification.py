@@ -47,7 +47,7 @@ DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
 if not DEEPSEEK_API_KEY:
     print("ERROR: DEEPSEEK_API_KEY environment variable not set.")
     sys.exit(1)
-DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 OLLAMA_BASE_URL = "http://localhost:11434"
 
 # DeployTier → 实际LLM端点映射

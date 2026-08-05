@@ -41,7 +41,7 @@ NOAA_CLI = os.environ.get('NOAA_CLI_PATH', os.path.join(NEXUSFLOW_DIR, '..', '.s
 WHO_CLI = os.environ.get('WHO_CLI_PATH', os.path.join(NEXUSFLOW_DIR, '..', '.skills', 'skill_who-data-skill', 'scripts', '_cli_wrapper.py'))
 
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_URL = "https://api.deepseek.com/chat/completions"
 
 # 添加NexusFlow到sys.path
 sys.path.insert(0, NEXUSFLOW_DIR)

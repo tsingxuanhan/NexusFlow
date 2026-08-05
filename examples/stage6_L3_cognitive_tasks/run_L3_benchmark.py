@@ -48,7 +48,7 @@ os.chdir(REPO_DIR)
 sys.path.insert(0, REPO_DIR)
 
 API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
-API_URL = 'https://api.deepseek.com/v1/chat/completions'
+API_URL = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-chat'  # 实际返回 deepseek-v4-flash
 
 OUTPUT_DIR = os.path.join(REPO_DIR, 'examples', 'stage6_L3_cognitive_tasks')

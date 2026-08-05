@@ -1,6 +1,26 @@
 # Changelog
 
-## [Unreleased] - 2026-08-02
+## [Unreleased]
+
+## [v3.6.0] - 2026-08-05
+
+### Fixed
+- **版本号统一**: 全项目版本号统一为 v3.6.0（`__init__.py`, `pyproject.toml`, `Dockerfile`, `run.py`, `server.py`）
+- **DeepSeek endpoint 修正**: 修复 `.env.example` 及 30+ 个 examples 文件中错误的 `/v1/chat/completions` 为正确的 `/chat/completions`
+- **Dashboard 优先级修复**: server 的 `serve_dashboard()` fallback 列表优先查找 v13，确保正确提供最新版 Dashboard
+- **API 端点参数修复**: 修复 A2A 协议参数名不匹配（`name`→`agent_name`, `target_agent_id`→`agent_id`）、工具执行参数名错误（`parameters`→`params`）
+
+### Added
+- **MCP Manager 模块**: 新增 `server/mcp_manager.py`，支持 MCP server 的注册、连接、工具调用等基础管理
+- **API 集成测试**: 新增 `tests/test_api_integration.py`，覆盖核心 API 端点的自动化测试
+- **结构化日志**: server 支持通过 `NEXUSFLOW_LOG_JSON=true` 环境变量启用 JSON 格式日志输出
+- **前端 CI**: 新增 `.github/workflows/frontend.yml`，自动检查前端 TypeScript 编译和构建
+
+### Changed
+- **Dashboard 清理**: 移除旧版 Dashboard HTML（v4/v4-ascii），仅保留最新 v13
+- **Dashboard fallback 列表简化**: 移除已不存在的旧版本查找路径
+
+
 
 ### Benchmark Results
 - **LHAB-NF 真实基准测试完成** (DeepSeek V4 Flash 后端)
@@ -272,7 +292,8 @@ NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachan
 - **自适应上下文管理器**（1,642 行）
 - **动态拓扑路由器**（869 行）：5 种拓扑模式
 
-[Unreleased]: https://github.com/tsingxuanhan/NexusFlow/compare/v3.2.0...HEAD
+[Unreleased]: https://github.com/tsingxuanhan/NexusFlow/compare/v3.6.0...HEAD
+[v3.6.0]: https://github.com/tsingxuanhan/NexusFlow/compare/v3.5.0...v3.6.0
 [3.2.0]: https://github.com/tsingxuanhan/NexusFlow/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v3.1.0
 [3.0.0]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v3.0.0

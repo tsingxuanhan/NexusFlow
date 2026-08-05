@@ -49,3 +49,4 @@ docs/api/
 # LHAB-NF benchmark results
 evaluation/lhab_nf/results/
 evaluation/lhab_nf/__pycache__/
+server/data/

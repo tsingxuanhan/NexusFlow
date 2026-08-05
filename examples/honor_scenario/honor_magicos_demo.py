@@ -47,7 +47,7 @@ if not DEEPSEEK_API_KEY:
     sys.exit(1)
 
 OLLAMA_BASE_URL = "http://localhost:11434"
-DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 
 TIER_ENDPOINTS = {
     DeployTier.EDGE: {"model": "qwen3.5:9b", "endpoint": f"{OLLAMA_BASE_URL}/api/chat", "type": "ollama", "label": "📱 Terminal(荣耀手机)"},

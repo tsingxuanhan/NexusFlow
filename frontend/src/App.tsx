@@ -3,15 +3,19 @@ import { CommandCenter } from '@/pages/CommandCenter'
 import { CognitionEngine } from '@/pages/CognitionEngine'
 import { EdgeCloudScheduler } from '@/pages/EdgeCloudScheduler'
 import { TopologyRouter } from '@/pages/TopologyRouter'
+import { MCPServers } from '@/pages/MCPServers'
+import { Settings } from '@/pages/Settings'
 import { api } from '@/api/client'
 import type { SystemStatus } from '@/api/client'
-import { LayoutDashboard, Brain, Server, Network, ChevronRight, Activity, CheckCircle } from 'lucide-react'
+import { LayoutDashboard, Brain, Server, Network, Settings as SettingsIcon, Plug, ChevronRight, Activity, CheckCircle } from 'lucide-react'
 
 const pages = [
   { id: 'command', label: '指挥中心', icon: LayoutDashboard, component: CommandCenter },
   { id: 'cognition', label: '认知引擎', icon: Brain, component: CognitionEngine },
   { id: 'scheduler', label: '端边云调度', icon: Server, component: EdgeCloudScheduler },
   { id: 'topology', label: '拓扑路由', icon: Network, component: TopologyRouter },
+  { id: 'mcp', label: 'MCP 工具', icon: Plug, component: MCPServers },
+  { id: 'settings', label: '设置', icon: SettingsIcon, component: Settings },
 ]
 
 const pageColors = ['text-[#6366f1]', 'text-[#F97316]', 'text-[#0EA5E9]', 'text-[#10B981]']

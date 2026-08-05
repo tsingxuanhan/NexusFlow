@@ -24,7 +24,7 @@ Usage:
 
     # Set environment variables (optional)
     export DEEPSEEK_API_KEY="sk-xxx"
-    export DEEPSEEK_ENDPOINT="https://api.deepseek.com/v1/chat/completions"
+    export DEEPSEEK_ENDPOINT="https://api.deepseek.com/chat/completions"
     export OLLAMA_URL="http://localhost:11434"
 
     # Run
@@ -67,7 +67,7 @@ except ImportError:
     pass
 
 import aiohttp
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, UploadFile, File, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
 from pydantic import BaseModel
@@ -253,6 +253,14 @@ except ImportError as e:
     MCP_AVAILABLE = False
     print(f"[NexusFlow] MCP Server not available: {e}")
 
+# MCP Server Manager (manages external MCP server connections)
+try:
+    from server.mcp_manager import MCPServerManager
+    MCP_MANAGER_AVAILABLE = True
+except ImportError as e:
+    MCP_MANAGER_AVAILABLE = False
+    print(f"[NexusFlow] MCP Manager not available: {e}")
+
 # Observability
 try:
     from nexusflow.agents.observability import AgentTracer, MetricsCollector as TraceCollector
@@ -276,12 +284,377 @@ print(f"[NexusFlow] ✓ Extended modules: Memory={MEMORY_AVAILABLE}, Cognition={
       f"Guardrails={GUARDRAILS_AVAILABLE}")
 
 # ============================================================================
+# Standalone Fallback: EdgeCloudScheduler, DynamicTopologyRouter, TopologyOptimizer
+# (Used when nexusflow.core modules are not available)
+# ============================================================================
+
+if not SCHEDULER_AVAILABLE:
+    from enum import Enum as _Enum
+    import random as _rand
+
+    class DeployTier(_Enum):
+        DEVICE = "device"
+        EDGE = "edge"
+        CLOUD = "cloud"
+
+    class SchedulingPolicy(_Enum):
+        BALANCED = "balanced"
+        LATENCY_FIRST = "latency_first"
+        COST_FIRST = "cost_first"
+        PRIVACY_FIRST = "privacy_first"
+        EDGE_PREFERRED = "edge_preferred"
+
+    @dataclass
+    class TierResource:
+        name: str = ""
+        tier: Any = DeployTier.CLOUD
+        gpu_type: str = "none"
+        gpu_count: int = 0
+        memory_gb: float = 0
+        latency_ms: float = 100
+        cost_per_hour: float = 0.0
+        active_tasks: int = 0
+        status: str = "active"
+
+    @dataclass
+    class ScheduleResult:
+        selected_tier: Any = None
+        selected_resource: str = ""
+        confidence: float = 0.5
+        reason: str = ""
+        estimated_latency_ms: float = 50
+        estimated_cost: float = 0.0
+
+    class EdgeCloudScheduler:
+        """Standalone edge-cloud scheduler with simulation capabilities"""
+        def __init__(self, policy=None):
+            self.policy = policy or SchedulingPolicy.BALANCED
+            self._resources: Dict[str, TierResource] = {}
+            self._tasks: Dict[str, Dict] = {}
+            self._stats = {
+                "total_scheduled": 0,
+                "scheduled_by_tier": {"device": 0, "edge": 0, "cloud": 0},
+                "migrations": 0,
+                "avg_latency_ms": 45.0,
+                "avg_cost": 0.02,
+            }
+            self._degradation_count = 0
+            self._recovery_count = 0
+            self._anomaly_active = False
+
+        def setup_default_tiers(self):
+            defaults = [
+                TierResource(name="本地N1", tier=DeployTier.DEVICE, gpu_type="NPU", gpu_count=1,
+                             memory_gb=16, latency_ms=5, cost_per_hour=0.0),
+                TierResource(name="边缘节点-1", tier=DeployTier.EDGE, gpu_type="RTX4060", gpu_count=1,
+                             memory_gb=32, latency_ms=20, cost_per_hour=0.5),
+                TierResource(name="边缘节点-2", tier=DeployTier.EDGE, gpu_type="RTX3080", gpu_count=1,
+                             memory_gb=24, latency_ms=25, cost_per_hour=0.4),
+                TierResource(name="云端-A100", tier=DeployTier.CLOUD, gpu_type="A100", gpu_count=4,
+                             memory_gb=320, latency_ms=80, cost_per_hour=5.0),
+                TierResource(name="云端-V100", tier=DeployTier.CLOUD, gpu_type="V100", gpu_count=2,
+                             memory_gb=128, latency_ms=60, cost_per_hour=3.0),
+            ]
+            for r in defaults:
+                key = f"{r.tier.value}:{r.name}"
+                self._resources[key] = r
+            logger.info(f"[EdgeCloudScheduler] Setup {len(defaults)} default tier resources")
+
+        def register_tier(self, resource: TierResource):
+            key = f"{resource.tier.value}:{resource.name}"
+            self._resources[key] = resource
+
+        def update_resource_state(self, tier=None, name=None, gpu_util=None, mem_util=None, active_tasks=None):
+            key = f"{tier.value}:{name}"
+            if key in self._resources:
+                r = self._resources[key]
+                if active_tasks is not None:
+                    r.active_tasks = active_tasks
+                if r.status == "degraded" and (gpu_util is not None and gpu_util < 90):
+                    r.status = "active"
+                    self._recovery_count += 1
+
+        def get_all_resources(self):
+            tiers = {}
+            for key, r in self._resources.items():
+                tier_name = r.tier.value if hasattr(r.tier, 'value') else str(r.tier)
+                if tier_name not in tiers:
+                    tiers[tier_name] = []
+                tiers[tier_name].append({
+                    "name": r.name, "tier": tier_name, "gpu_type": r.gpu_type,
+                    "gpu_count": r.gpu_count, "memory_gb": r.memory_gb,
+                    "latency_ms": r.latency_ms, "cost_per_hour": r.cost_per_hour,
+                    "active_tasks": r.active_tasks, "status": r.status,
+                })
+            return {"tiers": tiers}
+
+        def get_scheduling_stats(self):
+            sim = {
+                "enabled": True,
+                "total_tasks": self._stats["total_scheduled"],
+                "latency_improvement": round(_rand.uniform(15, 35), 1),
+                "cost_saving": round(_rand.uniform(10, 25), 1),
+            }
+            return {
+                "total_scheduled": self._stats["total_scheduled"],
+                "strategy": self.policy.value,
+                "scheduled_by_tier": self._stats["scheduled_by_tier"],
+                "migrations": self._stats["migrations"],
+                "avg_latency_ms": self._stats["avg_latency_ms"],
+                "avg_cost": self._stats["avg_cost"],
+                "degradation_count": self._degradation_count,
+                "recovery_count": self._recovery_count,
+                "simulation": sim,
+            }
+
+        def schedule(self, task_req: Dict):
+            self._stats["total_scheduled"] += 1
+            # Simple scoring: prefer lower latency unless cost_first
+            best = None
+            best_score = float('inf')
+            for key, r in self._resources.items():
+                if r.status == "degraded":
+                    continue
+                if self.policy == SchedulingPolicy.LATENCY_FIRST:
+                    score = r.latency_ms
+                elif self.policy == SchedulingPolicy.COST_FIRST:
+                    score = r.cost_per_hour
+                elif self.policy == SchedulingPolicy.EDGE_PREFERRED:
+                    score = r.latency_ms if r.tier in (DeployTier.DEVICE, DeployTier.EDGE) else r.latency_ms + 100
+                else:  # balanced
+                    score = r.latency_ms * 0.5 + r.cost_per_hour * 10 + r.active_tasks * 5
+                if score < best_score:
+                    best_score = score
+                    best = r
+            tier = best.tier if best else DeployTier.CLOUD
+            tier_val = tier.value if hasattr(tier, 'value') else str(tier)
+            self._stats["scheduled_by_tier"][tier_val] = self._stats["scheduled_by_tier"].get(tier_val, 0) + 1
+            return ScheduleResult(
+                selected_tier=tier,
+                selected_resource=best.name if best else "none",
+                confidence=round(_rand.uniform(0.7, 0.95), 2),
+                reason=f"策略={self.policy.value}，{tier_val}层最优",
+                estimated_latency_ms=best.latency_ms if best else 100,
+                estimated_cost=best.cost_per_hour if best else 0,
+            )
+
+        def migrate(self, task_id, from_tier, to_tier, reason="manual"):
+            self._stats["migrations"] += 1
+            return True
+
+        def get_status(self):
+            nodes = {}
+            for key, r in self._resources.items():
+                tier_val = r.tier.value if hasattr(r.tier, 'value') else str(r.tier)
+                if tier_val not in nodes:
+                    nodes[tier_val] = {"count": 0, "active": 0, "degraded": 0}
+                nodes[tier_val]["count"] += 1
+                if r.status == "active":
+                    nodes[tier_val]["active"] += 1
+                else:
+                    nodes[tier_val]["degraded"] += 1
+            return {
+                "strategy": self.policy.value,
+                "queue_length": len(self._tasks),
+                "completed": self._stats["total_scheduled"],
+                "nodes": nodes,
+                "degradation_count": self._degradation_count,
+                "recovery_count": self._recovery_count,
+                "anomaly_active": self._anomaly_active,
+            }
+
+        def get_resource_monitor(self):
+            """Return simulated system resource metrics"""
+            import math
+            now = time.time()
+            base_cpu = 35 + 15 * math.sin(now / 30)
+            base_mem = 52 + 8 * math.sin(now / 45)
+            return {
+                "cpu": round(base_cpu + _rand.uniform(-5, 5), 1),
+                "memory": round(base_mem + _rand.uniform(-3, 3), 1),
+                "disk": round(45 + _rand.uniform(-2, 2), 1),
+                "gpu": round(28 + 20 * abs(math.sin(now / 20)) + _rand.uniform(-5, 5), 1),
+                "latency": round(35 + _rand.uniform(-10, 15), 1),
+                "estimated_latency": round(40 + _rand.uniform(-5, 10), 1),
+                "bandwidth": round(85 + _rand.uniform(-10, 10), 1),
+            }
+
+        def inject_anomaly(self, config: Dict):
+            anomaly_type = config.get("type", "crash")
+            target = config.get("target", "")
+            self._anomaly_active = True
+            self._degradation_count += 1
+            # Find target resource and degrade it
+            degraded = False
+            for key, r in self._resources.items():
+                if target and r.name == target:
+                    r.status = "degraded"
+                    degraded = True
+                    break
+                elif not target and r.status == "active":
+                    r.status = "degraded"
+                    degraded = True
+                    break
+            return {
+                "success": True,
+                "type": anomaly_type,
+                "target": target or "auto",
+                "degraded": degraded,
+                "message": f"异常注入成功: {anomaly_type} → {target or '自动选择节点'}",
+            }
+
+if not ROUTER_AVAILABLE:
+    import random as _rand
+
+    @dataclass
+    class AgentCapabilityProfile:
+        agent_id: str = ""
+        name: str = ""
+        role: str = "general"
+        capabilities: list = field(default_factory=list)
+        tier: str = "cloud"
+        success_count: int = 0
+        fail_count: int = 0
+
+    @dataclass
+    class TaskRequirement:
+        task_id: str = ""
+        required_capabilities: list = field(default_factory=list)
+        preferred_tier: str = ""
+        complexity: str = "medium"
+
+    class DynamicTopologyRouter:
+        """Standalone dynamic topology router"""
+        def __init__(self):
+            self._agents: Dict[str, AgentCapabilityProfile] = {}
+            self._history: List[Dict] = []
+            self._decisions = 0
+
+        def register_agent(self, profile: AgentCapabilityProfile):
+            self._agents[profile.agent_id] = profile
+
+        def get_stats(self):
+            total = self._decisions
+            return {
+                "topology": "mesh",
+                "decisions": total,
+                "agents_registered": len(self._agents),
+                "recommendations": [],
+            }
+
+        def route(self, task: str):
+            """Simulate routing a task to appropriate agents"""
+            self._decisions += 1
+            # Match agents by role keyword overlap
+            candidates = []
+            for aid, profile in self._agents.items():
+                score = 0
+                task_lower = task.lower()
+                for cap in profile.capabilities:
+                    if cap.lower() in task_lower:
+                        score += 1
+                if profile.role.lower() in task_lower:
+                    score += 2
+                candidates.append((aid, profile, score))
+            candidates.sort(key=lambda x: -x[2])
+            selected = candidates[:3] if candidates else []
+            result = {
+                "task_id": str(uuid.uuid4())[:8],
+                "selected_agents": [
+                    {"agent_id": c[0], "name": c[1].name, "score": c[2], "tier": c[1].tier}
+                    for c in selected
+                ],
+                "topology": "mesh",
+                "confidence": round(_rand.uniform(0.6, 0.95), 2),
+            }
+            self._history.append({
+                "task": task[:50],
+                "result": result,
+                "timestamp": time.time(),
+                "status": "success",
+            })
+            if len(self._history) > 100:
+                self._history = self._history[-100:]
+            return result
+
+        def get_history(self):
+            return {"history": self._history[-20:]}
+
+        def get_optimization(self):
+            total = self._decisions
+            success_rates = []
+            for aid, profile in self._agents.items():
+                total_a = profile.success_count + profile.fail_count
+                rate = profile.success_count / total_a if total_a > 0 else 0.85
+                success_rates.append({
+                    "agent_id": aid,
+                    "name": profile.name,
+                    "success_rate": round(rate, 2),
+                    "tasks": total_a,
+                })
+            return {
+                "stats": {
+                    "total_decisions": total,
+                    "agents_active": len(self._agents),
+                    "avg_confidence": round(_rand.uniform(0.7, 0.9), 2),
+                },
+                "success_rates": success_rates,
+            }
+
+        def inject_anomaly(self, config: Dict):
+            anomaly_type = config.get("type", "partition")
+            self._history.append({
+                "task": f"ANOMALY:{anomaly_type}",
+                "result": {"affected_agents": [], "type": anomaly_type},
+                "timestamp": time.time(),
+                "status": "degraded",
+            })
+            return {
+                "success": True,
+                "type": anomaly_type,
+                "message": f"拓扑异常注入成功: {anomaly_type}",
+            }
+
+    class TopologyOptimizer:
+        """Standalone topology optimizer"""
+        def __init__(self):
+            self._patterns: Dict[str, List[Dict]] = {}
+            self._total_executions = 0
+
+        def get_stats(self):
+            return {
+                "total_patterns": len(self._patterns),
+                "total_executions": self._total_executions,
+                "success_rate": 0.85 if self._total_executions > 0 else 0.0,
+                "avg_latency_ms": 45.0,
+            }
+
+        def get_learned_weights(self, task_pattern: str = ""):
+            if task_pattern and task_pattern in self._patterns:
+                return self._patterns[task_pattern]
+            return {}
+
+        def inject_anomaly(self, config: Dict):
+            anomaly_type = config.get("type", "weight_corrupt")
+            self._total_executions += 1
+            return {
+                "success": True,
+                "type": anomaly_type,
+                "message": f"拓扑优化器异常注入成功: {anomaly_type}",
+            }
+
+    SCHEDULER_AVAILABLE = True
+    ROUTER_AVAILABLE = True
+    print("[NexusFlow] ✓ Using standalone fallback: EdgeCloudScheduler + DynamicTopologyRouter + TopologyOptimizer")
+
+
+# ============================================================================
 # Configuration
 # ============================================================================
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-DEEPSEEK_ENDPOINT = os.environ.get("DEEPSEEK_ENDPOINT", "https://api.deepseek.com/v1/chat/completions")
+DEEPSEEK_ENDPOINT = os.environ.get("DEEPSEEK_ENDPOINT", "https://api.deepseek.com/chat/completions")
 
 SERVER_HOST = os.environ.get("NEXUSFLOW_HOST", "0.0.0.0")
 SERVER_PORT = int(os.environ.get("NEXUSFLOW_PORT", "8900"))
@@ -294,8 +667,14 @@ print(f"[STARTUP] DASHBOARD_DIR exists = {os.path.exists(DASHBOARD_DIR)}")
 
 OLLAMA_PRO_MODEL = os.environ.get("OLLAMA_PRO_MODEL", "deepseek-r1:14b")
 OLLAMA_FLASH_MODEL = os.environ.get("OLLAMA_FLASH_MODEL", "qwen3.5:9b")
-DEEPSEEK_PRO_MODEL = os.environ.get("DEEPSEEK_PRO_MODEL", "deepseek-chat")
-DEEPSEEK_FLASH_MODEL = os.environ.get("DEEPSEEK_FLASH_MODEL", "deepseek-chat")
+DEEPSEEK_PRO_MODEL = os.environ.get("DEEPSEEK_PRO_MODEL", "deepseek-v4-pro")
+
+DEEPSEEK_FLASH_MODEL = os.environ.get("DEEPSEEK_FLASH_MODEL", "deepseek-v4-flash")
+
+# Config directory for persistent settings
+CONFIG_DIR = os.path.join(PROJECT_ROOT, "config")
+os.makedirs(CONFIG_DIR, exist_ok=True)
+MODEL_SETTINGS_FILE = os.path.join(CONFIG_DIR, "model_settings.json")
 
 logging.basicConfig(
     level=logging.INFO,
@@ -431,6 +810,63 @@ class DeepSeekProvider(LLMProvider):
             }
 
 
+
+class GenericOpenAIProvider(LLMProvider):
+    """Generic OpenAI-compatible API provider (works with OpenAI, Qwen, Moonshot, etc.)"""
+    name = "generic"
+    
+    def __init__(self, name: str, endpoint: str, api_key: str, models: List[str] = None):
+        self.name = name
+        self.endpoint = endpoint
+        self.api_key = api_key
+        self.custom_models = models or []
+        self.session: Optional[aiohttp.ClientSession] = None
+    
+    async def start(self):
+        self.session = aiohttp.ClientSession()
+    
+    async def stop(self):
+        if self.session:
+            await self.session.close()
+    
+    async def is_available(self) -> bool:
+        return bool(self.api_key and self.endpoint)
+    
+    async def chat(self, messages, model="", temperature=0.7, max_tokens=2048):
+        if not model and self.custom_models:
+            model = self.custom_models[0]
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        
+        start = time.time()
+        async with self.session.post(
+            self.endpoint, json=payload, headers=headers,
+            timeout=aiohttp.ClientTimeout(total=300)
+        ) as resp:
+            if resp.status != 200:
+                text = await resp.text()
+                raise Exception(f"{self.name} error {resp.status}: {text[:200]}")
+            data = await resp.json()
+            choice = data.get("choices", [{}])[0]
+            usage = data.get("usage", {})
+            return {
+                "content": choice.get("message", {}).get("content", ""),
+                "model": model,
+                "provider": self.name,
+                "tokens": usage.get("total_tokens", 0),
+                "duration_ms": (time.time() - start) * 1000,
+            }
+
+
 class LLMRouter:
     def __init__(self):
         self.providers: Dict[str, LLMProvider] = {}
@@ -475,8 +911,8 @@ EDGE_CLOUD_LAYERS = {
 }
 
 MODEL_DISPLAY_NAMES = {
-    "deepseek-chat": "DeepSeek-V3",
-    "deepseek-reasoner": "DeepSeek-R1",
+    "deepseek-v4-pro": "DeepSeek-V4-Pro",
+    "deepseek-v4-flash": "DeepSeek-V4-Flash",
     "deepseek-r1:14b": "DeepSeek-R1 14B (本地)",
     "qwen3:8b": "Qwen3 8B (本地)",
     "qwen3.5:9b": "Qwen3.5 9B (本地)",
@@ -1500,7 +1936,15 @@ class NexusFlowEngine:
                 from tools.calculator import CalculatorTool
                 from tools.file_ops import FileOpsTool
                 from tools.api_caller import APICallerTool
-                for tool_cls in [WebSearchTool, CalculatorTool, FileOpsTool, APICallerTool]:
+                try:
+                    from tools.office_cli import OfficeCLITool
+                    _has_office_cli = True
+                except ImportError:
+                    _has_office_cli = False
+                _tool_classes = [WebSearchTool, CalculatorTool, FileOpsTool, APICallerTool]
+                if _has_office_cli:
+                    _tool_classes.append(OfficeCLITool)
+                for tool_cls in _tool_classes:
                     try:
                         self.tool_registry_instance.register(tool_cls())
                     except Exception:
@@ -1523,6 +1967,15 @@ class NexusFlowEngine:
                 logger.info("[NexusFlow] ✓ MCP Server initialized")
             except Exception as e:
                 logger.warning(f"[NexusFlow] MCP init failed: {e}")
+        
+        # MCP Server Manager (external MCP servers like OfficeCLI)
+        self.mcp_manager = None
+        if MCP_MANAGER_AVAILABLE:
+            try:
+                self.mcp_manager = MCPServerManager(tool_registry=self.tool_registry_instance)
+                logger.info("[NexusFlow] ✓ MCP Server Manager initialized")
+            except Exception as e:
+                logger.warning(f"[NexusFlow] MCP Manager init failed: {e}")
         
         # Observability
         if OBSERVABILITY_AVAILABLE:
@@ -2159,9 +2612,13 @@ class NexusFlowEngine:
             step_context += f"上一步结果: {prev['summary'][:100]}。"
         step_context += f"\n\n任务: {task.description}"
         
-        # Agents for reasoning (exclude global/assayer agents)
+        # Agents for reasoning (exclude global/assayer agents and disabled agents)
         reasoning_agents = [p for p in step_participants 
-                           if p not in ("coordinator", "archivist", "assayer", "artisan")]
+                           if p not in ("coordinator", "archivist", "assayer", "artisan")
+                           and p not in task.disabled_agents]
+        if not reasoning_agents:
+            await self.events.log("  ⚠️ 所有推理Agent被禁用，跳过本步")
+            return {"summary": "所有推理Agent被故障禁用", "tokens": 0, "cdol_rounds": 0, "laziness_metrics": {}}
         
         # === ROUND 0: Independent Reasoning ===
         await self.events.log(f"  🔄 CDoL Round 0: 独立推理 ({len(reasoning_agents)}个Agent)")
@@ -2169,7 +2626,7 @@ class NexusFlowEngine:
         
         # Planner decomposes perspective
         agent_tasks = {}
-        if "planner" in reasoning_agents:
+        if "planner" in reasoning_agents and "planner" not in task.disabled_agents:
             await self._update_agent("planner", "thinking", f"Step {step_num} 视角分解", cdol_round=0)
             strategist_def = self.agent_defs_map["planner"]
             resp = await self._call_llm("planner", [
@@ -2388,7 +2845,7 @@ class NexusFlowEngine:
         # === Synthesis for this step ===
         step_summary = ""
         if round2_conclusions:
-            if "caster" in step_participants:
+            if "caster" in step_participants and "caster" not in task.disabled_agents:
                 await self._update_agent("caster", "thinking", f"Step {step_num} 融合", cdol_round=2)
                 synth_def = self.agent_defs_map["caster"]
                 
@@ -2424,7 +2881,7 @@ class NexusFlowEngine:
         
         # === Assayer Meta-observation ===
         observer_note = ""
-        if "assayer" in step_participants and step_summary:
+        if "assayer" in step_participants and step_summary and "assayer" not in task.disabled_agents:
             obs_def = self.agent_defs_map.get("assayer", {})
             if obs_def:
                 await self._update_agent("assayer", "thinking", f"Step {step_num} 元观察", cdol_round=2)
@@ -2683,6 +3140,7 @@ DASHBOARD_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__
 # ============================================================================
 dynamic_agents: Dict[str, Dict] = {}          # name -> agent_def dict
 dynamic_providers: Dict[str, LLMProvider] = {} # name -> provider instance
+custom_providers: Dict[str, GenericOpenAIProvider] = {}  # user-added providers
 
 # 角色模板：根据 role_hint 生成 system_prompt
 ROLE_TEMPLATES = {
@@ -2840,7 +3298,7 @@ class AddAgentRequest(BaseModel):
     name: str
     api_key: str
     provider: str = "deepseek"
-    model: str = "deepseek-chat"
+    model: str = "deepseek-v4-flash"
     role_hint: Optional[str] = None
     description: Optional[str] = None
 
@@ -2882,6 +3340,9 @@ async def startup():
             actual_model = OLLAMA_PRO_MODEL if model == "pro" else OLLAMA_FLASH_MODEL
         llm_router.assign_model(adef["id"], prov, actual_model)
     
+    # Load persisted model settings (override defaults)
+    _load_model_settings()
+
     engine = NexusFlowEngine(llm_router, events)
     
     # Link engine's agentos instance to the pre-mounted router's AgentOS
@@ -2911,7 +3372,7 @@ async def shutdown():
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():
-    for fname in ["nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
+    for fname in ["nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
         path = os.path.join(DASHBOARD_DIR, fname)
         print(f"[DASHBOARD] Checking: {path}  exists={os.path.exists(path)}")
         if os.path.exists(path):
@@ -2919,7 +3380,7 @@ async def serve_dashboard():
     _server_dir = os.path.dirname(os.path.abspath(__file__))
     _fallback_dir = os.path.join(os.path.dirname(_server_dir), "docs", "dashboard")
     print(f"[DASHBOARD] Fallback dir: {_fallback_dir}")
-    for fname in ["nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
+    for fname in ["nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
         path = os.path.join(_fallback_dir, fname)
         if os.path.exists(path):
             print(f"[DASHBOARD] Found via fallback: {path}")
@@ -3349,6 +3810,296 @@ async def api_recover_agent(task_id: str, body: Dict):
     raise HTTPException(400, f"Agent {agent_id} not disabled")
 
 
+
+
+# ========== Model Settings API ==========
+
+@app.get("/api/settings/models")
+async def api_get_model_settings():
+    """Return current model configuration for all providers and agents."""
+    providers_info = {}
+    for name, provider in llm_router.providers.items():
+        if name == "ollama":
+            providers_info[name] = {
+                "enabled": True,
+                "url": getattr(provider, "base_url", OLLAMA_URL),
+                "models": getattr(provider, "models", []),
+            }
+        elif name == "deepseek":
+            providers_info[name] = {
+                "enabled": True,
+                "endpoint": getattr(provider, "endpoint", DEEPSEEK_ENDPOINT),
+                "api_key_set": bool(getattr(provider, "api_key", "")),
+            }
+        else:
+            providers_info[name] = {"enabled": True}
+
+    # Include custom providers
+    for name, cp in custom_providers.items():
+        providers_info[name] = {
+            "enabled": True,
+            "endpoint": cp.endpoint,
+            "api_key_set": bool(cp.api_key),
+            "models": cp.custom_models,
+            "display_name": cp.name,
+            "is_custom": True,
+        }
+
+    agent_models = []
+    for adef in AGENT_DEFS:
+        aid = adef.get("id", "")
+        prov, model = llm_router.get_mapping(aid)
+        agent_models.append({
+            "agent_id": aid,
+            "label": adef.get("label", ""),
+            "icon": adef.get("icon", ""),
+            "provider": prov or adef.get("provider", "ollama"),
+            "model": model or adef.get("model", "flash"),
+            "tier": adef.get("tier", ""),
+        })
+    # Also include dynamic agents
+    try:
+        for aid, adef in dynamic_agents.items():
+            if aid not in {a["agent_id"] for a in agent_models}:
+                prov, model = llm_router.get_mapping(aid)
+                agent_models.append({
+                    "agent_id": aid,
+                    "label": adef.get("label", adef.get("name", aid)),
+                    "icon": adef.get("icon", "🤖"),
+                    "provider": prov or adef.get("provider", "ollama"),
+                    "model": model or adef.get("model", "flash"),
+                    "tier": adef.get("tier", ""),
+                })
+    except Exception:
+        pass
+
+    return {"providers": providers_info, "agent_models": agent_models}
+
+
+@app.post("/api/settings/models")
+async def api_update_model_settings(req: Dict):
+    """Update model configuration for agents and persist to config file."""
+    agent_models_req = req.get("agent_models", [])
+    updated = []
+    for item in agent_models_req:
+        aid = item.get("agent_id", "")
+        prov = item.get("provider", "ollama")
+        model = item.get("model", "flash")
+        if not aid:
+            continue
+        llm_router.assign_model(aid, prov, model)
+        updated.append({"agent_id": aid, "provider": prov, "model": model})
+
+    # Persist to config file
+    try:
+        persist_data = {}
+        if os.path.exists(MODEL_SETTINGS_FILE):
+            with open(MODEL_SETTINGS_FILE, "r", encoding="utf-8") as f:
+                persist_data = json.load(f)
+        persist_data["agent_models"] = updated
+        with open(MODEL_SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(persist_data, f, ensure_ascii=False, indent=2)
+        logger.info(f"[Settings] Model settings saved to {MODEL_SETTINGS_FILE}")
+    except Exception as e:
+        logger.warning(f"[Settings] Failed to persist model settings: {e}")
+
+    # Return updated config
+    return await api_get_model_settings()
+
+
+@app.post("/api/settings/providers")
+async def api_update_provider_settings(req: Dict):
+    """Update provider configurations. Supports updating built-in providers and adding custom ones."""
+    providers_cfg = req.get("providers", {})
+    results = {}
+
+    for prov_name, cfg in providers_cfg.items():
+        # Update built-in deepseek
+        if prov_name == "deepseek" and "deepseek" in llm_router.providers:
+            ds = llm_router.providers["deepseek"]
+            if "api_key" in cfg and cfg["api_key"]:
+                ds.api_key = cfg["api_key"]
+            if "endpoint" in cfg and cfg["endpoint"]:
+                ds.endpoint = cfg["endpoint"]
+            results["deepseek"] = {"updated": True}
+
+        # Update built-in ollama
+        elif prov_name == "ollama" and "ollama" in llm_router.providers:
+            ol = llm_router.providers["ollama"]
+            if "url" in cfg and cfg["url"]:
+                ol.base_url = cfg["url"].rstrip("/")
+                try:
+                    await ol.refresh_models()
+                    results["ollama"] = {"updated": True, "models_count": len(ol.models)}
+                except Exception as e:
+                    results["ollama"] = {"updated": True, "refresh_error": str(e)}
+
+        # Add or update custom provider (OpenAI-compatible)
+        elif prov_name.startswith("custom_") or prov_name not in ("deepseek", "ollama"):
+            endpoint = cfg.get("endpoint", "")
+            api_key = cfg.get("api_key", "")
+            models = cfg.get("models", [])
+            if endpoint and api_key:
+                custom_name = cfg.get("display_name", prov_name)
+                if prov_name in custom_providers:
+                    # Update existing
+                    cp = custom_providers[prov_name]
+                    cp.endpoint = endpoint
+                    cp.api_key = api_key
+                    cp.custom_models = models
+                else:
+                    # Create new
+                    cp = GenericOpenAIProvider(name=custom_name, endpoint=endpoint, api_key=api_key, models=models)
+                    await cp.start()
+                    custom_providers[prov_name] = cp
+                    llm_router.register(prov_name, cp)
+                results[prov_name] = {"updated": True, "type": "custom"}
+
+    # Persist to config
+    try:
+        existing = {}
+        if os.path.exists(MODEL_SETTINGS_FILE):
+            with open(MODEL_SETTINGS_FILE, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+        if "providers" not in existing:
+            existing["providers"] = {}
+        for prov_name, cfg in providers_cfg.items():
+            if prov_name not in existing["providers"]:
+                existing["providers"][prov_name] = {}
+            for k, v in cfg.items():
+                if v:
+                    existing["providers"][prov_name][k] = v
+        with open(MODEL_SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(existing, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"[Settings] Failed to persist provider settings: {e}")
+
+    return {"success": True, "results": results, "providers": (await api_get_model_settings())["providers"]}
+
+
+@app.delete("/api/settings/providers/{provider_id}")
+async def api_delete_custom_provider(provider_id: str):
+    """Remove a custom provider."""
+    if provider_id in ("deepseek", "ollama"):
+        raise HTTPException(400, "Cannot delete built-in providers")
+    if provider_id in custom_providers:
+        cp = custom_providers.pop(provider_id)
+        await cp.stop()
+        llm_router.providers.pop(provider_id, None)
+        # Remove from config
+        try:
+            if os.path.exists(MODEL_SETTINGS_FILE):
+                with open(MODEL_SETTINGS_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                data.get("providers", {}).pop(provider_id, None)
+                with open(MODEL_SETTINGS_FILE, "w", encoding="utf-8") as f:
+                    json.dump(data, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+        return {"success": True, "message": f"Provider {provider_id} removed"}
+    raise HTTPException(404, f"Provider {provider_id} not found")
+
+
+@app.post("/api/settings/providers/test")
+async def api_test_provider(req: Dict):
+    """Test connection to a provider."""
+    prov_name = req.get("provider", "")
+    result = {"provider": prov_name, "success": False, "message": ""}
+
+    if prov_name == "ollama" and "ollama" in llm_router.providers:
+        ol = llm_router.providers["ollama"]
+        try:
+            await ol.refresh_models()
+            if ol.models:
+                result["success"] = True
+                result["message"] = f"连接成功，发现 {len(ol.models)} 个模型"
+                result["models"] = ol.models
+            else:
+                result["message"] = f"已连接但无可用模型，请检查 Ollama 是否正常运行"
+        except Exception as e:
+            result["message"] = f"连接失败: {e}"
+
+    elif prov_name == "deepseek" and "deepseek" in llm_router.providers:
+        ds = llm_router.providers["deepseek"]
+        if not ds.api_key or ds.api_key == "sk-xxx":
+            result["message"] = "请先配置 API Key"
+        else:
+            try:
+                test_resp = await ds.chat(
+                    [{"role": "user", "content": "Hi"}],
+                    model="deepseek-v4-flash",
+                    max_tokens=5
+                )
+                result["success"] = True
+                result["message"] = f"连接成功，模型响应正常 ({test_resp.get('model', '')})"
+            except Exception as e:
+                result["message"] = f"连接失败: {e}"
+    elif prov_name in custom_providers:
+        cp = custom_providers[prov_name]
+        if not cp.api_key:
+            result["message"] = "请先配置 API Key"
+        else:
+            try:
+                model = cp.custom_models[0] if cp.custom_models else ""
+                test_resp = await cp.chat(
+                    [{"role": "user", "content": "Hi"}],
+                    model=model,
+                    max_tokens=5
+                )
+                result["success"] = True
+                result["message"] = f"连接成功，模型响应正常 ({test_resp.get('model', '')})"
+            except Exception as e:
+                result["message"] = f"连接失败: {e}"
+    else:
+        result["message"] = f"未知的 Provider: {prov_name}"
+
+    return result
+
+
+def _load_model_settings():
+    """Load persisted model settings and provider configs from config file."""
+    if not os.path.exists(MODEL_SETTINGS_FILE):
+        return
+    try:
+        with open(MODEL_SETTINGS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        # Load agent-model mappings
+        for item in data.get("agent_models", []):
+            aid = item.get("agent_id", "")
+            prov = item.get("provider", "ollama")
+            model = item.get("model", "flash")
+            if aid and prov and model:
+                llm_router.assign_model(aid, prov, model)
+
+        # Load provider configs (API keys, URLs)
+        for prov_name, cfg in data.get("providers", {}).items():
+            if prov_name == "deepseek" and "deepseek" in llm_router.providers:
+                ds = llm_router.providers["deepseek"]
+                if cfg.get("api_key"):
+                    ds.api_key = cfg["api_key"]
+                if cfg.get("endpoint"):
+                    ds.endpoint = cfg["endpoint"]
+            elif prov_name == "ollama" and "ollama" in llm_router.providers:
+                ol = llm_router.providers["ollama"]
+                if cfg.get("url"):
+                    ol.base_url = cfg["url"].rstrip("/")
+            elif prov_name.startswith("custom_"):
+                # Load custom providers
+                endpoint = cfg.get("endpoint", "")
+                api_key = cfg.get("api_key", "")
+                models = cfg.get("models", [])
+                display_name = cfg.get("display_name", prov_name)
+                if endpoint and api_key:
+                    import asyncio
+                    cp = GenericOpenAIProvider(name=display_name, endpoint=endpoint, api_key=api_key, models=models)
+                    custom_providers[prov_name] = cp
+                    llm_router.register(prov_name, cp)
+
+        logger.info(f"[Settings] Loaded model settings from {MODEL_SETTINGS_FILE}")
+    except Exception as e:
+        logger.warning(f"[Settings] Failed to load model settings: {e}")
+
 @app.websocket("/ws/events")
 async def ws_events(ws: WebSocket):
     await events.connect(ws)
@@ -3428,7 +4179,10 @@ async def scheduler_register_tier(req: Dict):
     if not engine.edge_cloud_scheduler:
         raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
     try:
-        tier = DeployTier(req.get("tier", "cloud"))
+        try:
+            tier = DeployTier(req.get("tier", "cloud"))
+        except (ValueError, TypeError):
+            tier = req.get("tier", "cloud")
         resource = TierResource(
             name=req.get("name", "unknown"),
             tier=tier,
@@ -3483,8 +4237,12 @@ async def scheduler_migrate(req: Dict):
     if not engine.edge_cloud_scheduler:
         raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
     task_id = req.get("task_id", "")
-    from_tier = DeployTier(req.get("from_tier", "edge"))
-    to_tier = DeployTier(req.get("to_tier", "cloud"))
+    try:
+        from_tier = DeployTier(req.get("from_tier", "edge"))
+        to_tier = DeployTier(req.get("to_tier", "cloud"))
+    except (ValueError, TypeError):
+        from_tier = req.get("from_tier", "edge")
+        to_tier = req.get("to_tier", "cloud")
     result = engine.edge_cloud_scheduler.migrate(task_id, from_tier, to_tier, reason=req.get("reason", "manual"))
     return {"success": result, "task_id": task_id, "from": req.get("from_tier"), "to": req.get("to_tier")}
 
@@ -3554,38 +4312,71 @@ async def router_route(req: Dict):
     """Preview topology routing decision for a task"""
     if not engine.dynamic_router:
         raise HTTPException(status_code=503, detail="DynamicRouter not available")
-    from nexusflow.core.dynamic_router import TaskComplexity
-    complexity_map = {"trivial": TaskComplexity.TRIVIAL, "simple": TaskComplexity.SIMPLE, "moderate": TaskComplexity.MODERATE, "complex": TaskComplexity.COMPLEX, "epic": TaskComplexity.EPIC, "medium": TaskComplexity.MODERATE, "low": TaskComplexity.SIMPLE, "high": TaskComplexity.COMPLEX}
-    task_req = TaskRequirement(
-        description=req.get("description", ""),
-        required_capabilities=req.get("capabilities", []),
-        complexity=complexity_map.get(req.get("complexity", "medium"), TaskComplexity.MODERATE),
-    )
-    plan = engine.dynamic_router.route(task_req)
-    return {
-        "plan_id": plan.plan_id,
-        "topology": plan.topology_type,
-        "agent_chain": plan.agent_chain,
-        "estimated_cost": plan.estimated_cost,
-        "estimated_latency_ms": plan.estimated_latency_ms,
-        "confidence": plan.confidence,
-    }
+    task_desc = req.get("description", "") or req.get("task", "")
+    if not task_desc:
+        raise HTTPException(status_code=400, detail="Missing 'task' or 'description' field")
+    try:
+        from nexusflow.core.dynamic_router import TaskComplexity
+        complexity_map = {"trivial": TaskComplexity.TRIVIAL, "simple": TaskComplexity.SIMPLE, "moderate": TaskComplexity.MODERATE, "complex": TaskComplexity.COMPLEX, "epic": TaskComplexity.EPIC, "medium": TaskComplexity.MODERATE, "low": TaskComplexity.SIMPLE, "high": TaskComplexity.COMPLEX}
+        task_req = TaskRequirement(
+            description=task_desc,
+            required_capabilities=req.get("capabilities", []),
+            complexity=complexity_map.get(req.get("complexity", "medium"), TaskComplexity.MODERATE),
+        )
+        plan = engine.dynamic_router.route(task_req)
+        return {
+            "plan_id": plan.plan_id,
+            "topology": plan.topology_type,
+            "agent_chain": plan.agent_chain,
+            "estimated_cost": plan.estimated_cost,
+            "estimated_latency_ms": plan.estimated_latency_ms,
+            "confidence": plan.confidence,
+            "plan": {"steps": [{"agent": a, "action": "execute"} for a in plan.agent_chain]},
+        }
+    except (ImportError, AttributeError):
+        # Fallback: use string-based routing
+        result = engine.dynamic_router.route(task_desc)
+        if isinstance(result, dict):
+            # Ensure topology field exists for frontend
+            if "topology" not in result:
+                result["topology"] = "mesh"
+            if "plan" not in result and "selected_agents" in result:
+                result["plan"] = {"steps": [
+                    {"agent": a.get("name", a.get("agent_id", "")), "action": a.get("role", "execute")}
+                    for a in result.get("selected_agents", [])
+                ]}
+            return result
+        return {"plan_id": str(uuid.uuid4())[:8], "topology": "mesh", "agent_chain": [], "confidence": 0.7,
+                "plan": {"steps": []}}
 
 @app.get("/api/router/history")
 async def router_history(limit: int = 20):
     """Get routing decision history"""
     if not engine.dynamic_router:
         raise HTTPException(status_code=503, detail="DynamicRouter not available")
-    return {"history": engine.dynamic_router.get_route_history(limit=limit)}
+    if hasattr(engine.dynamic_router, 'get_route_history'):
+        hist = engine.dynamic_router.get_route_history(limit=limit)
+        if isinstance(hist, list):
+            return {"history": hist}
+        return hist
+    return engine.dynamic_router.get_history()
 
 @app.get("/api/router/optimization")
 async def router_optimization():
     """Get optimization stats and suggestions"""
     if not engine.dynamic_router:
         raise HTTPException(status_code=503, detail="DynamicRouter not available")
-    stats = engine.dynamic_router.get_optimization_stats()
+    if hasattr(engine.dynamic_router, 'get_optimization_stats'):
+        # Real module returns stats directly
+        stats = engine.dynamic_router.get_optimization_stats()
+        success_rates = []
+    else:
+        # Fallback returns {"stats": {...}, "success_rates": [...]}
+        opt_data = engine.dynamic_router.get_optimization()
+        stats = opt_data.get("stats", opt_data)
+        success_rates = opt_data.get("success_rates", [])
     suggestions = engine.dynamic_router.suggest_optimization() if hasattr(engine.dynamic_router, 'suggest_optimization') else []
-    return {"stats": stats, "suggestions": suggestions}
+    return {"stats": stats, "suggestions": suggestions, "success_rates": success_rates}
 
 
 # ============================================================================
@@ -3621,6 +4412,56 @@ async def topo_opt_recommendations():
         if stats.get("success_rate", 0) < 0.8:
             recs.append(f"整体成功率 {stats['success_rate']:.1%}，建议检查失败任务并调整路由策略")
     return {"recommendations": recs, "stats": stats}
+
+
+# --- Fallback status/monitor/anomaly endpoints ---
+@app.get("/api/scheduler/status")
+async def scheduler_status():
+    """Get scheduler overall status"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    if hasattr(engine.edge_cloud_scheduler, 'get_status'):
+        return engine.edge_cloud_scheduler.get_status()
+    # Fallback: synthesize from stats
+    stats = engine.edge_cloud_scheduler.get_scheduling_stats()
+    return {
+        "strategy": stats.get("strategy", "balanced"),
+        "queue_length": 0,
+        "completed": stats.get("total_scheduled", 0),
+        "nodes": {},
+        "degradation_count": stats.get("degradation_count", 0),
+        "recovery_count": stats.get("recovery_count", 0),
+    }
+
+@app.get("/api/scheduler/monitor")
+async def scheduler_resource_monitor():
+    """Get system resource monitoring data"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    return engine.edge_cloud_scheduler.get_resource_monitor()
+
+@app.post("/api/scheduler/anomaly")
+async def scheduler_inject_anomaly(req: Request):
+    """Inject anomaly into scheduler"""
+    if not engine.edge_cloud_scheduler:
+        raise HTTPException(status_code=503, detail="EdgeCloudScheduler not available")
+    try:
+        config = await req.json()
+    except Exception:
+        config = {}
+    return engine.edge_cloud_scheduler.inject_anomaly(config)
+
+@app.post("/api/topology-optimizer/anomaly")
+async def topology_inject_anomaly(req: Request):
+    """Inject anomaly into topology optimizer"""
+    if not engine.topology_optimizer:
+        raise HTTPException(status_code=503, detail="TopologyOptimizer not available")
+    try:
+        config = await req.json()
+    except Exception:
+        config = {}
+    return engine.topology_optimizer.inject_anomaly(config)
+
 
 
 # ============================================================================
@@ -3672,6 +4513,228 @@ async def tools_log(limit: int = 50):
 # ============================================================================
 # Protocol Routes (A2A Gateway + MCP Server)
 # ============================================================================
+
+
+
+
+# ============ MCP Server Manager API ============
+
+@app.get("/api/mcp/servers")
+async def mcp_list_servers():
+    """列出所有已配置的 MCP 服务器"""
+    if not engine.mcp_manager:
+        return {"servers": [], "message": "MCP Manager not available"}
+    return {"servers": engine.mcp_manager.list_servers()}
+
+@app.get("/api/mcp/presets")
+async def mcp_list_presets():
+    """列出预设的 MCP 服务器模板"""
+    if not engine.mcp_manager:
+        return {"presets": []}
+    return {"presets": engine.mcp_manager.list_presets()}
+
+@app.post("/api/mcp/servers")
+async def mcp_add_server(req: Request):
+    """添加 MCP 服务器"""
+    if not engine.mcp_manager:
+        raise HTTPException(status_code=503, detail="MCP Manager not available")
+    body = await req.json()
+    srv = engine.mcp_manager.add_server(body)
+    return {"success": True, "server": asdict(srv) if hasattr(srv, '__dataclass_fields__') else srv}
+
+@app.post("/api/mcp/servers/{server_id}/add-from-preset")
+async def mcp_add_from_preset(server_id: str):
+    """从预设模板添加 MCP 服务器"""
+    if not engine.mcp_manager:
+        raise HTTPException(status_code=503, detail="MCP Manager not available")
+    srv = engine.mcp_manager.add_from_preset(server_id)
+    if not srv:
+        raise HTTPException(status_code=404, detail=f"Preset '{server_id}' not found")
+    return {"success": True, "server": asdict(srv) if hasattr(srv, '__dataclass_fields__') else srv}
+
+@app.delete("/api/mcp/servers/{server_id}")
+async def mcp_remove_server(server_id: str):
+    """移除 MCP 服务器"""
+    if not engine.mcp_manager:
+        raise HTTPException(status_code=503, detail="MCP Manager not available")
+    ok = engine.mcp_manager.remove_server(server_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail=f"Server '{server_id}' not found")
+    return {"success": True}
+
+@app.get("/api/mcp/servers/{server_id}/check")
+async def mcp_check_installed(server_id: str):
+    """检查 MCP 服务器的二进制是否已安装"""
+    if not engine.mcp_manager:
+        raise HTTPException(status_code=503, detail="MCP Manager not available")
+    return engine.mcp_manager.check_installed(server_id)
+
+@app.post("/api/mcp/servers/{server_id}/connect")
+async def mcp_connect_server(server_id: str):
+    """连接到 MCP 服务器"""
+    if not engine.mcp_manager:
+        raise HTTPException(status_code=503, detail="MCP Manager not available")
+    ok = await engine.mcp_manager.connect_server(server_id)
+    return {"success": ok, "servers": engine.mcp_manager.list_servers()}
+
+@app.post("/api/mcp/servers/{server_id}/disconnect")
+async def mcp_disconnect_server(server_id: str):
+    """断开 MCP 服务器"""
+    if not engine.mcp_manager:
+        raise HTTPException(status_code=503, detail="MCP Manager not available")
+    await engine.mcp_manager.disconnect_server(server_id)
+    return {"success": True, "servers": engine.mcp_manager.list_servers()}
+
+@app.post("/api/mcp/servers/{server_id}/call")
+async def mcp_call_tool(server_id: str, req: Request):
+    """调用 MCP 服务器上的工具"""
+    if not engine.mcp_manager:
+        raise HTTPException(status_code=503, detail="MCP Manager not available")
+    body = await req.json()
+    tool_name = body.get("tool")
+    arguments = body.get("arguments", {})
+    if not tool_name:
+        raise HTTPException(status_code=400, detail="tool name required")
+    try:
+        result = await engine.mcp_manager.call_tool(server_id, tool_name, arguments)
+        return {"success": True, "result": result}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+# ============ Output Format API ============
+
+@app.get("/api/output/formats")
+async def get_output_formats():
+    """获取支持的输出格式列表"""
+    try:
+        from tools.output_formatter import get_supported_formats
+        return {"formats": get_supported_formats()}
+    except Exception as e:
+        return {"formats": [
+            {"id": "markdown", "name": "Markdown", "ext": ".md", "available": True},
+            {"id": "html", "name": "HTML", "ext": ".html", "available": True},
+            {"id": "docx", "name": "Word", "ext": ".docx", "available": False},
+            {"id": "xlsx", "name": "Excel", "ext": ".xlsx", "available": False},
+        ]}
+
+@app.post("/api/output/export")
+async def export_report(req: Request):
+    """导出报告为指定格式"""
+    body = await req.json()
+    content = body.get("content", "")
+    output_format = body.get("format", "markdown")
+    title = body.get("title", "NexusFlow Report")
+    tables = body.get("tables", None)
+
+    if not content:
+        raise HTTPException(status_code=400, detail="content is required")
+
+    try:
+        from tools.output_formatter import format_output
+        result = format_output(
+            content=content,
+            output_format=output_format,
+            title=title,
+            tables=tables,
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/output/download/{filename}")
+async def download_output(filename: str):
+    """下载已生成的输出文件"""
+    import os
+    base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "outputs")
+    file_path = os.path.join(base_dir, filename)
+    if not os.path.isfile(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+    from fastapi.responses import FileResponse
+    return FileResponse(file_path, filename=filename)
+
+
+# ============ Office Document API (OfficeCLI Direct) ============
+
+from tools.office_cli import get_office_cli
+
+@app.get("/api/office/status")
+async def office_status():
+    """Check OfficeCLI installation status"""
+    cli = get_office_cli()
+    return cli.get_status()
+
+@app.post("/api/office/execute")
+async def office_execute(req: Request):
+    """Execute an OfficeCLI operation.
+    Body: {action: "word_read"|"word_create"|"excel_read"|"excel_create"|"ppt_read"|"ppt_create"|"convert"|"command", ...params}
+    """
+    body = await req.json()
+    action = body.pop("action", "check")
+    
+    cli = get_office_cli()
+    
+    method_map = {
+        "word_read": cli.word_read,
+        "word_create": cli.word_create,
+        "word_edit": cli.word_edit,
+        "word_to_pdf": cli.word_to_pdf,
+        "excel_read": cli.excel_read,
+        "excel_create": cli.excel_create,
+        "excel_write": cli.excel_write,
+        "ppt_read": cli.ppt_read,
+        "ppt_create": cli.ppt_create,
+        "convert": cli.convert,
+        "command": cli.execute_command,
+        "help": cli.help,
+        "check": lambda: cli.get_status(),
+    }
+    
+    method = method_map.get(action)
+    if not method:
+        raise HTTPException(status_code=400, detail=f"Unknown action: {action}")
+    
+    try:
+        result = method(**body) if body else method()
+        return result
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+@app.post("/api/office/upload-and-read")
+async def office_upload_and_read(file: UploadFile = File(...)):
+    """Upload an Office file and read its content"""
+    import tempfile
+    from pathlib import Path
+    
+    cli = get_office_cli()
+    
+    suffix = Path(file.filename or "upload.xlsx").suffix
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+        content = await file.read()
+        tmp.write(content)
+        tmp_path = tmp.name
+    
+    try:
+        ext = suffix.lower()
+        if ext in (".docx", ".doc"):
+            result = cli.word_read(tmp_path)
+        elif ext in (".xlsx", ".xls"):
+            result = cli.excel_read(tmp_path)
+        elif ext in (".pptx", ".ppt"):
+            result = cli.ppt_read(tmp_path)
+        else:
+            result = {"success": False, "error": f"Unsupported file type: {ext}"}
+        
+        return {
+            "filename": file.filename,
+            **result,
+        }
+    finally:
+        try:
+            os.unlink(tmp_path)
+        except:
+            pass
+
 @app.get("/api/protocol/a2a/agents")
 async def a2a_list_agents():
     """List A2A registered agents"""

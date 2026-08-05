@@ -282,3 +282,20 @@ NexusFlow 版本变更日志。格式基于 [Keep a Changelog](https://keepachan
 [2.7.0]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v2.7.0
 [2.5.0]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v2.5.0
 [1.0.0]: https://github.com/tsingxuanhan/NexusFlow/releases/tag/v1.0.0
+
+## [v3.7.0] - 2026-08-05
+
+### Fixed
+- DeepSeek API endpoint: removed erroneous `/v1` suffix
+- Agent output display: WebSocket message data unwrapping
+- Settings persistence: merge instead of overwrite config
+- CDoL execution loop: skip disabled_agents to prevent hang
+- File upload: content now read and appended to task description
+
+### Added
+- Standalone fallback classes for EdgeCloudScheduler, DynamicTopologyRouter, TopologyOptimizer
+- 4 new API endpoints: scheduler/status, scheduler/monitor, scheduler/anomaly, topology-optimizer/anomaly
+- Dashboard v13: 6-page single-HTML deployment with fault recovery UI
+- Settings page for Provider/Agent model management
+- MCP Tools management page
+

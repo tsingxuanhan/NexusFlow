@@ -7,7 +7,7 @@ dist/
 build/
 .pytest_cache/
 .env
-config.py
+/config.py
 *.log
 .DS_Store
 node_modules/

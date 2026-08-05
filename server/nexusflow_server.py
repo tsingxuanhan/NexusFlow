@@ -4184,7 +4184,7 @@ async def scheduler_register_tier(req: Dict):
         except (ValueError, TypeError):
             tier = req.get("tier", "cloud")
         resource = TierResource(
-            name=req.get("name", "unknown"),
+            agent_name=req.get("name", "unknown"),
             tier=tier,
             gpu_type=req.get("gpu_type", "none"),
             gpu_count=req.get("gpu_count", 0),
@@ -4298,7 +4298,7 @@ async def router_register_agent(req: Dict):
     try:
         profile = AgentCapabilityProfile(
             agent_id=req.get("agent_id", str(uuid.uuid4())[:8]),
-            name=req.get("name", "unknown"),
+            agent_name=req.get("name", "unknown"),
             capabilities=req.get("capabilities", []),
             tier=req.get("tier", "cloud"),
         )
@@ -4517,7 +4517,7 @@ async def tools_execute(req: Dict):
     tool_name = req.get("tool_name", "")
     params = req.get("parameters", {})
     try:
-        result = engine.tool_registry_instance.execute(tool_name=tool_name, parameters=params)
+        result = engine.tool_registry_instance.execute(tool_name=tool_name, params=params)
         return {"tool": tool_name, "result": result}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -4783,9 +4783,9 @@ async def a2a_register_agent(req: Dict):
         raise HTTPException(status_code=503, detail="A2A Gateway not available")
     info = A2AAgentInfo(
         agent_id=req.get("agent_id", str(uuid.uuid4())[:8]),
-        name=req.get("name", "unknown"),
+        agent_name=req.get("name", "unknown"),
         capabilities=req.get("capabilities", []),
-        endpoint=req.get("endpoint", ""),
+        agent_url=req.get("endpoint", ""),
     )
     aid = engine.a2a_gateway.register_agent(info)
     return {"status": "ok", "agent_id": aid}
@@ -4804,9 +4804,8 @@ async def a2a_delegate(req: Dict):
     if not engine.a2a_gateway:
         raise HTTPException(status_code=503, detail="A2A Gateway not available")
     result = engine.a2a_gateway.delegate_task(
-        target_agent_id=req.get("target_agent_id", ""),
-        goal=req.get("goal", ""),
-        context=req.get("context", ""),
+        agent_id=req.get("target_agent_id", ""),
+        description=req.get("goal", ""),
     )
     return result.to_dict() if hasattr(result, 'to_dict') else result
 

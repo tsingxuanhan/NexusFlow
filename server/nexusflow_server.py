@@ -1378,7 +1378,7 @@ class EventBus:
         for ws in self.connections:
             try:
                 await ws.send_json(event)
-            except:
+            except Exception:
                 dead.add(ws)
         self.connections -= dead
     
@@ -1778,7 +1778,11 @@ class FusionJudge:
             content = resp.get("content", "")
             json_match = re.search(r'\{[\s\S]*\}', content)
             if json_match:
-                analysis = json.loads(json_match.group())
+                try:
+                    analysis = json.loads(json_match.group())
+                except json.JSONDecodeError:
+                    logger.warning("FusionJudge: LLM returned invalid JSON, skipping analysis")
+                    return {}
                 conflict_type = analysis.get("conflict_type", self.TRUE_CONVERGENCE)
                 
                 if conflict_type == self.FALSE_CONSENSUS:
@@ -2439,7 +2443,10 @@ class NexusFlowEngine:
                 content = resp["content"]
                 json_match = re.search(r'\{[\s\S]*\}', content)
                 if json_match:
-                    plan = json.loads(json_match.group())
+                    try:
+                        plan = json.loads(json_match.group())
+                    except json.JSONDecodeError:
+                        raise ValueError("LLM returned invalid JSON for planning")
                     route = plan.get("route", "cdol" if max_steps > 2 else "simple")
                     topology = plan.get("topology", select_topology(description))
                     participants = plan.get("participants", TOPOLOGY_CONFIGS.get(topology, {}).get("active", []))
@@ -2670,7 +2677,10 @@ class NexusFlowEngine:
             try:
                 json_match = re.search(r'\{[\s\S]*\}', resp["content"])
                 if json_match:
-                    strat_plan = json.loads(json_match.group())
+                    try:
+                        strat_plan = json.loads(json_match.group())
+                    except json.JSONDecodeError:
+                        strat_plan = {}
                     perspectives = strat_plan.get("perspectives", {})
                     if isinstance(perspectives, dict) and perspectives:
                         agent_tasks = {k: str(v) for k, v in perspectives.items() if k in reasoning_agents}
@@ -2835,7 +2845,7 @@ class NexusFlowEngine:
                     revision_reason = str(attr_data.get("revision_reason", ""))
                     if revision:
                         await self.events.log(f"  ✏️ {adef['label']} Round 2 修正: {revision_reason[:50]}...")
-            except:
+            except (json.JSONDecodeError, AttributeError):
                 pass
             
             # Use revised conclusion if available
@@ -3158,7 +3168,7 @@ try:
     logger.info("[NexusFlow] ✓ AgentOS routes mounted at /agentos/ (pre-init)")
 except Exception as e:
     logger.warning(f"[NexusFlow] AgentOS pre-init route mount failed: {e}")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:*", "http://127.0.0.1:*", "https://localhost:*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=True)
 
 llm_router = LLMRouter()
 engine: Optional[NexusFlowEngine] = None
@@ -4142,7 +4152,7 @@ async def ws_events(ws: WebSocket):
                 await ws.send_json({"type": "pong"})
     except WebSocketDisconnect:
         events.disconnect(ws)
-    except:
+    except Exception:
         events.disconnect(ws)
 
 
@@ -4159,11 +4169,21 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 async def upload_file(file: UploadFile = File(...), task_id: str = Form(None)):
     """Upload a file, optionally associating with a task."""
     import shutil as _shutil
+    # 文件大小限制: 50MB
+    MAX_UPLOAD_SIZE = 50 * 1024 * 1024
+    content = await file.read()
+    if len(content) > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=413, detail=f"File too large (max {MAX_UPLOAD_SIZE // 1024 // 1024}MB)")
+    # 危险文件类型黑名单
+    DANGEROUS_EXTS = {".exe", ".bat", ".cmd", ".sh", ".ps1", ".msi", ".dll", ".so"}
+    ext = os.path.splitext(file.filename or "")[1].lower()
+    if ext in DANGEROUS_EXTS:
+        raise HTTPException(status_code=400, detail=f"File type {ext} not allowed")
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     safe_name = f"{timestamp}_{file.filename}"
     save_path = os.path.join(UPLOAD_DIR, safe_name)
     with open(save_path, "wb") as buf:
-        _shutil.copyfileobj(file.file, buf)
+        buf.write(content)
     file_size = os.path.getsize(save_path)
     result = {
         "success": True,
@@ -4705,8 +4725,14 @@ async def export_report(req: Request):
 async def download_output(filename: str):
     """下载已生成的输出文件"""
     import os
-    base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "outputs")
-    file_path = os.path.join(base_dir, filename)
+    # 防止路径穿越：拒绝包含 .. / \ 的文件名
+    if ".." in filename or "/" in filename or "\\" in filename:
+        raise HTTPException(status_code=400, detail="Invalid filename")
+    base_dir = os.path.realpath(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "outputs"))
+    file_path = os.path.realpath(os.path.join(base_dir, filename))
+    # 二次校验：解析后的路径必须在 base_dir 内
+    if not file_path.startswith(base_dir + os.sep) and file_path != base_dir:
+        raise HTTPException(status_code=403, detail="Access denied")
     if not os.path.isfile(file_path):
         raise HTTPException(status_code=404, detail="File not found")
     from fastapi.responses import FileResponse
@@ -4797,7 +4823,7 @@ async def office_upload_and_read(file: UploadFile = File(...)):
     finally:
         try:
             os.unlink(tmp_path)
-        except:
+        except OSError:
             pass
 
 @app.get("/api/protocol/a2a/agents")

@@ -3,7 +3,7 @@
 > **本文件是项目统计数据的唯一权威来源。** README、技术文档、答辩材料中的所有数字必须与此文件一致。
 > 可通过 `python scripts/generate_facts.py` 自动重新生成。
 
-*最后更新：2026-08-01 | 数据版本：v3.5.0*
+*最后更新：2026-08-05 | 数据版本：v3.6.0*
 
 ---
 
@@ -11,23 +11,23 @@
 
 | 维度 | 数据 | 统计方式 |
 |------|------|----------|
-| Git tracked 文件总数 | **658** | `git ls-files \| wc -l` |
-| Python 文件数 | **196** | `git ls-files '*.py' \| wc -l` |
-| Python 总字节数 | **3,208,322** | `git ls-files '*.py' \| xargs wc -c` |
-| Python 估算行数 | **~84,000** | 按 ~38 bytes/line 估算 |
+| Git tracked 文件总数 | **769** | `git ls-files \| wc -l` |
+| Python 文件数 | **216** | `git ls-files '*.py' \| wc -l` |
+| Python 总行数 | **91,863** | `git ls-files '*.py' \| xargs wc -l` |
+| 项目总行数（全类型） | **298,454** | `git ls-files \| xargs wc -l` |
 
 ### 按目录分布
 
-| 目录 | 文件数 | 字节数 | 估算行数 | 说明 |
-|------|--------|--------|----------|------|
-| `nexusflow/` | 71 | 1,098,656 | ~28,900 | 框架核心代码 |
-| `tools/` | 18 | 166,261 | ~4,400 | 内置工具（含 `__init__.py`） |
-| `server/` | 5 | 302,938 | ~8,000 | 服务端 + Dashboard |
-| `tests/` | 13 | 129,328 | ~3,400 | 自动化测试 |
-| `evaluation/` | 6 | 94,145 | ~2,500 | 评测模块 |
-| `examples/` | 78 | 1,394,345 | ~36,700 | 示例 + 实验脚本 |
-| `scripts/` | 2 | 9,155 | ~240 | 辅助脚本 |
-| `(root)` | 2 | 8,412 | ~220 | `__init__.py`, `run.py` |
+| 目录 | 文件数 | Python LOC | 说明 |
+|------|--------|------------|------|
+| `nexusflow/` | 74 | 31,643 | 框架核心代码 |
+| `tools/` | 19 | 5,222 | 内置工具（含 `__init__.py`） |
+| `server/` | 6 | 9,202 | 服务端 + Dashboard |
+| `tests/` | 14 | 3,979 | 自动化测试 |
+| `evaluation/` | 28 | 6,317 | 评测模块 |
+| `examples/` | 435 | 34,255 | 示例 + 实验脚本 + 资源 |
+| `scripts/` | 11 | 905 | 辅助脚本 |
+| `frontend/` | 30 | 2,716 | Vite + React + TypeScript Dashboard |
 
 ---
 
@@ -37,39 +37,25 @@
 
 ### 六大核心引擎
 
-| 模块 | 文件 | 行数 | LOC | 核心能力 |
-|------|------|------|-----|----------|
-| CDoL 认知分工引擎 | `cognitive_division_engine.py` | 2,058 | 1,618 | 6 种视角分解 + 三轮有损通信 + 虚假一致检测 |
-| 自适应上下文管理器 | `adaptive_context_manager.py` | 1,642 | 1,211 | 动态裁剪上下文，对抗"大窗口懒惰症" |
-| 动态拓扑路由器 | `dynamic_router.py` | 870 | 652 | 5 种拓扑模式，任务感知路由 |
-| 端边云调度器 | `edge_cloud_scheduler.py` | 636 | 499 | 隐私优先混合调度 |
-| 目标验证器 | `goal_verifier.py` | 590 | 435 | 目标达成度验证 |
-| 三层信息架构 | `agent_information_policy.py` | 512 | 368 | 全局/CDoL/旁观三层权限 |
-| 统一编排器 | `nexus_orchestrator.py` | 480 | 361 | 自动路由 + 蒸馏归档 |
-| 技能检索器 | `skill_retriever.py` | 408 | 322 | RRF 混合检索 |
+| 模块 | 文件 | 行数 | 核心能力 |
+|------|------|------|----------|
+| CDoL 认知分工引擎 | `cognitive_division_engine.py` | 2,058 | 6 种视角分解 + 三轮有损通信 + 虚假一致检测 |
+| 自适应上下文管理器 | `adaptive_context_manager.py` | 1,642 | 动态裁剪上下文，对抗"大窗口懒惰症" |
+| 动态拓扑路由器 | `dynamic_router.py` | 1,001 | 5 种拓扑模式，任务感知路由 + UCB1 优化 |
+| 端边云调度器 | `edge_cloud_scheduler.py` | 635 | 隐私优先混合调度 |
+| 目标验证器 | `goal_verifier.py` | 589 | 目标达成度验证 |
+| 三层信息架构 | `agent_information_policy.py` | 511 | 全局/CDoL/旁观三层权限 |
+| 统一编排器 | `nexus_orchestrator.py` | 479 | 自动路由 + 蒸馏归档 |
+| 技能检索器 | `skill_retriever.py` | 408 | RRF 混合检索 |
 
-**核心引擎合计：7,196 行（5,066 LOC）**
+**核心引擎合计：7,323 行**
 
 ### Agent 架构
 
-| 组件 | 行数 | LOC | 说明 |
-|------|------|-----|------|
-| BaseAgent | 1,212 | 935 | 主类 |
-| 6 Mixins | 1,284 | 945 | AGI/Checkpoint/CodeAct/Handoff/Memory/Reasoning |
-| Agent 角色文件 | 10 个 | — | 每角色独立文件 |
-| Agent 模块总计 | 32 个 | — | 含 domains/、quality.py、guardrails.py 等 |
-
-### Phase 7 核心新增代码
-
-| 模块 | 行数 |
-|------|------|
-| CDoL 引擎 | 2,058 |
-| 自适应上下文管理器 | 1,642 |
-| 信息策略 | 511 |
-| 编排器 | 479 |
-| 技能检索器 | 408 |
-| 目标验证器/检查点等配套 | 1,065 |
-| **Phase 7 合计** | **6,163** |
+| 组件 | 行数 | 说明 |
+|------|------|------|
+| BaseAgent | 1,211 | 主类 |
+| Agent 模块文件 | 26 个 | 含 domains/、quality.py、guardrails.py、mixins 等 |
 
 ### 核心算法创新
 
@@ -100,7 +86,7 @@
 
 ---
 
-## 四、工具生态（17 个）
+## 四、工具生态（18 个）
 
 | # | 工具 | 说明 |
 |---|------|------|
@@ -121,6 +107,7 @@
 | 15 | `tool_registry` | 工具注册中心 |
 | 16 | `web_search` | 网络搜索 |
 | 17 | `base_tool` | 工具基类 |
+| 18 | `office_cli` | Office 文档操作 |
 
 ---
 
@@ -133,14 +120,31 @@
 | 拓扑模式 | **5**（simple/research/coding/cdol/adaptive） |
 | 记忆层级 | **4**（Working/Episodic/Semantic/Archival） |
 | Benchmark 阶段 | **8**（Stage-1/2/3/4/5/6/6b/7/8） |
-| 自动化测试 | **13 个测试文件** + conftest.py |
-| CI 工作流 | **6**（tests/lint/docker/docs/security/CI） |
+| 自动化测试 | **14 个测试文件** + conftest.py |
+| API 集成测试 | **16 个用例**（test_api_integration.py） |
+| CI 工作流 | **6**（tests/lint/docker/docs/security/frontend） |
+| 可运行 Demo | **10 个** |
 | 服务端口 | **8900** |
 | 默认模型 | DeepSeek API (云端) + Ollama (边端/终端) |
+| Dashboard 版本 | **v13**（单文件 HTML，内联部署） |
+| 前端技术栈 | Vite + React + TypeScript + Tailwind v4 |
 
 ---
 
-## 六、可复现入口
+## 六、安全加固（v3.6.0）
+
+| 防护项 | 措施 |
+|--------|------|
+| 路径穿越 | `os.path.realpath` 校验，拒绝 `..`/`/`/`\` |
+| 文件上传 | 50MB 上限 + 危险扩展名黑名单 |
+| CORS | 仅限 localhost / 127.0.0.1 |
+| 异常处理 | 0 个裸 `except:`，全部替换为具体异常类型 |
+| JSON 容错 | LLM 输出 `json.loads()` 全部加 `JSONDecodeError` 处理 |
+| 结构化日志 | 可选 JSON formatter（`NEXUSFLOW_LOG_JSON=true`） |
+
+---
+
+## 七、可复现入口
 
 | 操作 | 命令 |
 |------|------|
@@ -159,7 +163,7 @@
 
 ---
 
-## 七、实验记录规范
+## 八、实验记录规范
 
 每项实验**必须**记录以下信息：
 
@@ -182,7 +186,7 @@
 
 ---
 
-## 八、表述规范
+## 九、表述规范
 
 性能宣称必须使用以下格式：
 

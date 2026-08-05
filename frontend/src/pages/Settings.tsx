@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import { apiSettings, type ModelSettings, type ModelProviderInfo } from '@/api/client'
-import { Settings as SettingsIcon, Loader, CheckCircle, XCircle, Save, RefreshCw, Cloud, Server, Key, Globe, Zap, Eye, EyeOff, Plus, Trash2 } from 'lucide-react'
+import { apiSettings, type ModelSettings } from '@/api/client'
+import { Settings as SettingsIcon, Loader, CheckCircle, XCircle, Save, Cloud, Server, Key, Globe, Zap, Eye, EyeOff, Plus, Trash2 } from 'lucide-react'
 
 const providerLabels: Record<string, string> = { deepseek: 'DeepSeek', ollama: '本地 Ollama' }
-const providerIcons: Record<string, React.ReactNode> = { deepseek: <Cloud className="w-4 h-4" />, ollama: <Server className="w-4 h-4" /> }
 const tierColors: Record<string, string> = { global: 'text-[#6366f1]', cdol: 'text-[#0EA5E9]', assayer: 'text-[#10B981]' }
 
 interface CustomProviderForm { name: string; endpoint: string; api_key: string; models: string; }

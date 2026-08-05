@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import { api, type SystemStatus, type AgentInfo, type TaskExecution, type OutputFormat } from '@/api/client'
-import { Play, Loader, Activity, Clock, FileText, Upload, X, Zap, AlertTriangle, Shield, RotateCcw } from 'lucide-react'
+import { api, type AgentInfo, type TaskExecution, type OutputFormat } from '@/api/client'
+import { Play, Loader, Activity, Clock, FileText, Upload, X, Zap, AlertTriangle, RotateCcw } from 'lucide-react'
 
 interface LogEntry { time: string; level: string; agent?: string; msg: string }
 interface AgentOutput { agent_id: string; content: string; time: string }
@@ -35,7 +35,6 @@ const SEVERITY_LEVELS = [
 ]
 
 export function CommandCenter() {
-  const [status, setStatus] = useState<SystemStatus | null>(null)
   const [agents, setAgents] = useState<AgentInfo[]>([])
   const [tasks, setTasks] = useState<TaskExecution[]>([])
   const [logs, setLogs] = useState<LogEntry[]>([])
@@ -50,7 +49,7 @@ export function CommandCenter() {
   const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set())
   const [creating, setCreating] = useState(false)
   const [dragOver, setDragOver] = useState(false)
-  const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'error'>('connecting')
+  const [_connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'error'>('connecting')
   
   // Fault injection state
   const [showFaultPanel, setShowFaultPanel] = useState(false)
@@ -69,13 +68,12 @@ export function CommandCenter() {
 
   const fetchAll = useCallback(async () => {
     try {
-      const [s, a, t, fmts] = await Promise.all([
+      const [_s, a, t, fmts] = await Promise.all([
         api.getSystemStatus(),
         api.getAgents(),
         api.getTasks(),
         fetch('/api/output/formats').then(r => r.ok ? r.json() : { formats: [] })
       ])
-      setStatus(s)
       setAgents(a.agents)
       setTasks(t.tasks)
       setFormats(fmts.formats || [])

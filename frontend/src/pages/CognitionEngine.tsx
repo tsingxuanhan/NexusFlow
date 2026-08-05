@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -179,7 +179,7 @@ export function CognitionEngine() {
                       <p className="text-xs font-medium text-gray-700">{spot.area || spot.name || '未知盲区'}</p>
                       <p className="text-xs text-gray-500 mt-0.5">{spot.description || spot.reason || ''}</p>
                     </div>
-                    {spot.severity && <Badge color={spot.severity === 'high' ? 'red' : 'yellow'}>{spot.severity}</Badge>}
+                    {spot.severity && <Badge color={spot.severity === 'high' ? 'red' : 'orange'}>{spot.severity}</Badge>}
                   </div>
                 </div>
               ))

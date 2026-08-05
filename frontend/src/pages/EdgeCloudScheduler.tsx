@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { apiScheduler, api } from '@/api/client'
-import { Loader, Server, Activity, AlertTriangle, BarChart3, Gauge, Cpu, HardDrive, Wifi } from 'lucide-react'
+import { Loader, Server, AlertTriangle, BarChart3, Gauge, Cpu, HardDrive, Wifi } from 'lucide-react'
 
 interface FaultType { value: string; label: string; icon: React.ReactNode; color: string; description: string; }
 
@@ -18,7 +18,7 @@ export function EdgeCloudScheduler() {
   const [stats, setStats] = useState<any>(null)
   const [tiers, setTiers] = useState<any>(null)
   const [monitor, setMonitor] = useState<any>(null)
-  const [agents, setAgents] = useState<any[]>([])
+  const [_agents, setAgents] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedFault, setSelectedFault] = useState('crash')
   const [faultConfig, setFaultConfig] = useState<any>({})

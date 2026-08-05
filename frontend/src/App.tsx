@@ -80,11 +80,11 @@ export default function App() {
               <>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#0EA5E9]/10 rounded-full">
                   <Activity className="w-3 h-3 text-[#0EA5E9]" />
-                  <span className="text-[10px] font-medium text-[#0EA5E9]">{systemStatus.active_tasks} 活跃</span>
+                  <span className="text-[10px] font-medium text-[#0EA5E9]">{systemStatus.tasks_running} 活跃</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#10B981]/10 rounded-full">
                   <CheckCircle className="w-3 h-3 text-[#10B981]" />
-                  <span className="text-[10px] font-medium text-[#10B981]">{systemStatus.completed_tasks} 完成</span>
+                  <span className="text-[10px] font-medium text-[#10B981]">{systemStatus.tasks_completed} 完成</span>
                 </div>
               </>
             ) : (

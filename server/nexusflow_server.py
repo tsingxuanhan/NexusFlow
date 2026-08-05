@@ -3372,7 +3372,7 @@ async def shutdown():
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():
-    for fname in ["nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
+    for fname in ["nexusflow-dashboard-v13.html", "nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html", "nexusflow-dashboard-v2.html"]:
         path = os.path.join(DASHBOARD_DIR, fname)
         print(f"[DASHBOARD] Checking: {path}  exists={os.path.exists(path)}")
         if os.path.exists(path):
@@ -3380,7 +3380,7 @@ async def serve_dashboard():
     _server_dir = os.path.dirname(os.path.abspath(__file__))
     _fallback_dir = os.path.join(os.path.dirname(_server_dir), "docs", "dashboard")
     print(f"[DASHBOARD] Fallback dir: {_fallback_dir}")
-    for fname in ["nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
+    for fname in ["nexusflow-dashboard-v13.html", "nexusflow-dashboard-v7.html", "nexusflow-dashboard-v5.html", "nexusflow-dashboard-v4.html", "nexusflow-dashboard-v3.html"]:
         path = os.path.join(_fallback_dir, fname)
         if os.path.exists(path):
             print(f"[DASHBOARD] Found via fallback: {path}")
